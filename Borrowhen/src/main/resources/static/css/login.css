@@ -1,0 +1,75 @@
+html{
+	height: 100%;
+	background: linear-gradient(171deg,rgba(196, 251, 255, 1) 0%, rgba(128, 251, 255, 1) 48%, rgba(28, 221, 255, 1) 100%);
+}
+
+.content{
+	background: rgba(255, 255, 255, 0.15); /* translucent white */
+  	border-radius: 16px;                   /* rounded corners */
+  	padding: 50px 50px;
+  	backdrop-filter: blur(10px);           /* frosted blur effect */
+  	-webkit-backdrop-filter: blur(10px);   /* Safari support */
+  	border: 1px solid rgba(255, 255, 255, 0.3); /* subtle border */
+  	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);  /* soft shadow */
+  	color: #fff;      
+  	display: flex;
+  	flex-direction: column;
+  	gap: 30px;
+}
+
+.content-header{
+	font-size: 22px;
+	text-align: center;
+	letter-spacing: 2px;
+}
+
+.glass-input {
+  width: 250px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); 
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.glass-button {
+  display: inline-block;
+  padding: 10px 32px;
+  border: 0;
+  text-decoration: none;
+  border-radius: 20px;
+  background-color: rgba(255,255,255,0.1);
+  backdrop-filter: blur(30px);
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.glass-button:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.link-group{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	font-size: 16px;
+}

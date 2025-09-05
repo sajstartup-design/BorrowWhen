@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main class="main-content" th:fragment="content">
+            <header class="header">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+                <div class="header-actions">
+                    <div class="notification-icon">
+                        <span class="notification-badge">1</span>
+                    </div>
+                    <div class="user-profile">
+                        <span class="user-name">Peter Purby</span>
+                        <div class="user-avatar"></div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-avatar">PP</div>
+                        <div class="welcome-content">
+                            <h2>Hello Peter</h2>
+                            <p>New cases are waiting</p>
+                        </div>
+                    </div>
+                    
+                    <div class="metrics-cards">
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span class="metric-label">NEW CASES</span>
+                                <div class="trend-chart green"></div>
+                            </div>
+                            <div class="metric-value">104</div>
+                            <div class="metric-change positive">+14.88%</div>
+                            <div class="metric-period">Trends last month</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span class="metric-label">NEW TASKS</span>
+                                <div class="trend-chart red"></div>
+                            </div>
+                            <div class="metric-value">34</div>
+                            <div class="metric-change negative">-5.67%</div>
+                            <div class="metric-period">Trends last month</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cases Table -->
+                <div class="cases-section">
+                    <div class="section-header">
+                        <h3>LIST OF CASES TO BE ACCEPTED</h3>
+                        <button class="view-all-btn">Full Set ></button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="cases-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Dates</th>
+                                    <th>Priority</th>
+                                    <th>Attachment</th>
+                                    <th>Assignee</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="case-name">Lorem ipsum dolor sit...</span>
+                                    </td>
+                                    <td>May 18, 2024 - May 25, 2024</td>
+                                    <td><span class="priority-badge low">Low</span></td>
+                                    <td><span class="attachment">📄 Requirements.doc</span></td>
+                                    <td><div class="assignee-avatars"></div></td>
+                                    <td><button class="action-btn">⚙️</button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="case-name">Lorem ipsum dolor</span>
+                                    </td>
+                                    <td>May 18, 2024 - May 25, 2024</td>
+                                    <td><span class="priority-badge medium">Medium</span></td>
+                                    <td><span class="attachment">📄 New case.doc</span></td>
+                                    <td><div class="assignee-avatars multi"></div></td>
+                                    <td><button class="action-btn">⚙️</button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="case-name">Lorem ipsum dolor sit...</span>
+                                    </td>
+                                    <td></td>
+                                    <td><span class="priority-badge low">Low</span></td>
+                                    <td><span class="attachment">📄 New field.doc</span></td>
+                                    <td><div class="assignee-avatars"></div></td>
+                                    <td><button class="action-btn">⚙️</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Communication and Analytics -->
+                <div class="bottom-section">
+                    <div class="communication-card">
+                        <div class="section-header">
+                            <h3>COMMUNICATION (Last 7 days)</h3>
+                            <button class="view-all-btn">See all ></button>
+                        </div>
+                        
+                        <div class="communication-messages">
+                            <div class="message">
+                                <h4>Mark Wahlberg</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur. Ut turpis luctus adipiscing leo leo in non tristique. Nulla orci...</p>
+                                <span class="message-time">2 days ago 🟢</span>
+                            </div>
+                            <div class="message">
+                                <h4>Leonardo DiCaprio</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur. Ut turpis luctus adipiscing leo leo in non tristique. Nulla orci...</p>
+                                <span class="message-time">5 days ago 🔴</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-cards">
+                        <div class="analytics-card">
+                            <div class="section-header">
+                                <h3>CASE TYPE BREAKDOWN</h3>
+                                <button class="view-all-btn">Full Report ></button>
+                            </div>
+                            <div class="chart-container">
+                                <div class="chart-bars">
+                                    <div class="chart-bar" style="height: 60%" data-value="100"></div>
+                                    <div class="chart-bar" style="height: 40%" data-value="75"></div>
+                                    <div class="chart-bar" style="height: 80%" data-value="50"></div>
+                                    <div class="chart-bar" style="height: 30%" data-value="25"></div>
+                                    <div class="chart-bar" style="height: 10%" data-value="0"></div>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="legend-item">
+                                        <span class="legend-color product"></span>
+                                        <span>Product</span>
+                                        <span>76</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color trademark"></span>
+                                        <span>Trademark</span>
+                                        <span>48</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color patent"></span>
+                                        <span>Patent</span>
+                                        <span>16</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color copyright"></span>
+                                        <span>Copyright</span>
+                                        <span>0</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color grey"></span>
+                                        <span>Grey market</span>
+                                        <span>0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="section-header">
+                                <h3>NUMBER OF CASES (Per Country)</h3>
+                                <button class="view-all-btn">See all ></button>
+                            </div>
+                            <div class="country-stats">
+                                <div class="country-row">
+                                    <span class="country-name">Sweden</span>
+                                    <span class="country-value">76</span>
+                                    <span class="country-change positive">+ 16.7%</span>
+                                </div>
+                                <div class="country-row">
+                                    <span class="country-name">USA</span>
+                                    <span class="country-value">45</span>
+                                    <span class="country-change positive">+ 3.23%</span>
+                                </div>
+                                <div class="country-row">
+                                    <span class="country-name">Germany</span>
+                                    <span class="country-value">3</span>
+                                    <span class="country-change negative">- 5.44%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	</main>
+</body>
+</html>
