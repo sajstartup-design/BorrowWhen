@@ -50,6 +50,7 @@ public class SecurityConfig {
 						.requestMatchers("/images/**").permitAll()
 						.requestMatchers("/css/**").permitAll()
 						.requestMatchers("/script/**").permitAll()
+						.requestMatchers("/gif/**").permitAll()
 						.requestMatchers("/user/**").hasAuthority("ADMIN")
 						.anyRequest().authenticated()
 						
