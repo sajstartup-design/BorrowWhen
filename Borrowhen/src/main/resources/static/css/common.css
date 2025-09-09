@@ -29,6 +29,8 @@ html, body {
   overflow-x: hidden; /* block horizontal scroll only */
   /*background: radial-gradient(60rem 40rem at 10% 10%, #d8f1ff 0%, #bbe3f8 50%, #a7d8f3 100%);*/
   background: var(--bg-color);
+  display: flex;
+  justify-content: center;
 }
 
 .container{
@@ -67,6 +69,7 @@ button,
     box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
     cursor: pointer;
     font-size: 0.8rem;
+    color: #0a3d62;
 }
 
 button:hover,

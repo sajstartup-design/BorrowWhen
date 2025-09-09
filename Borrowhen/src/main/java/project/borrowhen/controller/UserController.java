@@ -17,19 +17,19 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/admin/user")
+	@GetMapping("/user")
 	public String showUserScreen() {
 		
 		return "user/user-view";
 	}
 	
-	@GetMapping("/admin/user/create")
+	@GetMapping("/user/create")
 	public String showUserCreateScreen(@ModelAttribute UserDto userWebDto) {
 		
 		return "user/user-create";
 	}
 	
-	@PostMapping("/admin/user/create")
+	@PostMapping("/user/create")
 	public String postUserCreateScreen(@ModelAttribute UserDto userWebDto, RedirectAttributes ra) {
 		
 		try {
@@ -45,7 +45,7 @@ public class UserController {
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 		}
 
-		return "redirect:/admin/user";
+		return "redirect:/user";
 	}
 	
 }
