@@ -12,62 +12,69 @@
 		<section>
 			<p>MAIN</p>
 			<a th:href="@{/dashboard}" class="option">
-				<p class="active"><img th:src="@{/images/dashboard.png}"> Dashboard</p>
+				<p class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</p>
 			</a>
 			<div class="option">
-				<p><img th:src="@{/images/supplies.png}"> Inventory</p>
+				<p><img th:src="@{/images/supplies.png}"> INVENTORY</p>
 			</div>
 			<div class="option">
-				<p><img th:src="@{/images/request.png}"> Request</p>
+				<p><img th:src="@{/images/request.png}"> REQUEST</p>
 			</div>
 		</section>
 		<hr class="soft-gradient">
 		<section>
 			<p>HISTORY</p>
 			<div class="option">
-				<p><img th:src="@{/images/history.png}"> History</p>
+				<p><img th:src="@{/images/history.png}"> HISTORY</p>
 			</div>
 		</section>
 		<hr class="soft-gradient">
 		<section class="admin-settings">
 		    <p>USERS</p>
 		    <a th:href="@{/admin/user}" class="option" >
-		        <p><img th:src="@{/images/friends.png}"> User</p>
+		        <p><img th:src="@{/images/friends.png}"> USER</p>
 		    </a>		   
 		</section>		
 		<script>
 		document.addEventListener("DOMContentLoaded", () => {
-		
-		  const currentPage = window.location.pathname.split("/").pop().toLowerCase();
+			  const currentPath = window.location.pathname.toLowerCase();
 
-		  document.querySelectorAll(".option p.active")
-		    .forEach(el => el.classList.remove("active"));
-		
-		  const options = Array.from(document.querySelectorAll(".option p"));
-		  let matched = false;
-		
-		  options.forEach(p => {
-		    const text = p.textContent.trim().toLowerCase().replace(/\s+/g, " ");
+			  document.querySelectorAll(".option p.active")
+			    .forEach(el => el.classList.remove("active"));
 
-		    if (currentPage && (currentPage.includes(text) || text.includes(currentPage) || currentPage.includes(text.split(" ")[0]))) {
-		      p.classList.add("active");
-		      matched = true;
-		    }
-		  });
+			  const options = Array.from(document.querySelectorAll(".option p"));
+			  let matched = false;
 
-		  if (!matched && options.length) {
-		    options[0].classList.add("active");
-		  }
+			  options.forEach(p => {
+			    const text = p.textContent.trim().toLowerCase().replace(/\s+/g, " ");
 
-		  document.querySelectorAll(".option").forEach(opt => {
-		    opt.addEventListener("click", () => {
-		      document.querySelectorAll(".option p.active")
-		        .forEach(el => el.classList.remove("active"));
-		      const p = opt.querySelector("p");
-		      if (p) p.classList.add("active");
-		    });
-		  });
-		});
+			    // ✅ Match if path contains the menu keyword
+			    if (currentPath.includes(text) || text.includes(currentPath) || currentPath.includes(text.split(" ")[0])) {
+			      p.classList.add("active");
+			      matched = true;
+			    }
+
+			    // ✅ Special case: if path includes /admin/user -> highlight "User"
+			    if (currentPath.includes("/admin/user") && text.includes("user")) {
+			      p.classList.add("active");
+			      matched = true;
+			    }
+			  });
+
+			  if (!matched && options.length) {
+			    options[0].classList.add("active");
+			  }
+
+			  // click event
+			  document.querySelectorAll(".option").forEach(opt => {
+			    opt.addEventListener("click", () => {
+			      document.querySelectorAll(".option p.active")
+			        .forEach(el => el.classList.remove("active"));
+			      const p = opt.querySelector("p");
+			      if (p) p.classList.add("active");
+			    });
+			  });
+			});
 		</script>
 	</nav>
 </body>
