@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<aside th:fragment="content">
+			<div class="profile">
+				<span class="notification" data-count="3">
+					<img th:src="@{/images/notification-bell.png}" alt="bell">
+				</span>			
+				<div>
+					<label>ADMIN</label>
+					<span>Julius Basas</span>
+				</div>
+				<img class="down" th:src="@{/images/down.png}" alt="down">
+				<div class="settings inactive">
+					<p>Profile Settings</p>	
+            		<a>Logout</a>
+				</div>
+			</div>
+			<script>
+				document.addEventListener("DOMContentLoaded", () => {
+				    const downIcon = document.querySelector(".profile .down");
+				    const settings = document.querySelector(".profile .settings");
+				
+				    downIcon.addEventListener("click", () => {
+				        settings.classList.toggle("active");
+				        settings.classList.toggle("inactive");
+				    });
+				});
+
+			</script>
+		</aside>
+</body>
+</html>

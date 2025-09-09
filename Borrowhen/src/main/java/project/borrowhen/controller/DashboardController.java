@@ -7,10 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DashboardController {
 
+//	@GetMapping("/dashboard")
+//    public String showDashboard(Model model) {
+//        
+//		model.addAttribute("content", "content/dashboard");
+//		return "base";
+//    }
+	
 	@GetMapping("/dashboard")
-    public String showDashboard(Model model) {
-        
-		model.addAttribute("content", "content/dashboard");
-		return "base";
-    }
+	public String showLenderDashboard(Model model) {
+		
+		return "dashboard/dashboard";
+	}
 }
