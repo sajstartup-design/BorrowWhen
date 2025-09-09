@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
-		<main>
+		<main th:object="${userDto}">
 			<div class="content-header">USERS</div>
 			<div class="content-body">
 				<div class="user-statistics">
@@ -55,14 +55,13 @@
 							<a th:href="@{/user/create}" class="button"><img th:src="@{/images/add.png}">CREATE</a>
 						</div>
 						<div class="pagination">
-							<button>PREV</button>
-							<input type="text" />
-							<button>NEXT</button>
+							<button class="prev-btn">PREV</button>
+							<input class="input-page" type="text" />
+							<button class="next-btn" disable>NEXT</button>
 						</div>
 					</div>
 					<div class="table">
 						<div class="table-header">
-							<div class="table-cell"># ID</div>
 							<div class="table-cell"><img th:src="@{/images/user.png}"> NAME</div>
 							<div class="table-cell"><img th:src="@{/images/user.png}"> USER ID</div>
 							<div class="table-cell"><img th:src="@{/images/email.png}"> MOBILE NUMBER</div>
@@ -74,8 +73,11 @@
 							<div class="table-cell"><img th:src="@{/images/setting.png}"> UPDATED DATE</div>
 							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> ACTION</div>
 						</div>
-						<div class="table-row">
-							<div class="table-cell">1</div>
+						<div class="table-body" id="table-body">
+						
+						</div>
+						<!-- <div class="table-row" >
+							<div class="table-cell"></div>
 							<div class="table-cell">Julius Basas</div>
 							<div class="table-cell">jbasas0713</div>
 							<div class="table-cell">09323569314</div>
@@ -89,13 +91,29 @@
 								<button><img th:src="@{/images/edit.png}"></button>
 								<button><img th:src="@{/images/delete.png}"></button>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
 		</main>
 		<aside th:replace="~{aside/aside :: content}"></aside>
 	</div>
+	<form style="display: none" th:action="@{/user/edit}" method="GET" id="editForm">
+		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
+	</form>
+	<script th:inline="javascript">
+		const webDto = /*[[${userDto}]]*/'';
+		console.log(webDto);
+	</script>
+	<script th:src="@{/script/pagination.js}"></script>
+	<script th:src="@{/script/loading.js}"></script>
+	<script th:src="@{/script/user/user-api.js}"></script>
+	
+	
+	
+	
+	
+	
 <!-- 	<div class="modal" id="createUser">
 		<div class="modal-content">
 			<div class="modal-header">

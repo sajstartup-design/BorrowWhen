@@ -17,6 +17,7 @@ form{
 
 .field{
 	display: flex;
+	gap: 0.5rem;
 	width: 100%;
 }
 
@@ -48,7 +49,7 @@ form{
     color: #0a3d62;
     outline: none;
     transition: all 0.2s ease-in-out;
-    width: 15rem;
+    width: 16rem;
 }
 
 /* Input focus */

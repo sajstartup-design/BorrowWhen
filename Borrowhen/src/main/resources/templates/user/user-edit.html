@@ -2,7 +2,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>BW | User Create</title>
+<title>BW | User Edit</title>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 <link rel="stylesheet" th:href="@{/css/common.css}" />
 <link rel="stylesheet" th:href="@{/css/user/user-create.css}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -11,17 +13,19 @@
 	<div class="container">
 		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
 		<main>
-			<div class="content-header">USERS > USER CREATE</div>
+			<div class="content-header">USERS > USER EDIT</div>
 			<div class="content-body">
 				<div class="content">
-					<form th:action="@{/user/create}" th:object="${userDto}" method="POST" id="saveForm">
+					<form th:action="@{/user/edit}" th:object="${userDto}" method="POST" id="saveForm">
+					    <input type="hidden" name="encryptedId" th:value="${userDto.encryptedId}" />
+					
 					    <div class="field bold">
 					        <label>PERSON INFORMATION</label>
 					    </div>
 					
 					    <div class="field">
 					        <label>FIRST NAME</label>
-					        <input type="text" name="firstName" />
+					        <input type="text" name="firstName" th:value="*{firstName}" />
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('firstName')}"
 					              th:text="${fieldErrors['firstName']}"></span>
@@ -30,7 +34,7 @@
 					
 					    <div class="field">
 					        <label>MIDDLE NAME</label>
-					        <input type="text" name="middleName" />
+					        <input type="text" name="middleName" th:value="${userDto.middleName}" />
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('middleName')}"
 					              th:text="${fieldErrors['middleName']}"></span>
@@ -39,7 +43,7 @@
 					
 					    <div class="field">
 					        <label>FAMILY NAME</label>
-					        <input type="text" name="familyName" />
+					        <input type="text" name="familyName" th:value="${userDto.familyName}" />
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('familyName')}"
 					              th:text="${fieldErrors['familyName']}"></span>
@@ -48,7 +52,7 @@
 					
 					    <div class="field">
 					        <label>ADDRESS</label>
-					        <input type="text" name="address" />
+					        <input type="text" name="address" th:value="${userDto.address}" />
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('address')}"
 					              th:text="${fieldErrors['address']}"></span>
@@ -57,7 +61,7 @@
 					
 					    <div class="field">
 					        <label>EMAIL ADDRESS</label>
-					        <input type="email" name="emailAddress" />
+					        <input type="email" name="emailAddress" th:value="${userDto.emailAddress}" />
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('emailAddress')}"
 					              th:text="${fieldErrors['emailAddress']}"></span>
@@ -66,7 +70,7 @@
 					
 					    <div class="field">
 					        <label>PHONE NUMBER</label>
-					        <input type="text" name="phoneNumber" />
+					        <input type="number" name="phoneNumber" th:value="${userDto.phoneNumber}" />
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('phoneNumber')}"
 					              th:text="${fieldErrors['phoneNumber']}"></span>
@@ -75,7 +79,7 @@
 					
 					    <div class="field">
 					        <label>BIRTH DATE</label>
-					        <input type="date" name="birthDate" />
+					        <input type="date" name="birthDate" th:value="${userDto.birthDate}" />
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('birthDate')}"
 					              th:text="${fieldErrors['birthDate']}"></span>
@@ -85,9 +89,9 @@
 					    <div class="field">
 					        <label>GENDER</label>
 					        <select name="gender">
-					            <option value="MALE">Male</option>
-					            <option value="FEMALE">Female</option>
-					            <option value="OTHER">Other</option>
+					            <option value="MALE" th:selected="${userDto.gender == 'MALE'}">Male</option>
+					            <option value="FEMALE" th:selected="${userDto.gender == 'FEMALE'}">Female</option>
+					            <option value="OTHER" th:selected="${userDto.gender == 'OTHER'}">Other</option>
 					        </select>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('gender')}"
@@ -101,7 +105,7 @@
 					
 					    <div class="field">
 					        <label>USER ID</label>
-					        <input type="text" name="userId" />
+					        <input type="text" name="userId" th:value="${userDto.userId}" />
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('userId')}"
 					              th:text="${fieldErrors['userId']}"></span>
@@ -110,7 +114,7 @@
 					
 					    <div class="field">
 					        <label>PASSWORD</label>
-					        <input type="password" name="password" />
+					        <input type="password" name="password" value="0000000000" />
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('password')}"
 					              th:text="${fieldErrors['password']}"></span>
@@ -120,9 +124,9 @@
 					    <div class="field">
 					        <label>ROLE</label>
 					        <select name="role">
-					            <option value="BORROWER">BORROWER</option>
-					            <option value="LENDER">LENDER</option>
-					            <option value="ADMIN">ADMIN</option>
+					            <option value="BORROWER" th:selected="${userDto.role == 'BORROWER'}">BORROWER</option>
+					            <option value="LENDER" th:selected="${userDto.role == 'LENDER'}">LENDER</option>
+					            <option value="ADMIN" th:selected="${userDto.role == 'ADMIN'}">ADMIN</option>
 					        </select>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('role')}"
@@ -133,7 +137,7 @@
 
 					<div class="form-btn">
 						<button>CANCEL</button>
-						<button type="submit" form="saveForm" class="save-btn">SAVE</button>
+						<button type="submit" form="saveForm" class="update-btn">UPDATE</button>
 					</div>
 				</div>			
 			</div>

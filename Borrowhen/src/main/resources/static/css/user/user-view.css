@@ -92,10 +92,10 @@
 	overflow: auto;
 }
 
-.table-cell:first-child{
+/* .table-cell:first-child{
 	width: 3rem;
 	padding: 0.5rem;
-}
+} */
 
 .table-cell {
 	width: 12rem;
