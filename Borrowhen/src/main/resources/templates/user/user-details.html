@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BW | User Edit</title>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/user/user-create.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
+		<main>
+			<div class="content-header">USERS > USER EDIT</div>
+			<div class="content-body">
+				<div class="content">
+					<form th:action="@{/user/edit}" th:object="${userDto}" method="POST" id="saveForm">
+					    <input type="hidden" name="encryptedId" th:value="${userDto.encryptedId}" />
+					
+					    <div class="field bold">
+					        <label>PERSON INFORMATION</label>
+					    </div>
+					
+					    <div class="field">
+					        <label>FIRST NAME</label>
+					        <div th:text="*{firstName}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>MIDDLE NAME</label>
+					        <div th:text="*{middleName}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>FAMILY NAME</label>
+					        <div th:text="*{familyName}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>ADDRESS</label>
+					        <div th:text="*{address}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>EMAIL ADDRESS</label>
+					        <div th:text="*{emailAddress}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>PHONE NUMBER</label>
+					        <div th:text="*{phoneNumber}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>BIRTH DATE</label>
+					        <div th:text="*{birthDate}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>GENDER</label>
+					        <div th:text="*{gender}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field bold">
+					        <label>ACCOUNT INFORMATION</label>
+					    </div>
+					
+					    <div class="field">
+					        <label>USER ID</label>
+					        <div th:text="*{userId}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>ROLE</label>
+					        <div th:text="*{role}"></div>
+					    </div>
+					</form>
+
+
+					<div class="form-btn">
+						<a class="button" th:href="@{/user}">BACK</a>
+						<!-- <button type="submit" form="saveForm" class="update-btn">EDIT</button>
+						<button type="submit" form="saveForm" class="update-btn">DELETE</button> -->
+					</div>
+				</div>			
+			</div>
+		</main>
+		<aside th:replace="~{aside/aside :: content}"></aside>
+	</div>
+	<script th:src="@{/script/loading.js}"></script>
+	<script th:src="@{/script/submit.js}"></script>
+</body>
+</html>

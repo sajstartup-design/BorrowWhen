@@ -28,7 +28,7 @@
 }
 
 .user-statistics div{
-	width: 10rem;
+	width: 12rem;
 	background: #fff;
 	border-radius: 1rem;
 	padding: 1rem;
@@ -92,10 +92,15 @@
 	overflow: auto;
 }
 
-.table-cell:first-child{
+.table-row:hover {
+    background: rgba(195, 225, 245, 1); /* slightly darker blue */
+    cursor: pointer; /* makes it look clickable */
+}
+
+/* .table-cell:first-child{
 	width: 3rem;
 	padding: 0.5rem;
-}
+} */
 
 .table-cell {
 	width: 12rem;

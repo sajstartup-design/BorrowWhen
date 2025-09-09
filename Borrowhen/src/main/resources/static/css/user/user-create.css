@@ -17,13 +17,13 @@ form{
 
 .field{
 	display: flex;
+	gap: 0.5rem;
 	width: 100%;
 }
 
 .field label {
     font-size: 0.85rem;
     font-weight: 400;
-    margin-bottom: 0.4rem;
     color: #0a3d62;
     display: flex;
     align-items: center;
@@ -37,7 +37,8 @@ form{
 /* Inputs (slightly lighter glass look inside form) */
 .field input,
 .field textarea,
-.field select {
+.field select,
+.field div {
     background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -48,7 +49,7 @@ form{
     color: #0a3d62;
     outline: none;
     transition: all 0.2s ease-in-out;
-    width: 15rem;
+    width: 16rem;
 }
 
 /* Input focus */

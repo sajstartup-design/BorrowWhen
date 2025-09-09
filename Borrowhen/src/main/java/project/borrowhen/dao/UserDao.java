@@ -1,9 +1,64 @@
 package project.borrowhen.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.sql.Date;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.UserEntity;
 
 public interface UserDao extends JpaRepository<UserEntity, Integer> {
 
+	public final String GET_ALL_USERS = "SELECT e "
+			+ "FROM UserEntity e "
+			+ "WHERE e.isDeleted = false ";
+	
+	@Query(value=GET_ALL_USERS)
+	public Page<UserEntity> getAllUsers(Pageable pageable);
+	
+	public final String GET_USER = "SELECT e "
+			+ "FROM UserEntity e "
+			+ "WHERE e.id = :id "
+			+ "AND e.isDeleted = false ";
+	
+	@Query(value=GET_USER)
+	public UserEntity getUser(@Param("id") int id);
+	
+	public final String UPDATE_USER = "UPDATE users "
+            + "SET first_name = :firstName, "
+            + "middle_name = :middleName, "
+            + "family_name = :familyName, "
+            + "address = :address, "
+            + "email_address = :emailAddress, "
+            + "phone_number = :phoneNumber, "
+            + "birth_date = :birthDate, "
+            + "gender = :gender, "
+            + "user_id = :userId, "
+            + "password = :password, "
+            + "role = :role "
+            + "WHERE id = :id";
+
+    @Modifying
+    @Transactional
+    @Query(value = UPDATE_USER, nativeQuery = true)
+    void updateUser(
+            @Param("id") int id,
+            @Param("firstName") String firstName,
+            @Param("middleName") String middleName,
+            @Param("familyName") String familyName,
+            @Param("address") String address,
+            @Param("emailAddress") String emailAddress,
+            @Param("phoneNumber") String phoneNumber,
+            @Param("birthDate") Date birthDate,
+            @Param("gender") String gender,
+            @Param("userId") String userId,
+            @Param("password") String password,
+            @Param("role") String role,
+            @Param("hasChanged") boolean hasChanged
+    );
 }

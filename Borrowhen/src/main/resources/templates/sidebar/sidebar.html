@@ -14,9 +14,9 @@
 			<a th:href="@{/dashboard}" class="option">
 				<p class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</p>
 			</a>
-			<div class="option">
+			<a th:href="@{/inventory}" class="option">
 				<p><img th:src="@{/images/supplies.png}"> INVENTORY</p>
-			</div>
+			</a>
 			<div class="option">
 				<p><img th:src="@{/images/request.png}"> REQUEST</p>
 			</div>
@@ -29,9 +29,16 @@
 			</div>
 		</section>
 		<hr class="soft-gradient">
+		<section>
+			<p>PAYMENT</p>
+			<div class="option">
+				<p><img th:src="@{/images/history.png}"> PAYMENT</p>
+			</div>
+		</section>
+		<hr class="soft-gradient">
 		<section class="admin-settings">
 		    <p>USERS</p>
-		    <a th:href="@{/admin/user}" class="option" >
+		    <a th:href="@{/user}" class="option" >
 		        <p><img th:src="@{/images/friends.png}"> USER</p>
 		    </a>		   
 		</section>		
