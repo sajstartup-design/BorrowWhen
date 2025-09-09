@@ -55,6 +55,7 @@ async function loadUsers(page = 0) {
         data.users.forEach(user => {
             const row = document.createElement("div");
             row.classList.add("table-row");
+			row.setAttribute('data-id', user.encryptedId);
 
             row.innerHTML = `
                 <div class="table-cell">${user.firstName} ${user.familyName}</div>
@@ -79,6 +80,18 @@ async function loadUsers(page = 0) {
 				
 				form.submit();
 			});
+			
+			row.addEventListener('click', function(e) {
+			   
+			    if (e.target.closest('button') || e.target.closest('a')) {
+			        return; 
+			    }
+				
+				const encryptedId = this.getAttribute('data-id');
+
+			    window.location.href="/user/details?encryptedId=" + encryptedId;
+			});
+
 
             fragment.appendChild(row);
         });

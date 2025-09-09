@@ -148,4 +148,33 @@ public class UserController {
 		return "redirect:/user";
 	}
 	
+	@GetMapping("/details")
+	public String showUserDetailsScreen(Model model,
+			@RequestParam("encryptedId") String encryptedId,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			UserDto inDto = new UserDto();
+			
+			inDto.setEncryptedId(encryptedId);
+			
+			UserDto outDto = userService.getUser(inDto);
+			
+			outDto.setEncryptedId(encryptedId);
+			
+			model.addAttribute("userDto", outDto);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			
+			return "redirect:/user";
+		}
+		
+		return "user/user-details";
+	}
+	
 }

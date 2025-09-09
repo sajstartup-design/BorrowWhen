@@ -28,7 +28,7 @@
 }
 
 .user-statistics div{
-	width: 10rem;
+	width: 12rem;
 	background: #fff;
 	border-radius: 1rem;
 	padding: 1rem;
@@ -90,6 +90,11 @@
 	flex-direction: row;
 	justify-content: space-between;
 	overflow: auto;
+}
+
+.table-row:hover {
+    background: rgba(195, 225, 245, 1); /* slightly darker blue */
+    cursor: pointer; /* makes it look clickable */
 }
 
 /* .table-cell:first-child{
