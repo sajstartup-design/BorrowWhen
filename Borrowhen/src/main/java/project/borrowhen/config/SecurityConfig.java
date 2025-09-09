@@ -51,6 +51,7 @@ public class SecurityConfig {
 						.requestMatchers("/css/**").permitAll()
 						.requestMatchers("/script/**").permitAll()
 						.requestMatchers("/user/**").hasAuthority("ADMIN")
+						.requestMatchers("/inventory/**").hasAuthority("ADMIN")
 						.anyRequest().authenticated()
 						
 						)
