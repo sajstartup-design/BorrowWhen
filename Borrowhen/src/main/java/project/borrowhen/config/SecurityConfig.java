@@ -64,7 +64,7 @@ public class SecurityConfig {
 						 .defaultSuccessUrl("/dashboard"))
 						//.successHandler(authenticationSuccessHandler()))
 				.logout((logout) -> logout
-						.logoutSuccessUrl("/")
+						.logoutSuccessUrl("/login")
 						.invalidateHttpSession(true)
 						.permitAll());
 

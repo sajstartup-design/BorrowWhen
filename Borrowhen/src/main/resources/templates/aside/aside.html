@@ -16,7 +16,9 @@
 				<img class="down" th:src="@{/images/down.png}" alt="down">
 				<div class="settings inactive">
 					<p>Profile Settings</p>	
-            		<a>Logout</a>
+            		<form th:action="@{/logout}" method="post">
+					    <button type="submit">Logout</button>
+					</form>
 				</div>
 			</div>
 			<div class="content">

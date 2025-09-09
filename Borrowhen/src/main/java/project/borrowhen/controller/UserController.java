@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.borrowhen.common.MessageConstant;
@@ -12,24 +13,25 @@ import project.borrowhen.dto.UserDto;
 import project.borrowhen.service.UserService;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/user")
+	@GetMapping()
 	public String showUserScreen() {
 		
 		return "user/user-view";
 	}
 	
-	@GetMapping("/user/create")
+	@GetMapping("/create")
 	public String showUserCreateScreen(@ModelAttribute UserDto userWebDto) {
 		
 		return "user/user-create";
 	}
 	
-	@PostMapping("/user/create")
+	@PostMapping("/create")
 	public String postUserCreateScreen(@ModelAttribute UserDto userWebDto, RedirectAttributes ra) {
 		
 		try {
