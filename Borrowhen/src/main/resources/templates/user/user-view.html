@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BW | User</title>
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/user/user-view.css}" />
+</head>
+<body>
+	<div class="container">
+		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
+		<main>
+			<div class="content-header">USERS</div>
+			<div class="content-body">
+				<div class="user-statistics">
+					<div>
+						<label><img th:src="@{/images/friends.png}" >Total Borrower</label>
+						<span>
+							100
+						</span>
+					</div>
+					<div>
+						<label><img th:src="@{/images/friends.png}" >Total Lender</label>
+						<span>
+							100
+						</span>
+					</div>
+				</div>
+			</div>
+		</main>
+		<aside th:replace="~{aside/aside :: content}"></aside>
+	</div>
+</body>
+</html>
