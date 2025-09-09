@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BW | User Create</title>
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/user/user-create.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
+		<main>
+			<div class="content-header">USERS > USER CREATE</div>
+			<div class="content-body">
+				<div class="content">
+					<form th:action="@{/admin/user/create}" method="POST" id="saveForm">
+						<div class="field bold">
+							<label>PERSON INFORMATION</label>
+						</div>
+						<div class="field">
+							<label>FIRST NAME</label>
+							<input type="text" name="firstName" />
+						</div>
+						<hr class="soft-gradient">
+						<div class="field">
+							<label>MIDDLE NAME</label>
+							<input type="text" name="middleName" />
+						</div>
+						<hr class="soft-gradient">
+						<div class="field">
+							<label>FAMILY NAME</label>
+							<input type="text" name="familyName" />
+						</div>
+						<hr class="soft-gradient">
+						<div class="field">
+							<label>ADDRESS</label>
+							<input type="text" name="address" />
+						</div>
+						<hr class="soft-gradient">
+						<div class="field">
+							<label>EMAIL ADDRESS</label>
+							<input type="email" name="emailAddress" />
+						</div>
+						<hr class="soft-gradient">
+						<div class="field">
+							<label>PHONE NUMBER</label>
+							<input type="number" name="phoneNumber" />
+						</div>
+						<hr class="soft-gradient">
+						<div class="field">
+							<label>BIRTH DATE</label>
+							<input type="date" name="birthDate" />
+						</div>
+						<hr class="soft-gradient">
+						<div class="field">
+							<label>GENDER</label>
+							<select name="gender">
+								<option value="MALE">Male</option>
+								<option value="FEMALE">Female</option>
+								<option value="OTHER">Other</option>
+							</select>
+						</div>
+						<hr class="soft-gradient">
+						<div class="field bold">
+							<label>ACCOUNT INFORMATION</label>
+						</div>
+						<div class="field">
+							<label>USER ID</label>
+							<input type="text" name="userId" />
+						</div>
+						<hr class="soft-gradient">
+						<div class="field">
+							<label>PASSWORD</label>
+							<input type="password" name="password" />
+						</div>
+						<hr class="soft-gradient">
+						<div class="field">
+							<label>ROLE</label>
+							<select name="role">				
+								<option value="BORROWER">BORROWER</option>			
+								<option value="LENDER">LENDER</option>								
+								<option value="ADMIN">ADMIN</option>
+							</select>
+						</div>
+					</form>
+					<div class="form-btn">
+						<button>CANCEL</button>
+						<button type="submit" form="saveForm">SAVE</button>
+					</div>
+				</div>			
+			</div>
+		</main>
+		<aside th:replace="~{aside/aside :: content}"></aside>
+	</div>
+</body>
+</html>

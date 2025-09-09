@@ -48,6 +48,60 @@ a{
 	color: #000;
 }
 
+button,
+.button{
+	min-width: 3rem;
+	height: 2rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center; 
+	gap: 0.5rem;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	box-sizing: border-box;
+	background: rgba(215, 238, 251, 1); /* Semi-transparent */
+	backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.05rem solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+button:hover,
+.button:hover{
+	background: rgba(180, 220, 245, 1); /* darker shade */
+    box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.15);
+}
+
+button img,
+.button img{
+	width: 1rem;
+	height: 1rem;
+}
+
+input{
+	background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.95rem;
+    color: #0a3d62;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+}
+
+.pagination input{
+	width: 3rem;
+    height: 2rem;
+    padding: 0.2rem;
+    box-sizing: border-box;
+}
+
 /* Sidebar Design */
 
 nav{
@@ -60,6 +114,7 @@ nav{
 	padding: 1rem;
 	box-sizing: border-box;
 	gap: 0.5rem;
+	color: #0a3d62;
 }
 
 nav img{
@@ -119,7 +174,7 @@ hr{
 /*-------------------------------------------------*/
 
 main{
-	width: 73%;
+	width: 68%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -139,28 +194,27 @@ main .content-header{
 	border-radius: 1rem;
 	padding: 1rem;
 	box-sizing: border-box;
+	font-size: 0.8rem;
+	font-weight: 600;
 }
 
 main .content-body{
 	width: initial;
-	background: rgba(215, 238, 251, 1); /* Semi-transparent */
-	backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 0.05rem solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+	
 	border-radius: 1rem;
-	padding: 1rem;
-	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
 }
 
 /* Aside Design */
 
 aside{
-	width: 15%;
+	width: 20%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
+	gap: 1rem;
 	justify-content: start;
 	align-items: center;
 	padding: 1.5rem;
@@ -176,6 +230,7 @@ aside .profile{
 	align-items: center;
 	gap: 0.75rem;
 	position: relative;
+	height: 3rem;
 }
 
 aside .down{
@@ -256,6 +311,72 @@ aside .settings.active {
     display: block;
 }
 
+aside .content{
+    background: rgba(215, 238, 251, 1); /* Semi-transparent */
+	backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.05rem solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+	border-radius: 1rem;
+    width: 100%;
+    height: 10rem;
+}
+
+
+/*-------------------------------------------------*/
+
+/* Modal Design */
+
+.modal-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-content {
+	background: rgba(215, 238, 251, 0.3); /* 30% opacity */
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+
+	padding: 1.5rem;
+	box-sizing: border-box;
+	border-radius: 0.75rem;
+	width: 400px;
+	max-width: 90%;
+}
+
+.modal-header {
+	font-size: 1.25rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+	color: #0a3d62; /* Dark text for contrast */
+	text-align: center;
+}
+
+.modal-body {
+	color: #333;
+	font-size: 0.95rem;
+}
+
 
 
 /*-------------------------------------------------*/
@@ -278,6 +399,136 @@ hr.soft-gradient {
 hr.soft-gradient.thin { 
     height: 0.15rem; 
     box-shadow: none; 
+}
+
+::-webkit-scrollbar {
+  width: 0.3rem;   /* = 6px */
+  height: 0.3rem;  /* horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 0.5rem; /* = 10px */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.container-msg.modal-hide{
+	display: none;
+}
+
+.container-msg.modal-show{
+	display: flex;
+}
+
+.container-msg{
+	position: absolute;
+	right: 0;
+	bottom: 0;	
+	width: 100%;	
+	z-index: 999999;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	font-size: 0.8rem;
+	padding: 0.5rem;
+	box-sizing: border-box;
+}
+
+.container-msg .icon-msg{
+	display: flex;
+	gap: 0.5rem;
+	justify-content: center;
+	align-items: center;
+	padding: 0.25rem 0.5rem;
+	box-sizing: border-box;
+	border-radius: 0.5rem;
+	box-shadow: 0 0.2rem 0.2rem -0.1rem rgba(0, 0, 0, 0.5);
+	background: #fff;
+	width: 2rem;
+	height: 2rem;
+}
+
+.container-msg .icon-msg img{
+	width: 1rem;
+	height: 1rem;
+}
+
+.content-msg{
+	display: flex;
+	flex-direction: column;
+}
+
+.header-msg{
+	font-weight: bold;	
+}
+
+.content-msg .header-msg{
+	font-weight: bold !important;
+	text-align: left;
+}
+
+.content-msg .body-msg{
+	font-weight: normal !important;
+	text-align: left;
+}
+
+
+.success-msg{
+	background: linear-gradient(99deg,rgba(48, 255, 66, 1) 26%, rgba(149, 211, 245, 1) 61%, rgba(28, 221, 255, 1) 100%);	
+	border-radius: 0.75rem;
+	box-shadow: 0 0.2rem 0.2rem -0.1rem rgba(0, 0, 0, 0.5);
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+	position: relative;
+	overflow: hidden;
+}
+
+.error-msg{
+	background: linear-gradient(99deg,rgba(255, 79, 48, 1) 26%, rgba(149, 211, 245, 1) 61%, rgba(28, 221, 255, 1) 100%);
+	border-radius: 0.75rem;
+	box-shadow: 0 0.2rem 0.2rem -0.1rem rgba(0, 0, 0, 0.5);
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+	position: relative;
+	overflow: hidden;
+}
+
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 0.1rem;
+    background: #4caf50;
+    width: 0;
+    border-radius: 0 0 0.75rem 0.75rem;
+    animation: progressFill 3s linear forwards;
+}
+
+@keyframes progressFill {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Fade-out effect */
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
 }
 
   
