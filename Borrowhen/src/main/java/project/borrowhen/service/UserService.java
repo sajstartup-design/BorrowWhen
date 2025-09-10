@@ -28,6 +28,8 @@ public interface UserService {
 	
 	public UserEntity getLoggedInUser();
 	
+	public UserEntity getUser(int id);
+	
 	public List<String> getAllUserId();
 	
 	public UserEntity getUserByUserId(String userId);

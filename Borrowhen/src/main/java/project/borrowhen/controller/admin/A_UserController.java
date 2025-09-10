@@ -87,8 +87,6 @@ public class A_UserController {
 		
 		try {
 			
-			System.out.println(encryptedId);
-			
 			UserDto inDto = new UserDto();
 			
 			inDto.setEncryptedId(encryptedId);

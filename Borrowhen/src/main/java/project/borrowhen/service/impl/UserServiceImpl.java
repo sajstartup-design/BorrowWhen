@@ -212,4 +212,10 @@ public class UserServiceImpl implements UserService {
 		
 		return userDao.getUserByUserId(userId);
 	}
+
+	@Override
+	public UserEntity getUser(int id) {
+		
+		return userDao.getUser(id);
+	}
 }

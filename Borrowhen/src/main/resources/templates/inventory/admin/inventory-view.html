@@ -90,7 +90,7 @@
 		</main>
 		<aside th:replace="~{aside/aside :: content}"></aside>
 	</div>
-	<form style="display: none" th:action="@{/inventory/edit}" method="GET" id="editForm">
+	<form style="display: none" th:action="@{/admin/inventory/edit}" method="GET" id="editForm">
 		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
 	</form>
 	<script th:inline="javascript">

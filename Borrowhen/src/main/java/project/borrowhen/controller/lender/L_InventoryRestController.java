@@ -26,8 +26,6 @@ public class L_InventoryRestController {
             pagination.setPage(page);
 
             inDto.setPagination(pagination);
-            
-            System.out.println("YAWA");
 
             return inventoryService.getAllOwnedInventory(inDto);
         } catch (Exception e) {

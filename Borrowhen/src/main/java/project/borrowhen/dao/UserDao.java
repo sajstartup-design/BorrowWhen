@@ -39,20 +39,21 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 	@Query(value=GET_USER_BY_USER_ID)
 	public UserEntity getUserByUserId(@Param("userId") String userId) throws DataAccessException;
 	
-	public final String UPDATE_USER = "UPDATE users "
-            + "SET first_name = :firstName, "
-            + "middle_name = :middleName, "
-            + "family_name = :familyName, "
-            + "address = :address, "
-            + "email_address = :emailAddress, "
-            + "phone_number = :phoneNumber, "
-            + "birth_date = :birthDate, "
-            + "gender = :gender, "
-            + "user_id = :userId, "
-            + "password = :password, "
-            + "role = :role, "
-            + "updated_date = :updatedDate "
-            + "WHERE id = :id";
+	public final String UPDATE_USER = 
+		    "UPDATE users " +
+		    "SET first_name = :firstName, " +
+		    "middle_name = :middleName, " +
+		    "family_name = :familyName, " +
+		    "address = :address, " +
+		    "email_address = :emailAddress, " +
+		    "phone_number = :phoneNumber, " +
+		    "birth_date = :birthDate, " +
+		    "gender = :gender, " +
+		    "user_id = :userId, " +
+		    "password = CASE WHEN :hasChanged = true THEN :password ELSE password END, " +
+		    "role = :role, " +
+		    "updated_date = :updatedDate " +
+		    "WHERE id = :id";
 
     @Modifying
     @Transactional

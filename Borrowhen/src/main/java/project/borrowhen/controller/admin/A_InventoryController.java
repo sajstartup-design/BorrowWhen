@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
@@ -81,6 +82,77 @@ public class A_InventoryController {
 		try {
 			
 			inventoryService.saveInventory(inventoryWebDto);
+			
+			ra.addFlashAttribute("successMsg", MessageConstant.INVENTORY_CREATE_MSG);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+		}
+		
+		return "redirect:/admin/inventory";
+	}
+	
+	@GetMapping("/edit")
+	public String showInventoryEditScreen(Model model,
+			@RequestParam("encryptedId") String encryptedId,
+			@ModelAttribute InventoryDto inventoryWebDto,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			InventoryDto inDto = new InventoryDto();
+			
+			inDto.setEncryptedId(encryptedId);
+			
+			InventoryDto outDto = inventoryService.getInventory(inDto);
+			
+			outDto.setEncryptedId(encryptedId);
+			
+			model.addAttribute("inventoryDto", outDto);
+			
+			model.addAttribute("allUserId", userService.getAllUserId());
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			
+			return "redirect:/admin/inventory";
+		}
+		
+		return "inventory/admin/inventory-edit";
+	}
+	
+	@PostMapping("/edit")
+	public String postInventoryEditScreen(@ModelAttribute @Valid InventoryDto inventoryWebDto,
+			BindingResult result,
+			RedirectAttributes ra) {
+		
+		if(result.hasErrors()) {
+			
+			Map<String, String> fieldErrors = result.getFieldErrors()
+	                .stream()
+	                .collect(Collectors.toMap(
+	                        FieldError::getField, 
+	                        DefaultMessageSourceResolvable::getDefaultMessage,
+	                        (existing, replacement) -> existing 
+	                ));
+
+	        ra.addFlashAttribute("fieldErrors", fieldErrors);
+	        
+	        ra.addFlashAttribute("inventoryDto", inventoryWebDto);
+	        
+	        return "redirect:/admin/inventory/edit?encryptedId=" + inventoryWebDto.getEncryptedId();
+	        
+		}
+		
+		try {
+			
+			inventoryService.editInventory(inventoryWebDto);
 			
 			ra.addFlashAttribute("successMsg", MessageConstant.INVENTORY_CREATE_MSG);
 			

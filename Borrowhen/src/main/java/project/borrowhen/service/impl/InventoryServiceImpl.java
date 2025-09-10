@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.dao.InventoryDao;
 import project.borrowhen.dao.entity.InventoryData;
@@ -145,4 +144,45 @@ public class InventoryServiceImpl implements InventoryService{
 		return outDto;
 	}
 
+	@Override
+	public InventoryDto getInventory(InventoryDto inDto) throws Exception {
+		
+		InventoryDto outDto = new InventoryDto();
+		
+		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+		
+		InventoryEntity inventory = inventoryDao.getInventory(id);
+		
+		UserEntity user = userService.getUser(inventory.getUserId());
+		
+		outDto.setUserId(user.getUserId());
+		outDto.setItemName(inventory.getItemName());
+		outDto.setPrice(inventory.getPrice());
+		outDto.setTotalQty(inventory.getTotalQty());
+		
+		return outDto;
+	}
+
+	@Override
+	public void editInventory(InventoryDto inDto) throws Exception {
+			
+		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+		
+		Date dateNow = Date.valueOf(LocalDate.now());
+		
+		UserEntity user = userService.getLoggedInUser();
+
+		if (inDto.getUserId() != null && !inDto.getUserId().isBlank()) {
+	        user = userService.getUserByUserId(inDto.getUserId());
+	    }
+		
+		inventoryDao.updateInventory(id, 
+				user.getId().intValue(), 
+				inDto.getItemName(), 
+				inDto.getPrice().doubleValue(),
+				inDto.getTotalQty().intValue(),
+				dateNow);
+		
+	
+	}
 }
