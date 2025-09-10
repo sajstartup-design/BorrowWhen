@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 </head>
@@ -10,8 +10,8 @@
 					<img th:src="@{/images/notification-bell.png}" alt="bell">
 				</span>			
 				<div>
-					<label>ADMIN</label>
-					<span>Julius Piandong Basas</span>
+					<label th:text="${session.role}">User</label>
+					<span th:text="${session.fullname}">User</span>
 				</div>
 				<img class="down" th:src="@{/images/down.png}" alt="down">
 				<div class="settings inactive">
