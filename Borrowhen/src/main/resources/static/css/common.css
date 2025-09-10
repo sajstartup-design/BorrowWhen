@@ -320,20 +320,30 @@ aside .notification[data-count]:not([data-count="0"])::after {
 }
 
 aside .settings {
+	width: 12rem;
     display: none;
+    position: absolute;
+    top: 100%;   /* directly below profile */
     background: rgba(215, 238, 251, 0.25); 
     padding: 0.5rem;
     border: 0.05rem solid rgba(255, 255, 255, 0.4); 
     border-radius: 0.4rem;
-    position: absolute;
-    bottom: -3rem; 
-    right: 0;   
-    width: 100%; 
     box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.1);
     z-index: 100;
     font-size: 0.8rem;
     backdrop-filter: blur(0.8rem); 
-    -webkit-backdrop-filter: blur(0.8rem); /* for Safari */
+    -webkit-backdrop-filter: blur(0.8rem);
+    flex-direction: column; /* stack buttons vertically */
+    gap: 0.5rem;
+}
+
+aside .settings form{
+	width: 100%;
+}
+
+aside .settings button{
+	width: 100%;
+	background: none;
 }
 
 
@@ -342,7 +352,7 @@ aside .settings.inactive {
 }
 
 aside .settings.active {
-    display: block;
+    display: flex;
 }
 
 aside .content{

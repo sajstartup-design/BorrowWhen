@@ -15,7 +15,14 @@
 				</div>
 				<img class="down" th:src="@{/images/down.png}" alt="down">
 				<div class="settings inactive">
-					<p>Profile Settings</p>	
+					<form th:action="@{/logout}" method="post">
+					    <button type="submit">Profile</button>
+					</form>
+					<hr class="soft-gradient">
+					<form th:action="@{/logout}" method="post">
+					    <button type="submit">Settings</button>
+					</form>
+					<hr class="soft-gradient">
             		<form th:action="@{/logout}" method="post">
 					    <button type="submit">Logout</button>
 					</form>
@@ -25,15 +32,28 @@
 			
 			</div>
 			<script>
-				document.addEventListener("DOMContentLoaded", () => {
-				    const downIcon = document.querySelector(".profile .down");
-				    const settings = document.querySelector(".profile .settings");
-				
-				    downIcon.addEventListener("click", () => {
-				        settings.classList.toggle("active");
-				        settings.classList.toggle("inactive");
-				    });
-				});
+			document.addEventListener("DOMContentLoaded", () => {
+			    const downIcon = document.querySelector(".profile .down");
+			    const settings = document.querySelector(".profile .settings");
+			    const profile = document.querySelector(".profile");
+
+			    downIcon.addEventListener("click", () => {
+			        settings.classList.toggle("active");
+			        settings.classList.toggle("inactive");
+
+			        if (settings.classList.contains("active")) {
+			            // Get profile position
+			            const rect = profile.getBoundingClientRect();
+						
+			            console.log(rect);
+			            // Position dropdown relative to profile
+			            settings.style.position = "absolute";
+			            settings.style.right = `${0}rem`;
+			      
+			        }
+			    });
+			});
+
 
 			</script>
 		</aside>
