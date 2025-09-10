@@ -40,10 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadInventories(page = 0) {
     try {
-        const response = await fetch(`/api/admin/inventory?page=${page}`);
+        const response = await fetch(`/api/lender/inventory?page=${page}`);
         const data = await response.json();
 		
-		
+		console.log(data);
 
         updatePagination(data.pagination);
 
@@ -55,14 +55,14 @@ async function loadInventories(page = 0) {
         data.inventories.forEach(inventory => {
             const row = document.createElement("div");
             row.classList.add("table-row");
+			row.classList.add("full-width");
 			row.setAttribute('data-id', inventory.encryptedId);
 			
             row.innerHTML = `
                 <div class="table-cell">${inventory.itemName}</div>
                 <div class="table-cell">₱${inventory.price}</div>
                 <div class="table-cell">${inventory.totalQty}</div>
-                <div class="table-cell">09/09/2025</div>
-                <div class="table-cell">09/09/2025</div>
+				<div class="table-cell">${inventory.totalQty}</div>
                 <div class="table-cell">
 					<button class="edit-btn" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
                     <button><img src="/images/delete.png"></button>
@@ -85,7 +85,7 @@ async function loadInventories(page = 0) {
 				
 				const encryptedId = this.getAttribute('data-id');
 
-			    window.location.href="/user/details?encryptedId=" + encryptedId;
+			    window.location.href="/lender/inventory/details?encryptedId=" + encryptedId;
 			});
 
 

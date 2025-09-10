@@ -23,7 +23,7 @@ import project.borrowhen.service.UserService;
 
 @Controller
 @RequestMapping("/admin/user")
-public class AAAUserController {
+public class A_UserController {
 	
 	@Autowired
 	private UserService userService;
@@ -59,7 +59,7 @@ public class AAAUserController {
 
 	        ra.addFlashAttribute("fieldErrors", fieldErrors);
 	        
-	        ra.addFlashAttribute("useDto", userWebDto);
+	        ra.addFlashAttribute("userDto", userWebDto);
 	        
 	        return "redirect:/admin/user/create";
 		}
@@ -129,7 +129,7 @@ public class AAAUserController {
 
 	        ra.addFlashAttribute("fieldErrors", fieldErrors);
 	        
-	        ra.addFlashAttribute("useDto", userWebDto);
+	        ra.addFlashAttribute("userDto", userWebDto);
 	        
 	        return "redirect:/admin/user/edit?encryptedId=" + userWebDto.getEncryptedId();
 	        

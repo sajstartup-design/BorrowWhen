@@ -1,35 +1,37 @@
-package project.borrowhen.controller;
+package project.borrowhen.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import project.borrowhen.dto.InventoryDto;
+import project.borrowhen.dto.UserDto;
 import project.borrowhen.object.PaginationObj;
-import project.borrowhen.service.InventoryService;
+import project.borrowhen.service.UserService;
 
 @RestController
-public class InventoryRestController {
-	
-	@Autowired
-    private InventoryService inventoryService;
+public class A_UserRestController {
 
-    @GetMapping("/api/inventories")
-    public InventoryDto getUsers(@RequestParam(defaultValue = "0") int page) {
+	@Autowired
+    private UserService userService;
+
+    @GetMapping("/api/admin/users")
+    public UserDto getUsers(@RequestParam(defaultValue = "0") int page) {
         try {
-            InventoryDto inDto = new InventoryDto();
+            UserDto inDto = new UserDto();
 
             PaginationObj pagination = new PaginationObj();
             pagination.setPage(page);
 
             inDto.setPagination(pagination);
 
-            return inventoryService.getAllInventory(inDto);
+            return userService.getAllUsers(inDto);
         } catch (Exception e) {
             e.printStackTrace();
 
-            return new InventoryDto();
+            // Return empty UserDto on error
+            return new UserDto();
         }
     }
+	
 }

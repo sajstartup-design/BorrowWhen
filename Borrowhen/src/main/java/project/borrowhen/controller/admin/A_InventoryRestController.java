@@ -5,33 +5,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import project.borrowhen.dto.UserDto;
+import project.borrowhen.dto.InventoryDto;
 import project.borrowhen.object.PaginationObj;
-import project.borrowhen.service.UserService;
+import project.borrowhen.service.InventoryService;
 
 @RestController
-public class AAAUserRestController {
-
+public class A_InventoryRestController {
+	
 	@Autowired
-    private UserService userService;
+    private InventoryService inventoryService;
 
-    @GetMapping("/api/admin/users")
-    public UserDto getUsers(@RequestParam(defaultValue = "0") int page) {
+    @GetMapping("/api/admin/inventory")
+    public InventoryDto getUsers(@RequestParam(defaultValue = "0") int page) {
         try {
-            UserDto inDto = new UserDto();
+            InventoryDto inDto = new InventoryDto();
 
             PaginationObj pagination = new PaginationObj();
             pagination.setPage(page);
 
             inDto.setPagination(pagination);
 
-            return userService.getAllUsers(inDto);
+            return inventoryService.getAllInventory(inDto);
         } catch (Exception e) {
             e.printStackTrace();
 
-            // Return empty UserDto on error
-            return new UserDto();
+            return new InventoryDto();
         }
     }
-	
 }

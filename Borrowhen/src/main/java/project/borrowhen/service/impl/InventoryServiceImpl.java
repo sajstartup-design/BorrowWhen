@@ -46,13 +46,11 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		UserEntity user = userService.getLoggedInUser();
 		
-		if(!CommonConstant.BLANK.equals(inDto.getUserId())) {
-			
-			user = userService.getUserByUserId(inDto.getUserId());
-			
-		}
-		
 		InventoryEntity inventory = new InventoryEntity();
+		
+		if (inDto.getUserId() != null && !inDto.getUserId().isBlank()) {
+	        user = userService.getUserByUserId(inDto.getUserId());
+	    }
 		
 		inventory.setUserId(user.getId());
 		inventory.setItemName(inDto.getItemName());
@@ -89,6 +87,46 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setCreatedDate(inventory.getCreatedDate());
 			obj.setUpdatedDate(inventory.getUpdatedDate());		
 			
+			inventories.add(obj);
+			
+		}
+		
+		PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allInventories.getNumber());
+		pagination.setTotalPages(allInventories.getTotalPages());
+		pagination.setTotalElements(allInventories.getTotalElements());
+		pagination.setHasNext(allInventories.hasNext());
+		pagination.setHasPrevious(allInventories.hasPrevious());
+		
+		outDto.setInventories(inventories);
+		outDto.setPagination(pagination);
+		
+		return outDto;
+	}
+
+	@Override
+	public InventoryDto getAllOwnedInventory(InventoryDto inDto) throws Exception {
+		
+		InventoryDto outDto = new InventoryDto();
+		
+		UserEntity user = userService.getLoggedInUser();
+		
+		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(MAX_USER_DISPLAY));
+		
+		Page<InventoryData> allInventories = inventoryDao.getAllOwnedInventory(pageable, user.getId()); 
+		
+		List<InventoryObj> inventories = new ArrayList<>();
+		
+		for(InventoryData inventory : allInventories) {
+			
+			InventoryObj obj = new InventoryObj();
+			
+			obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(inventory.getInventoryId())));
+			obj.setItemName(inventory.getItemName());
+			obj.setPrice(inventory.getPrice());
+			obj.setTotalQty(inventory.getTotalQty());
+	
 			inventories.add(obj);
 			
 		}

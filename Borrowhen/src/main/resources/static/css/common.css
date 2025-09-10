@@ -692,6 +692,11 @@ hr.soft-gradient.thin {
 	overflow: auto;
 }
 
+.table-header.full-width,
+.table-row.full-width{
+	width: 100%;
+}
+
 .table-row:hover {
     background: rgba(195, 225, 245, 1); /* slightly darker blue */
     cursor: pointer; /* makes it look clickable */

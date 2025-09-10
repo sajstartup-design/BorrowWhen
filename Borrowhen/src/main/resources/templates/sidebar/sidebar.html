@@ -11,13 +11,16 @@
 		<img th:src="@{/images/logo.png}" alt="logo">
 		<hr class="soft-gradient">
 		
+		
+		<!--  LENDER SIDEBAR  -->	
+		
 		<th:block sec:authorize="hasAuthority('LENDER')">
 			<section>
 				<p>MAIN</p>
-				<a th:href="@{/dashboard}" class="option">
+				<a th:href="@{/lender/dashboard}" class="option">
 					<p class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</p>
 				</a>
-				<a th:href="@{/inventory}" class="option">
+				<a th:href="@{/lender/inventory}" class="option">
 					<p><img th:src="@{/images/supplies.png}"> INVENTORY</p>
 				</a>
 				<div class="option">
@@ -39,6 +42,9 @@
 				</div>
 			</section>
 		</th:block>	
+			
+			
+		<!--  ADMIN SIDEBAR  -->		
 			
 		<th:block sec:authorize="hasAuthority('ADMIN')">
 		    <section>
@@ -99,7 +105,7 @@
 			    "/admin/dashboard": "dashboard",
 			    "/admin/inventory": "inventory",
 			    "/admin/user": "user",
-			    "/inventory": "inventory",
+			    "/lender/inventory": "inventory",
 			    "/dashboard": "dashboard",
 			    "/request": "request",
 			    "/payment": "payment",

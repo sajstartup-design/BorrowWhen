@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>BW | User</title>
+<title>BW | Inventory</title>
 <link rel="stylesheet" th:href="@{/css/common.css}" />
 <link rel="stylesheet" th:href="@{/css/inventory/inventory-view.css}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -55,7 +55,7 @@
 				<div class="table-container">
 					<div class="table-buttons">
 						<div>
-							<a th:href="@{/inventory/create}" class="button"><img th:src="@{/images/add.png}">ADD ITEM</a>
+							<a th:href="@{/lender/inventory/create}" class="button"><img th:src="@{/images/add.png}">ADD ITEM</a>
 						</div>
 						<div class="pagination">
 							<button class="prev-btn">PREV</button>
@@ -64,14 +64,14 @@
 						</div>
 					</div>
 					<div class="table">
-						<div class="table-header">
+						<div class="table-header full-width">
 							<div class="table-cell"><img th:src="@{/images/box.png}"> ITEM</div>
 							<div class="table-cell"><img th:src="@{/images/price-tag.png}"> PRICE</div>
 							<div class="table-cell"><img th:src="@{/images/quality.png}"> TOTAL QTY</div>
 							<div class="table-cell"><img th:src="@{/images/in-stock.png}"> AVAILABLE QTY</div>
 							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> ACTION</div>
 						</div>
-						<div class="table-body" id="table-body">
+						<div class="table-body " id="table-body">
 						
 						</div>
 					</div>
@@ -89,6 +89,6 @@
 	</script>
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
-	<script th:src="@{/script/inventory/inventory-api.js}"></script>
+	<script th:src="@{/script/inventory/l-inventory-api.js}"></script>
 </body>
 </html>

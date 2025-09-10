@@ -76,7 +76,8 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
     
     public final String GET_ALL_USER_ID = "SELECT e.userId "
 			+ "FROM UserEntity e "
-			+ "WHERE e.isDeleted = false ";
+			+ "WHERE e.isDeleted = false "
+			+ "AND e.role NOT IN ('ADMIN', 'BORROWER') ";
     
     @Query(value=GET_ALL_USER_ID)
     public List<String> getAllUserId() throws DataAccessException;

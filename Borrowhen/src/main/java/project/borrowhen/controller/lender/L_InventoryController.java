@@ -1,4 +1,4 @@
-package project.borrowhen.controller.admin;
+package project.borrowhen.controller.lender;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,35 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
-import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.constant.MessageConstant;
 import project.borrowhen.dto.InventoryDto;
 import project.borrowhen.service.InventoryService;
-import project.borrowhen.service.UserService;
 
 @Controller
-@RequestMapping("/admin/inventory")
-public class AAAInventoryController {
+@RequestMapping("/lender/inventory")
+public class L_InventoryController {
 	
 	@Autowired
 	private InventoryService inventoryService;
 	
-	@Autowired
-	private UserService userService;
-	
 	@GetMapping()
 	public String showInventoryScreen() {
 		
-		return "inventory/admin/inventory-view";
+		return "inventory/lender/inventory-view";
 	}
 	
 	@GetMapping("/create")
-	public String showInventoryCreateScreen(Model model, 
-			@ModelAttribute InventoryDto inventoryWebDto) {
+	public String showInventoryCreateScreen(@ModelAttribute InventoryDto inventoryWebDto) {
 		
-		model.addAttribute("allUserId", userService.getAllUserId());
-		
-		return "inventory/admin/inventory-create";
+		return "inventory/lender/inventory-create";
 	}
 	
 	@PostMapping("/create")
@@ -66,16 +57,7 @@ public class AAAInventoryController {
 	        
 	        ra.addFlashAttribute("inventoryDto", inventoryWebDto);
 	        
-	        return "redirect:/admin/inventory/create";
-		}
-		
-		if(CommonConstant.BLANK.equals(inventoryWebDto.getUserId())) {
-			
-			ra.addFlashAttribute("ownerError", MessageConstant.OWNER_BLANK);
-			
-			ra.addFlashAttribute("inventoryDto", inventoryWebDto);
-	        
-	        return "redirect:/admin/inventory/create";
+	        return "redirect:/lender/inventory/create";
 		}
 		
 		try {
@@ -91,7 +73,7 @@ public class AAAInventoryController {
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 		}
 		
-		return "redirect:/admin/inventory";
+		return "redirect:/lender/inventory";
 	}
-	
+
 }

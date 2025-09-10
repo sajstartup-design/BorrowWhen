@@ -4,15 +4,27 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
 
 public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
+	
+	public final String GET_ALL_INVENTORY = "SELECT new project.borrowhen.dao.entity.InventoryData(e.id, u.firstName, u.familyName, e.itemName, e.price, e.totalQty, e.createdDate, e.updatedDate)"
+			+ "FROM InventoryEntity e "
+			+ "LEFT JOIN UserEntity u ON u.id = e.userId "
+			+ "WHERE e.isDeleted = false ";
 
-	@Query("SELECT new project.borrowhen.dao.entity.InventoryData(e.id, u.firstName, u.familyName, e.itemName, e.price, e.totalQty, e.createdDate, e.updatedDate) " +
-		       "FROM InventoryEntity e " +
-		       "LEFT JOIN UserEntity u ON u.id = e.userId " +
-		       "WHERE e.isDeleted = false")
+	@Query(value=GET_ALL_INVENTORY)
 	Page<InventoryData> getAllInventory(Pageable pageable);
+	
+	public final String GET_ALL_OWNER_INVENTORY = "SELECT new project.borrowhen.dao.entity.InventoryData(e.id, e.itemName, e.price, e.totalQty)"
+			+ "FROM InventoryEntity e "
+			+ "WHERE e.userId = :userId "
+			+ "AND e.isDeleted = false ";
+
+	@Query(value = GET_ALL_OWNER_INVENTORY)
+	Page<InventoryData> getAllOwnedInventory(Pageable pageable, @Param("userId") int userId);
+
 }

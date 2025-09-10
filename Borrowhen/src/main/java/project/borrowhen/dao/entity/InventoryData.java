@@ -11,6 +11,13 @@ import lombok.Data;
 @AllArgsConstructor
 @Scope("prototype")
 public class InventoryData {
+	
+	public InventoryData(int inventoryId, String itemName, double price, int totalQty) {
+		this.inventoryId = inventoryId;
+		this.itemName = itemName;
+		this.price = price;
+		this.totalQty = totalQty;
+	}
 
 	private int inventoryId;
 	

@@ -1,7 +1,8 @@
-package project.borrowhen.controller.admin;
+package project.borrowhen.controller.lender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,12 +11,13 @@ import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.InventoryService;
 
 @RestController
-public class AAAInventoryRestController {
+@RequestMapping("/api/lender/")
+public class L_InventoryRestController {
 	
 	@Autowired
     private InventoryService inventoryService;
 
-    @GetMapping("/api/admin/inventory")
+    @GetMapping("inventory")
     public InventoryDto getUsers(@RequestParam(defaultValue = "0") int page) {
         try {
             InventoryDto inDto = new InventoryDto();
@@ -24,8 +26,10 @@ public class AAAInventoryRestController {
             pagination.setPage(page);
 
             inDto.setPagination(pagination);
+            
+            System.out.println("YAWA");
 
-            return inventoryService.getAllInventory(inDto);
+            return inventoryService.getAllOwnedInventory(inDto);
         } catch (Exception e) {
             e.printStackTrace();
 
