@@ -74,6 +74,8 @@ public class SecurityConfig {
 						.requestMatchers("/api/lender/inventory/**").hasAuthority("LENDER")
 						
 						
+						.requestMatchers("/api/inventory").authenticated()
+						
 						
 						
 						.anyRequest().authenticated()

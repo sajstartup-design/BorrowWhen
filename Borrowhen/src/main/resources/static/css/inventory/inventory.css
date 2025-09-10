@@ -43,7 +43,6 @@
 }
 
 .filter .filter-btn button{
-	height: 2.5rem !important;
 	width: 100%;
 }
 
@@ -56,6 +55,18 @@
     border-radius: 1rem;
     padding: 1rem 0.5rem;
     box-sizing: border-box;
+}
+
+.filter .filter-rating{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.filter .filter-rating span{
+	width: 1.2rem;
+	height: 1.2rem;
+	cursor: pointer;
 }
 
 .items-body{
@@ -74,6 +85,11 @@
 	width: 80%;
 }
 
+.item-nav{
+	display: flex;
+	gap: 0.5rem;
+}
+
 .search-filter{
 	display: flex;
 	width: 100%;
@@ -83,13 +99,11 @@
 .search-filter input{
 	width: 100%;
 	padding: 0.5rem !important;
-	height: 2.5rem;
 	text-align: left;
 }
 
 .search-filter button{
 	padding: 0.5rem 1rem !important;
-	height: 2.5rem;
 }
 
 .item-container{

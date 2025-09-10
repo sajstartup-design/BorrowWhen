@@ -60,6 +60,17 @@
 						</section>
 						<hr class="soft-gradient">
 						<section>
+							<p>RATING</p>
+							<div class="filter-rating">
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+							</div>
+						</section>
+						<hr class="soft-gradient">
+						<section>
 							<p>PRICE</p>
 							<div class="price-range">
 								<input type="range" name="price" min="0" max="500" value="50" step="1" oninput="document.getElementById('priceValue').textContent = this.value">
@@ -68,9 +79,16 @@
 					</div>
 				</div>
 				<div class="items">
-					<div class="search-filter">
-						<button>SEARCH</button>
-						<input type="search" placeholder="Search"/>
+					<div class="item-nav">
+						<div class="search-filter">
+							<button>SEARCH</button>
+							<input type="search" placeholder="Search"/>
+						</div>
+						<div class="pagination">
+							<button>PREV</button>
+							<input type="text" value="1"/>
+							<button>NEXT</button>
+						</div>					
  					</div>
 					<div class="items-body">
 						<div class="item-container">
@@ -89,7 +107,7 @@
 								<span class="lender-name">Lender: Julius Basas</span>
 							</div>
 							<div class="item-btns">
-								<button class="borrow-btn">BORROW</button>
+								<button class="borrow-btn" data-toggle="modal" data-target="#borrowModal">BORROW</button>
 							</div>
 							<div class="item-ratings">
 								<span class="fa fa-star checked"></span>
@@ -269,16 +287,17 @@
 		<aside th:replace="~{aside/aside :: content}"></aside>
 	</div>
 	
-	<div class="modal" id="createUser">
+	<div class="modal" id="borrowModal">
 		<div class="modal-content">
 			<div class="modal-header">
-				CREATE USER
+				BORROW REQUEST
 			</div>
 			<div class="modal-body">
 				
 			</div>
 		</div>
 	</div>
+	<script th:src="@{/script/inventory/inventory.js}"></script>
 	<script th:src="@{/script/modal.js}"></script>
 </body>
 </html>

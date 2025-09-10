@@ -381,6 +381,9 @@ aside .content{
 	display: none;
 	justify-content: center;
 	align-items: center;
+	
+	background: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+	backdrop-filter: blur(2px);
 }
 
 .modal {
@@ -393,10 +396,11 @@ aside .content{
 	display: none;
 	justify-content: center;
 	align-items: center;
+	
 }
 
 .modal-content {
-	background: rgba(215, 238, 251, 0.3); /* 30% opacity */
+	background: var(--bg-color);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
 	box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
@@ -409,11 +413,19 @@ aside .content{
 }
 
 .modal-header {
-	font-size: 1.25rem;
+	font-size: 1rem;
 	font-weight: 600;
 	margin-bottom: 1rem;
 	color: #0a3d62; /* Dark text for contrast */
 	text-align: center;
+	background: rgba(215, 238, 251, 1); /* Semi-transparent */
+	backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.05rem solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+	border-radius: 1rem;
+	padding: 0.5rem 1rem;
+	box-sizing: border-box;
 }
 
 .modal-body {
@@ -667,7 +679,8 @@ hr.soft-gradient.thin {
 	gap: 0.5rem;
 }
 
-.table-buttons .pagination{
+.table-buttons .pagination,
+.pagination{
 	display: flex;
 	gap: 0.5rem;
 }
