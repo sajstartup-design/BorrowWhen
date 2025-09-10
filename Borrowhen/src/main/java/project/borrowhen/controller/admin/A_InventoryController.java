@@ -166,4 +166,31 @@ public class A_InventoryController {
 		return "redirect:/admin/inventory";
 	}
 	
+	@GetMapping("/details")
+	public String showInventoryDetailsScreen(Model model,
+			@RequestParam("encryptedId") String encryptedId,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			InventoryDto inDto = new InventoryDto();
+			
+			inDto.setEncryptedId(encryptedId);
+			
+			InventoryDto outDto = inventoryService.getInventory(inDto);
+			
+			model.addAttribute("inventoryDto", outDto);
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			
+			return "redirect:/admin/user";
+		}
+		
+		return "inventory/admin/inventory-details";
+	}
+	
 }

@@ -20,6 +20,11 @@
 					    <div class="field bold">
 					        <label>ITEM INFORMATION</label>
 					    </div>
+					    <hr class="soft-gradient">
+					    <div class="field">
+					        <label>OWNER</label>
+					        <div th:text="*{userId}"></div>
+					    </div>
 						<hr class="soft-gradient">
 					    <div class="field">
 					        <label>ITEM NAME</label>
@@ -40,7 +45,7 @@
 					    
 					</form>
 					<div class="form-btn">
-						<a class="button" th:href="@{/lender/inventory}">BACK</a>
+						<a class="button" th:href="@{/admin/inventory}">BACK</a>
 					</div>
 				</div>			
 			</div>

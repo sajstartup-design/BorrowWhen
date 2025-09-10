@@ -16,7 +16,7 @@
 			<div class="content-header">USERS > USER EDIT</div>
 			<div class="content-body">
 				<div class="content">
-					<form th:action="@{/admin/user/edit}" th:object="${userDto}" method="POST" id="saveForm">
+					<form th:object="${userDto}">
 					    <input type="hidden" name="encryptedId" th:value="${userDto.encryptedId}" />
 					
 					    <div class="field bold">

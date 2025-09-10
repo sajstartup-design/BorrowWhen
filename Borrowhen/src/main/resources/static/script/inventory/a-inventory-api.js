@@ -87,7 +87,7 @@ async function loadInventories(page = 0) {
 				
 				const encryptedId = this.getAttribute('data-id');
 
-			    window.location.href="/user/details?encryptedId=" + encryptedId;
+			    window.location.href="/admin/inventory/details?encryptedId=" + encryptedId;
 			});
 
 
