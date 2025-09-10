@@ -1,4 +1,4 @@
-package project.borrowhen.controller;
+package project.borrowhen.controller.admin;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,7 +23,7 @@ import project.borrowhen.service.UserService;
 
 @Controller
 @RequestMapping("/admin/user")
-public class UserController {
+public class AAAUserController {
 	
 	@Autowired
 	private UserService userService;

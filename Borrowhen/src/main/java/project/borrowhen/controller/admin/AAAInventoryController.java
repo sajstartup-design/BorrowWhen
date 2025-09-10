@@ -1,4 +1,4 @@
-package project.borrowhen.controller;
+package project.borrowhen.controller.admin;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,8 +20,8 @@ import project.borrowhen.dto.InventoryDto;
 import project.borrowhen.service.InventoryService;
 
 @Controller
-@RequestMapping("/lender/inventory")
-public class InventoryController {
+@RequestMapping("/admin/inventory")
+public class AAAInventoryController {
 	
 	@Autowired
 	private InventoryService inventoryService;
@@ -29,13 +29,13 @@ public class InventoryController {
 	@GetMapping()
 	public String showInventoryScreen() {
 		
-		return "inventory/inventory-view";
+		return "inventory/admin/inventory-view";
 	}
 	
 	@GetMapping("/create")
 	public String showInventoryCreateScreen(@ModelAttribute InventoryDto inventoryWebDto) {
 		
-		return "inventory/inventory-create";
+		return "inventory/admin/inventory-create";
 	}
 	
 	@PostMapping("/create")
@@ -73,7 +73,7 @@ public class InventoryController {
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 		}
 		
-		return "redirect:/inventory";
+		return "redirect:/admin/inventory";
 	}
-
+	
 }

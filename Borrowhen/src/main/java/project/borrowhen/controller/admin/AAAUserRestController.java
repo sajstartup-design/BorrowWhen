@@ -1,4 +1,4 @@
-package project.borrowhen.controller;
+package project.borrowhen.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +10,7 @@ import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.UserService;
 
 @RestController
-public class UserRestController {
+public class AAAUserRestController {
 
 	@Autowired
     private UserService userService;

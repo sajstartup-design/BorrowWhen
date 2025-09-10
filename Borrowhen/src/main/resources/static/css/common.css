@@ -680,11 +680,10 @@ hr.soft-gradient.thin {
 
 .table-header,
 .table-row{
-	width: 100%;
+	width: fit-content;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: center;
 	overflow: auto;
 }
 
