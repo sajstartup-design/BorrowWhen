@@ -10,9 +10,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpSession;
+import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.dao.UserDao;
 import project.borrowhen.dao.entity.UserEntity;
@@ -29,6 +33,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private PasswordEncoder encoder;
+	
+	@Autowired
+	private HttpSession httpSession;
 	
 	@Autowired
 	private CipherUtil cipherUtil;
@@ -162,5 +169,28 @@ public class UserServiceImpl implements UserService {
 				encoder.encode(inDto.getPassword()),
 				inDto.getRole(),
 				hasChanged);
+	}
+
+	@Override
+	public UserEntity getLoggedInUser() {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	  
+		String userId = CommonConstant.BLANK;
+	
+        if(httpSession.getAttribute("userId") == null || CommonConstant.BLANK.equals(httpSession.getAttribute("userId"))) {
+		
+        	userId = authentication.getName();
+
+		} else {
+
+			userId = (String) httpSession.getAttribute("userId");
+		}
+
+		httpSession.setAttribute("userId", userId);
+
+        UserEntity user = userDao.getUserByUserId(userId);
+
+		return user;
 	}
 }

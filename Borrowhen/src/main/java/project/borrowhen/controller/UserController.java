@@ -19,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 import project.borrowhen.common.constant.MessageConstant;
 import project.borrowhen.dto.UserDto;
-import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.UserService;
 
 @Controller
@@ -59,6 +58,8 @@ public class UserController {
 	                ));
 
 	        ra.addFlashAttribute("fieldErrors", fieldErrors);
+	        
+	        ra.addFlashAttribute("useDto", userWebDto);
 	        
 	        return "redirect:/user/create";
 		}
@@ -127,6 +128,8 @@ public class UserController {
 	                ));
 
 	        ra.addFlashAttribute("fieldErrors", fieldErrors);
+	        
+	        ra.addFlashAttribute("useDto", userWebDto);
 	        
 	        return "redirect:/user/edit?encryptedId=" + userWebDto.getEncryptedId();
 	        

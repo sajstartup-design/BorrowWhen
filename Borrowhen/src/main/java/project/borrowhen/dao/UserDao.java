@@ -2,6 +2,7 @@ package project.borrowhen.dao;
 
 import java.sql.Date;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,15 +20,23 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 			+ "WHERE e.isDeleted = false ";
 	
 	@Query(value=GET_ALL_USERS)
-	public Page<UserEntity> getAllUsers(Pageable pageable);
+	public Page<UserEntity> getAllUsers(Pageable pageable)  throws DataAccessException;
 	
-	public final String GET_USER = "SELECT e "
+	public final String GET_USER_BY_ID = "SELECT e "
 			+ "FROM UserEntity e "
 			+ "WHERE e.id = :id "
 			+ "AND e.isDeleted = false ";
 	
-	@Query(value=GET_USER)
-	public UserEntity getUser(@Param("id") int id);
+	@Query(value=GET_USER_BY_ID)
+	public UserEntity getUser(@Param("id") int id)  throws DataAccessException;
+	
+	public final String GET_USER_BY_USER_ID = "SELECT e "
+			+ "FROM UserEntity e "
+			+ "WHERE e.userId = :userId "
+			+ "AND e.isDeleted = false ";
+	
+	@Query(value=GET_USER_BY_USER_ID)
+	public UserEntity getUserByUserId(@Param("userId") String userId) throws DataAccessException;
 	
 	public final String UPDATE_USER = "UPDATE users "
             + "SET first_name = :firstName, "
@@ -60,5 +69,5 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
             @Param("password") String password,
             @Param("role") String role,
             @Param("hasChanged") boolean hasChanged
-    );
+    )  throws DataAccessException;
 }

@@ -11,7 +11,7 @@
 	<div class="container">
 		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
 		<main>
-			<div class="content-header">USERS > USER CREATE</div>
+			<div class="content-header">USERS > ADD USER</div>
 			<div class="content-body">
 				<div class="content">
 					<form th:action="@{/user/create}" th:object="${userDto}" method="POST" id="saveForm">

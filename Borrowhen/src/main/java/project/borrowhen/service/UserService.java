@@ -2,6 +2,7 @@ package project.borrowhen.service;
 
 import org.springframework.stereotype.Service;
 
+import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.UserDto;
 
 @Service
@@ -14,4 +15,12 @@ public interface UserService {
 	public UserDto getUser(UserDto inDto) throws Exception;
 	
 	public void editUser(UserDto inDto) throws Exception;
+	
+	
+	
+	/*
+	 * Authentication Part
+	 */
+	
+	public UserEntity getLoggedInUser();
 }
