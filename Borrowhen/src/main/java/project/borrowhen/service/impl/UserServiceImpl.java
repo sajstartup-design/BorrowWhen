@@ -10,9 +10,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpSession;
+import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.dao.UserDao;
 import project.borrowhen.dao.entity.UserEntity;
@@ -29,6 +33,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private PasswordEncoder encoder;
+	
+	@Autowired
+	private HttpSession httpSession;
 	
 	@Autowired
 	private CipherUtil cipherUtil;
@@ -91,7 +98,9 @@ public class UserServiceImpl implements UserService {
 		    obj.setGender(user.getGender());
 		    obj.setUserId(user.getUserId());
 		    obj.setRole(user.getRole());
-
+		    obj.setCreatedDate(user.getCreatedDate());
+		    obj.setUpdatedDate(user.getUpdatedDate());
+		    
 		    users.add(obj);
 		}
 		
@@ -133,12 +142,16 @@ public class UserServiceImpl implements UserService {
 	    outDto.setGender(user.getGender());
 	    outDto.setUserId(user.getUserId());
 	    outDto.setRole(user.getRole());
+	    outDto.setCreatedDate(user.getCreatedDate());
+	    outDto.setUpdatedDate(user.getUpdatedDate());
 	    
-		return outDto;
+	    return outDto;
 	}
 
 	@Override
 	public void editUser(UserDto inDto) throws Exception {
+		
+		Date dateNow = Date.valueOf(LocalDate.now());
 		
 		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
 		
@@ -161,6 +174,48 @@ public class UserServiceImpl implements UserService {
 				inDto.getUserId(),
 				encoder.encode(inDto.getPassword()),
 				inDto.getRole(),
-				hasChanged);
+				hasChanged,
+				dateNow);
+	}
+
+	@Override
+	public UserEntity getLoggedInUser() {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	  
+		String userId = CommonConstant.BLANK;
+	
+        if(httpSession.getAttribute("userId") == null || CommonConstant.BLANK.equals(httpSession.getAttribute("userId"))) {
+		
+        	userId = authentication.getName();
+
+		} else {
+
+			userId = (String) httpSession.getAttribute("userId");
+		}
+
+		httpSession.setAttribute("userId", userId);
+
+        UserEntity user = userDao.getUserByUserId(userId);
+
+		return user;
+	}
+
+	@Override
+	public List<String> getAllUserId() {
+		
+		return userDao.getAllUserId();
+	}
+
+	@Override
+	public UserEntity getUserByUserId(String userId) {
+		
+		return userDao.getUserByUserId(userId);
+	}
+
+	@Override
+	public UserEntity getUser(int id) {
+		
+		return userDao.getUser(id);
 	}
 }

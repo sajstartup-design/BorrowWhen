@@ -7,13 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputPage = document.querySelector('.input-page');
 
     // Load first page
-    loadUsers(0);
+    loadInventories(0);
 
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
 			createLoadingScreenBody();
             let currentPage = Number(inputPage.value);
-            loadUsers(currentPage); 
+            loadInventories(currentPage); 
         });
     }
 
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         prevBtn.addEventListener('click', () => {
 			createLoadingScreenBody();
             let currentPage = Number(inputPage.value);
-            loadUsers(currentPage - 2); 
+            loadInventories(currentPage - 2); 
         });
     }
 
@@ -31,19 +31,19 @@ document.addEventListener("DOMContentLoaded", () => {
             let newPage = Number(inputPage.value);
             if (newPage < 1) newPage = 1;
             inputPage.value = newPage;
-            loadUsers(newPage - 1);
+            loadInventories(newPage - 1);
         });
     }
 
 });
 
 
-async function loadUsers(page = 0) {
+async function loadInventories(page = 0) {
     try {
-        const response = await fetch(`/api/admin/users?page=${page}`);
+        const response = await fetch(`/api/lender/inventory?page=${page}`);
         const data = await response.json();
 		
-		
+		console.log(data);
 
         updatePagination(data.pagination);
 
@@ -52,23 +52,19 @@ async function loadUsers(page = 0) {
 
         const fragment = document.createDocumentFragment();
 
-        data.users.forEach(user => {
+        data.inventories.forEach(inventory => {
             const row = document.createElement("div");
             row.classList.add("table-row");
-			row.setAttribute('data-id', user.encryptedId);
-
+			row.classList.add("full-width");
+			row.setAttribute('data-id', inventory.encryptedId);
+			
             row.innerHTML = `
-                <div class="table-cell">${user.firstName} ${user.familyName}</div>
-                <div class="table-cell">${user.userId}</div>
-                <div class="table-cell">${user.phoneNumber}</div>
-                <div class="table-cell">${user.emailAddress}</div>
-                <div class="table-cell">${user.address}</div>
-                <div class="table-cell">${user.birthDate || ""}</div>
-                <div class="table-cell"><span class="role ${user.role.toLowerCase()}">${user.role}</span></div>
-                <div class="table-cell">${user.createdDate}</div>
-                <div class="table-cell">${user.updatedDate}</div>
+                <div class="table-cell">${inventory.itemName}</div>
+                <div class="table-cell">₱${inventory.price}</div>
+                <div class="table-cell">${inventory.totalQty}</div>
+				<div class="table-cell">${inventory.totalQty}</div>
                 <div class="table-cell">
-					<button class="edit-btn" data-id="${user.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
+					<button class="edit-btn" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
                     <button><img src="/images/delete.png"></button>
                 </div>
             `;
@@ -89,7 +85,7 @@ async function loadUsers(page = 0) {
 				
 				const encryptedId = this.getAttribute('data-id');
 
-			    window.location.href="/admin/user/details?encryptedId=" + encryptedId;
+			    window.location.href="/lender/inventory/details?encryptedId=" + encryptedId;
 			});
 
 
@@ -103,7 +99,7 @@ async function loadUsers(page = 0) {
 		removeLoadingScreenBody();
 
     } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching inventories:", error);
     }
 }
 

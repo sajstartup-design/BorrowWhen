@@ -1,4 +1,4 @@
-package project.borrowhen.controller;
+package project.borrowhen.controller.admin;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,36 +17,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
+import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.constant.MessageConstant;
-import project.borrowhen.dto.UserDto;
-import project.borrowhen.object.PaginationObj;
+import project.borrowhen.dto.InventoryDto;
+import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.UserService;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/admin/inventory")
+public class A_InventoryController {
+	
+	@Autowired
+	private InventoryService inventoryService;
 	
 	@Autowired
 	private UserService userService;
-
+	
 	@GetMapping()
-	public String showUserScreen() {
-
-		return "user/user-view";
+	public String showInventoryScreen() {
+		
+		return "inventory/admin/inventory-view";
 	}
 	
 	@GetMapping("/create")
-	public String showUserCreateScreen(@ModelAttribute UserDto userWebDto) {
+	public String showInventoryCreateScreen(Model model, 
+			@ModelAttribute InventoryDto inventoryWebDto) {
 		
-		return "user/user-create";
+		model.addAttribute("allUserId", userService.getAllUserId());
+		
+		return "inventory/admin/inventory-create";
 	}
 	
 	@PostMapping("/create")
-	public String postUserCreateScreen(Model model,
-			@ModelAttribute @Valid UserDto userWebDto,
+	public String postInventoryCreateScreen(@ModelAttribute @Valid InventoryDto inventoryWebDto,
 			BindingResult result,
-			RedirectAttributes ra
-			) {
+			RedirectAttributes ra) {
 		
 		if(result.hasErrors()) {
 			
@@ -60,43 +65,55 @@ public class UserController {
 
 	        ra.addFlashAttribute("fieldErrors", fieldErrors);
 	        
-	        return "redirect:/user/create";
+	        ra.addFlashAttribute("inventoryDto", inventoryWebDto);
+	        
+	        return "redirect:/admin/inventory/create";
+		}
+		
+		if(CommonConstant.BLANK.equals(inventoryWebDto.getUserId())) {
+			
+			ra.addFlashAttribute("ownerError", MessageConstant.OWNER_BLANK);
+			
+			ra.addFlashAttribute("inventoryDto", inventoryWebDto);
+	        
+	        return "redirect:/admin/inventory/create";
 		}
 		
 		try {
 			
-			userService.saveUser(userWebDto);
+			inventoryService.saveInventory(inventoryWebDto);
 			
-			ra.addFlashAttribute("successMsg", MessageConstant.USER_CREATE_MSG);
+			ra.addFlashAttribute("successMsg", MessageConstant.INVENTORY_CREATE_MSG);
 			
-		} catch(Exception e) {
+		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 		}
-
-		return "redirect:/user";
+		
+		return "redirect:/admin/inventory";
 	}
 	
 	@GetMapping("/edit")
-	public String showUserEditScreen(Model model,
+	public String showInventoryEditScreen(Model model,
 			@RequestParam("encryptedId") String encryptedId,
+			@ModelAttribute InventoryDto inventoryWebDto,
 			RedirectAttributes ra) {
 		
 		try {
 			
-			System.out.println(encryptedId);
-			
-			UserDto inDto = new UserDto();
+			InventoryDto inDto = new InventoryDto();
 			
 			inDto.setEncryptedId(encryptedId);
 			
-			UserDto outDto = userService.getUser(inDto);
+			InventoryDto outDto = inventoryService.getInventory(inDto);
 			
 			outDto.setEncryptedId(encryptedId);
 			
-			model.addAttribute("userDto", outDto);
+			model.addAttribute("inventoryDto", outDto);
+			
+			model.addAttribute("allUserId", userService.getAllUserId());
 			
 		} catch (Exception e) {
 			
@@ -104,20 +121,19 @@ public class UserController {
 			
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 			
-			return "redirect:/user";
+			return "redirect:/admin/inventory";
 		}
 		
-		return "user/user-edit";
+		return "inventory/admin/inventory-edit";
 	}
 	
 	@PostMapping("/edit")
-	public String postUserEditScreen(Model model,
-			@ModelAttribute @Valid UserDto userWebDto, 
+	public String postInventoryEditScreen(@ModelAttribute @Valid InventoryDto inventoryWebDto,
 			BindingResult result,
 			RedirectAttributes ra) {
 		
 		if(result.hasErrors()) {
-	
+			
 			Map<String, String> fieldErrors = result.getFieldErrors()
 	                .stream()
 	                .collect(Collectors.toMap(
@@ -128,53 +144,53 @@ public class UserController {
 
 	        ra.addFlashAttribute("fieldErrors", fieldErrors);
 	        
-	        return "redirect:/user/edit?encryptedId=" + userWebDto.getEncryptedId();
+	        ra.addFlashAttribute("inventoryDto", inventoryWebDto);
+	        
+	        return "redirect:/admin/inventory/edit?encryptedId=" + inventoryWebDto.getEncryptedId();
 	        
 		}
 		
 		try {
 			
+			inventoryService.editInventory(inventoryWebDto);
 			
+			ra.addFlashAttribute("successMsg", MessageConstant.INVENTORY_CREATE_MSG);
 			
-			ra.addFlashAttribute("successMsg", MessageConstant.USER_EDIT_MSG);
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+		}
+		
+		return "redirect:/admin/inventory";
+	}
+	
+	@GetMapping("/details")
+	public String showInventoryDetailsScreen(Model model,
+			@RequestParam("encryptedId") String encryptedId,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			InventoryDto inDto = new InventoryDto();
+			
+			inDto.setEncryptedId(encryptedId);
+			
+			InventoryDto outDto = inventoryService.getInventory(inDto);
+			
+			model.addAttribute("inventoryDto", outDto);
 			
 		} catch(Exception e) {
 			
 			e.printStackTrace();
 			
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
-		}
-
-		return "redirect:/user";
-	}
-	
-	@GetMapping("/details")
-	public String showUserDetailsScreen(Model model,
-			@RequestParam("encryptedId") String encryptedId,
-			RedirectAttributes ra) {
-		
-		try {
 			
-			UserDto inDto = new UserDto();
-			
-			inDto.setEncryptedId(encryptedId);
-			
-			UserDto outDto = userService.getUser(inDto);
-			
-			outDto.setEncryptedId(encryptedId);
-			
-			model.addAttribute("userDto", outDto);
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-			
-			ra.addFlashAttribute("errorMsg", "Something went wrong!");
-			
-			return "redirect:/user";
+			return "redirect:/admin/user";
 		}
 		
-		return "user/user-details";
+		return "inventory/admin/inventory-details";
 	}
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @EnableWebSecurity
 @Configuration
@@ -44,6 +45,12 @@ public class SecurityConfig {
 	}
 	
 	@Bean
+	protected AuthenticationSuccessHandler authenticationSuccessHandler() {
+		return new CustomSuccessHandler();
+	}
+
+	
+	@Bean
 	protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 				.authorizeHttpRequests((requests) -> requests
@@ -51,8 +58,26 @@ public class SecurityConfig {
 						.requestMatchers("/css/**").permitAll()
 						.requestMatchers("/script/**").permitAll()
 						.requestMatchers("/gif/**").permitAll()
-						.requestMatchers("/user/**").hasAuthority("ADMIN")
-						.requestMatchers("/inventory/**").hasAuthority("ADMIN")
+						
+						
+						
+						
+						.requestMatchers("/admin/user/**").hasAuthority("ADMIN")
+						.requestMatchers("/admin/inventory/**").hasAuthority("ADMIN")
+						
+						.requestMatchers("/api/admin/user/**").hasAuthority("ADMIN")
+						.requestMatchers("/api/admin/inventory/**").hasAuthority("ADMIN")
+						
+						
+						.requestMatchers("/lender/inventory/**").hasAuthority("LENDER")
+						
+						.requestMatchers("/api/lender/inventory/**").hasAuthority("LENDER")
+						
+						
+						.requestMatchers("/api/inventory").authenticated()
+						
+						
+						
 						.anyRequest().authenticated()
 						
 						)
@@ -63,8 +88,8 @@ public class SecurityConfig {
 						//.failureHandler(authenticationFailureHandler())
 						.usernameParameter("userId")
 						.passwordParameter("password")
-						 .defaultSuccessUrl("/dashboard"))
-						//.successHandler(authenticationSuccessHandler()))
+						 .defaultSuccessUrl("/dashboard")
+						.successHandler(authenticationSuccessHandler()))
 				.logout((logout) -> logout
 						.logoutSuccessUrl("/login")
 						.invalidateHttpSession(true)

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BW | Inventory Add</title>
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/user/user-create.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
+		<main>
+			<div class="content-header">INVENTORY > ADD ITEM</div>
+			<div class="content-body">
+				<div class="content">
+					<form th:action="@{/admin/inventory/create}" th:object="${inventoryDto}" method="POST" id="saveForm">
+					    <div class="field bold">
+					        <label>ITEM INFORMATION</label>
+					    </div>
+					    <hr class="soft-gradient">
+					    <div class="field">
+					        <label>OWNER</label>
+					       <select name="userId">
+							    <option value="" selected></option>
+							    <option th:each="userId : ${allUserId}" th:value="${userId}" th:text="${userId}"></option>
+							</select>
+					        <span class="error"
+					              th:if="${fieldErrors != null and fieldErrors.containsKey('userId')}"
+					              th:text="${fieldErrors['userId']}"></span>
+					    </div>
+						<hr class="soft-gradient">
+					    <div class="field">
+					        <label>ITEM NAME</label>
+					        <input type="text" name="itemName"  th:value="*{itemName}" />
+					        <span class="error"
+					              th:if="${fieldErrors != null and fieldErrors.containsKey('itemName')}"
+					              th:text="${fieldErrors['itemName']}"></span>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>PRICE</label>
+					        <input type="text" name="price" class="price-input"  th:value="*{price}" />
+					        <span class="error"
+					              th:if="${fieldErrors != null and fieldErrors.containsKey('price')}"
+					              th:text="${fieldErrors['price']}"></span>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>TOTAL QTY</label>
+					        <input type="number" name="totalQty" th:value="*{totalQty}"/>
+					        <span class="error"
+					              th:if="${fieldErrors != null and fieldErrors.containsKey('totalQty')}"
+					              th:text="${fieldErrors['totalQty']}"></span>
+					    </div>
+					    
+					</form>
+					<div class="form-btn">
+						<a class="button" th:href="@{/admin/inventory}">BACK</a>
+						<button type="submit" form="saveForm" class="save-btn">SAVE</button>
+					</div>
+				</div>			
+			</div>
+		</main>
+		<aside th:replace="~{aside/aside :: content}"></aside>
+	</div>
+	<script th:src="@{/script/loading.js}"></script>
+	<script th:src="@{/script/submit.js}"></script>
+	<!-- <script th:src="@{/script/inputUtil.js}"></script> -->
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BW | Inventory Add</title>
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/user/user-create.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
+		<main>
+			<div class="content-header">INVENTORY > DETAILS</div>
+			<div class="content-body">
+				<div class="content">
+					<form th:object="${inventoryDto}">
+						<input type="hidden" name="encryptedId" th:value="*{encryptedId}" />
+					
+					    <div class="field bold">
+					        <label>ITEM INFORMATION</label>
+					    </div>
+					    <hr class="soft-gradient">
+					    <div class="field">
+					        <label>OWNER</label>
+					        <div th:text="*{userId}"></div>
+					    </div>
+						<hr class="soft-gradient">
+					    <div class="field">
+					        <label>ITEM NAME</label>
+					        <div th:text="*{itemName}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>PRICE</label>
+					        <div th:text="*{price}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>TOTAL QTY</label>
+					        <div th:text="*{totalQty}"></div>
+					    </div>
+					    
+					</form>
+					<div class="form-btn">
+						<a class="button" th:href="@{/admin/inventory}">BACK</a>
+					</div>
+				</div>			
+			</div>
+		</main>
+		<aside th:replace="~{aside/aside :: content}"></aside>
+	</div>
+	<script th:src="@{/script/loading.js}"></script>
+	<script th:src="@{/script/submit.js}"></script>
+	<!-- <script th:src="@{/script/inputUtil.js}"></script> -->
+</body>
+</html>

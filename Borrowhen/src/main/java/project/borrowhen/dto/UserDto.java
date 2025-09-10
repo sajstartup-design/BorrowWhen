@@ -1,5 +1,6 @@
 package project.borrowhen.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
@@ -47,6 +48,10 @@ public class UserDto {
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
 	private String role;
+	
+	private Date createdDate;
+	
+	private Date updatedDate;
 	
 	private List<UserObj> users;
 	

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>BW | User</title>
 <link rel="stylesheet" th:href="@{/css/common.css}" />
-<link rel="stylesheet" th:href="@{/css/user/user-view.css}" />
+<link rel="stylesheet" th:href="@{/css/inventory/inventory-view.css}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -30,20 +30,29 @@
 				</div>
 				<div class="progress-bar"></div>
 			</div>
+			
+			
+			
 		</div>
 		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
-		<main th:object="${userDto}">
-			<div class="content-header">USERS</div>
+		<main>
+			<div class="content-header">INVENTORY</div>
 			<div class="content-body">
-				<div class="user-statistics">
+				<div class="item-statistics">
 					<div>
-						<label><img th:src="@{/images/friends.png}" >Total Borrower</label>
+						<label><img th:src="@{/images/friends.png}" >Total Items</label>
 						<span>
 							100
 						</span>
 					</div>
 					<div>
-						<label><img th:src="@{/images/friends.png}" >Total Lender</label>
+						<label><img th:src="@{/images/friends.png}" >Overall Qty</label>
+						<span>
+							100
+						</span>
+					</div>
+					<div>
+						<label><img th:src="@{/images/friends.png}" >Available Items</label>
 						<span>
 							100
 						</span>
@@ -51,8 +60,9 @@
 				</div>
 				<div class="table-container">
 					<div class="table-buttons">
-						<div>
-							<a th:href="@{/admin/user/create}" class="button"><img th:src="@{/images/add.png}">ADD USER</a>
+						<div class="btns">
+							<a th:href="@{/admin/inventory/create}" class="button"><img th:src="@{/images/add.png}">ADD ITEM</a>
+							<button>FILTER BY</button>
 						</div>
 						<div class="pagination">
 							<button class="prev-btn"><img th:src="@{/images/left-arrow.png}"/> PREV</button>
@@ -62,15 +72,13 @@
 					</div>
 					<div class="table">
 						<div class="table-header">
-							<div class="table-cell"><img th:src="@{/images/user.png}"> NAME</div>
-							<div class="table-cell"><img th:src="@{/images/user.png}"> USER ID</div>
-							<div class="table-cell"><img th:src="@{/images/email.png}"> MOBILE NUMBER</div>
-							<div class="table-cell"><img th:src="@{/images/email.png}"> EMAIL</div>
-							<div class="table-cell"><img th:src="@{/images/email.png}"> ADDRESS</div>
-							<div class="table-cell"><img th:src="@{/images/email.png}"> BIRTH DATE</div>
-							<div class="table-cell"><img th:src="@{/images/setting.png}"> ROLE</div>
-							<div class="table-cell"><img th:src="@{/images/setting.png}"> CREATED DATE</div>
-							<div class="table-cell"><img th:src="@{/images/setting.png}"> UPDATED DATE</div>
+							<div class="table-cell"><img th:src="@{/images/user.png}"> OWNER</div>
+							<div class="table-cell"><img th:src="@{/images/box.png}"> ITEM</div>
+							<div class="table-cell"><img th:src="@{/images/price-tag.png}"> PRICE</div>
+							<div class="table-cell"><img th:src="@{/images/quality.png}"> TOTAL QTY</div>
+							<div class="table-cell"><img th:src="@{/images/in-stock.png}"> AVAILABLE QTY</div>
+							<div class="table-cell"><img th:src="@{/images/in-stock.png}"> CREATED DATE</div>
+							<div class="table-cell"><img th:src="@{/images/in-stock.png}"> UPDATED DATE</div>
 							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> ACTION</div>
 						</div>
 						<div class="table-body" id="table-body">
@@ -82,15 +90,15 @@
 		</main>
 		<aside th:replace="~{aside/aside :: content}"></aside>
 	</div>
-	<form style="display: none" th:action="@{/admin/user/edit}" method="GET" id="editForm">
+	<form style="display: none" th:action="@{/admin/inventory/edit}" method="GET" id="editForm">
 		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
 	</form>
 	<script th:inline="javascript">
-		const webDto = /*[[${userDto}]]*/'';
+		const webDto = /*[[${inventoryDto}]]*/'';
 		console.log(webDto);
 	</script>
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
-	<script th:src="@{/script/user/user-api.js}"></script>
+	<script th:src="@{/script/inventory/a-inventory-api.js}"></script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package project.borrowhen.object;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
@@ -26,6 +28,10 @@ public class UserObj {
 	private String userId;
 		
 	private String role;
+	
+	private Date createdDate;
+	
+	private Date updatedDate;
 	
 	private int page;
 }

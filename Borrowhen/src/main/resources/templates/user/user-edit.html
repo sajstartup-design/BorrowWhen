@@ -13,10 +13,10 @@
 	<div class="container">
 		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
 		<main>
-			<div class="content-header">USERS > USER EDIT</div>
+			<div class="content-header">USERS > EDIT USER</div>
 			<div class="content-body">
 				<div class="content">
-					<form th:action="@{/user/edit}" th:object="${userDto}" method="POST" id="saveForm">
+					<form th:action="@{/admin/user/edit}" th:object="${userDto}" method="POST" id="saveForm">
 					    <input type="hidden" name="encryptedId" th:value="${userDto.encryptedId}" />
 					
 					    <div class="field bold">
@@ -136,7 +136,7 @@
 
 
 					<div class="form-btn">
-						<a class="button" th:href="@{/user}">BACK</a>
+						<a class="button" th:href="@{/admin/user}">BACK</a>
 						<button type="submit" form="saveForm" class="update-btn">SAVE</button>
 					</div>
 				</div>			

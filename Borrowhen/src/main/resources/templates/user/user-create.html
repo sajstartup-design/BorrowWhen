@@ -11,17 +11,17 @@
 	<div class="container">
 		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
 		<main>
-			<div class="content-header">USERS > USER CREATE</div>
+			<div class="content-header">USERS > ADD USER</div>
 			<div class="content-body">
 				<div class="content">
-					<form th:action="@{/user/create}" th:object="${userDto}" method="POST" id="saveForm">
+					<form th:action="@{/admin/user/create}" th:object="${userDto}" method="POST" id="saveForm">
 					    <div class="field bold">
 					        <label>PERSON INFORMATION</label>
 					    </div>
 						<hr class="soft-gradient">
 					    <div class="field">
 					        <label>FIRST NAME</label>
-					        <input type="text" name="firstName" />
+					        <input type="text" name="firstName" th:value="*{firstName}"/>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('firstName')}"
 					              th:text="${fieldErrors['firstName']}"></span>
@@ -30,7 +30,7 @@
 					
 					    <div class="field">
 					        <label>MIDDLE NAME</label>
-					        <input type="text" name="middleName" />
+					        <input type="text" name="middleName" th:value="*{middleName}"/>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('middleName')}"
 					              th:text="${fieldErrors['middleName']}"></span>
@@ -39,7 +39,7 @@
 					
 					    <div class="field">
 					        <label>FAMILY NAME</label>
-					        <input type="text" name="familyName" />
+					        <input type="text" name="familyName" th:value="*{familyName}"/>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('familyName')}"
 					              th:text="${fieldErrors['familyName']}"></span>
@@ -48,7 +48,7 @@
 					
 					    <div class="field">
 					        <label>ADDRESS</label>
-					        <input type="text" name="address" />
+					        <input type="text" name="address" th:value="*{address}"/>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('address')}"
 					              th:text="${fieldErrors['address']}"></span>
@@ -57,7 +57,7 @@
 					
 					    <div class="field">
 					        <label>EMAIL ADDRESS</label>
-					        <input type="email" name="emailAddress" />
+					        <input type="email" name="emailAddress" th:value="*{emailAddress}"/>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('emailAddress')}"
 					              th:text="${fieldErrors['emailAddress']}"></span>
@@ -66,7 +66,7 @@
 					
 					    <div class="field">
 					        <label>PHONE NUMBER</label>
-					        <input type="text" name="phoneNumber" />
+					        <input type="text" name="phoneNumber" th:value="*{phoneNumber}"/>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('phoneNumber')}"
 					              th:text="${fieldErrors['phoneNumber']}"></span>
@@ -75,7 +75,7 @@
 					
 					    <div class="field">
 					        <label>BIRTH DATE</label>
-					        <input type="date" name="birthDate" />
+					        <input type="date" name="birthDate" th:value="*{birthDate}"/>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('birthDate')}"
 					              th:text="${fieldErrors['birthDate']}"></span>
@@ -85,9 +85,9 @@
 					    <div class="field">
 					        <label>GENDER</label>
 					        <select name="gender">
-					            <option value="MALE">Male</option>
-					            <option value="FEMALE">Female</option>
-					            <option value="OTHER">Other</option>
+				             	<option value="MALE" th:selected="*{gender == 'MALE'}">Male</option>
+					            <option value="FEMALE" th:selected="*{gender == 'FEMALE'}">Female</option>
+					            <option value="OTHER" th:selected="*{gender == 'OTHER'}">Other</option>
 					        </select>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('gender')}"
@@ -103,7 +103,7 @@
 						<hr class="soft-gradient">
 					    <div class="field">
 					        <label>USER ID</label>
-					        <input type="text" name="userId" />
+					        <input type="text" name="userId" th:value="*{userId}"/>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('userId')}"
 					              th:text="${fieldErrors['userId']}"></span>
@@ -122,9 +122,9 @@
 					    <div class="field">
 					        <label>ROLE</label>
 					        <select name="role">
-					            <option value="BORROWER">BORROWER</option>
-					            <option value="LENDER">LENDER</option>
-					            <option value="ADMIN">ADMIN</option>
+					           <option value="BORROWER" th:selected="*{role == 'BORROWER'}">BORROWER</option>
+					            <option value="LENDER" th:selected="*{role == 'LENDER'}">LENDER</option>
+					            <option value="ADMIN" th:selected="*{role == 'ADMIN'}">ADMIN</option>
 					        </select>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('role')}"
@@ -134,7 +134,7 @@
 
 
 					<div class="form-btn">
-						<a class="button" th:href="@{/user}">BACK</a>
+						<a class="button" th:href="@{/admin/user}">BACK</a>
 						<button type="submit" form="saveForm" class="save-btn">SAVE</button>
 					</div>
 				</div>			
