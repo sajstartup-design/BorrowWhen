@@ -11,5 +11,6 @@ public class MessageConstant {
 	
 	public static final String NOT_BLANK = "This field must not be blank.";
 	public static final String QUANTITY_NOT_BLANK = "Quantity must be at least 1 and above.";
+	public static final String OWNER_BLANK = "This field mst not be blank.";
 	
 }

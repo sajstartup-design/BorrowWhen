@@ -12,8 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.dao.InventoryDao;
+import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.InventoryDto;
@@ -38,11 +40,17 @@ public class InventoryServiceImpl implements InventoryService{
 	private String MAX_USER_DISPLAY;
 
 	@Override
-	public void saveInventory(InventoryDto inDto) {
+	public void saveInventory(InventoryDto inDto) throws Exception {
 		
 		Date dateNow = Date.valueOf(LocalDate.now());
 		
 		UserEntity user = userService.getLoggedInUser();
+		
+		if(!CommonConstant.BLANK.equals(inDto.getUserId())) {
+			
+			user = userService.getUserByUserId(inDto.getUserId());
+			
+		}
 		
 		InventoryEntity inventory = new InventoryEntity();
 		
@@ -59,24 +67,27 @@ public class InventoryServiceImpl implements InventoryService{
 	}
 
 	@Override
-	public InventoryDto getAlInventory(InventoryDto inDto) throws Exception {
-		
+	public InventoryDto getAllInventory(InventoryDto inDto) throws Exception {
+			
 		InventoryDto outDto = new InventoryDto();
 		
 		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(MAX_USER_DISPLAY));
 		
-		Page<InventoryEntity> allInventories = inventoryDao.getAllInventory(pageable); 
+		Page<InventoryData> allInventories = inventoryDao.getAllInventory(pageable); 
 		
 		List<InventoryObj> inventories = new ArrayList<>();
 		
-		for(InventoryEntity inventory : allInventories) {
+		for(InventoryData inventory : allInventories) {
 			
 			InventoryObj obj = new InventoryObj();
 			
-			obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(inventory.getId())));
+			obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(inventory.getInventoryId())));
 			obj.setItemName(inventory.getItemName());
 			obj.setPrice(inventory.getPrice());
 			obj.setTotalQty(inventory.getTotalQty());
+			obj.setOwner(inventory.getFirstName() + " " + inventory.getFamilyName());
+			obj.setCreatedDate(inventory.getCreatedDate());
+			obj.setUpdatedDate(inventory.getUpdatedDate());		
 			
 			inventories.add(obj);
 			

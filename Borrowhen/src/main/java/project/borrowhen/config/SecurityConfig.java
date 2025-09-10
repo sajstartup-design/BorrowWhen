@@ -66,7 +66,7 @@ public class SecurityConfig {
 						.requestMatchers("/admin/inventory/**").hasAuthority("ADMIN")
 						
 						.requestMatchers("/api/admin/user/**").hasAuthority("ADMIN")
-						
+						.requestMatchers("/api/admin/inventory/**").hasAuthority("ADMIN")
 						
 						
 						.requestMatchers("/inventory/**").hasAuthority("LENDER")

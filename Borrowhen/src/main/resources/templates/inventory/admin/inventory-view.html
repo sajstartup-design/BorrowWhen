@@ -46,6 +46,12 @@
 						</span>
 					</div>
 					<div>
+						<label><img th:src="@{/images/friends.png}" >Overall Qty</label>
+						<span>
+							100
+						</span>
+					</div>
+					<div>
 						<label><img th:src="@{/images/friends.png}" >Available Items</label>
 						<span>
 							100
@@ -54,8 +60,9 @@
 				</div>
 				<div class="table-container">
 					<div class="table-buttons">
-						<div>
-							<a th:href="@{/inventory/create}" class="button"><img th:src="@{/images/add.png}">ADD ITEM</a>
+						<div class="btns">
+							<a th:href="@{/admin/inventory/create}" class="button"><img th:src="@{/images/add.png}">ADD ITEM</a>
+							<button>FILTER BY</button>
 						</div>
 						<div class="pagination">
 							<button class="prev-btn">PREV</button>
@@ -92,6 +99,6 @@
 	</script>
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
-	<script th:src="@{/script/inventory/inventory-api.js}"></script>
+	<script th:src="@{/script/inventory/aaa-inventory-api.js}"></script>
 </body>
 </html>

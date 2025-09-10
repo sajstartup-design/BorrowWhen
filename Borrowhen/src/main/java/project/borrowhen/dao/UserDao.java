@@ -1,6 +1,7 @@
 package project.borrowhen.dao;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -56,7 +57,7 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
     @Modifying
     @Transactional
     @Query(value = UPDATE_USER, nativeQuery = true)
-    void updateUser(
+    public void updateUser(
             @Param("id") int id,
             @Param("firstName") String firstName,
             @Param("middleName") String middleName,
@@ -72,4 +73,11 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
             @Param("hasChanged") boolean hasChanged,
             @Param("updatedDate") Date updatedDate
     )  throws DataAccessException;
+    
+    public final String GET_ALL_USER_ID = "SELECT e.userId "
+			+ "FROM UserEntity e "
+			+ "WHERE e.isDeleted = false ";
+    
+    @Query(value=GET_ALL_USER_ID)
+    public List<String> getAllUserId() throws DataAccessException;
 }

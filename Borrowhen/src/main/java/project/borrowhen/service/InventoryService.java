@@ -9,5 +9,5 @@ public interface InventoryService {
 
 	public void saveInventory(InventoryDto inDto) throws Exception;
 	
-	public InventoryDto getAlInventory(InventoryDto inDto) throws Exception;
+	public InventoryDto getAllInventory(InventoryDto inDto) throws Exception;
 }

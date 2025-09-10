@@ -18,6 +18,8 @@ public class InventoryDto {
 
 	private String encryptedId;
 	
+	private String userId;
+	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
 	private String itemName;
 	
@@ -28,6 +30,8 @@ public class InventoryDto {
 	@Min(value = 1, message = MessageConstant.QUANTITY_NOT_BLANK)
 	@NotNull(message = MessageConstant.QUANTITY_NOT_BLANK)
 	private Integer totalQty;
+	
+	private List<String> allUserId;
 	
 	List<InventoryObj> inventories;
 	

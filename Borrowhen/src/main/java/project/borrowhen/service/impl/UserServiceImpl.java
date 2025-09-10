@@ -200,4 +200,16 @@ public class UserServiceImpl implements UserService {
 
 		return user;
 	}
+
+	@Override
+	public List<String> getAllUserId() {
+		
+		return userDao.getAllUserId();
+	}
+
+	@Override
+	public UserEntity getUserByUserId(String userId) {
+		
+		return userDao.getUserByUserId(userId);
+	}
 }

@@ -652,6 +652,11 @@ hr.soft-gradient.thin {
 	justify-content: space-between;
 }
 
+.table-buttons .btns{
+	display: flex;
+	gap: 0.5rem;
+}
+
 .table-buttons .pagination{
 	display: flex;
 	gap: 0.5rem;

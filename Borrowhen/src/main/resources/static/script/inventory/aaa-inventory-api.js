@@ -58,11 +58,13 @@ async function loadInventories(page = 0) {
 			row.setAttribute('data-id', inventory.encryptedId);
 			
             row.innerHTML = `
+				<div class="table-cell">${inventory.owner}</div>
                 <div class="table-cell">${inventory.itemName}</div>
                 <div class="table-cell">₱${inventory.price}</div>
                 <div class="table-cell">${inventory.totalQty}</div>
-                <div class="table-cell">09/09/2025</div>
-                <div class="table-cell">09/09/2025</div>
+				<div class="table-cell">${inventory.totalQty}</div>
+                <div class="table-cell">${inventory.createdDate}</div>
+                <div class="table-cell">${inventory.updatedDate}</div>
                 <div class="table-cell">
 					<button class="edit-btn" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
                     <button><img src="/images/delete.png"></button>

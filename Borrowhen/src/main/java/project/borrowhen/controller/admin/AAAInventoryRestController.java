@@ -1,4 +1,4 @@
-package project.borrowhen.controller;
+package project.borrowhen.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +10,12 @@ import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.InventoryService;
 
 @RestController
-public class InventoryRestController {
+public class AAAInventoryRestController {
 	
 	@Autowired
     private InventoryService inventoryService;
 
-    @GetMapping("/api/inventories")
+    @GetMapping("/api/admin/inventory")
     public InventoryDto getUsers(@RequestParam(defaultValue = "0") int page) {
         try {
             InventoryDto inDto = new InventoryDto();

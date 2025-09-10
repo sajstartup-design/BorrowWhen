@@ -1,5 +1,7 @@
 package project.borrowhen.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import project.borrowhen.dao.entity.UserEntity;
@@ -20,7 +22,13 @@ public interface UserService {
 	
 	/*
 	 * Authentication Part
+	 * 
+	 * This can be used from another services
 	 */
 	
 	public UserEntity getLoggedInUser();
+	
+	public List<String> getAllUserId();
+	
+	public UserEntity getUserByUserId(String userId);
 }

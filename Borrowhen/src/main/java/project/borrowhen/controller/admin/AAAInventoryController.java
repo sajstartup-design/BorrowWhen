@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
+import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.constant.MessageConstant;
 import project.borrowhen.dto.InventoryDto;
 import project.borrowhen.service.InventoryService;
+import project.borrowhen.service.UserService;
 
 @Controller
 @RequestMapping("/admin/inventory")
@@ -26,6 +29,9 @@ public class AAAInventoryController {
 	@Autowired
 	private InventoryService inventoryService;
 	
+	@Autowired
+	private UserService userService;
+	
 	@GetMapping()
 	public String showInventoryScreen() {
 		
@@ -33,7 +39,10 @@ public class AAAInventoryController {
 	}
 	
 	@GetMapping("/create")
-	public String showInventoryCreateScreen(@ModelAttribute InventoryDto inventoryWebDto) {
+	public String showInventoryCreateScreen(Model model, 
+			@ModelAttribute InventoryDto inventoryWebDto) {
+		
+		model.addAttribute("allUserId", userService.getAllUserId());
 		
 		return "inventory/admin/inventory-create";
 	}
@@ -57,7 +66,16 @@ public class AAAInventoryController {
 	        
 	        ra.addFlashAttribute("inventoryDto", inventoryWebDto);
 	        
-	        return "redirect:/inventory/create";
+	        return "redirect:/admin/inventory/create";
+		}
+		
+		if(CommonConstant.BLANK.equals(inventoryWebDto.getUserId())) {
+			
+			ra.addFlashAttribute("ownerError", MessageConstant.OWNER_BLANK);
+			
+			ra.addFlashAttribute("inventoryDto", inventoryWebDto);
+	        
+	        return "redirect:/admin/inventory/create";
 		}
 		
 		try {

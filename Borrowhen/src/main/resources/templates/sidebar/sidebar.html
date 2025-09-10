@@ -91,46 +91,46 @@
 		</th:block>
 
 		<script>
-		document.addEventListener("DOMContentLoaded", () => {
+			document.addEventListener("DOMContentLoaded", () => {
 			  const currentPath = window.location.pathname.toLowerCase();
-
-			  document.querySelectorAll(".option p.active")
-			    .forEach(el => el.classList.remove("active"));
-
-			  const options = Array.from(document.querySelectorAll(".option p"));
+			
+			  // "enum" style mapping (URL keyword → menu keyword)
+			  const menuMap = {
+			    "/admin/dashboard": "dashboard",
+			    "/admin/inventory": "inventory",
+			    "/admin/user": "user",
+			    "/inventory": "inventory",
+			    "/dashboard": "dashboard",
+			    "/request": "request",
+			    "/payment": "payment",
+			    "/history": "history"
+			  };
+			
+			  // remove any existing active classes
+			  document.querySelectorAll(".option p.active").forEach(el => el.classList.remove("active"));
+			
 			  let matched = false;
-
-			  options.forEach(p => {
-			    const text = p.textContent.trim().toLowerCase().replace(/\s+/g, " ");
-
-			    // ✅ Match if path contains the menu keyword
-			    if (currentPath.includes(text) || text.includes(currentPath) || currentPath.includes(text.split(" ")[0])) {
-			      p.classList.add("active");
-			      matched = true;
+			
+			  for (const [url, key] of Object.entries(menuMap)) {
+			    if (currentPath.startsWith(url)) {
+			      document.querySelectorAll(".option p").forEach(p => {
+			        if (p.textContent.toLowerCase().includes(key)) {
+			          p.classList.add("active");
+			          matched = true;
+			        }
+			      });
+			      break;
 			    }
-
-			    // ✅ Special case: if path includes /admin/user -> highlight "User"
-			    if (currentPath.includes("/admin/user") && text.includes("user")) {
-			      p.classList.add("active");
-			      matched = true;
-			    }
-			  });
-
-			  if (!matched && options.length) {
-			    options[0].classList.add("active");
 			  }
-
-			  // click event
-			  document.querySelectorAll(".option").forEach(opt => {
-			    opt.addEventListener("click", () => {
-			      document.querySelectorAll(".option p.active")
-			        .forEach(el => el.classList.remove("active"));
-			      const p = opt.querySelector("p");
-			      if (p) p.classList.add("active");
-			    });
-			  });
+			
+			  // fallback → highlight first option
+			  if (!matched) {
+			    const first = document.querySelector(".option p");
+			    if (first) first.classList.add("active");
+			  }
 			});
-		</script>
+			</script>
+
 	</nav>
 </body>
 </html>
