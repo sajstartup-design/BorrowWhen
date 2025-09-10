@@ -98,7 +98,9 @@ public class UserServiceImpl implements UserService {
 		    obj.setGender(user.getGender());
 		    obj.setUserId(user.getUserId());
 		    obj.setRole(user.getRole());
-
+		    obj.setCreatedDate(user.getCreatedDate());
+		    obj.setUpdatedDate(user.getUpdatedDate());
+		    
 		    users.add(obj);
 		}
 		
@@ -140,12 +142,16 @@ public class UserServiceImpl implements UserService {
 	    outDto.setGender(user.getGender());
 	    outDto.setUserId(user.getUserId());
 	    outDto.setRole(user.getRole());
+	    outDto.setCreatedDate(user.getCreatedDate());
+	    outDto.setUpdatedDate(user.getUpdatedDate());
 	    
-		return outDto;
+	    return outDto;
 	}
 
 	@Override
 	public void editUser(UserDto inDto) throws Exception {
+		
+		Date dateNow = Date.valueOf(LocalDate.now());
 		
 		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
 		
@@ -168,7 +174,8 @@ public class UserServiceImpl implements UserService {
 				inDto.getUserId(),
 				encoder.encode(inDto.getPassword()),
 				inDto.getRole(),
-				hasChanged);
+				hasChanged,
+				dateNow);
 	}
 
 	@Override

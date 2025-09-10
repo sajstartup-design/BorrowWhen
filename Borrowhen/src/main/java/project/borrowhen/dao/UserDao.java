@@ -49,7 +49,8 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
             + "gender = :gender, "
             + "user_id = :userId, "
             + "password = :password, "
-            + "role = :role "
+            + "role = :role, "
+            + "updated_date = :updatedDate "
             + "WHERE id = :id";
 
     @Modifying
@@ -68,6 +69,7 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
             @Param("userId") String userId,
             @Param("password") String password,
             @Param("role") String role,
-            @Param("hasChanged") boolean hasChanged
+            @Param("hasChanged") boolean hasChanged,
+            @Param("updatedDate") Date updatedDate
     )  throws DataAccessException;
 }

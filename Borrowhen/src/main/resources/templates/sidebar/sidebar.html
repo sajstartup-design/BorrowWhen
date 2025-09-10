@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Sidebar</title>
@@ -9,39 +10,86 @@
 	<nav th:fragment="content">
 		<img th:src="@{/images/logo.png}" alt="logo">
 		<hr class="soft-gradient">
-		<section>
-			<p>MAIN</p>
-			<a th:href="@{/dashboard}" class="option">
-				<p class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</p>
-			</a>
-			<a th:href="@{/inventory}" class="option">
-				<p><img th:src="@{/images/supplies.png}"> INVENTORY</p>
-			</a>
-			<div class="option">
-				<p><img th:src="@{/images/request.png}"> REQUEST</p>
-			</div>
-		</section>
-		<hr class="soft-gradient">
-		<section>
-			<p>HISTORY</p>
-			<div class="option">
-				<p><img th:src="@{/images/history.png}"> HISTORY</p>
-			</div>
-		</section>
-		<hr class="soft-gradient">
-		<section>
-			<p>PAYMENT</p>
-			<div class="option">
-				<p><img th:src="@{/images/history.png}"> PAYMENT</p>
-			</div>
-		</section>
-		<hr class="soft-gradient">
-		<section class="admin-settings">
-		    <p>USERS</p>
-		    <a th:href="@{/user}" class="option" >
-		        <p><img th:src="@{/images/friends.png}"> USER</p>
-		    </a>		   
-		</section>		
+		
+		<th:block sec:authorize="hasAuthority('LENDER')">
+			<section>
+				<p>MAIN</p>
+				<a th:href="@{/dashboard}" class="option">
+					<p class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</p>
+				</a>
+				<a th:href="@{/inventory}" class="option">
+					<p><img th:src="@{/images/supplies.png}"> INVENTORY</p>
+				</a>
+				<div class="option">
+					<p><img th:src="@{/images/request.png}"> REQUEST</p>
+				</div>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>HISTORY</p>
+				<div class="option">
+					<p><img th:src="@{/images/history.png}"> HISTORY</p>
+				</div>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>PAYMENT</p>
+				<div class="option">
+					<p><img th:src="@{/images/history.png}"> PAYMENT</p>
+				</div>
+			</section>
+		</th:block>	
+			
+		<th:block sec:authorize="hasAuthority('ADMIN')">
+		    <section>
+		        <p>MAIN</p>
+		        <a th:href="@{/admin/dashboard}" class="option">
+		            <p class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</p>
+		        </a>
+		        <a th:href="@{/inventory}" class="option">
+		            <p><img th:src="@{/images/supplies.png}"> ALL INVENTORY</p>
+		        </a>
+		        <div class="option">
+		            <p><img th:src="@{/images/request.png}"> ALL REQUEST</p>
+		        </div>
+		    </section>
+		    <hr class="soft-gradient">
+		    
+		    <section>
+		        <p>HISTORY</p>
+		        <div class="option">
+		            <p><img th:src="@{/images/history.png}"> HISTORY</p>
+		        </div>
+		    </section>
+		    <hr class="soft-gradient">
+		    
+		    <section>
+		        <p>LOGS</p>
+		        <div class="option">
+		            <p><img th:src="@{/images/history.png}"> REQUEST LOGS</p>
+		        </div>
+		        <div class="option">
+		            <p><img th:src="@{/images/history.png}"> PAYMENT LOGS</p>
+		        </div>
+		    </section>
+		    <hr class="soft-gradient">
+		    
+		    <section>
+		        <p>PAYMENT</p>
+		        <div class="option">
+		            <p><img th:src="@{/images/history.png}"> PAYMENT</p>
+		        </div>
+		    </section>
+		    <hr class="soft-gradient">
+		    
+		    <section class="admin-settings">
+		        <p>USERS</p>
+		        <a th:href="@{/admin/user}" class="option">
+		            <p><img th:src="@{/images/friends.png}"> USER</p>
+		        </a>
+		    </section>
+		</th:block>
+
 		<script>
 		document.addEventListener("DOMContentLoaded", () => {
 			  const currentPath = window.location.pathname.toLowerCase();

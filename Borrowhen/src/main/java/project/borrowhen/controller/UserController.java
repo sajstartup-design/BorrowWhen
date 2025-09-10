@@ -22,7 +22,7 @@ import project.borrowhen.dto.UserDto;
 import project.borrowhen.service.UserService;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 public class UserController {
 	
 	@Autowired
@@ -61,7 +61,7 @@ public class UserController {
 	        
 	        ra.addFlashAttribute("useDto", userWebDto);
 	        
-	        return "redirect:/user/create";
+	        return "redirect:/admin/user/create";
 		}
 		
 		try {
@@ -77,7 +77,7 @@ public class UserController {
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 		}
 
-		return "redirect:/user";
+		return "redirect:/admin/user";
 	}
 	
 	@GetMapping("/edit")
@@ -105,7 +105,7 @@ public class UserController {
 			
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 			
-			return "redirect:/user";
+			return "redirect:/admin/user";
 		}
 		
 		return "user/user-edit";
@@ -131,13 +131,13 @@ public class UserController {
 	        
 	        ra.addFlashAttribute("useDto", userWebDto);
 	        
-	        return "redirect:/user/edit?encryptedId=" + userWebDto.getEncryptedId();
+	        return "redirect:/admin/user/edit?encryptedId=" + userWebDto.getEncryptedId();
 	        
 		}
 		
 		try {
 			
-			
+			userService.editUser(userWebDto);
 			
 			ra.addFlashAttribute("successMsg", MessageConstant.USER_EDIT_MSG);
 			
@@ -148,7 +148,7 @@ public class UserController {
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 		}
 
-		return "redirect:/user";
+		return "redirect:/admin/user";
 	}
 	
 	@GetMapping("/details")
@@ -174,7 +174,7 @@ public class UserController {
 			
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 			
-			return "redirect:/user";
+			return "redirect:/admin/user";
 		}
 		
 		return "user/user-details";

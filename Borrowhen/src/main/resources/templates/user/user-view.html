@@ -52,7 +52,7 @@
 				<div class="table-container">
 					<div class="table-buttons">
 						<div>
-							<a th:href="@{/user/create}" class="button"><img th:src="@{/images/add.png}">ADD USER</a>
+							<a th:href="@{/admin/user/create}" class="button"><img th:src="@{/images/add.png}">ADD USER</a>
 						</div>
 						<div class="pagination">
 							<button class="prev-btn">PREV</button>
@@ -82,7 +82,7 @@
 		</main>
 		<aside th:replace="~{aside/aside :: content}"></aside>
 	</div>
-	<form style="display: none" th:action="@{/user/edit}" method="GET" id="editForm">
+	<form style="display: none" th:action="@{/admin/user/edit}" method="GET" id="editForm">
 		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
 	</form>
 	<script th:inline="javascript">

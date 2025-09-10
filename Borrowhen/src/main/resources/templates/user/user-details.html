@@ -16,7 +16,7 @@
 			<div class="content-header">USERS > USER EDIT</div>
 			<div class="content-body">
 				<div class="content">
-					<form th:action="@{/user/edit}" th:object="${userDto}" method="POST" id="saveForm">
+					<form th:action="@{/admin/user/edit}" th:object="${userDto}" method="POST" id="saveForm">
 					    <input type="hidden" name="encryptedId" th:value="${userDto.encryptedId}" />
 					
 					    <div class="field bold">
@@ -85,13 +85,23 @@
 					        <label>ROLE</label>
 					        <div th:text="*{role}"></div>
 					    </div>
+					    <hr class="soft-gradient">
+					    
+					    <div class="field">
+					        <label>CREATED DATE</label>
+					        <div th:text="*{createdDate}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					    
+					    <div class="field">
+					        <label>UPDATED DATE</label>
+					        <div th:text="*{updatedDate}"></div>
+					    </div>
 					</form>
 
 
 					<div class="form-btn">
-						<a class="button" th:href="@{/user}">BACK</a>
-						<!-- <button type="submit" form="saveForm" class="update-btn">EDIT</button>
-						<button type="submit" form="saveForm" class="update-btn">DELETE</button> -->
+						<a class="button" th:href="@{/admin/user}">BACK</a>
 					</div>
 				</div>			
 			</div>

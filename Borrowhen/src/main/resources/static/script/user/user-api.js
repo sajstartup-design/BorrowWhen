@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadUsers(page = 0) {
     try {
-        const response = await fetch(`/api/users?page=${page}`);
+        const response = await fetch(`/api/admin/users?page=${page}`);
         const data = await response.json();
 		
 		
@@ -65,8 +65,8 @@ async function loadUsers(page = 0) {
                 <div class="table-cell">${user.address}</div>
                 <div class="table-cell">${user.birthDate || ""}</div>
                 <div class="table-cell"><span class="role ${user.role.toLowerCase()}">${user.role}</span></div>
-                <div class="table-cell">09/09/2025</div>
-                <div class="table-cell">09/09/2025</div>
+                <div class="table-cell">${user.createdDate}</div>
+                <div class="table-cell">${user.updatedDate}</div>
                 <div class="table-cell">
 					<button class="edit-btn" data-id="${user.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
                     <button><img src="/images/delete.png"></button>
@@ -89,7 +89,7 @@ async function loadUsers(page = 0) {
 				
 				const encryptedId = this.getAttribute('data-id');
 
-			    window.location.href="/user/details?encryptedId=" + encryptedId;
+			    window.location.href="/admin/user/details?encryptedId=" + encryptedId;
 			});
 
 

@@ -14,7 +14,7 @@
 			<div class="content-header">USERS > ADD USER</div>
 			<div class="content-body">
 				<div class="content">
-					<form th:action="@{/user/create}" th:object="${userDto}" method="POST" id="saveForm">
+					<form th:action="@{/admin/user/create}" th:object="${userDto}" method="POST" id="saveForm">
 					    <div class="field bold">
 					        <label>PERSON INFORMATION</label>
 					    </div>
@@ -134,7 +134,7 @@
 
 
 					<div class="form-btn">
-						<a class="button" th:href="@{/user}">BACK</a>
+						<a class="button" th:href="@{/admin/user}">BACK</a>
 						<button type="submit" form="saveForm" class="save-btn">SAVE</button>
 					</div>
 				</div>			

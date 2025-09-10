@@ -58,8 +58,23 @@ public class SecurityConfig {
 						.requestMatchers("/css/**").permitAll()
 						.requestMatchers("/script/**").permitAll()
 						.requestMatchers("/gif/**").permitAll()
-						.requestMatchers("/user/**").hasAuthority("ADMIN")
-						.requestMatchers("/inventory/**").hasAuthority("ADMIN")
+						
+						
+						
+						
+						.requestMatchers("/admin/user/**").hasAuthority("ADMIN")
+						.requestMatchers("/admin/inventory/**").hasAuthority("ADMIN")
+						
+						.requestMatchers("/api/admin/user/**").hasAuthority("ADMIN")
+						
+						
+						
+						.requestMatchers("/inventory/**").hasAuthority("LENDER")
+						
+						
+						
+						
+						
 						.anyRequest().authenticated()
 						
 						)

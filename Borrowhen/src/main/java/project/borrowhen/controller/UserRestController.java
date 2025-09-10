@@ -15,7 +15,7 @@ public class UserRestController {
 	@Autowired
     private UserService userService;
 
-    @GetMapping("/api/users")
+    @GetMapping("/api/admin/users")
     public UserDto getUsers(@RequestParam(defaultValue = "0") int page) {
         try {
             UserDto inDto = new UserDto();
