@@ -90,7 +90,7 @@
 							<button class="next-btn" disable>NEXT <img th:src="@{/images/right-arrow.png}"/></button>
 						</div>					
  					</div>
-					<div class="items-body">
+					<div class="items-body" id="items-body">
 						<div class="item-container">
 							<div class="item-details">
 								<div class="ribbon green"><span>AVAILABLE</span></div>
@@ -117,168 +117,7 @@
 								<span class="fa fa-star"></span>
 							</div>
 						</div>
-						
-						<div class="item-container">
-							<div class="item-details">
-								<div class="ribbon green"><span>AVAILABLE</span></div>
-								<span class="item-name">
-								    Hammer 
-								</span>
-								<span class="item-price">
-									₱100
-								</span>
-								<span class="item-quantity">
-									Quantity Left: 10
-								</span>
-								<hr class="soft-gradient">
-								<span class="lender-name">Lender: Julius Basas</span>
-							</div>
-							<div class="item-btns">
-								<button class="borrow-btn">BORROW</button>
-							</div>
-							<div class="item-ratings">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-						</div>
-						
-						<div class="item-container">
-							<div class="item-details">
-								<div class="ribbon green"><span>AVAILABLE</span></div>
-								<span class="item-name">
-								    Hammer 
-								</span>
-								<span class="item-price">
-									₱100
-								</span>
-								<span class="item-quantity">
-									Quantity Left: 10
-								</span>
-								<hr class="soft-gradient">
-								<span class="lender-name">Lender: Julius Basas</span>
-							</div>
-							<div class="item-btns">
-								<button class="borrow-btn">BORROW</button>
-							</div>
-							<div class="item-ratings">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-						</div>
-						
-						<div class="item-container">
-							<div class="item-details">
-								<div class="ribbon green"><span>AVAILABLE</span></div>
-								<span class="item-name">
-								    Hammer 
-								</span>
-								<span class="item-price">
-									₱100
-								</span>
-								<span class="item-quantity">
-									Quantity Left: 10
-								</span>
-								<hr class="soft-gradient">
-								<span class="lender-name">Lender: Julius Basas</span>
-							</div>
-							<div class="item-btns">
-								<button class="borrow-btn">BORROW</button>
-							</div>
-							<div class="item-ratings">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-						</div>
-						
-						<div class="item-container">
-							<div class="item-details">
-								<div class="ribbon green"><span>AVAILABLE</span></div>
-								<span class="item-name">
-								    Hammer 
-								</span>
-								<span class="item-price">
-									₱100
-								</span>
-								<span class="item-quantity">
-									Quantity Left: 10
-								</span>
-								<hr class="soft-gradient">
-								<span class="lender-name">Lender: Julius Basas</span>
-							</div>
-							<div class="item-btns">
-								<button class="borrow-btn">BORROW</button>
-							</div>
-							<div class="item-ratings">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-						</div>
-						
-						<div class="item-container">
-							<div class="item-details">
-								<div class="ribbon green"><span>AVAILABLE</span></div>
-								<span class="item-name">
-								    Hammer 
-								</span>
-								<span class="item-price">
-									₱100
-								</span>
-								<span class="item-quantity">
-									Quantity Left: 10
-								</span>
-								<hr class="soft-gradient">
-								<span class="lender-name">Lender: Julius Basas</span>
-							</div>
-							<div class="item-btns">
-								<button class="borrow-btn">BORROW</button>
-							</div>
-							<div class="item-ratings">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-						</div>
-						
-						<div class="item-container">
-							<div class="item-details">
-								<div class="ribbon green"><span>AVAILABLE</span></div>
-								<span class="item-name">
-								    Hammer 
-								</span>
-								<span class="item-price">
-									₱100
-								</span>
-								<span class="item-quantity">
-									Quantity Left: 10
-								</span>
-								<hr class="soft-gradient">
-								<span class="lender-name">Lender: Julius Basas</span>
-							</div>
-							<div class="item-btns">
-								<button class="borrow-btn">BORROW</button>
-							</div>
-							<div class="item-ratings">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-						</div>
+	
 						
 					</div>
 				</div>
@@ -297,6 +136,8 @@
 			</div>
 		</div>
 	</div>
+	<script th:src="@{/script/pagination.js}"></script>
+	<script th:src="@{/script/loading.js}"></script>
 	<script th:src="@{/script/inventory/inventory.js}"></script>
 	<script th:src="@{/script/modal.js}"></script>
 </body>

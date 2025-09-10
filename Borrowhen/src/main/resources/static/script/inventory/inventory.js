@@ -47,13 +47,42 @@ async function loadInventories(page = 0) {
 
         updatePagination(data.pagination);
 
-        const tableBody = document.getElementById("table-body");
+        const tableBody = document.getElementById("items-body");
 		tableBody.innerHTML = '';
 
         const fragment = document.createDocumentFragment();
 
         data.inventories.forEach(inventory => {
-            const row = document.createElement("div");
+			
+			const item = document.createElement('div');
+			item.classList.add("item-container");
+			
+			item.innerHTML = `<div class="item-details">
+								<div class="ribbon green"><span>AVAILABLE</span></div>
+								<span class="item-name">
+								    ${inventory.itemName}
+								</span>
+								<span class="item-price">
+									₱${inventory.price}
+								</span>
+								<span class="item-quantity">
+									Quantity Left: ${inventory.totalQty}
+								</span>
+								<hr class="soft-gradient">
+								<span class="lender-name">Lender: ${inventory.owner}</span>
+							</div>
+							<div class="item-btns">
+								<button class="borrow-btn" data-toggle="modal" data-target="#borrowModal">BORROW</button>
+							</div>
+							<div class="item-ratings">
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+							</div>`;
+			
+            /*const row = document.createElement("div");
             row.classList.add("table-row");
 			row.setAttribute('data-id', inventory.encryptedId);
 			
@@ -88,10 +117,10 @@ async function loadInventories(page = 0) {
 				const encryptedId = this.getAttribute('data-id');
 
 			    window.location.href="/admin/inventory/details?encryptedId=" + encryptedId;
-			});
+			});*/
 
 
-            fragment.appendChild(row);
+            fragment.appendChild(item);
         });
 
         tableBody.appendChild(fragment);
