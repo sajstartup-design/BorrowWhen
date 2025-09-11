@@ -313,8 +313,9 @@ aside .notification-icon img{
 	z-index: 1;
 }
 
-aside .notification:hover{
+aside .bell-container:hover{
 	background: var(--sidebar-active);
+	border-radius: 50%;
 }
 
 aside .notification-icon[data-count]:not([data-count="0"])::after {

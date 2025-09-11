@@ -127,7 +127,7 @@
 				BORROW REQUEST
 			</div>
 			<div class="modal-body">
-				<form id="requestForm" th:action="@{/inventory/request}" method="POST">
+				<form id="saveForm" th:action="@{/inventory/request}" method="POST">
 					<input type="hidden" name="encryptedId" value="" id="encryptedId"/>
 					
 					<div class="field">
@@ -165,11 +165,13 @@
 				Once confirmed, this action cannot be undone.
 				<div>
 					<button class="cancel" name="cancel">CANCEL</button>
-					<button form="requestForm">CONFIRM</button>
+					<button class="borrow-btn request-btn" form="saveForm">REQUEST</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script th:src="@{/script/loading.js}"></script>
+	<script th:src="@{/script/submit.js}"></script>
 	<script th:src="@{/script/modal.js}"></script>
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
