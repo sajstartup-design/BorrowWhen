@@ -190,4 +190,11 @@ public class InventoryServiceImpl implements InventoryService{
 		
 	
 	}
+
+	@Override
+	public InventoryEntity getInventory(int id) {
+		
+		return inventoryDao.getInventory(id);
+		
+	}
 }

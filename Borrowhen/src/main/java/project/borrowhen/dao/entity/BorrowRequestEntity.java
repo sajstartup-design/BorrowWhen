@@ -22,9 +22,9 @@ public class BorrowRequestEntity {
 	
 	private int userId;
 	
-	private Date startDate;
+	private Date dateToBorrow;
 	
-	private Date endDate;
+	private Date dateToReturn;
 	
 	private int qty;
 

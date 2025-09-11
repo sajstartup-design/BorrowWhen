@@ -15,6 +15,20 @@ function updateBtnsModal(){
 
 		            const modalBackground = document.createElement("div");
 		            modalBackground.classList.add("modal-background");
+					
+					if(modal.id === 'borrowModal'){
+						// Fill hidden input
+				     	modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
+
+				      	// Fill display fields
+				     	modal.querySelector(".item-name").textContent = btn.dataset.name;
+				      	modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;
+				      	modal.querySelector(".item-qty").textContent = btn.dataset.qty;
+						modal.querySelector("#encryptedId").value = btn.dataset.id;
+					}
+					
+					
+					
 
 		            document.body.appendChild(modalBackground);
 

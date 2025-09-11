@@ -98,7 +98,16 @@ async function loadInventories(page = 0,
 									<span class="lender-name">Lender: ${inventory.owner}</span>
 								</div>
 								<div class="item-btns">
-									<button class="borrow-btn" data-toggle="modal" data-target="#borrowModal">BORROW</button>
+									<button 
+									  class="borrow-btn" 
+									  data-toggle="modal" 
+									  data-target="#borrowModal"
+									  data-id="${inventory.encryptedId}"
+									  data-name="${inventory.itemName}"
+									  data-price="${inventory.price}"
+									  data-qty="${inventory.totalQty}">
+									  BORROW
+									</button>
 								</div>
 								<div class="item-ratings">
 									<span class="fa fa-star checked"></span>

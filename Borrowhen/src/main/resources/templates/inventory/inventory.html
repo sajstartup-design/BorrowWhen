@@ -113,32 +113,7 @@
 						</div>					
  					</div>
 					<div class="items-body" id="items-body">
-						<div class="item-container">
-							<div class="item-details">
-								<div class="ribbon green"><span>AVAILABLE</span></div>
-								<span class="item-name">
-								    Hammer 
-								</span>
-								<span class="item-price">
-									₱100
-								</span>
-								<span class="item-quantity">
-									Quantity Left: 10
-								</span>
-								<hr class="soft-gradient">
-								<span class="lender-name">Lender: Julius Basas</span>
-							</div>
-							<div class="item-btns">
-								<button class="borrow-btn" data-toggle="modal" data-target="#borrowModal">BORROW</button>
-							</div>
-							<div class="item-ratings">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -153,21 +128,21 @@
 			</div>
 			<div class="modal-body">
 				<form id="requestForm" th:action="@{/inventory/request}" method="POST">
-					<input type="hidden" name="encryptedId" value="" />
+					<input type="hidden" name="encryptedId" value="" id="encryptedId"/>
 					
 					<div class="field">
-						<label>Item Name</label>
-						<span>Hammer</span>
+					  <label>Item Name</label>
+					  <span class="item-name">Hammer</span>
 					</div>
 					<hr class="soft-gradient">
 					<div class="field">
-						<label>Price</label>
-						<span>P100</span>
+					  <label>Price</label>
+					  <span class="item-price">P100</span>
 					</div>
 					<hr class="soft-gradient">
 					<div class="field">
-						<label>Available Qty:</label>
-						<span>100</span>
+					  <label>Available Qty:</label>
+					  <span class="item-qty">100</span>
 					</div>
 					<hr class="soft-gradient">
 					<div class="field">

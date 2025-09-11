@@ -2,6 +2,7 @@ package project.borrowhen.service;
 
 import org.springframework.stereotype.Service;
 
+import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dto.InventoryDto;
 
 @Service
@@ -16,4 +17,10 @@ public interface InventoryService {
 	public InventoryDto getAllOwnedInventory(InventoryDto inDto) throws Exception;
 	
 	public void editInventory(InventoryDto inDto) throws Exception;
+	
+	
+	/*
+	 * To be used from another services
+	 */
+	public InventoryEntity getInventory(int id);
 }

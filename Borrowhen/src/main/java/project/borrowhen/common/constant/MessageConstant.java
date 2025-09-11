@@ -10,8 +10,13 @@ public class MessageConstant {
 	public static final String INVENTORY_CREATE_MSG = "A new item has been added.";
 	public static final String INVENTORY_EDIT_MSG = "An item has been edited.";
 	
+	public static final String REQUEST_CREATED_MSG = "Your borrow request has been sent to the lender for review.";
+	
 	public static final String NOT_BLANK = "This field must not be blank.";
 	public static final String QUANTITY_NOT_BLANK = "Quantity must be at least 1 and above.";
 	public static final String OWNER_BLANK = "This field mst not be blank.";
+	
+	
+	public static final String SOMETHING_WENT_WRONG = "Something went wrong!";
 	
 }
