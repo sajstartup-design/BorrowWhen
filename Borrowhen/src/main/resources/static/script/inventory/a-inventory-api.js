@@ -38,13 +38,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-async function loadInventories(page = 0) {
+async function loadInventories(page = 0, search = "") {
     try {
-        const response = await fetch(`/api/admin/inventory?page=${page}`);
+		
+		const params = new URLSearchParams({ page, search });
+				
+		const url = `/api/inventory?${params.toString()}`;
+		
+        const response = await fetch(url);
         const data = await response.json();
 		
-		
-
         updatePagination(data.pagination);
 
         const tableBody = document.getElementById("table-body");

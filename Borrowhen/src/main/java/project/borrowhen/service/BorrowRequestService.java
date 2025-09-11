@@ -1,0 +1,11 @@
+package project.borrowhen.service;
+
+import org.springframework.stereotype.Service;
+
+import project.borrowhen.dto.BorrowRequestDto;
+
+@Service
+public interface BorrowRequestService {
+
+	public void saveBorrowRequest(BorrowRequestDto inDto) throws Exception;
+}

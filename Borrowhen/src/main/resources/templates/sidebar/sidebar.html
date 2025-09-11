@@ -37,15 +37,22 @@
 			<section>
 				<p>PAYMENT</p>
 				<div class="option">
-					<span><img th:src="@{/images/history.png}"> PAYMENT</span>
+					<span><img th:src="@{/images/wallet.png}"> PAYMENT</span>
 				</div>
 			</section>
 			<hr class="soft-gradient">
 			<section>
 				<p>NOTIFICATION</p>
 				<div class="option">
-					<span><img th:src="@{/images/history.png}"> NOTIFICATIONS</span>
+					<span><img th:src="@{/images/reminder.png}"> NOTIFICATIONS</span>
 				</div>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>GUIDELINES</p>
+				<a th:href="@{/guidelines}" class="option">
+					<span><img th:src="@{/images/rules.png}"> RULES</span>
+				</a>
 			</section>
 		</th:block>	
 		
@@ -135,42 +142,42 @@
 		</th:block>
 
 		<script>
-			document.addEventListener("DOMContentLoaded", () => {
+		document.addEventListener("DOMContentLoaded", () => {
 			  const currentPath = window.location.pathname.toLowerCase();
-			
-			  // "enum" style mapping (URL keyword → menu keyword)
+
 			  const menuMap = {
 			    "/admin/dashboard": "dashboard",
 			    "/admin/inventory": "inventory",
 			    "/admin/user": "user",
 			    "/lender/inventory": "inventory",
-			    "/inventory": "inventory",
+			    "/inventory": "inventories", // matches text "INVENTORIES"
 			    "/dashboard": "dashboard",
-			    "/request": "request",
+			    "/request": "requests",      // matches text "REQUESTS"
 			    "/payment": "payment",
-			    "/history": "history"
+			    "/history": "history",
+			    "/guidelines": "rules"
 			  };
-			
+
 			  // remove any existing active classes
-			  document.querySelectorAll(".option p.active").forEach(el => el.classList.remove("active"));
-			
+			  document.querySelectorAll(".option span.active").forEach(el => el.classList.remove("active"));
+
 			  let matched = false;
-			
+
 			  for (const [url, key] of Object.entries(menuMap)) {
 			    if (currentPath.startsWith(url)) {
-			      document.querySelectorAll(".option p").forEach(p => {
-			        if (p.textContent.toLowerCase().includes(key)) {
-			          p.classList.add("active");
+			      document.querySelectorAll(".option span").forEach(span => {
+			        if (span.textContent.toLowerCase().includes(key)) {
+			          span.classList.add("active");
 			          matched = true;
 			        }
 			      });
 			      break;
 			    }
 			  }
-			
+
 			  // fallback → highlight first option
 			  if (!matched) {
-			    const first = document.querySelector(".option p");
+			    const first = document.querySelector(".option span");
 			    if (first) first.classList.add("active");
 			  }
 			});

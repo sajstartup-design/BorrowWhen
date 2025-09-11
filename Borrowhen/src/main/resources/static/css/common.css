@@ -194,7 +194,7 @@ nav section .option span img{
 	object-fit: contain;
 }
 
-nav section .option p.active
+nav section .option sp.active
 nav section .option span.active{
 	background: rgba(215, 238, 251, 1);
 	backdrop-filter: blur(10px);

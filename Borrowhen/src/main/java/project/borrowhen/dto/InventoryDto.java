@@ -32,6 +32,10 @@ public class InventoryDto {
 	@NotNull(message = MessageConstant.QUANTITY_NOT_BLANK)
 	private Integer totalQty;
 	
+	private String dateToBorrow;
+
+	private String dateToReturn;
+	
 	private List<String> allUserId;
 	
 	private List<InventoryObj> inventories;

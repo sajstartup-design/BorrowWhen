@@ -24,8 +24,7 @@ function updateBtnsModal(){
 		            modal.style.display = "flex";
 
 		           	modalBackground.addEventListener("click", (e) => {
-						console.log(e.target);
-						if (e.target === modal) {
+						if (e.target === modal || e.target.name.includes('cancel') ) {
 							modal.style.display = "none";
 							document.body.appendChild(modal);
 		                    modalBackground.remove();
