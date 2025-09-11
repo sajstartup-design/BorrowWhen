@@ -82,48 +82,12 @@ async function loadInventories(page = 0) {
 								<span class="fa fa-star"></span>
 							</div>`;
 			
-            /*const row = document.createElement("div");
-            row.classList.add("table-row");
-			row.setAttribute('data-id', inventory.encryptedId);
-			
-            row.innerHTML = `
-				<div class="table-cell">${inventory.owner}</div>
-                <div class="table-cell">${inventory.itemName}</div>
-                <div class="table-cell">₱${inventory.price}</div>
-                <div class="table-cell">${inventory.totalQty}</div>
-				<div class="table-cell">${inventory.totalQty}</div>
-                <div class="table-cell">${inventory.createdDate}</div>
-                <div class="table-cell">${inventory.updatedDate}</div>
-                <div class="table-cell">
-					<button class="edit-btn" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
-                    <button><img src="/images/delete.png"></button>
-                </div>
-            `;
-			
-			row.querySelector('.edit-btn').addEventListener('click', function(){
-				const form = document.querySelector('#editForm');
-				
-				form.querySelector('#hiddenEncryptedId').value = this.getAttribute('data-id');
-				
-				form.submit();
-			});
-			
-			row.addEventListener('click', function(e) {
-			   
-			    if (e.target.closest('button') || e.target.closest('a')) {
-			        return; 
-			    }
-				
-				const encryptedId = this.getAttribute('data-id');
-
-			    window.location.href="/admin/inventory/details?encryptedId=" + encryptedId;
-			});*/
-
-
             fragment.appendChild(item);
         });
 
         tableBody.appendChild(fragment);
+		
+		updateBtnsModal();
 
         document.querySelector(".input-page").value = data.pagination.page + 1;
 		

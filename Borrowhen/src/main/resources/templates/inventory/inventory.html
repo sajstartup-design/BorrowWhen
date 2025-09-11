@@ -117,8 +117,6 @@
 								<span class="fa fa-star"></span>
 							</div>
 						</div>
-	
-						
 					</div>
 				</div>
 			</div>
@@ -132,13 +130,49 @@
 				BORROW REQUEST
 			</div>
 			<div class="modal-body">
-				
+				<div class="field">
+					<label>Item Name</label>
+					<span>Hammer</span>
+				</div>
+				<hr class="soft-gradient">
+				<div class="field">
+					<label>Price</label>
+					<span>P100</span>
+				</div>
+				<hr class="soft-gradient">
+				<div class="field">
+					<label>Available Qty:</label>
+					<span>100</span>
+				</div>
+				<hr class="soft-gradient">
+				<div class="field">
+					<label>Date to Borrow</label>
+					<input type="date"/>
+				</div>
+				<hr class="soft-gradient">
+				<div class="field">
+					<label>Date to Return</label>
+					<input type="date"/>
+				</div>
+				<hr class="soft-gradient">
+				<div class="field">
+					<label>How Many to Borrow</label>
+					<input type="text"/>
+				</div>
+			</div>
+			<div class="modal-footer">
+				Once confirmed, this action cannot be undone.
+				<div>
+					<button>CANCEL</button>
+					<button>CONFIRM</button>
+				</div>
 			</div>
 		</div>
 	</div>
+	<script th:src="@{/script/modal.js}"></script>
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
 	<script th:src="@{/script/inventory/inventory.js}"></script>
-	<script th:src="@{/script/modal.js}"></script>
+	
 </body>
 </html>
