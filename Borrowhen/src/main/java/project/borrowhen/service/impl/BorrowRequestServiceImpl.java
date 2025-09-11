@@ -73,7 +73,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		    inDto.getDateToReturn()
 		);
 		notification.setMessage(message);
-		notification.setRead(false);
+		notification.setIsRead(false);
 		notification.setCreatedDate(dateNow);
 		notification.setUpdatedDate(dateNow);
 		notification.setIsDeleted(false);

@@ -22,7 +22,9 @@ public class NotificationEntity {
 	
 	private String message;
 	
-	private boolean isRead;
+	private Boolean isRead;
+	
+	private String type;
 	
 	private Date createdDate;
 	

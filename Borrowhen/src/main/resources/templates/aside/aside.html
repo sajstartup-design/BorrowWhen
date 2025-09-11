@@ -7,7 +7,7 @@
 <body>
 	<aside th:fragment="content">
 			<div class="profile">
-				<span class="notification-icon" data-count="3">
+				<span class="notification-icon" data-count="0">
 					<img th:src="@{/images/notification-bell.png}" alt="bell">
 				</span>			
 				<div>
@@ -32,7 +32,7 @@
 					<div class="title">Notifications</div>
 					<hr class="soft-gradient">
 					<div class="notifications-list">
-						<div class="notification">
+						<!-- div class="notification">
 							<img th:src="@{/images/approve.png}">
 							<div class="details">
 								<span>Your request has been approved by lender</span>
@@ -40,12 +40,12 @@
 							</div>							
 						</div>
 						<div class="notification">
-							<img th:src="@{/images/approve.png}">
+							<img th:src="@{/images/pending.png}">
 							<div class="details">
-								<span>Your request has been approved by lender</span>
+								<span>Julius Basas has requested to borrow 'Hammer' from 09/11/2024 to 09/11/2025 </span>
 								<span>09/11/2025</span>
 							</div>							
-						</div>
+						</div> -->
 					</div>
 					<button>SHOW ALL NOTIFICATIONS</button>
 				</div>
@@ -126,7 +126,7 @@
 			</th:block>
 			
 			
-			
+			<script th:src="@{/script/notification/notification-api.js}"></script>
 			<script>
 			document.addEventListener("DOMContentLoaded", () => {
 			    const downIcon = document.querySelector(".profile .down");
@@ -140,6 +140,7 @@
 			        settings.classList.toggle("inactive");
 
 			        if (settings.classList.contains("active")) {
+ 	
 			            // Get profile position
 			            const rect = profile.getBoundingClientRect();
 						
@@ -147,7 +148,9 @@
 			            // Position dropdown relative to profile
 			            settings.style.position = "absolute";
 			            settings.style.right = `${0}rem`;
-			      
+			            
+			            
+			      		
 			        }
 			    });
 			    
@@ -156,6 +159,9 @@
 			    	notifications.classList.toggle("inactive");
 
 			        if (notifications.classList.contains("active")) {
+
+			        	updateNotificationModal(notificationIcon);
+			        	
 			            // Get profile position
 			            const rect = profile.getBoundingClientRect();
 						
