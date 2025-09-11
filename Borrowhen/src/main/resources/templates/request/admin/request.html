@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>BW | Inventory</title>
+<title>BW | Request</title>
 <link rel="stylesheet" th:href="@{/css/common.css}" />
 <link rel="stylesheet" th:href="@{/css/inventory/inventory-view.css}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -36,23 +36,29 @@
 		</div>
 		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
 		<main>
-			<div class="content-header">INVENTORY</div>
+			<div class="content-header">BORROW REQUESTS</div>
 			<div class="content-body">
 				<div class="item-statistics">
 					<div>
-						<label><img th:src="@{/images/friends.png}" >Total Items</label>
+						<label><img th:src="@{/images/friends.png}" >Total Request</label>
+						<span>
+							100
+						</span>
+					</div>
+										<div>
+						<label><img th:src="@{/images/friends.png}" >Pending Request</label>
 						<span>
 							100
 						</span>
 					</div>
 					<div>
-						<label><img th:src="@{/images/friends.png}" >Overall Qty</label>
+						<label><img th:src="@{/images/friends.png}" >Completed Request</label>
 						<span>
 							100
 						</span>
 					</div>
 					<div>
-						<label><img th:src="@{/images/friends.png}" >Available Items</label>
+						<label><img th:src="@{/images/friends.png}" >Rejected Request</label>
 						<span>
 							100
 						</span>
@@ -61,7 +67,6 @@
 				<div class="table-container">
 					<div class="table-buttons">
 						<div class="btns">
-							<a th:href="@{/admin/inventory/create}" class="button"><img th:src="@{/images/add.png}">ADD ITEM</a>
 							<button>FILTER BY</button>
 						</div>
 						<div class="pagination">
@@ -72,13 +77,16 @@
 					</div>
 					<div class="table">
 						<div class="table-header">
-							<div class="table-cell"><img th:src="@{/images/user.png}"> OWNER</div>
-							<div class="table-cell"><img th:src="@{/images/box.png}"> ITEM</div>
+							<div class="table-cell"><img th:src="@{/images/user.png}"> BORROWER</div>
+							<div class="table-cell"><img th:src="@{/images/user.png}"> LENDER</div>
+							<div class="table-cell"><img th:src="@{/images/box.png}"> ITEM NAME</div>
 							<div class="table-cell"><img th:src="@{/images/price-tag.png}"> PRICE</div>
-							<div class="table-cell"><img th:src="@{/images/quality.png}"> TOTAL QTY</div>
-							<div class="table-cell"><img th:src="@{/images/in-stock.png}"> AVAILABLE QTY</div>
-							<div class="table-cell"><img th:src="@{/images/in-stock.png}"> CREATED DATE</div>
-							<div class="table-cell"><img th:src="@{/images/in-stock.png}"> UPDATED DATE</div>
+							<div class="table-cell"><img th:src="@{/images/quality.png}"> QTY TO BORROW</div>
+							<div class="table-cell"><img th:src="@{/images/calendar.png}"> DATE TO BORROW</div>
+							<div class="table-cell"><img th:src="@{/images/calendar.png}"> DATE TO RETURN</div>
+							<div class="table-cell"><img th:src="@{/images/rotate.png}"> STATUS</div>
+							<div class="table-cell"><img th:src="@{/images/calendar.png}"> CREATED DATE</div>
+							<div class="table-cell"><img th:src="@{/images/calendar.png}"> UPDATED DATE</div>
 							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> ACTION</div>
 						</div>
 						<div class="table-body" id="table-body">

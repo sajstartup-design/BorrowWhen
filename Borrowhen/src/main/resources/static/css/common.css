@@ -772,6 +772,7 @@ hr.soft-gradient.thin {
 	display: flex;
 	gap: 1rem;
 	flex-direction: column;
+	height: -webkit-fill-available;
 	
 }
 
