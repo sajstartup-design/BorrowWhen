@@ -8,7 +8,9 @@
 	<aside th:fragment="content">	
 			<div class="profile">
 				<span class="notification-icon" data-count="0">
-					<img th:src="@{/images/notification-bell.png}" alt="bell">
+					<span class="bell-container">
+						<img class="bell-icon" th:src="@{/images/notification-bell.png}" alt="bell">
+					</span>
 				</span>			
 				<div>
 					<label th:text="${session.role}">User</label>
@@ -32,20 +34,6 @@
 					<div class="title">Notifications</div>
 					<hr class="soft-gradient">
 					<div class="notifications-list">
-						<!-- div class="notification">
-							<img th:src="@{/images/approve.png}">
-							<div class="details">
-								<span>Your request has been approved by lender</span>
-								<span>09/11/2025</span>
-							</div>							
-						</div>
-						<div class="notification">
-							<img th:src="@{/images/pending.png}">
-							<div class="details">
-								<span>Julius Basas has requested to borrow 'Hammer' from 09/11/2024 to 09/11/2025 </span>
-								<span>09/11/2025</span>
-							</div>							
-						</div> -->
 					</div>
 					<button>SHOW ALL NOTIFICATIONS</button>
 				</div>
@@ -159,8 +147,18 @@
 			    notificationIcon.addEventListener("click", () => {
 			    	notifications.classList.toggle("active");
 			    	notifications.classList.toggle("inactive");
-
+			    	
+			    	const bellContainer = notificationIcon.querySelector('.bell-container');
+			    	
+			    	if(bellContainer) bellContainer.classList.remove('pulsating-circle');
+			    	
+			    	const bell = notificationIcon.querySelector('.bell-icon');
+			    	
+			    	if(bell) bell.classList.remove('bell');
+			    	
 			        if (notifications.classList.contains("active")) {
+
+			        	
 
 			        	updateNotificationModal(notificationIcon);
 			        	

@@ -10,9 +10,20 @@ stompClient.onConnect = (frame) => {
 	
 	stompClient.subscribe('/user/queue/lender/notifications', (notification) => {
         const data = notification.body;
-        console.log("Private lender notification:", data);
+		
+		// Add pulsating effect
+	    const notifIcon = document.querySelector('.notification-icon');
+		updateNotificationModal(notifIcon, true);
+		
+		if(notifIcon){
+			let bellContainer = notifIcon.querySelector('.bell-container');
+			bellContainer.classList.add('pulsating-circle');
+			let bellIcon = notifIcon.querySelector('.bell-icon');
+			bellIcon.classList.add('bell');
+			
+			 
+		}
 
-        updateNotificationModal(null, true);
     });
 };
 

@@ -80,6 +80,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		);
 		notification.setMessage(message);
 		notification.setIsRead(false);
+		notification.setType(CommonConstant.REQUEST_PENDING);
 		notification.setCreatedDate(dateNow);
 		notification.setUpdatedDate(dateNow);
 		notification.setIsDeleted(false);
