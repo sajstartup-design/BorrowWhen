@@ -11,24 +11,20 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="borrow_Request")
-public class BorrowRequestEntity {
+@Table(name="notifications")
+public class NotificationEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	private int inventoryId;
-	
 	private int userId;
 	
-	private Date dateToBorrow;
+	private String message;
 	
-	private Date dateToReturn;
+	private Boolean isRead;
 	
-	private int qty;
-
-	private String status;
+	private String type;
 	
 	private Date createdDate;
 	

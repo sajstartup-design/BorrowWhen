@@ -9,5 +9,30 @@ public class CommonConstant {
 	public static final String ROLE_BORROWER = "BORROWER";
 	
 	public static final String ROLE_LENDER = "LENDER";
+	
+	public static final String AVAILABLE = "AVAILABLE";
+	
+	public static final String NOT_AVAILABLE = "NOT AVAILABLE";
+	
+	public static final String PENDING = "PENDING";
+	
+	public static final String APPROVED = "APPROVED";
+	
+	public static final String REJECTED = "REJECTED";
+	
+	
+	
+	/*
+	 * For Notification Type
+	 */
+	public static final String REQUEST_PENDING = "REQUEST_PENDING";
+	
+    public static final String REQUEST_APPROVED = "REQUEST_APPROVED";
+    
+    public static final String REQUEST_REJECTED = "REQUEST_REJECTED";
+    
+    public static final String ITEM_RETURNED = "ITEM_RETURNED";
+    
+    public static final String GENERAL = "GENERAL";
 
 }

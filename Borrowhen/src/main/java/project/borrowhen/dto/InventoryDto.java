@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import project.borrowhen.common.constant.MessageConstant;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
 
@@ -31,9 +32,15 @@ public class InventoryDto {
 	@NotNull(message = MessageConstant.QUANTITY_NOT_BLANK)
 	private Integer totalQty;
 	
+	private String dateToBorrow;
+
+	private String dateToReturn;
+	
 	private List<String> allUserId;
 	
-	List<InventoryObj> inventories;
+	private List<InventoryObj> inventories;
 	
 	private PaginationObj pagination;
+	
+	private FilterAndSearchObj filter;
 }

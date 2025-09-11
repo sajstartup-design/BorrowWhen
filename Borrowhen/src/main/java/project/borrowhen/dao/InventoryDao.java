@@ -13,16 +13,35 @@ import org.springframework.data.repository.query.Param;
 import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
+import project.borrowhen.object.FilterAndSearchObj;
 
 public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	
-	public final String GET_ALL_INVENTORY = "SELECT new project.borrowhen.dao.entity.InventoryData(e.id, u.firstName, u.familyName, e.itemName, e.price, e.totalQty, e.createdDate, e.updatedDate)"
-			+ "FROM InventoryEntity e "
-			+ "LEFT JOIN UserEntity u ON u.id = e.userId "
-			+ "WHERE e.isDeleted = false ";
+	public final String GET_ALL_INVENTORY =
+		    "SELECT new project.borrowhen.dao.entity.InventoryData(" +
+		    " e.id, u.firstName, u.familyName, e.itemName, e.price, e.totalQty, e.createdDate, e.updatedDate) " +
+		    "FROM InventoryEntity e " +
+		    "LEFT JOIN UserEntity u ON u.id = e.userId " +
+		    "WHERE e.isDeleted = false " +
+		    "AND ( " +
+		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
+		    "       LOWER(e.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.familyName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       CAST(e.price AS string) LIKE CONCAT('%', :search, '%') OR " +
+		    "       CAST(e.totalQty AS string) LIKE CONCAT('%', :search, '%')" +
+		    "   )) " +
+		    "   OR (:search IS NULL OR :search = '') " +
+		    ")";
+
+
 
 	@Query(value=GET_ALL_INVENTORY)
-	public Page<InventoryData> getAllInventory(Pageable pageable) throws DataAccessException;
+	public Page<InventoryData> getAllInventory(Pageable pageable, 
+			@Param("search") String search) throws DataAccessException;
+	
+	
+	
 	
 	public final String GET_ALL_OWNER_INVENTORY = "SELECT new project.borrowhen.dao.entity.InventoryData(e.id, e.itemName, e.price, e.totalQty)"
 			+ "FROM InventoryEntity e "

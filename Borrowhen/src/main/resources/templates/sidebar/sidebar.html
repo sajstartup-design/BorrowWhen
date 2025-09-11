@@ -17,32 +17,49 @@
 			<section>
 				<p>MAIN</p>
 				<a th:href="@{/dashboard}" class="option">
-					<p class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</p>
+					<span class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</span>
 				</a>
 				<a th:href="@{/inventory}" class="option">
-					<p><img th:src="@{/images/supplies.png}"> INVENTORIES</p>
+					<span><img th:src="@{/images/supplies.png}"> INVENTORIES</span>
+				</a>
+				<a th:href="@{/request}" class="option">
+					<span><img th:src="@{/images/supplies.png}"> REQUESTS</span>
 				</a>
 			</section>
 			<hr class="soft-gradient">
 			<section>
 				<p>HISTORY</p>
 				<div class="option">
-					<p><img th:src="@{/images/history.png}"> HISTORY</p>
+					<span><img th:src="@{/images/history.png}"> HISTORY</span>
 				</div>
 			</section>
 			<hr class="soft-gradient">
 			<section>
 				<p>PAYMENT</p>
 				<div class="option">
-					<p><img th:src="@{/images/history.png}"> PAYMENT</p>
+					<span><img th:src="@{/images/wallet.png}"> PAYMENT</span>
 				</div>
 			</section>
 			<hr class="soft-gradient">
 			<section>
 				<p>NOTIFICATION</p>
 				<div class="option">
-					<p><img th:src="@{/images/history.png}"> NOTIFICATIONS</p>
+					<span><img th:src="@{/images/reminder.png}"> NOTIFICATIONS</span>
 				</div>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>GUIDELINES</p>
+				<a th:href="@{/support}" class="option">
+					<span><img th:src="@{/images/rules.png}"> SUPPORT</span>
+				</a>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>SUPPORT</p>
+				<a th:href="@{/guidelines/rules}" class="option">
+					<span><img th:src="@{/images/rules.png}"> RULES</span>
+				</a>
 			</section>
 		</th:block>	
 		
@@ -53,28 +70,42 @@
 			<section>
 				<p>MAIN</p>
 				<a th:href="@{/lender/dashboard}" class="option">
-					<p class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</p>
+					<span class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</span>
 				</a>
 				<a th:href="@{/lender/inventory}" class="option">
-					<p><img th:src="@{/images/supplies.png}"> INVENTORY</p>
+					<span><img th:src="@{/images/supplies.png}"> INVENTORY</span>
 				</a>
-				<div class="option">
-					<p><img th:src="@{/images/request.png}"> REQUEST</p>
-				</div>
+				<a th:href="@{/lender/inventory}" class="option">
+					<span><img th:src="@{/images/supplies.png}"> REQUEST</span>
+				</a>
 			</section>
 			<hr class="soft-gradient">
 			<section>
 				<p>HISTORY</p>
 				<div class="option">
-					<p><img th:src="@{/images/history.png}"> HISTORY</p>
+					<span><img th:src="@{/images/history.png}"> HISTORY</span>
 				</div>
 			</section>
 			<hr class="soft-gradient">
 			<section>
 				<p>PAYMENT</p>
 				<div class="option">
-					<p><img th:src="@{/images/history.png}"> PAYMENT</p>
+					<span><img th:src="@{/images/history.png}"> PAYMENT</span>
 				</div>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>GUIDELINES</p>
+				<a th:href="@{/support}" class="option">
+					<span><img th:src="@{/images/rules.png}"> SUPPORT</span>
+				</a>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>SUPPORT</p>
+				<a th:href="@{/guidelines/rules}" class="option">
+					<span><img th:src="@{/images/rules.png}"> RULES</span>
+				</a>
 			</section>
 		</th:block>	
 			
@@ -85,13 +116,13 @@
 		    <section>
 		        <p>MAIN</p>
 		        <a th:href="@{/admin/dashboard}" class="option">
-		            <p class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</p>
+		            <span class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</span>
 		        </a>
 		        <a th:href="@{/admin/inventory}" class="option">
-		            <p><img th:src="@{/images/supplies.png}"> ALL INVENTORY</p>
+		            <span><img th:src="@{/images/supplies.png}"> ALL INVENTORY</span>
 		        </a>
 		        <div class="option">
-		            <p><img th:src="@{/images/request.png}"> ALL REQUEST</p>
+		            <span><img th:src="@{/images/request.png}"> ALL REQUEST</span>
 		        </div>
 		    </section>
 		    <hr class="soft-gradient">
@@ -99,7 +130,7 @@
 		    <section>
 		        <p>HISTORY</p>
 		        <div class="option">
-		            <p><img th:src="@{/images/history.png}"> HISTORY</p>
+		            <span><img th:src="@{/images/history.png}"> HISTORY</span>
 		        </div>
 		    </section>
 		    <hr class="soft-gradient">
@@ -107,10 +138,10 @@
 		    <section>
 		        <p>LOGS</p>
 		        <div class="option">
-		            <p><img th:src="@{/images/history.png}"> REQUEST LOGS</p>
+		            <span><img th:src="@{/images/history.png}"> REQUEST LOGS</span>
 		        </div>
 		        <div class="option">
-		            <p><img th:src="@{/images/history.png}"> PAYMENT LOGS</p>
+		            <span><img th:src="@{/images/history.png}"> PAYMENT LOGS</span>
 		        </div>
 		    </section>
 		    <hr class="soft-gradient">
@@ -118,7 +149,7 @@
 		    <section>
 		        <p>PAYMENT</p>
 		        <div class="option">
-		            <p><img th:src="@{/images/history.png}"> PAYMENT</p>
+		            <span><img th:src="@{/images/history.png}"> PAYMENT</span>
 		        </div>
 		    </section>
 		    <hr class="soft-gradient">
@@ -126,51 +157,36 @@
 		    <section class="admin-settings">
 		        <p>USERS</p>
 		        <a th:href="@{/admin/user}" class="option">
-		            <p><img th:src="@{/images/friends.png}"> USER</p>
+		            <span><img th:src="@{/images/friends.png}"> USER</span>
 		        </a>
 		    </section>
 		</th:block>
 
 		<script>
-			document.addEventListener("DOMContentLoaded", () => {
-			  const currentPath = window.location.pathname.toLowerCase();
-			
-			  // "enum" style mapping (URL keyword → menu keyword)
-			  const menuMap = {
-			    "/admin/dashboard": "dashboard",
-			    "/admin/inventory": "inventory",
-			    "/admin/user": "user",
-			    "/lender/inventory": "inventory",
-			    "/inventory": "inventory",
-			    "/dashboard": "dashboard",
-			    "/request": "request",
-			    "/payment": "payment",
-			    "/history": "history"
-			  };
-			
+		document.addEventListener("DOMContentLoaded", () => {
+			const currentPath = window.location.pathname.toLowerCase().replaceAll("/", "");
+
 			  // remove any existing active classes
-			  document.querySelectorAll(".option p.active").forEach(el => el.classList.remove("active"));
-			
-			  let matched = false;
-			
-			  for (const [url, key] of Object.entries(menuMap)) {
-			    if (currentPath.startsWith(url)) {
-			      document.querySelectorAll(".option p").forEach(p => {
-			        if (p.textContent.toLowerCase().includes(key)) {
-			          p.classList.add("active");
-			          matched = true;
-			        }
-			      });
-			      break;
-			    }
-			  }
-			
-			  // fallback → highlight first option
-			  if (!matched) {
-			    const first = document.querySelector(".option p");
-			    if (first) first.classList.add("active");
-			  }
+			  document.querySelectorAll(".option span.active").forEach(el =>
+			    el.classList.remove("active")
+			  );
+
+			  // loop through each <a class="option">
+			  document.querySelectorAll(".option").forEach(option => {
+				  const href = option.tagName === "A" && option.getAttribute("href")
+				    ? option.getAttribute("href").toLowerCase().replaceAll("/", "")
+				    : "";
+
+				  if (option.tagName === "A" && currentPath.includes(href)) {
+				    const span = option.querySelector("span");
+				    if (span) {
+				      span.classList.add("active");
+				    }
+				  }
+				});
+
 			});
+
 			</script>
 
 	</nav>

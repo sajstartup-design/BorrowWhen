@@ -43,8 +43,6 @@ async function loadInventories(page = 0) {
         const response = await fetch(`/api/lender/inventory?page=${page}`);
         const data = await response.json();
 		
-		console.log(data);
-
         updatePagination(data.pagination);
 
         const tableBody = document.getElementById("table-body");

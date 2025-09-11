@@ -12,12 +12,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.dao.InventoryDao;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.InventoryDto;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.InventoryService;
@@ -55,6 +57,7 @@ public class InventoryServiceImpl implements InventoryService{
 		inventory.setItemName(inDto.getItemName());
 		inventory.setPrice(inDto.getPrice());
 		inventory.setTotalQty(inDto.getTotalQty());
+		inventory.setStatus(CommonConstant.AVAILABLE);
 		inventory.setCreatedDate(dateNow);
 		inventory.setUpdatedDate(dateNow);
 		inventory.setIsDeleted(false);
@@ -70,7 +73,9 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(MAX_USER_DISPLAY));
 		
-		Page<InventoryData> allInventories = inventoryDao.getAllInventory(pageable); 
+		FilterAndSearchObj filter = inDto.getFilter();
+		
+		Page<InventoryData> allInventories = inventoryDao.getAllInventory(pageable, filter.getSearch()); 
 		
 		List<InventoryObj> inventories = new ArrayList<>();
 		
@@ -184,5 +189,12 @@ public class InventoryServiceImpl implements InventoryService{
 				dateNow);
 		
 	
+	}
+
+	@Override
+	public InventoryEntity getInventory(int id) {
+		
+		return inventoryDao.getInventory(id);
+		
 	}
 }

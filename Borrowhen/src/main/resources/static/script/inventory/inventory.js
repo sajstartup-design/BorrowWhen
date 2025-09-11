@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const inputPage = document.querySelector('.input-page');
+	const search = document.querySelector('.search');
 
     // Load first page
     loadInventories(0);
@@ -34,16 +35,37 @@ document.addEventListener("DOMContentLoaded", () => {
             loadInventories(newPage - 1);
         });
     }
+	
+	if (search) {
+	    let typingTimer; 
+	    const delay = 500; 
+
+	    search.addEventListener('input', function () {
+	        clearTimeout(typingTimer); 
+
+	        const currentPage = 0;
+	        const searchValue = this.value;
+
+	        typingTimer = setTimeout(() => {
+				createLoadingScreenBody();
+	            loadInventories(currentPage, searchValue);
+	        }, delay);
+	    });
+	}
 
 });
 
 
-async function loadInventories(page = 0) {
+async function loadInventories(page = 0, 
+	search = ""
+) {
     try {
-        const response = await fetch(`/api/inventory?page=${page}`);
-        const data = await response.json();
 		
-		console.log(data);
+		const params = new URLSearchParams({ page, search });
+		
+		const url = `/api/inventory?${params.toString()}`;
+		const response = await fetch(url);
+        const data = await response.json();
 
         updatePagination(data.pagination);
 
@@ -52,80 +74,56 @@ async function loadInventories(page = 0) {
 
         const fragment = document.createDocumentFragment();
 
-        data.inventories.forEach(inventory => {
+		if(data.inventories){
 			
-			const item = document.createElement('div');
-			item.classList.add("item-container");
-			
-			item.innerHTML = `<div class="item-details">
-								<div class="ribbon green"><span>AVAILABLE</span></div>
-								<span class="item-name">
-								    ${inventory.itemName}
-								</span>
-								<span class="item-price">
-									₱${inventory.price}
-								</span>
-								<span class="item-quantity">
-									Quantity Left: ${inventory.totalQty}
-								</span>
-								<hr class="soft-gradient">
-								<span class="lender-name">Lender: ${inventory.owner}</span>
-							</div>
-							<div class="item-btns">
-								<button class="borrow-btn" data-toggle="modal" data-target="#borrowModal">BORROW</button>
-							</div>
-							<div class="item-ratings">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>`;
-			
-            /*const row = document.createElement("div");
-            row.classList.add("table-row");
-			row.setAttribute('data-id', inventory.encryptedId);
-			
-            row.innerHTML = `
-				<div class="table-cell">${inventory.owner}</div>
-                <div class="table-cell">${inventory.itemName}</div>
-                <div class="table-cell">₱${inventory.price}</div>
-                <div class="table-cell">${inventory.totalQty}</div>
-				<div class="table-cell">${inventory.totalQty}</div>
-                <div class="table-cell">${inventory.createdDate}</div>
-                <div class="table-cell">${inventory.updatedDate}</div>
-                <div class="table-cell">
-					<button class="edit-btn" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
-                    <button><img src="/images/delete.png"></button>
-                </div>
-            `;
-			
-			row.querySelector('.edit-btn').addEventListener('click', function(){
-				const form = document.querySelector('#editForm');
+	        data.inventories.forEach(inventory => {
 				
-				form.querySelector('#hiddenEncryptedId').value = this.getAttribute('data-id');
+				const item = document.createElement('div');
+				item.classList.add("item-container");
 				
-				form.submit();
-			});
+				item.innerHTML = `<div class="item-details">
+									<div class="ribbon green"><span>AVAILABLE</span></div>
+									<span class="item-name">
+									    ${inventory.itemName}
+									</span>
+									<span class="item-price">
+										₱${inventory.price}
+									</span>
+									<span class="item-quantity">
+										Quantity Left: ${inventory.totalQty}
+									</span>
+									<hr class="soft-gradient">
+									<span class="lender-name">Lender: ${inventory.owner}</span>
+								</div>
+								<div class="item-btns">
+									<button 
+									  class="borrow-btn" 
+									  data-toggle="modal" 
+									  data-target="#borrowModal"
+									  data-id="${inventory.encryptedId}"
+									  data-name="${inventory.itemName}"
+									  data-price="${inventory.price}"
+									  data-qty="${inventory.totalQty}">
+									  BORROW
+									</button>
+								</div>
+								<div class="item-ratings">
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star"></span>
+									<span class="fa fa-star"></span>
+								</div>`;
+				
+	            fragment.appendChild(item);
+	        });
+	
+	        tableBody.appendChild(fragment);
 			
-			row.addEventListener('click', function(e) {
-			   
-			    if (e.target.closest('button') || e.target.closest('a')) {
-			        return; 
-			    }
-				
-				const encryptedId = this.getAttribute('data-id');
-
-			    window.location.href="/admin/inventory/details?encryptedId=" + encryptedId;
-			});*/
-
-
-            fragment.appendChild(item);
-        });
-
-        tableBody.appendChild(fragment);
-
-        document.querySelector(".input-page").value = data.pagination.page + 1;
+			updateBtnsModal();
+	
+	        document.querySelector(".input-page").value = data.pagination.page + 1;
+		}
 		
 		removeLoadingScreenBody();
 

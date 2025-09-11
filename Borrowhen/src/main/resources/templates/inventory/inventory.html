@@ -48,13 +48,20 @@
 						<div class="filter-title">FILTERS</div>
 						<hr class="soft-gradient">
 						<section>
+							<p>CATEGORY</p>
+							<div>
+								<label>UNDER CONSTRUCTION</label>
+							</div>
+						</section>
+						<hr class="soft-gradient">
+						<section>
 							<p>AVAILABILITY</p>
 							<div>
-								<input type="checkbox" />
+								<input type="checkbox" value="AVAILABLE" class="available"/>
 								<label>Available</label>
 							</div>
 							<div>
-								<input type="checkbox" />
+								<input type="checkbox" value="NOT AVAILABLE" class="not-available"/>
 								<label>Not Available</label>
 							</div>
 						</section>
@@ -72,6 +79,21 @@
 						<hr class="soft-gradient">
 						<section>
 							<p>PRICE</p>
+							<div>
+								<input type="checkbox" value="NOT AVAILABLE" class="not-available"/>
+								<label>Highest Price</label>
+							</div>
+							<div>
+								<input type="checkbox" value="NOT AVAILABLE" class="not-available"/>
+								<label>Lowest Price</label>
+							</div>
+							<div class="price-range">
+								<input type="range" name="price" min="0" max="500" value="50" step="1" oninput="document.getElementById('priceValue').textContent = this.value">
+							</div>
+						</section>
+						<hr class="soft-gradient">
+						<section>
+							<p>QUANTITY</p>
 							<div class="price-range">
 								<input type="range" name="price" min="0" max="500" value="50" step="1" oninput="document.getElementById('priceValue').textContent = this.value">
 							</div>
@@ -82,7 +104,7 @@
 					<div class="item-nav">
 						<div class="search-filter">
 							<button>SEARCH</button>
-							<input type="search" placeholder="Search"/>
+							<input type="search" placeholder="Search" class="search"/>
 						</div>
 						<div class="pagination">
 							<button class="prev-btn"><img th:src="@{/images/left-arrow.png}"/> PREV</button>
@@ -91,33 +113,6 @@
 						</div>					
  					</div>
 					<div class="items-body" id="items-body">
-						<div class="item-container">
-							<div class="item-details">
-								<div class="ribbon green"><span>AVAILABLE</span></div>
-								<span class="item-name">
-								    Hammer 
-								</span>
-								<span class="item-price">
-									₱100
-								</span>
-								<span class="item-quantity">
-									Quantity Left: 10
-								</span>
-								<hr class="soft-gradient">
-								<span class="lender-name">Lender: Julius Basas</span>
-							</div>
-							<div class="item-btns">
-								<button class="borrow-btn" data-toggle="modal" data-target="#borrowModal">BORROW</button>
-							</div>
-							<div class="item-ratings">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-						</div>
-	
 						
 					</div>
 				</div>
@@ -132,13 +127,53 @@
 				BORROW REQUEST
 			</div>
 			<div class="modal-body">
-				
+				<form id="requestForm" th:action="@{/inventory/request}" method="POST">
+					<input type="hidden" name="encryptedId" value="" id="encryptedId"/>
+					
+					<div class="field">
+					  <label>Item Name</label>
+					  <span class="item-name">Hammer</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+					  <label>Price</label>
+					  <span class="item-price">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+					  <label>Available Qty:</label>
+					  <span class="item-qty">100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Borrow</label>
+						<input type="date" name="dateToBorrow" required/>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Return</label>
+						<input type="date" name="dateToReturn" required/>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>How Many to Borrow</label>
+						<input type="text" name="qty" required/>
+					</div>
+				</form>	
+			</div>
+			<div class="modal-footer">
+				Once confirmed, this action cannot be undone.
+				<div>
+					<button class="cancel" name="cancel">CANCEL</button>
+					<button form="requestForm">CONFIRM</button>
+				</div>
 			</div>
 		</div>
 	</div>
+	<script th:src="@{/script/modal.js}"></script>
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
 	<script th:src="@{/script/inventory/inventory.js}"></script>
-	<script th:src="@{/script/modal.js}"></script>
+	
 </body>
 </html>
