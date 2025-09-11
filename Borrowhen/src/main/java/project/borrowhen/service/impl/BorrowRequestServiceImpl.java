@@ -3,8 +3,14 @@ package project.borrowhen.service.impl;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +18,17 @@ import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.BorrowRequestDao;
+import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
+import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.BorrowRequestDto;
+import project.borrowhen.dto.InventoryDto;
+import project.borrowhen.object.BorrowRequestObj;
+import project.borrowhen.object.FilterAndSearchObj;
+import project.borrowhen.object.InventoryObj;
 import project.borrowhen.service.BorrowRequestService;
 import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.NotificationService;
@@ -42,6 +54,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	
 	@Autowired
 	private CipherUtil cipherUtil;
+	
+	@Value("${inventory.max.display}")
+	private String MAX_INVENTORY_DISPLAY;
 
 	@Override
 	public void saveBorrowRequest(BorrowRequestDto inDto) throws Exception {
@@ -96,5 +111,49 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		);
 		
 	}
+
+	@Override
+	public BorrowRequestDto getAllBorrowRequest(BorrowRequestDto inDto) throws Exception {
+	    
+	    BorrowRequestDto outDto = new BorrowRequestDto();
+	    
+	    Pageable pageable = PageRequest.of(
+	        inDto.getPagination().getPage(),
+	        Integer.valueOf(MAX_INVENTORY_DISPLAY)
+	    );
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllBorrowRequests(pageable);
+	    
+	    List<BorrowRequestObj> requests = new ArrayList<>();
+	    
+	    for (BorrowRequestData request : allRequests) {
+	        BorrowRequestObj obj = new BorrowRequestObj();
+	        
+	        String borrowerFullName = request.getBorrowerFirstName() + " " + request.getBorrowerFamilyName();
+	        obj.setBorrower(borrowerFullName.trim());
+	        
+	        String lenderFullName = request.getLenderFirstName() + " " + request.getLenderFamilyName();
+	        obj.setLender(lenderFullName.trim());
+	        
+	        obj.setItemName(request.getItemName());
+	        obj.setPrice(request.getPrice());
+	        obj.setQty(request.getQty());
+	        obj.setDateToBorrow(request.getDateToBorrow());
+	        obj.setDateToReturn(request.getDateToReturn());
+	        obj.setStatus(request.getStatus());
+			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(request.getCreatedDate()));
+			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(request.getUpdatedDate()));		
+	        
+	        requests.add(obj);
+	    }
+	    
+	    outDto.setRequests(requests);
+	    outDto.setPagination(inDto.getPagination());
+	    outDto.getPagination().setTotalPages(allRequests.getTotalPages());
+	    outDto.getPagination().setTotalElements(allRequests.getTotalElements());
+	    
+	    return outDto;
+	}
+
 
 }

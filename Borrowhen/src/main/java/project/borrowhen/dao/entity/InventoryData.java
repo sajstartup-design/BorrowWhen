@@ -1,6 +1,5 @@
 package project.borrowhen.dao.entity;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.springframework.context.annotation.Scope;

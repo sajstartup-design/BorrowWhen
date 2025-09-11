@@ -38,12 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-async function loadInventories(page = 0, search = "") {
+async function loadInventories(page = 0) {
     try {
 		
-		const params = new URLSearchParams({ page, search });
+		const params = new URLSearchParams({ page });
 				
-		const url = `/api/admin/inventory?${params.toString()}`;
+		const url = `/api/admin/request?${params.toString()}`;
 		
         const response = await fetch(url);
         const data = await response.json();
@@ -55,32 +55,40 @@ async function loadInventories(page = 0, search = "") {
 
         const fragment = document.createDocumentFragment();
 
-        data.inventories.forEach(inventory => {
+        data.requests.forEach(request => {
             const row = document.createElement("div");
             row.classList.add("table-row");
-			row.setAttribute('data-id', inventory.encryptedId);
+			row.setAttribute('data-id', request.encryptedId);
 			
             row.innerHTML = `
-				<div class="table-cell">${inventory.owner}</div>
-                <div class="table-cell">${inventory.itemName}</div>
-                <div class="table-cell">₱${inventory.price}</div>
-                <div class="table-cell">${inventory.totalQty}</div>
-				<div class="table-cell">${inventory.totalQty}</div>
-                <div class="table-cell">${inventory.createdDate}</div>
-                <div class="table-cell">${inventory.updatedDate}</div>
-                <div class="table-cell">
-					<button class="edit-btn" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
+				<div class="table-cell">${request.borrower}</div>
+				<div class="table-cell">${request.lender}</div>
+                <div class="table-cell">${request.itemName}</div>
+                <div class="table-cell">₱${request.price}</div>
+                <div class="table-cell">${request.qty}</div>
+				<div class="table-cell">${request.dateToBorrow}</div>
+                <div class="table-cell">${request.dateToReturn}</div>
+				<div class="table-cell">
+				  <span class="status ${request.status?.toLowerCase()}">
+				    <span>${request.status}</span>
+				  </span>
+				</div>
+                <div class="table-cell">${request.createdDate}</div>
+                <div class="table-cell">${request.updatedDate}</div>
+                <div class="table-cell">     
+					<button><img src="/images/approved.png"></button>
+					<button><img src="/images/rejected.png"></button>
                     <button><img src="/images/delete.png"></button>
                 </div>
             `;
 			
-			row.querySelector('.edit-btn').addEventListener('click', function(){
+			/*row.querySelector('.edit-btn').addEventListener('click', function(){
 				const form = document.querySelector('#editForm');
 				
 				form.querySelector('#hiddenEncryptedId').value = this.getAttribute('data-id');
 				
 				form.submit();
-			});
+			});*/
 			
 			row.addEventListener('click', function(e) {
 			   
