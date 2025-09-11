@@ -2,7 +2,11 @@ const openedModals = new WeakSet();
 
 // 🔹 Run this once on page load
 document.addEventListener("DOMContentLoaded", async () => {
-    try {
+    updateNotificationCount()
+});
+
+async function updateNotificationCount(){
+	try {
         const countUrl = `/api/notifications/count`;
         const res = await fetch(countUrl);
         const data = await res.json();
@@ -14,11 +18,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.error("Error fetching inventory count:", error);
     }
-});
+}
 
-async function updateNotificationModal(e) {
+async function updateNotificationModal(e, refresh=false) {
     try {
-        if (!openedModals.has(e)) {
+        if (!openedModals.has(e) || refresh) {
+			
+			if(refresh){
+				updateNotificationCount();
+			}
+			
             const notificationIcon = document.querySelector('.notification-icon');
             const notificationsList = document.querySelector(".notifications-list");
 

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import project.borrowhen.common.constant.CommonConstant;
@@ -34,6 +35,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	@Autowired
 	private InventoryService inventoryService;
 	
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+	
 	@Autowired
 	private CipherUtil cipherUtil;
 
@@ -47,6 +51,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
 		
 		InventoryEntity inventory = inventoryService.getInventory(id);
+		
+		UserEntity lender = userService.getUser(inventory.getUserId());
 		
 		BorrowRequestEntity request = new BorrowRequestEntity();
 		
@@ -79,6 +85,12 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		notification.setIsDeleted(false);
 		
 		notificationService.saveNotification(notification);	
+		
+		messagingTemplate.convertAndSendToUser(
+			lender.getUserId().toString(),   
+		    "/queue/lender/notifications",           
+		    message                           
+		);
 		
 	}
 
