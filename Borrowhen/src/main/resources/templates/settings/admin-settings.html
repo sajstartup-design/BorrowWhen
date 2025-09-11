@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BW | Settings</title>
+<link rel="stylesheet" th:href="@{/css/settings/admin-settings.css}" />
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+</head>
+<body>
+	<div class="container">
+		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
+		<main>
+			<div class="content-header">RULES</div>
+			<div class="content-body">
+				<form th:object="${adminSettingsDto}" th:action="@{/admin/settings}" method="POST" id="saveForm">
+					<div class="rule-container">
+						<div>🔢 PAGINATION</div>
+						<hr class="soft-gradient">
+						<div>
+						    <div class="field">
+						    	<label>USERS PER PAGE</label>
+						    	<input type="text" name="userPerPage" th:value="${settings.userPerPage}" />
+						    </div>
+						</div>
+						<hr class="soft-gradient">
+						<div>
+						    <div class="field">
+						    	<label>INVENTORY PER PAGE</label>
+						    	<input type="text" name="inventoryPerPage" th:value="${settings.inventoryPerPage}"/>
+						    </div>
+						</div>
+						<hr class="soft-gradient">
+						<div>
+						    <div class="field">
+						    	<label>REQUEST PER PAGE</label>
+						    	<input type="text" name="requestPerPage" th:value="${settings.requestPerPage}"/>
+						    </div>
+						</div>
+					</div>
+					<div class="rule-container">
+						<div>🔢 AVAILABILITY</div>
+						<hr class="soft-gradient">
+						<div>
+						    <div class="field">
+						    	<label>SHOW NOTIFICATION</label>
+						    	<select name="showNotificationPage">
+						    		<option>TRUE</option>
+						    		<option>FALSE</option>
+						    	</select>
+						    </div>
+						</div>
+						<hr class="soft-gradient">
+						<div>
+						    <div class="field">
+						    	<label>SHOW DASHBOARD</label>
+						    	<select name="showDashboardPage">
+						    		<option>TRUE</option>
+						    		<option>FALSE</option>
+						    	</select>
+						    </div>
+						</div>
+						<hr class="soft-gradient">
+						<div>
+						    <div class="field">
+						    	<label>SHOW HISTORY</label>
+						    	<select name="showHistoryPage">
+						    		<option>TRUE</option>
+						    		<option>FALSE</option>
+						    	</select>
+						    </div>
+						</div>
+						<hr class="soft-gradient">
+						<div>
+						    <div class="field">
+						    	<label>SHOW PAYMENT</label>
+						    	<select name="showPaymentPage">
+						    		<option>TRUE</option>
+						    		<option>FALSE</option>
+						    	</select>
+						    </div>
+						</div>
+					</div>
+					<div class="btns">
+						<a class="button" th:href="@{/admin/dashboard}">BACK</a>
+						<button class="save-btn">SAVE</button>
+					</div>
+				</form>
+			</div>
+		</main>
+		<aside th:replace="~{aside/aside :: content}"></aside>
+	</div>
+	<script th:src="@{/script/loading.js}"></script>
+	<script th:src="@{/script/submit.js}"></script>
+</body>
+</html>

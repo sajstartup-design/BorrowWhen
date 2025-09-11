@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
+import project.borrowhen.dao.AdminSettingsDao;
 import project.borrowhen.dao.InventoryDao;
+import project.borrowhen.dao.entity.AdminSettingsEntity;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.UserEntity;
@@ -24,6 +26,7 @@ import project.borrowhen.dto.InventoryDto;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
+import project.borrowhen.service.AdminSettingsInitService;
 import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.UserService;
 
@@ -39,10 +42,13 @@ public class InventoryServiceImpl implements InventoryService{
 	@Autowired
 	private CipherUtil cipherUtil;
 	
-	@Value("${inventory.max.display}")
-	private String MAX_INVENTORY_DISPLAY;
+	private final int MAX_INVENTORY_DISPLAY;
 
-	@Override
+    public InventoryServiceImpl(AdminSettingsInitService adminSettingsService) {
+        this.MAX_INVENTORY_DISPLAY = adminSettingsService.getSettings().getInventoryPerPage();
+    }
+
+	@Override 
 	public void saveInventory(InventoryDto inDto) throws Exception {
 		
 		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();

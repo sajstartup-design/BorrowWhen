@@ -20,4 +20,6 @@ public class MessageConstant {
 	
 	public static final String SOMETHING_WENT_WRONG = "Something went wrong!";
 	
+	public static final String SETTINGS_UPDATE = "Admin settings have been updated.";
+	
 }
