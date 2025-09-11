@@ -9,5 +9,9 @@ public class CommonConstant {
 	public static final String ROLE_BORROWER = "BORROWER";
 	
 	public static final String ROLE_LENDER = "LENDER";
+	
+	public static final String AVAILABLE = "AVAILABLE";
+	
+	public static final String NOT_AVAILABLE = "NOT AVAILABLE";
 
 }

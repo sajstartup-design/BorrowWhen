@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 </head>
 <body>
 	<aside th:fragment="content">
 			<div class="profile">
-				<span class="notification" data-count="3">
+				<span class="notification-icon" data-count="3">
 					<img th:src="@{/images/notification-bell.png}" alt="bell">
 				</span>			
 				<div>
@@ -27,14 +28,111 @@
 					    <button type="submit">Logout</button>
 					</form>
 				</div>
+				<div class="notifications inactive">
+					<div class="title">Notifications</div>
+					<hr class="soft-gradient">
+					<div class="notifications-list">
+						<div class="notification">
+							<img th:src="@{/images/approve.png}">
+							<div class="details">
+								<span>Your request has been approved by lender</span>
+								<span>09/11/2025</span>
+							</div>							
+						</div>
+						<div class="notification">
+							<img th:src="@{/images/approve.png}">
+							<div class="details">
+								<span>Your request has been approved by lender</span>
+								<span>09/11/2025</span>
+							</div>							
+						</div>
+					</div>
+					<button>SHOW ALL NOTIFICATIONS</button>
+				</div>
 			</div>
-			<div class="content">
 			
-			</div>
+			<th:block sec:authorize="hasAuthority('BORROWER')">
+				<div class="content">
+					<div class="title">
+						Currently Borrowed
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Hammer</span>
+						<span>09/05/2025 → 09/11/2025</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Hammer</span>
+						<span>09/05/2025 → 09/11/2025</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Hammer</span>
+						<span>09/05/2025 → 09/11/2025</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Hammer</span>
+						<span>09/05/2025 → 09/11/2025</span>
+					</div>
+				</div>
+				
+				<div class="content">
+					<div class="title">
+						Items to return
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+						<span>Return by: 09/20/2025</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+						<span>Return by: 09/20/2025</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+						<span>Return by: 09/20/2025</span>
+					</div>
+				</div>
+				
+				<div class="content">
+					<div class="title">
+						Pending Request
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+					</div>
+				</div>
+			
+			</th:block>
+			
+			
+			
 			<script>
 			document.addEventListener("DOMContentLoaded", () => {
 			    const downIcon = document.querySelector(".profile .down");
+			    const notificationIcon = document.querySelector('.profile .notification-icon'); 
 			    const settings = document.querySelector(".profile .settings");
+			    const notifications = document.querySelector('.profile .notifications');
 			    const profile = document.querySelector(".profile");
 
 			    downIcon.addEventListener("click", () => {
@@ -49,6 +147,22 @@
 			            // Position dropdown relative to profile
 			            settings.style.position = "absolute";
 			            settings.style.right = `${0}rem`;
+			      
+			        }
+			    });
+			    
+			    notificationIcon.addEventListener("click", () => {
+			    	notifications.classList.toggle("active");
+			    	notifications.classList.toggle("inactive");
+
+			        if (notifications.classList.contains("active")) {
+			            // Get profile position
+			            const rect = profile.getBoundingClientRect();
+						
+			            console.log(rect);
+			            // Position dropdown relative to profile
+			            notifications.style.position = "absolute";
+			            notifications.style.right = `${0}rem`;
 			      
 			        }
 			    });
