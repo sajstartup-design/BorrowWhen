@@ -50,7 +50,14 @@
 			<hr class="soft-gradient">
 			<section>
 				<p>GUIDELINES</p>
-				<a th:href="@{/guidelines}" class="option">
+				<a th:href="@{/support}" class="option">
+					<span><img th:src="@{/images/rules.png}"> SUPPORT</span>
+				</a>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>SUPPORT</p>
+				<a th:href="@{/guidelines/rules}" class="option">
 					<span><img th:src="@{/images/rules.png}"> RULES</span>
 				</a>
 			</section>
@@ -85,6 +92,20 @@
 				<div class="option">
 					<span><img th:src="@{/images/history.png}"> PAYMENT</span>
 				</div>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>GUIDELINES</p>
+				<a th:href="@{/support}" class="option">
+					<span><img th:src="@{/images/rules.png}"> SUPPORT</span>
+				</a>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>SUPPORT</p>
+				<a th:href="@{/guidelines/rules}" class="option">
+					<span><img th:src="@{/images/rules.png}"> RULES</span>
+				</a>
 			</section>
 		</th:block>	
 			
@@ -143,44 +164,31 @@
 
 		<script>
 		document.addEventListener("DOMContentLoaded", () => {
-			  const currentPath = window.location.pathname.toLowerCase();
+			const currentPath = window.location.pathname.toLowerCase().replaceAll("/", "");
 
-			  const menuMap = {
-			    "/admin/dashboard": "dashboard",
-			    "/admin/inventory": "inventory",
-			    "/admin/user": "user",
-			    "/lender/inventory": "inventory",
-			    "/inventory": "inventories", // matches text "INVENTORIES"
-			    "/dashboard": "dashboard",
-			    "/request": "requests",      // matches text "REQUESTS"
-			    "/payment": "payment",
-			    "/history": "history",
-			    "/guidelines": "rules"
-			  };
+			  console.log("Current path:", currentPath);
 
 			  // remove any existing active classes
-			  document.querySelectorAll(".option span.active").forEach(el => el.classList.remove("active"));
+			  document.querySelectorAll(".option span.active").forEach(el =>
+			    el.classList.remove("active")
+			  );
 
-			  let matched = false;
+			  // loop through each <a class="option">
+			  document.querySelectorAll(".option").forEach(option => {
+				  const href = option.tagName === "A" && option.getAttribute("href")
+				    ? option.getAttribute("href").toLowerCase().replaceAll("/", "")
+				    : "";
 
-			  for (const [url, key] of Object.entries(menuMap)) {
-			    if (currentPath.startsWith(url)) {
-			      document.querySelectorAll(".option span").forEach(span => {
-			        if (span.textContent.toLowerCase().includes(key)) {
-			          span.classList.add("active");
-			          matched = true;
-			        }
-			      });
-			      break;
-			    }
-			  }
+				  if (option.tagName === "A" && currentPath.includes(href)) {
+				    const span = option.querySelector("span");
+				    if (span) {
+				      span.classList.add("active");
+				    }
+				  }
+				});
 
-			  // fallback → highlight first option
-			  if (!matched) {
-			    const first = document.querySelector(".option span");
-			    if (first) first.classList.add("active");
-			  }
 			});
+
 			</script>
 
 	</nav>
