@@ -9,6 +9,7 @@ public class MessageConstant {
 	
 	public static final String INVENTORY_CREATE_MSG = "A new item has been added.";
 	public static final String INVENTORY_EDIT_MSG = "An item has been edited.";
+	public static final String INVENTORY_DELETE_MSG = "An item has been successfully deleted.";
 	
 	public static final String REQUEST_CREATED_MSG = "Your borrow request has been sent to the lender for review.";
 	

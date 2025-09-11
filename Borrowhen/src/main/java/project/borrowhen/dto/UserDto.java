@@ -49,9 +49,9 @@ public class UserDto {
 	@NotBlank(message = MessageConstant.NOT_BLANK)
 	private String role;
 	
-	private Date createdDate;
+	private String createdDate;
 	
-	private Date updatedDate;
+	private String updatedDate;
 	
 	private List<UserObj> users;
 	

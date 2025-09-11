@@ -29,9 +29,9 @@ public class UserObj {
 		
 	private String role;
 	
-	private Date createdDate;
+	private String createdDate;
 	
-	private Date updatedDate;
+	private String updatedDate;
 	
 	private int page;
 }

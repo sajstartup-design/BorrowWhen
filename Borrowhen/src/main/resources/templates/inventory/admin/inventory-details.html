@@ -42,6 +42,24 @@
 					        <label>TOTAL QTY</label>
 					        <div th:text="*{totalQty}"></div>
 					    </div>
+					    <hr class="soft-gradient">
+					    
+					     <div class="field">
+					        <label>AVAILABLE QTY</label>
+					        <div th:text="*{totalQty}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					    
+					    <div class="field">
+					        <label>CREATED DATE</label>
+					        <div th:text="*{createdDate}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					    
+					    <div class="field">
+					        <label>UPDATED DATE</label>
+					        <div th:text="*{updatedDate}"></div>
+					    </div>
 					    
 					</form>
 					<div class="form-btn">
@@ -52,6 +70,9 @@
 		</main>
 		<aside th:replace="~{aside/aside :: content}"></aside>
 	</div>
+	<script th:inline="javascript">
+		console.log(/*[[${inventoryDto}]]*/'');
+	</script>
 	<script th:src="@{/script/loading.js}"></script>
 	<script th:src="@{/script/submit.js}"></script>
 	<!-- <script th:src="@{/script/inputUtil.js}"></script> -->

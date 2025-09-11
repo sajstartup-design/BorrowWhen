@@ -1,6 +1,7 @@
 package project.borrowhen.service.impl;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
+import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.UserDao;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.UserDto;
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void saveUser(UserDto inDto) throws Exception{
 		
-		Date dateNow = Date.valueOf(LocalDate.now());
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
 		
 		UserEntity user = new UserEntity();
 		
@@ -98,8 +100,8 @@ public class UserServiceImpl implements UserService {
 		    obj.setGender(user.getGender());
 		    obj.setUserId(user.getUserId());
 		    obj.setRole(user.getRole());
-		    obj.setCreatedDate(user.getCreatedDate());
-		    obj.setUpdatedDate(user.getUpdatedDate());
+			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(user.getCreatedDate()));
+			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(user.getUpdatedDate()));		
 		    
 		    users.add(obj);
 		}
@@ -142,8 +144,8 @@ public class UserServiceImpl implements UserService {
 	    outDto.setGender(user.getGender());
 	    outDto.setUserId(user.getUserId());
 	    outDto.setRole(user.getRole());
-	    outDto.setCreatedDate(user.getCreatedDate());
-	    outDto.setUpdatedDate(user.getUpdatedDate());
+	    outDto.setCreatedDate(DateFormatUtil.formatTimestampToString(user.getCreatedDate()));
+	    outDto.setUpdatedDate(DateFormatUtil.formatTimestampToString(user.getUpdatedDate()));
 	    
 	    return outDto;
 	}

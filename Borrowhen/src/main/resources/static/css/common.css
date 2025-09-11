@@ -109,7 +109,7 @@ button:disabled:hover,
 	box-shadow: none;
 }
 
-input[type="text"], input[type="search"], input[type="date"],
+input[type="text"], input[type="search"], input[type="date"], input[type="email"], input[type="password"], input[type="number"], input[type="numeric"]
 select,
 textarea,
 .field div{
@@ -200,6 +200,12 @@ nav section .option .active{
     -webkit-backdrop-filter: blur(10px);
     border: 0.05rem solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+nav section .option:hover {
+	background: rgba(180, 220, 245, 1); /* darker shade */
+	border-radius: 0.5rem;
+    cursor: pointer;
 }
 
 hr{

@@ -1,6 +1,7 @@
 package project.borrowhen.service.impl;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
+import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.BorrowRequestDao;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.InventoryEntity;
@@ -44,7 +46,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	@Override
 	public void saveBorrowRequest(BorrowRequestDto inDto) throws Exception {
 		
-		Date dateNow = Date.valueOf(LocalDate.now());
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
 		
 		UserEntity user = userService.getLoggedInUser();
 		

@@ -1,6 +1,7 @@
 package project.borrowhen.dao.entity;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,9 +29,9 @@ public class InventoryEntity {
 	
 	private String status;
 	
-	private Date createdDate;
+	private Timestamp createdDate;
 	
-	private Date updatedDate;
+	private Timestamp updatedDate;
 	
 	private Boolean isDeleted;
 }
