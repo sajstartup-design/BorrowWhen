@@ -66,8 +66,6 @@ async function loadInventories(page = 0,
 		const url = `/api/inventory?${params.toString()}`;
 		const response = await fetch(url);
         const data = await response.json();
-		
-		console.log(data);
 
         updatePagination(data.pagination);
 

@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	<aside th:fragment="content">
+	<aside th:fragment="content">	
 			<div class="profile">
 				<span class="notification-icon" data-count="0">
 					<img th:src="@{/images/notification-bell.png}" alt="bell">
@@ -125,7 +125,9 @@
 			
 			</th:block>
 			
-			
+			<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    		<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+			<script th:src="@{/script/notification/websocket.js}"></script>
 			<script th:src="@{/script/notification/notification-api.js}"></script>
 			<script>
 			document.addEventListener("DOMContentLoaded", () => {

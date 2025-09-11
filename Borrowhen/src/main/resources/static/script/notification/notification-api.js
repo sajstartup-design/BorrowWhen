@@ -7,8 +7,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const res = await fetch(countUrl);
         const data = await res.json();
 		
-		console.log(data);
-
         const notificationIcon = document.querySelector('.notification-icon');
         if (notificationIcon) {
             notificationIcon.dataset.count = data.notificationCount;
