@@ -42,9 +42,17 @@
 				<a th:href="@{/dashboard}" class="option">
 					<span class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</span>
 				</a>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>INVENTORY</p>
 				<a th:href="@{/inventory}" class="option">
-					<span><img th:src="@{/images/supplies.png}"> INVENTORIES</span>
+					<span><img th:src="@{/images/supplies.png}"> AVAILABLE ITEMS</span>
 				</a>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>REQUEST</p>
 				<a th:href="@{/request}" class="option">
 					<span><img th:src="@{/images/supplies.png}"> REQUESTS</span>
 				</a>
@@ -94,12 +102,20 @@
 				<p>MAIN</p>
 				<a th:href="@{/lender/dashboard}" class="option">
 					<span class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</span>
-				</a>
+				</a>				
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>INVENTORY</p>
 				<a th:href="@{/lender/inventory}" class="option">
 					<span><img th:src="@{/images/supplies.png}"> INVENTORY</span>
 				</a>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>REQUEST</p>
 				<a th:href="@{/lender/request}" class="option">
-					<span><img th:src="@{/images/supplies.png}"> REQUEST</span>
+					<span><img th:src="@{/images/supplies.png}"> REQUEST LIST</span>
 				</a>
 			</section>
 			<hr class="soft-gradient">
@@ -168,7 +184,10 @@
 		    <hr class="soft-gradient">
 		    		    
 		    <section>
-		        <p>PAYMENT</p>		        
+		        <p>PAYMENT</p>		  
+		        <div class="option">
+		            <span><img th:src="@{/images/history.png}"> PAYMENT</span>
+		        </div>      
 		        <div class="option">
 		            <span><img th:src="@{/images/history.png}"> PAYMENT LOGS</span>
 		        </div>
@@ -185,6 +204,9 @@
 		    
 		    <section>
 		        <p>NOTIFICATIONS</p>
+		        <div class="option">
+		            <span><img th:src="@{/images/history.png}"> NOTIFICATION</span>
+		        </div>
 		        <div class="option">
 		            <span><img th:src="@{/images/history.png}"> NOTIFICATION LOGS</span>
 		        </div>
