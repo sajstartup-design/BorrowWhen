@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const createBtn = document.querySelector('.save-btn');
 	const borrowBtn = document.querySelector('.request-btn');
 	const approveBtn = document.querySelector('.approve-btn');
+	const rejectBtn = document.querySelector('.reject-btn');
     const form = document.querySelector('#saveForm'); 
 
     if (updateBtn) {
@@ -13,7 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             createLoadingScreenBody();
 
-            form.submit();
+			const form = getForm(updateBtn);
+			if (form) {
+			    form.submit();
+			} else {
+			    console.error("❌ No form found for updateBtn");
+			}
         });
     }
 
@@ -24,7 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             createLoadingScreenBody();
 
-            form.submit();
+			const form = getForm(createBtn);
+			if (form) {
+			    form.submit();
+			} else {
+			    console.error("❌ No form found for createBtn");
+			}
         });
     }
 	
@@ -35,7 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             createLoadingScreenBody();
 
-            form.submit();
+			const form = getForm(borrowBtn);
+			if (form) {
+			    form.submit();
+			} else {
+			    console.error("❌ No form found for borrowBtn");
+			}
         });
 	}
 	
@@ -46,8 +62,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
             createLoadingScreenBody();
 
-            form.submit();
+			const form = getForm(approveBtn);
+			if (form) {
+			    form.submit();
+			} else {
+			    console.error("❌ No form found for approveBtn");
+			}
         });
+	}
+	
+	if(rejectBtn){
+		rejectBtn.addEventListener('click', function () {
+	        rejectBtn.textContent = 'Rejecting...';
+	        rejectBtn.disabled = true;
+
+	        createLoadingScreenBody();
+			
+			const form = getForm(rejectBtn);
+			if (form) {
+			    form.submit();
+			} else {
+			    console.error("❌ No form found for rejectBtn");
+			}
+	    });
+	}
+	
+	function getForm(e) {
+	    return e.form || null;
 	}
 
 });

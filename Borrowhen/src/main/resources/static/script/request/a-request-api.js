@@ -101,7 +101,17 @@ async function loadInventories(page = 0) {
 		                  data-number-to-borrow="${request.qty}">
 		                  <img src="/images/approved.png">
 		                </button>
-		                <button class="reject-btn" data-id="${request.encryptedId}">
+						<button 
+		                  class="reject-btn" 
+		                  data-toggle="modal" 
+		                  data-target="#rejectModal"
+		                  data-id="${request.encryptedId}"
+		                  data-item-name="${request.itemName}"
+		                  data-price="${request.price}"
+		                  data-borrower="${request.borrower}"
+		                  data-date-to-borrow="${request.dateToBorrow}"
+		                  data-date-to-return="${request.dateToReturn}"
+		                  data-number-to-borrow="${request.qty}">
 		                  <img src="/images/rejected.png">
 		                </button>
 		              `

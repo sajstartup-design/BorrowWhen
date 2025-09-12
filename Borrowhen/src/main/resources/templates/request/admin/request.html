@@ -108,7 +108,7 @@
 				APPROVE REQUEST
 			</div>
 			<div class="modal-body">
-				<form id="saveForm" th:action="@{/admin/request/approve}" method="POST">
+				<form id="approveForm" th:action="@{/admin/request/approve}" method="POST">
 					<input type="hidden" name="encryptedId" value="" id="encryptedId"/>
 					
 					<div class="field">
@@ -141,11 +141,57 @@
 				Once confirmed, this action cannot be undone.
 				<div>
 					<button class="cancel" name="cancel">CANCEL</button>
-					<button class="borrow-btn approve-btn" form="saveForm">APPROVE</button>
+					<button class="borrow-btn approve-btn" form="approveForm">APPROVE</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal" id="rejectModal">
+		<div class="modal-content">
+			<div class="modal-header">
+				REJECT REQUEST
+			</div>
+			<div class="modal-body">
+				<form id="rejectForm" th:action="@{/admin/request/reject}" method="POST">
+					<input type="hidden" name="encryptedId" value="" id="encryptedId"/>
+					
+					<div class="field">
+					  <label>Item Name</label>
+					  <span class="item-name">Hammer</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+					  <label>Price</label>
+					  <span class="item-price">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Borrow</label>
+						<span class="date-to-borrow">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Return</label>
+						<span class="date-to-return">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Number to Borrow</label>
+						<span class="number-to-borrow">P100</span>
+					</div>
+				</form>	
+			</div>
+			<div class="modal-footer">
+				Once confirmed, this action cannot be undone.
+				<div>
+					<button class="cancel" name="cancel">CANCEL</button>
+					<button class="borrow-btn reject-btn" form="rejectForm">REJECT</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
 	<script th:src="@{/script/submit.js}"></script>
