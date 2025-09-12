@@ -113,6 +113,80 @@
 			
 			</th:block>
 			
+			<th:block sec:authorize="hasAuthority('LENDER')">
+				<div class="content">
+					<div class="title">
+						Currently Borrowed
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Hammer</span>
+						<span>09/05/2025 → 09/11/2025</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Hammer</span>
+						<span>09/05/2025 → 09/11/2025</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Hammer</span>
+						<span>09/05/2025 → 09/11/2025</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Hammer</span>
+						<span>09/05/2025 → 09/11/2025</span>
+					</div>
+				</div>
+				
+				<div class="content">
+					<div class="title">
+						Items to return
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+						<span>Return by: 09/20/2025</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+						<span>Return by: 09/20/2025</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+						<span>Return by: 09/20/2025</span>
+					</div>
+				</div>
+				
+				<div class="content">
+					<div class="title">
+						Pending Request
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="content-item">
+						<span>Screwdriver</span>
+						<span>Qty: 3</span>
+					</div>
+				</div>
+			
+			</th:block>
+			
 			<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     		<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
 			<script th:src="@{/script/notification/websocket.js}"></script>
