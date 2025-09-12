@@ -55,46 +55,62 @@ async function loadInventories(page = 0) {
         const tableBody = document.getElementById("table-body");
 		tableBody.innerHTML = '';
 
-        const fragment = document.createDocumentFragment();
+		const fragment = document.createDocumentFragment();
 
-        data.requests.forEach(request => {
-            const row = document.createElement("div");
-            row.classList.add("table-row");
-			row.setAttribute('data-id', request.encryptedId);
-			
-            row.innerHTML = `
-				<div class="table-cell">${request.borrower}</div>
-				<div class="table-cell">${request.lender}</div>
-                <div class="table-cell">${request.itemName}</div>
-                <div class="table-cell">₱${request.price}</div>
-                <div class="table-cell">${request.qty}</div>
-				<div class="table-cell">${request.dateToBorrow}</div>
-                <div class="table-cell">${request.dateToReturn}</div>
-				<div class="table-cell">
-				  <span class="status ${request.status?.toLowerCase()}">
-				    <span>${request.status}</span>
-				  </span>
-				</div>
-                <div class="table-cell">${request.createdDate}</div>
-                <div class="table-cell">${request.updatedDate}</div>
-                <div class="table-cell">     
-					<button 
-		              class="approve-btn" 
-		              data-toggle="modal" 
-		              data-target="#approveModal"
-		              data-id="${request.encryptedId}"
-		              data-item-name="${request.itemName}"
-					  data-price="${request.price}"
-		              data-borrower="${request.borrower}"
-		              data-date-to-borrow="${request.dateToBorrow}"
-		              data-date-to-return="${request.dateToReturn}"
-					  data-number-to-borrow="${request.qty}">
-		              <img src="/images/approved.png">
-		            </button>
-					<button><img src="/images/rejected.png"></button>
-                    <button><img src="/images/delete.png"></button>
-                </div>
-            `;
+		data.requests.forEach(request => {
+		    const row = document.createElement("div");
+		    row.classList.add("table-row");
+		    row.setAttribute('data-id', request.encryptedId);
+
+		    // decide if buttons should be fake (disabled look)
+		    const isFinalStatus = request.status?.toLowerCase() === "approved" || request.status?.toLowerCase() === "rejected";
+
+		    row.innerHTML = `
+		        <div class="table-cell">${request.borrower}</div>
+		        <div class="table-cell">${request.lender}</div>
+		        <div class="table-cell">${request.itemName}</div>
+		        <div class="table-cell">₱${request.price}</div>
+		        <div class="table-cell">${request.qty}</div>
+		        <div class="table-cell">${request.dateToBorrow}</div>
+		        <div class="table-cell">${request.dateToReturn}</div>
+		        <div class="table-cell">
+		          <span class="status ${request.status?.toLowerCase()}">
+		            <span>${request.status}</span>
+		          </span>
+		        </div>
+		        <div class="table-cell">${request.createdDate}</div>
+		        <div class="table-cell">${request.updatedDate}</div>
+		        <div class="table-cell">     
+		          ${
+		            isFinalStatus
+		            ? `
+		                <button class="fake-btn" disabled><img src="/images/approved.png"></button>
+		                <button class="fake-btn" disabled><img src="/images/rejected.png"></button>
+		              `
+		            : `
+		                <button 
+		                  class="approve-btn" 
+		                  data-toggle="modal" 
+		                  data-target="#approveModal"
+		                  data-id="${request.encryptedId}"
+		                  data-item-name="${request.itemName}"
+		                  data-price="${request.price}"
+		                  data-borrower="${request.borrower}"
+		                  data-date-to-borrow="${request.dateToBorrow}"
+		                  data-date-to-return="${request.dateToReturn}"
+		                  data-number-to-borrow="${request.qty}">
+		                  <img src="/images/approved.png">
+		                </button>
+		                <button class="reject-btn" data-id="${request.encryptedId}">
+		                  <img src="/images/rejected.png">
+		                </button>
+		              `
+		          }
+		          <button class="delete-btn" data-id="${request.encryptedId}">
+		            <img src="/images/delete.png">
+		          </button>
+		        </div>
+		    `;
 					
 			row.addEventListener('click', function(e) {
 			   
