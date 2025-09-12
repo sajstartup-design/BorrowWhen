@@ -11,5 +11,7 @@ public class NotificationObj {
 	
 	private Boolean isRead;
 	
+	private String dateAndTime;
+	
 	private String type;
 }

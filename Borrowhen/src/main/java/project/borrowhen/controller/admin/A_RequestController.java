@@ -33,7 +33,27 @@ public class A_RequestController {
 			
 			borrowRequestService.approveBorrowRequest(borrowRequestWebDto);
 			
-			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_APPROVED);
+			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_APPROVED_MSG);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+		}
+		
+		return "redirect:/admin/request";
+	}
+	
+	@PostMapping("/reject")
+	public String postRequestRejectScreen(@ModelAttribute BorrowRequestDto borrowRequestWebDto,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			borrowRequestService.rejectBorrowRequest(borrowRequestWebDto);
+			
+			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_REJECTED_MSG);
 			
 		}catch(Exception e) {
 			

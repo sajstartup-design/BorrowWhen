@@ -392,13 +392,13 @@ aside .notifications .notifications-list{
 aside .notification{
 	display: flex;
 	flex-direction: row !important;
-	font-size: 0.8rem;
 	background: #fff;
 	border-radius: 0.5rem;
 	padding: 0.5rem;
 	box-sizing: border-box;
 	gap: 0.5rem;
 	justify-content: flex-start !important;
+    font-size: 0.65rem;
 }
 
 aside .notifications .title{

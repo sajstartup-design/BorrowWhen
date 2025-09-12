@@ -12,7 +12,9 @@ public class MessageConstant {
 	public static final String INVENTORY_DELETE_MSG = "An item has been successfully deleted.";
 	
 	public static final String REQUEST_CREATED_MSG = "Your borrow request has been sent to the lender for review.";
-	public static final String REQUEST_APPROVED = "The borrow request has been approved.";
+	public static final String REQUEST_APPROVED_MSG = "The borrow request has been successfully approved.";
+	public static final String REQUEST_REJECTED_MSG = "The borrow request has been successfully rejected.";
+	public static final String REQUEST_DELETE_MSG = "The borrow request has been successfully deleted.";
 	
 	public static final String NOT_BLANK = "This field must not be blank.";
 	public static final String QUANTITY_NOT_BLANK = "Quantity must be at least 1 and above.";
