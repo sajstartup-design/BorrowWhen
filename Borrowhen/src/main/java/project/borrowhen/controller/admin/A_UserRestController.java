@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.borrowhen.dto.UserDto;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.UserService;
 
@@ -16,14 +17,19 @@ public class A_UserRestController {
     private UserService userService;
 
     @GetMapping("/api/admin/users")
-    public UserDto getUsers(@RequestParam(defaultValue = "0") int page) {
+    public UserDto getUsers(@RequestParam(defaultValue = "0") int page,
+    		@RequestParam(required = false) String search) {
         try {
             UserDto inDto = new UserDto();
 
             PaginationObj pagination = new PaginationObj();
             pagination.setPage(page);
 
+            FilterAndSearchObj filter = new FilterAndSearchObj();
+            filter.setSearch(search);
+
             inDto.setPagination(pagination);
+            inDto.setFilter(filter);
 
             return userService.getAllUsers(inDto);
         } catch (Exception e) {

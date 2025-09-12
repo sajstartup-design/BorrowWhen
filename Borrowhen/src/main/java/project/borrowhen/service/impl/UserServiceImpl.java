@@ -23,6 +23,7 @@ import project.borrowhen.dao.UserDao;
 import project.borrowhen.dao.entity.UserData;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.UserDto;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.object.UserObj;
 import project.borrowhen.service.AdminSettingsService;
@@ -83,7 +84,9 @@ public class UserServiceImpl implements UserService {
 		
 		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(getMaxUserDisplay()));
 		
-		Page<UserData> allUsers = userDao.getAllUsers(pageable, CommonConstant.BLANK);
+		FilterAndSearchObj filter = inDto.getFilter();
+		
+		Page<UserData> allUsers = userDao.getAllUsers(pageable, filter.getSearch());
 		
 		List<UserObj> users = new ArrayList<>();
 		

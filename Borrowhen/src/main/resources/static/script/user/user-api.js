@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const inputPage = document.querySelector('.input-page');
+	const search = document.querySelector('.search');
+
 
     // Load first page
     loadUsers(0);
@@ -34,13 +36,36 @@ document.addEventListener("DOMContentLoaded", () => {
             loadUsers(newPage - 1);
         });
     }
+	
+	if (search) {
+	    let typingTimer; 
+	    const delay = 500; 
+
+	    search.addEventListener('input', function () {
+	        clearTimeout(typingTimer); 
+
+	        const currentPage = 0;
+	        const searchValue = this.value;
+
+	        typingTimer = setTimeout(() => {
+				createLoadingScreenBody();
+	            loadUsers(currentPage, searchValue);
+	        }, delay);
+	    });
+	}
 
 });
 
 
-async function loadUsers(page = 0) {
+async function loadUsers(page = 0,
+	search = ""
+) {
     try {
-        const response = await fetch(`/api/admin/users?page=${page}`);
+		const params = new URLSearchParams({ page, search });
+				
+		const url = `/api/admin/users?${params.toString()}`;
+				
+        const response = await fetch(url);
         const data = await response.json();
 		
 		console.log(data);
