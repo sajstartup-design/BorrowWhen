@@ -31,6 +31,8 @@ public class CommonConstant {
     
     public static final String REQUEST_REJECTED = "REQUEST_REJECTED";
     
+    public static final String NEW_ITEM = "NEW_ITEM";
+    
     public static final String ITEM_RETURNED = "ITEM_RETURNED";
     
     public static final String GENERAL = "GENERAL";

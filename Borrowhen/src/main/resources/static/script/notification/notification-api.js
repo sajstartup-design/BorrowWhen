@@ -54,6 +54,9 @@ async function updateNotificationModal(e) {
                             case "REQUEST_REJECTED":
                                 imgSrc = "/images/rejected.png";
                                 break;
+							case "NEW_ITEM":
+								imgSrc = "/images/new.png";
+                                break;
                         }
 
                         container.innerHTML = `

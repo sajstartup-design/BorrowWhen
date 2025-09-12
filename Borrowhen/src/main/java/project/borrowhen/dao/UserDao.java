@@ -102,4 +102,12 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
     
     @Query(value=GET_ALL_USER_ID)
     public List<String> getAllUserId() throws DataAccessException;
+    
+    public final String GET_ALL_USERS_BY_ROLE = "SELECT e "
+    		+ "FROM UserEntity e "
+    		+ "WHERE e.role = :role "
+    		+ "AND e.isDeleted = false ";
+    
+    @Query(value=GET_ALL_USERS_BY_ROLE)
+    public List<UserEntity> getAllUsersByRole(String role) throws DataAccessException;
 }

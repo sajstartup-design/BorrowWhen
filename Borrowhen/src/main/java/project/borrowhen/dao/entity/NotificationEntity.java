@@ -20,6 +20,8 @@ public class NotificationEntity {
 	
 	private int userId;
 	
+	private String targetRole;
+	
 	private String message;
 	
 	private Boolean isRead;

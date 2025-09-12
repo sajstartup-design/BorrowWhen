@@ -80,7 +80,7 @@ public class SecurityConfig {
 						.requestMatchers("/api/inventory").authenticated()
 						
 						
-						
+						.requestMatchers("/borrow-when-websocket/**").authenticated()
 						.anyRequest().authenticated()
 						
 						)

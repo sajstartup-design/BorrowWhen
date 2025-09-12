@@ -229,4 +229,10 @@ public class UserServiceImpl implements UserService {
 		
 		return userDao.getUser(id);
 	}
+
+	@Override
+	public List<UserEntity> getAllUsersByRole(String role) {
+		
+		return userDao.getAllUsersByRole(role);
+	}
 }
