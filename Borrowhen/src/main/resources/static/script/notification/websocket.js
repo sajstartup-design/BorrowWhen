@@ -1,5 +1,5 @@
 const stompClient = new StompJs.Client({
-    brokerURL: 'ws://localhost:8081/borrow-when-websocket'
+    brokerURL: 'ws://localhost:8080/borrow-when-websocket'
 });
 
 stompClient.onConnect = (frame) => {

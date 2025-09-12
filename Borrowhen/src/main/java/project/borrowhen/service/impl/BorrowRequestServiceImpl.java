@@ -53,9 +53,6 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	private CipherUtil cipherUtil;
 	
 	@Autowired
-	private HttpSession httpSession;
-	
-	@Autowired
 	private AdminSettingsService adminSettingsService;
     
     private int getMaxRequestDisplay() {
@@ -258,6 +255,54 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    );
 		
 	
+	}
+
+	@Override
+	public BorrowRequestDto getAllOwnedBorrowRequestForLender(BorrowRequestDto inDto) throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+	    
+	    Pageable pageable = PageRequest.of(
+	        inDto.getPagination().getPage(),
+	        Integer.valueOf(getMaxRequestDisplay())
+	    );
+	    
+	    UserEntity user = userService.getLoggedInUser();
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForLender(pageable, user.getId());
+	    
+	    List<BorrowRequestObj> requests = new ArrayList<>();
+	    
+	    for (BorrowRequestData request : allRequests) {
+	        BorrowRequestObj obj = new BorrowRequestObj();
+	        
+	        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getBorrowRequestId())));
+	        
+	        String borrowerFullName = request.getBorrowerFirstName() + " " + request.getBorrowerFamilyName();
+	        obj.setBorrower(borrowerFullName.trim());
+	        	        
+	        obj.setItemName(request.getItemName());
+	        obj.setPrice(request.getPrice());
+	        obj.setQty(request.getQty());
+	        obj.setDateToBorrow(request.getDateToBorrow());
+	        obj.setDateToReturn(request.getDateToReturn());
+	        obj.setStatus(request.getStatus());	
+	        
+	        requests.add(obj);
+	    }
+	    
+	    PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allRequests.getNumber());
+		pagination.setTotalPages(allRequests.getTotalPages());
+		pagination.setTotalElements(allRequests.getTotalElements());
+		pagination.setHasNext(allRequests.hasNext());
+		pagination.setHasPrevious(allRequests.hasPrevious());
+		
+		outDto.setRequests(requests);
+		outDto.setPagination(pagination);
+		
+	    return outDto;
 	}
 
 
