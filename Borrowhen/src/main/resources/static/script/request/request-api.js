@@ -84,9 +84,30 @@ async function loadRequests(page = 0,
 		    const row = document.createElement("div");
 		    row.classList.add("table-row");
 		    row.setAttribute('data-id', request.encryptedId);
-
-		    // decide if buttons should be fake (disabled look)
-		    const isFinalStatus = request.status?.toLowerCase() === "approved" || request.status?.toLowerCase() === "rejected";
+			
+			let actionButton = "";
+			
+			if (request.status == "PENDING") {
+		        actionButton = `<button class="delete-btn" 				
+										data-toggle="modal" 
+						                data-target="#cancelModal"
+										data-item-name="${request.itemName}"
+					                    data-price="${request.price}"
+					                    data-date-to-borrow="${request.dateToBorrow}"
+					                    data-date-to-return="${request.dateToReturn}"
+					                    data-number-to-borrow="${request.qty}"
+										data-id="${request.encryptedId}">CANCEL</button>`;
+		    } else if (request.status == "APPROVED") {
+		        actionButton = `<button class="received-btn" 
+										data-toggle="modal" 
+						              	data-target="#confirmModal"
+										data-item-name="${request.itemName}"
+					                    data-price="${request.price}"
+					                    data-date-to-borrow="${request.dateToBorrow}"
+					                    data-date-to-return="${request.dateToReturn}"
+					                    data-number-to-borrow="${request.qty}"
+										data-id="${request.encryptedId}">ITEM RECEIVED</button>`;
+		    }
 
 		    row.innerHTML = `
 		        <div class="table-cell">${request.itemName}</div>
@@ -95,14 +116,12 @@ async function loadRequests(page = 0,
 		        <div class="table-cell">${request.dateToBorrow}</div>
 		        <div class="table-cell">${request.dateToReturn}</div>
 		        <div class="table-cell">
-		          <span class="status ${request.status?.toLowerCase()}">
-		            <span>${request.status}</span>
-		          </span>
+					<span class="status ${request.status?.toLowerCase().replace(' ', '').trim()}">
+					    <span>${request.status}</span>
+					</span>
 		        </div>
 		        <div class="table-cell">     		        
-		          <button class="delete-btn" data-id="${request.encryptedId}">
-		            CANCEL
-		          </button>
+		          ${actionButton}
 		        </div>
 		    `;
 					

@@ -965,6 +965,24 @@ hr.soft-gradient.thin {
     font-weight: 600;
 }
 
+.table-cell .status.ongoing {
+    color: #0c5460;
+    background: #d1ecf1;
+    border-left: 0.3rem solid #17a2b8; 
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+    font-weight: 600;
+}
+
+.table-cell .status.completed {
+    color: #155724;
+    background: #c3e6cb;
+    border-left: 0.3rem solid #28a745; 
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+    font-weight: 600;
+}
+
 
 .ribbon {
    position: absolute;

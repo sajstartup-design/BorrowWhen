@@ -57,6 +57,8 @@ async function updateNotificationModal(e) {
 							case "NEW_ITEM":
 								imgSrc = "/images/new.png";
                                 break;
+							case "ITEM_RECEIVED":
+								imgSrc = "/images/received.png";
                         }
 
                         container.innerHTML = `

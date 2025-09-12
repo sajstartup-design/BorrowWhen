@@ -25,15 +25,15 @@ public class RequestController {
 		return "request/request";
 	}
 	
-	@PostMapping("/approve")
-	public String postRequestApproveScreen(@ModelAttribute BorrowRequestDto borrowRequestWebDto,
+	@PostMapping("/item-received")
+	public String postItemReceivedScreen(@ModelAttribute BorrowRequestDto borrowRequestWebDto,
 			RedirectAttributes ra) {
 		
 		try {
 			
-			borrowRequestService.approveBorrowRequest(borrowRequestWebDto);
-			
-			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_APPROVED_MSG);
+			borrowRequestService.itemReceivedBorrowRequest(borrowRequestWebDto);
+	
+			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_ITEM_RECEIVED_MSG);
 			
 		}catch(Exception e) {
 			
@@ -45,23 +45,4 @@ public class RequestController {
 		return "redirect:/request";
 	}
 	
-	@PostMapping("/reject")
-	public String postRequestRejectScreen(@ModelAttribute BorrowRequestDto borrowRequestWebDto,
-			RedirectAttributes ra) {
-		
-		try {
-			
-			borrowRequestService.rejectBorrowRequest(borrowRequestWebDto);
-			
-			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_REJECTED_MSG);
-			
-		}catch(Exception e) {
-			
-			e.printStackTrace();
-			
-			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
-		}
-		
-		return "redirect:/request";
-	}
 }
