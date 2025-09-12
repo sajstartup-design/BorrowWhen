@@ -43,7 +43,7 @@ async function loadUsers(page = 0) {
         const response = await fetch(`/api/admin/users?page=${page}`);
         const data = await response.json();
 		
-		
+		console.log(data);
 
         updatePagination(data.pagination);
 
@@ -69,7 +69,11 @@ async function loadUsers(page = 0) {
                 <div class="table-cell">${user.updatedDate}</div>
                 <div class="table-cell">
 					<button class="edit-btn" data-id="${user.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
-                    <button><img src="/images/delete.png"></button>
+					${
+		                user.isDeletable
+		                    ? `<button class="delete-btn" data-id="${user.encryptedId}" type="submit"><img src="/images/delete.png"></button>`
+		                    : `<button class="delete-btn disabled" disabled title="User has pending requests"><img src="/images/delete.png"></button>`
+		            }
                 </div>
             `;
 			

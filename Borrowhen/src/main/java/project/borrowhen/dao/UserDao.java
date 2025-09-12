@@ -12,16 +12,39 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import jakarta.transaction.Transactional;
+import project.borrowhen.dao.entity.UserData;
 import project.borrowhen.dao.entity.UserEntity;
 
 public interface UserDao extends JpaRepository<UserEntity, Integer> {
 
-	public final String GET_ALL_USERS = "SELECT e "
-			+ "FROM UserEntity e "
-			+ "WHERE e.isDeleted = false ";
+	public final String GET_ALL_USERS =
+		    "SELECT new project.borrowhen.dao.entity.UserData(" +
+		    "   u.id, u.firstName, u.middleName, u.familyName, u.address, u.emailAddress, " +
+		    "   u.phoneNumber, u.birthDate, u.gender, u.userId, u.password, u.role, " +
+		    "   u.createdDate, u.updatedDate, " +
+		    "   CASE WHEN COUNT(br.id) > 0 THEN false ELSE true END " +
+		    ") " +
+		    "FROM UserEntity u " +
+		    "LEFT JOIN BorrowRequestEntity br ON br.userId = u.id AND br.status = 'PENDING' " +
+		    "WHERE u.isDeleted = false " +
+		    "AND ( " +
+		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
+		    "       LOWER(u.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.middleName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.familyName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.emailAddress) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.phoneNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.userId) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.role) LIKE LOWER(CONCAT('%', :search, '%'))" +
+		    "   )) " +
+		    "   OR (:search IS NULL OR :search = '') " +
+		    ") " +
+		    "GROUP BY u.id, u.firstName, u.middleName, u.familyName, u.address, u.emailAddress, " +
+		    "   u.phoneNumber, u.birthDate, u.gender, u.userId, u.password, u.role, " +
+		    "   u.createdDate, u.updatedDate, u.isDeleted";
 	
 	@Query(value=GET_ALL_USERS)
-	public Page<UserEntity> getAllUsers(Pageable pageable)  throws DataAccessException;
+	public Page<UserData> getAllUsers(Pageable pageable, @Param("search") String search)  throws DataAccessException;
 	
 	public final String GET_USER_BY_ID = "SELECT e "
 			+ "FROM UserEntity e "
