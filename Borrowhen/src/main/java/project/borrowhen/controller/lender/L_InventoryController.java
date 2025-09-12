@@ -168,7 +168,7 @@ public class L_InventoryController {
 			
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 			
-			return "redirect:/lender/user";
+			return "redirect:/lender/inventory";
 		}
 		
 		return "inventory/lender/inventory-details";

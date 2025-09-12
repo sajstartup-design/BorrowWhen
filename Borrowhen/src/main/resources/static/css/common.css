@@ -22,7 +22,7 @@
 
 html, body {
   font-family: 'Montserrat', sans-serif;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -40,6 +40,7 @@ html, body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	
 }
 
 p{
@@ -435,7 +436,7 @@ aside .notifications.active {
     display: flex;
 }
 
-aside .content,
+aside .aside-content,
 aside .content-two,
 aside .content-three{
     background: rgba(215, 238, 251, 1); /* Semi-transparent */
@@ -451,18 +452,18 @@ aside .content-three{
     font-size: 0.8rem;
 }
 
-aside .content .content-item{
+aside .aside-content .content-item{
 	display: flex;
 	flex-direction: column;
 }
 
-aside .content .content-item span:nth-child(1){
+aside .aside-content .content-item span:nth-child(1){
 	font-weight: 600;
 }
-aside .content .content-item span:nth-child(2){
+aside .aside-content .content-item span:nth-child(2){
 	font-size: 0.6rem;
 }
-aside .content .content-item span:nth-child(3){
+aside .aside-content .content-item span:nth-child(3){
 	font-size: 0.6rem;
 }
 
@@ -497,6 +498,10 @@ aside .content .content-item span:nth-child(3){
 	justify-content: center;
 	align-items: center;
 	
+}
+
+.modal p{
+	font-size: 0.8rem;
 }
 
 .modal-content {
@@ -895,6 +900,9 @@ hr.soft-gradient.thin {
 	text-align: center;          /* optional: keep it centered */
 }
 
+.table-cell:last-child{
+	width: 15rem;
+}
 
 .table-cell img{
 	width: 1rem;
@@ -937,7 +945,8 @@ hr.soft-gradient.thin {
 
 
 
-.table-cell .status.pending {
+.table-cell .status.pending,
+.status.pending {
     color: #856404; 
     background: #fff3cd; 
     border-left: 0.3rem solid #ffc107;
@@ -946,7 +955,8 @@ hr.soft-gradient.thin {
     font-weight: 600;
 }
 
-.table-cell .status.approved {
+.table-cell .status.approved,
+.status.approved {
     color: #155724; 
     background: #d4edda; 
     border-left: 0.3rem solid #28a745; 
@@ -956,7 +966,8 @@ hr.soft-gradient.thin {
 }
 
 
-.table-cell .status.rejected {
+.table-cell .status.rejected,
+.status.rejected  {
     color: #721c24;
     background: #f8d7da;
     border-left: 0.3rem solid #dc3545; 
@@ -965,7 +976,8 @@ hr.soft-gradient.thin {
     font-weight: 600;
 }
 
-.table-cell .status.ongoing {
+.table-cell .status.ongoing,
+.status.ongoing{
     color: #0c5460;
     background: #d1ecf1;
     border-left: 0.3rem solid #17a2b8; 
@@ -974,7 +986,8 @@ hr.soft-gradient.thin {
     font-weight: 600;
 }
 
-.table-cell .status.completed {
+.table-cell .status.completed,
+.status.completed {
     color: #155724;
     background: #c3e6cb;
     border-left: 0.3rem solid #28a745; 

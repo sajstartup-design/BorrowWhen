@@ -31,7 +31,8 @@ public interface NotificationDao extends JpaRepository<NotificationEntity, Integ
 		    + "    (u.role = 'BORROWER' AND (e.userId = :userId OR e.targetRole = 'BORROWER' OR e.targetRole = 'ALL')) "
 		    + " OR (u.role <> 'BORROWER' AND (e.userId = :userId OR e.targetRole = 'ALL')) "
 		    + ") "
-		    + "ORDER BY e.createdDate DESC";
+		    + "ORDER BY e.createdDate DESC "
+		    + "LIMIT 10 ";
 
 	
 	@Query(value=GET_NOTIFICATIONS_FOR_MODAL)

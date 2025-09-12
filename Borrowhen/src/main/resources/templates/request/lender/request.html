@@ -194,6 +194,53 @@
 		</div>
 	</div>
 	
+	<div class="modal" id="confirmModal">
+		<div class="modal-content">
+			<div class="modal-header">
+				ITEM RETURNED
+			</div>
+			<div class="modal-body">
+				<form id="confirmForm" th:action="@{/lender/request/item-returned}" method="POST">
+					<input type="hidden" name="encryptedId" value="" id="encryptedId"/>
+					 <p>Have you received the item back from the borrower? Confirm below to update the request status.</p>
+
+	                <hr class="soft-gradient">
+					<div class="field">
+					  <label>Item Name</label>
+					  <span class="item-name">Hammer</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+					  <label>Price</label>
+					  <span class="item-price">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Borrow</label>
+						<span class="date-to-borrow">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Return</label>
+						<span class="date-to-return">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Number to Borrow</label>
+						<span class="number-to-borrow">P100</span>
+					</div>
+				</form>	
+			</div>
+			<div class="modal-footer">
+				Once confirmed, this action cannot be undone.
+				<div>
+					<button class="cancel" name="cancel">CANCEL</button>
+					<button class="confirm-btn" form="confirmForm">CONFIRM</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
 	<script th:src="@{/script/submit.js}"></script>

@@ -24,7 +24,7 @@ public class CommonConstant {
 	
 	public static final String ON_GOING = "ON GOING";
 	
-	public static final String ITEM_RETURNED = "ITEM RETURNED";
+	public static final String PAYMENT_PENDING = "PAYMENT PENDING";
 	
 	public static final String ITEM_REFUND = "ITEM REFUND";
 	
@@ -43,6 +43,8 @@ public class CommonConstant {
     public static final String REQUEST_REJECTED = "REQUEST_REJECTED";
     
     public static final String REQUEST_ITEM_RECEIVED = "ITEM_RECEIVED";
+    
+    public static final String REQUEST_COMPLETED = "REQUEST_COMPLETED";
     
     public static final String NEW_ITEM = "NEW_ITEM";
     

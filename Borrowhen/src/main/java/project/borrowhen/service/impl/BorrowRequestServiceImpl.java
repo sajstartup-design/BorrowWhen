@@ -25,6 +25,7 @@ import project.borrowhen.dto.BorrowRequestDto;
 import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
+import project.borrowhen.object.UserObj;
 import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.BorrowRequestService;
 import project.borrowhen.service.InventoryService;
@@ -269,7 +270,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    UserEntity user = userService.getLoggedInUser();
 	    
-	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForLender(pageable, user.getId());
+	    FilterAndSearchObj filter = inDto.getFilter();
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForLender(pageable, user.getId(), filter.getSearch());
 	    
 	    List<BorrowRequestObj> requests = new ArrayList<>();
 	    
@@ -392,11 +395,89 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    messagingTemplate.convertAndSendToUser(
 	        lender.getUserId().toString(),
-	        "/queue/borrower/notifications", // or a lender-specific queue
+	        "/queue/borrower/notifications",
 	        message
 	    );
 	}
 
+	@Override
+	public BorrowRequestDto getBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public BorrowRequestDto getBorrowRequestDetailsForLender(BorrowRequestDto inDto) throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+    
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+	    
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+	    
+	    UserEntity borrower = userService.getUser(request.getUserId());
+	    
+	    BorrowRequestObj obj = new BorrowRequestObj();
+        
+        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getId())));
+        obj.setItemName(request.getItemName());
+        obj.setPrice(request.getPrice());
+        obj.setQty(request.getQty());
+        obj.setDateToBorrow(request.getDateToBorrow());
+        obj.setDateToReturn(request.getDateToReturn());
+        obj.setStatus(request.getStatus());	     
+        
+        UserObj borrowerObj = new UserObj();
+        
+        borrowerObj.setFirstName(borrower.getFirstName());
+        borrowerObj.setMiddleName(borrower.getMiddleName());
+        borrowerObj.setFamilyName(borrower.getFamilyName());
+        borrowerObj.setEmailAddress(borrower.getEmailAddress());
+        borrowerObj.setPhoneNumber(borrower.getPhoneNumber());
+        borrowerObj.setGender(borrower.getGender());       
+	           
+        outDto.setRequest(obj);
+        outDto.setBorrower(borrowerObj);       
+	
+	    return outDto;
+	    
+	}
 
+	@Override
+	public void itemReturnedBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		
+		 Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+
+	    UserEntity borrower = userService.getUser(request.getUserId()); 
+
+	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.COMPLETED);
+	    
+	    NotificationEntity notification = new NotificationEntity();
+	    notification.setUserId(borrower.getId());
+
+	    String message = String.format(
+    	    "Lender has confirmed that the item '%s' has been returned. Please proceed with the payment. <a href=\"#\">Click here to continue</a>.",
+    	    request.getItemName()
+    	);
+
+	    notification.setMessage(message);
+	    notification.setIsRead(false);
+	    notification.setType(CommonConstant.REQUEST_COMPLETED);
+	    notification.setCreatedDate(dateNow);
+	    notification.setUpdatedDate(dateNow);
+	    notification.setIsDeleted(false);
+
+	    notificationService.saveNotification(notification);
+
+	    messagingTemplate.convertAndSendToUser(
+    		borrower.getUserId().toString(),
+	        "/queue/borrower/notifications",
+	        message
+	    );
+		
+	}
 }

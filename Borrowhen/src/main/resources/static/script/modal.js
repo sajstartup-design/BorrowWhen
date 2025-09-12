@@ -16,25 +16,29 @@ function updateBtnsModal(){
 		            const modalBackground = document.createElement("div");
 		            modalBackground.classList.add("modal-background");
 					
-					if(modal.id === 'borrowModal'){
-						// Fill hidden input
-				     	modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
+					if(!modal.getAttribute('name')){
+						if(modal.id === 'borrowModal'){
+							// Fill hidden input
+						 	modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
 
-				     	modal.querySelector(".item-name").textContent = btn.dataset.name;
-				      	modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;
-				      	modal.querySelector(".item-qty").textContent = btn.dataset.qty;
+						 	modal.querySelector(".item-name").textContent = btn.dataset.name;
+						  	modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;
+						  	modal.querySelector(".item-qty").textContent = btn.dataset.qty;
+						}
+
+						if(modal.id === 'approveModal' || modal.id === 'rejectModal' || modal.id === 'confirmModal'){
+							modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
+
+						 	modal.querySelector(".item-name").textContent = btn.dataset.itemName;
+						  	modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;					
+							modal.querySelector('.date-to-borrow').textContent = btn.dataset.dateToBorrow;
+							modal.querySelector('.date-to-return').textContent = btn.dataset.dateToReturn;
+							modal.querySelector('.number-to-borrow').textContent = btn.dataset.numberToBorrow;
+						}
+
 					}
 					
-					if(modal.id === 'approveModal' || modal.id === 'rejectModal' || modal.id === 'confirmModal'){
-						modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
 
-				     	modal.querySelector(".item-name").textContent = btn.dataset.itemName;
-				      	modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;					
-						modal.querySelector('.date-to-borrow').textContent = btn.dataset.dateToBorrow;
-						modal.querySelector('.date-to-return').textContent = btn.dataset.dateToReturn;
-						modal.querySelector('.number-to-borrow').textContent = btn.dataset.numberToBorrow;
-					}
-					
 					
 					
 
