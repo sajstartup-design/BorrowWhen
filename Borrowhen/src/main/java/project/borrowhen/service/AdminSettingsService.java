@@ -8,7 +8,7 @@ import project.borrowhen.dao.entity.AdminSettingsEntity;
 
 @Service
 @RequiredArgsConstructor
-public class AdminSettingsInitService {
+public class AdminSettingsService {
 
     private final AdminSettingsDao adminSettingsDao;
 
@@ -36,14 +36,12 @@ public class AdminSettingsInitService {
         }
     }
 
-    // ✅ Accessor for cached settings
     public AdminSettingsEntity getSettings() {
         return cachedSettings;
     }
 
-    // ✅ Update method (also updates cache)
     public AdminSettingsEntity updateSettings(AdminSettingsEntity updated) {
-        updated.setId(1); // always enforce single-record design
+        updated.setId(1); 
         cachedSettings = adminSettingsDao.save(updated);
         return cachedSettings;
     }

@@ -11,13 +11,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.borrowhen.common.constant.MessageConstant;
 import project.borrowhen.dao.entity.AdminSettingsEntity;
 import project.borrowhen.dto.AdminSettingsDto;
-import project.borrowhen.service.AdminSettingsInitService;
+import project.borrowhen.service.AdminSettingsService;
 
 @Controller
 public class A_SettingsController {
 	
 	@Autowired
-	private AdminSettingsInitService adminSettingsInitService;
+	private AdminSettingsService adminSettingsInitService;
 	
 	@GetMapping("/admin/settings")
 	public String showAdminSettings(Model model, @ModelAttribute AdminSettingsDto adminSettingsWebDto) {

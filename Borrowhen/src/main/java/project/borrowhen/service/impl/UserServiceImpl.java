@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +24,7 @@ import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.UserDto;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.object.UserObj;
+import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.UserService;
 
 @Service
@@ -42,8 +42,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private CipherUtil cipherUtil;
 	
-	@Value("${user.max.display}")
-	private String MAX_USER_DISPLAY;
+	@Autowired
+	private AdminSettingsService adminSettingsService;
+    
+    private int getMaxUserDisplay() {
+        return adminSettingsService.getSettings().getUserPerPage();
+    }
 
 	@Override
 	public void saveUser(UserDto inDto) throws Exception{
@@ -76,7 +80,7 @@ public class UserServiceImpl implements UserService {
 		
 		UserDto outDto = new UserDto();
 		
-		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(MAX_USER_DISPLAY));
+		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(getMaxUserDisplay()));
 		
 		Page<UserEntity> allUsers = userDao.getAllUsers(pageable);
 		

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +15,7 @@ import org.springframework.stereotype.Service;
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
-import project.borrowhen.dao.AdminSettingsDao;
 import project.borrowhen.dao.InventoryDao;
-import project.borrowhen.dao.entity.AdminSettingsEntity;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.UserEntity;
@@ -26,7 +23,7 @@ import project.borrowhen.dto.InventoryDto;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
-import project.borrowhen.service.AdminSettingsInitService;
+import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.UserService;
 
@@ -42,10 +39,11 @@ public class InventoryServiceImpl implements InventoryService{
 	@Autowired
 	private CipherUtil cipherUtil;
 	
-	private final int MAX_INVENTORY_DISPLAY;
-
-    public InventoryServiceImpl(AdminSettingsInitService adminSettingsService) {
-        this.MAX_INVENTORY_DISPLAY = adminSettingsService.getSettings().getInventoryPerPage();
+	@Autowired
+	private AdminSettingsService adminSettingsService;
+    
+    private int getMaxInventoryDisplay() {
+        return adminSettingsService.getSettings().getInventoryPerPage();
     }
 
 	@Override 
@@ -79,7 +77,7 @@ public class InventoryServiceImpl implements InventoryService{
 			
 		InventoryDto outDto = new InventoryDto();
 		
-		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(MAX_INVENTORY_DISPLAY));
+		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(getMaxInventoryDisplay()));
 		
 		FilterAndSearchObj filter = inDto.getFilter();
 		
@@ -124,7 +122,7 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		UserEntity user = userService.getLoggedInUser();
 		
-		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(MAX_INVENTORY_DISPLAY));
+		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(getMaxInventoryDisplay()));
 		
 		Page<InventoryData> allInventories = inventoryDao.getAllOwnedInventory(pageable, user.getId()); 
 		

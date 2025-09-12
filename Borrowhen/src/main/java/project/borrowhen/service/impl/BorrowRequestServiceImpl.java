@@ -2,7 +2,6 @@ package project.borrowhen.service.impl;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +19,12 @@ import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.BorrowRequestDao;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
-import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.BorrowRequestDto;
-import project.borrowhen.dto.InventoryDto;
 import project.borrowhen.object.BorrowRequestObj;
-import project.borrowhen.object.FilterAndSearchObj;
-import project.borrowhen.object.InventoryObj;
+import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.BorrowRequestService;
 import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.NotificationService;
@@ -55,8 +51,12 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	@Autowired
 	private CipherUtil cipherUtil;
 	
-	@Value("${inventory.max.display}")
-	private String MAX_INVENTORY_DISPLAY;
+	@Autowired
+	private AdminSettingsService adminSettingsService;
+    
+    private int getMaxRequestDisplay() {
+        return adminSettingsService.getSettings().getRequestPerPage();
+    }
 
 	@Override
 	public void saveBorrowRequest(BorrowRequestDto inDto) throws Exception {
@@ -119,7 +119,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    Pageable pageable = PageRequest.of(
 	        inDto.getPagination().getPage(),
-	        Integer.valueOf(MAX_INVENTORY_DISPLAY)
+	        Integer.valueOf(getMaxRequestDisplay())
 	    );
 	    
 	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllBorrowRequests(pageable);
