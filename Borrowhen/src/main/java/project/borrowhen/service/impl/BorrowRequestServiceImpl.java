@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpSession;
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
@@ -24,6 +23,7 @@ import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.BorrowRequestDto;
 import project.borrowhen.object.BorrowRequestObj;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.BorrowRequestService;
@@ -317,7 +317,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    UserEntity user = userService.getLoggedInUser();
 	    
-	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForBorrower(pageable, user.getId());
+	    FilterAndSearchObj filter = inDto.getFilter();
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForBorrower(pageable, user.getId(), filter.getSearch());
 	    
 	    List<BorrowRequestObj> requests = new ArrayList<>();
 	    

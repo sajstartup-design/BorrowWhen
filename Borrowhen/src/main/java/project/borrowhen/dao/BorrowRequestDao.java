@@ -84,11 +84,21 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    "LEFT JOIN UserEntity borrower ON borrower.id = br.userId " + 
 		    "LEFT JOIN UserEntity lender ON lender.id = i.userId " +
 		    "WHERE br.isDeleted = false " +
-			"AND br.userId = :userId ";
+		    "AND br.userId = :userId " +
+		    "AND ( :search IS NULL OR :search = '' OR " +
+		    "      LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "      CAST(br.price AS string) LIKE CONCAT('%', :search, '%') OR " +
+		    "      CAST(br.qty AS string) LIKE CONCAT('%', :search, '%') OR " +
+		    "      CAST(br.dateToBorrow AS string) LIKE CONCAT('%', :search, '%') OR " +
+		    "      CAST(br.dateToReturn AS string) LIKE CONCAT('%', :search, '%') OR " +
+		    "      LOWER(br.status) LIKE LOWER(CONCAT('%', :search, '%')) " +
+		    "    )";
+
 	
 	@Query(value=GET_ALL_OWNED_BORROW_REQUESTS_FOR_BORROWER)
 	public Page<BorrowRequestData> getAllOwnedBorrowRequestsForBorrower(Pageable pageable, 
-			@Param("userId") int userId) throws DataAccessException; 
+			@Param("userId") int userId, 
+			@Param("search") String search) throws DataAccessException; 
 	
     public final String UPDATE_BORROW_REQUEST_STATUS =
         "UPDATE BorrowRequestEntity br " +
