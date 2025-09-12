@@ -85,9 +85,9 @@
 					    <div class="field">
 					        <label>GENDER</label>
 					        <select name="gender">
-				             	<option value="MALE" th:selected="*{gender == 'MALE'}">Male</option>
-					            <option value="FEMALE" th:selected="*{gender == 'FEMALE'}">Female</option>
-					            <option value="OTHER" th:selected="*{gender == 'OTHER'}">Other</option>
+				             	<option value="MALE" th:selected="*{gender == 'MALE'}">MALE</option>
+					            <option value="FEMALE" th:selected="*{gender == 'FEMALE'}">FEMALE</option>
+					            <option value="OTHER" th:selected="*{gender == 'OTHER'}">OTHER</option>
 					        </select>
 					        <span class="error"
 					              th:if="${fieldErrors != null and fieldErrors.containsKey('gender')}"

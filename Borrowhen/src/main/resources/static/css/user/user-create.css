@@ -50,6 +50,7 @@ form{
     outline: none;
     transition: all 0.2s ease-in-out;
     width: 16rem;
+    text-align: center;
 }
 
 /* Input focus */

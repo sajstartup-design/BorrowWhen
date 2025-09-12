@@ -22,7 +22,7 @@ public interface NotificationDao extends JpaRepository<NotificationEntity, Integ
 			+ "SELECT e "
 			+ "FROM NotificationEntity e "
 			+ "WHERE e.userId = :userId "
-			+ "ORDER BY e.createdDate ASC "
+			+ "ORDER BY e.createdDate DESC "
 			+ "LIMIT 10 "
 			+ "";
 	
