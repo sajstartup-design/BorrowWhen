@@ -13,7 +13,6 @@ import org.springframework.data.repository.query.Param;
 import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
-import project.borrowhen.object.FilterAndSearchObj;
 
 public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	

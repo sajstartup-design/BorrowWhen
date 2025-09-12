@@ -1,0 +1,47 @@
+.field{
+	display: flex;
+	gap: 0.5rem;
+	width: 100%;
+}
+
+.field label {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #0a3d62;
+    display: flex;
+    align-items: center;
+    width: 20rem;
+}
+
+.field.bold label{
+	font-weight: 600;
+}
+
+/* Inputs (slightly lighter glass look inside form) */
+.field input,
+.field textarea,
+.field select,
+.field span {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 0.05rem solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+    color: #0a3d62;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    width: 16rem;
+    box-sizing: unset;
+    text-align: center;
+}
+
+/* Input focus */
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+    border-color: rgba(0, 123, 255, 0.6);
+    box-shadow: 0 0 0.4rem rgba(0, 123, 255, 0.3);
+    background: rgba(255, 255, 255, 0.55);
+}

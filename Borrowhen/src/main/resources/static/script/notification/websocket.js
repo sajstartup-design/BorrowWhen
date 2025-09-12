@@ -3,10 +3,27 @@ const stompClient = new StompJs.Client({
 });
 
 stompClient.onConnect = (frame) => {
-    setConnected(true);
     console.log('Connected: ' + frame);
     stompClient.subscribe('/topic/greetings', (greeting) => {
         showGreeting(JSON.parse(greeting.body).content);
+    });
+	
+	stompClient.subscribe('/user/queue/lender/notifications', (notification) => {
+        const data = notification.body;
+		
+		// Add pulsating effect
+	    const notifIcon = document.querySelector('.notification-icon');
+		updateNotificationCount();
+		
+		if(notifIcon){
+			let bellContainer = notifIcon.querySelector('.bell-container');
+			bellContainer.classList.add('pulsating-circle');
+			let bellIcon = notifIcon.querySelector('.bell-icon');
+			bellIcon.classList.add('bell');
+			
+			 
+		}
+
     });
 };
 
@@ -18,18 +35,6 @@ stompClient.onStompError = (frame) => {
     console.error('Broker reported error: ' + frame.headers['message']);
     console.error('Additional details: ' + frame.body);
 };
-
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
-    $("#greetings").html("");
-}
 
 function connect() {
     stompClient.activate();

@@ -43,7 +43,7 @@ async function loadInventories(page = 0, search = "") {
 		
 		const params = new URLSearchParams({ page, search });
 				
-		const url = `/api/inventory?${params.toString()}`;
+		const url = `/api/admin/inventory?${params.toString()}`;
 		
         const response = await fetch(url);
         const data = await response.json();

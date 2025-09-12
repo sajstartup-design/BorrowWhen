@@ -1,6 +1,10 @@
 package project.borrowhen.dto;
 
+import java.util.List;
+
 import lombok.Data;
+import project.borrowhen.object.BorrowRequestObj;
+import project.borrowhen.object.PaginationObj;
 
 @Data
 public class BorrowRequestDto {
@@ -12,4 +16,10 @@ public class BorrowRequestDto {
 	private String dateToBorrow;
 
 	private String dateToReturn;
+	
+	
+	private List<BorrowRequestObj> requests;
+	
+	private PaginationObj pagination;
+	
 }

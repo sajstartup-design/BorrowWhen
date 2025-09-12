@@ -1,12 +1,12 @@
 package project.borrowhen.service.impl;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +18,13 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
+import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.UserDao;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.UserDto;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.object.UserObj;
+import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.UserService;
 
 @Service
@@ -40,13 +42,17 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private CipherUtil cipherUtil;
 	
-	@Value("${user.max.display}")
-	private String MAX_USER_DISPLAY;
+	@Autowired
+	private AdminSettingsService adminSettingsService;
+    
+    private int getMaxUserDisplay() {
+        return adminSettingsService.getSettings().getUserPerPage();
+    }
 
 	@Override
 	public void saveUser(UserDto inDto) throws Exception{
 		
-		Date dateNow = Date.valueOf(LocalDate.now());
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
 		
 		UserEntity user = new UserEntity();
 		
@@ -74,7 +80,7 @@ public class UserServiceImpl implements UserService {
 		
 		UserDto outDto = new UserDto();
 		
-		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(MAX_USER_DISPLAY));
+		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(getMaxUserDisplay()));
 		
 		Page<UserEntity> allUsers = userDao.getAllUsers(pageable);
 		
@@ -98,8 +104,8 @@ public class UserServiceImpl implements UserService {
 		    obj.setGender(user.getGender());
 		    obj.setUserId(user.getUserId());
 		    obj.setRole(user.getRole());
-		    obj.setCreatedDate(user.getCreatedDate());
-		    obj.setUpdatedDate(user.getUpdatedDate());
+			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(user.getCreatedDate()));
+			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(user.getUpdatedDate()));		
 		    
 		    users.add(obj);
 		}
@@ -142,8 +148,8 @@ public class UserServiceImpl implements UserService {
 	    outDto.setGender(user.getGender());
 	    outDto.setUserId(user.getUserId());
 	    outDto.setRole(user.getRole());
-	    outDto.setCreatedDate(user.getCreatedDate());
-	    outDto.setUpdatedDate(user.getUpdatedDate());
+	    outDto.setCreatedDate(DateFormatUtil.formatTimestampToString(user.getCreatedDate()));
+	    outDto.setUpdatedDate(DateFormatUtil.formatTimestampToString(user.getUpdatedDate()));
 	    
 	    return outDto;
 	}

@@ -8,4 +8,10 @@ import project.borrowhen.dto.BorrowRequestDto;
 public interface BorrowRequestService {
 
 	public void saveBorrowRequest(BorrowRequestDto inDto) throws Exception;
+	
+	public BorrowRequestDto getAllBorrowRequest(BorrowRequestDto inDto) throws Exception;
+	
+	public void approveBorrowRequest(BorrowRequestDto inDto) throws Exception;
+	
+	public void rejectBorrowRequest(BorrowRequestDto inDto) throws Exception;
 }

@@ -13,6 +13,29 @@
 		
 		<!--  LENDER SIDEBAR  -->	
 		
+		<div class="container-msg" id="msgContainer" >
+			<div class="success-msg" th:if="${successMsg != null}">
+				<div class="icon-msg">
+					<img th:src="@{/images/check.png}" alt="success"/>
+				</div>
+				<div class="content-msg">
+					<span class="header-msg">SUCCESS</span>
+					<span class="body-msg" th:text="${successMsg}"></span>
+				</div>
+				<div class="progress-bar"></div>
+			</div>
+			<div class="error-msg" th:if="${errorMsg != null}">
+				<div class="icon-msg">
+					<img th:src="@{/images/check.png}" alt="success"/>
+				</div>
+				<div class="content-msg">
+					<span class="header-msg">ERROR</span>
+					<span class="body-msg" th:text="${errorMsg}"></span>
+				</div>
+				<div class="progress-bar"></div>
+			</div>
+		</div>
+		
 		<th:block sec:authorize="hasAuthority('BORROWER')">
 			<section>
 				<p>MAIN</p>
@@ -121,9 +144,9 @@
 		        <a th:href="@{/admin/inventory}" class="option">
 		            <span><img th:src="@{/images/supplies.png}"> ALL INVENTORY</span>
 		        </a>
-		        <div class="option">
+		        <a th:href="@{/admin/request}" class="option">
 		            <span><img th:src="@{/images/request.png}"> ALL REQUEST</span>
-		        </div>
+		        </a>
 		    </section>
 		    <hr class="soft-gradient">
 		    
@@ -158,6 +181,15 @@
 		        <p>USERS</p>
 		        <a th:href="@{/admin/user}" class="option">
 		            <span><img th:src="@{/images/friends.png}"> USER</span>
+		        </a>
+		    </section>
+		    
+		    <hr class="soft-gradient">
+		    
+		    <section class="admin-settings">
+		        <p>ADMIN SETTINGS</p>
+		        <a th:href="@{/admin/settings}" class="option">
+		            <span><img th:src="@{/images/friends.png}"> ADMIN SETTINGS</span>
 		        </a>
 		    </section>
 		</th:block>

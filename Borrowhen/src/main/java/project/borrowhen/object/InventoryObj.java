@@ -1,6 +1,5 @@
 package project.borrowhen.object;
 
-import java.sql.Date;
 
 import lombok.Data;
 
@@ -17,7 +16,7 @@ public class InventoryObj {
 
 	private Integer totalQty;
 	
-	private Date createdDate;
+	private String createdDate;
 	
-	private Date updatedDate;
+	private String updatedDate;
 }

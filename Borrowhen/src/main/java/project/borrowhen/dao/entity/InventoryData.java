@@ -1,6 +1,6 @@
 package project.borrowhen.dao.entity;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.springframework.context.annotation.Scope;
 
@@ -31,7 +31,7 @@ public class InventoryData {
 	
 	private int totalQty;
 	
-	private Date createdDate;
+	private Timestamp createdDate;
 	
-	private Date updatedDate;
+	private Timestamp updatedDate;
 }

@@ -135,7 +135,7 @@ public class L_InventoryController {
 			
 			inventoryService.editInventory(inventoryWebDto);
 			
-			ra.addFlashAttribute("successMsg", MessageConstant.INVENTORY_CREATE_MSG);
+			ra.addFlashAttribute("successMsg", MessageConstant.INVENTORY_EDIT_MSG);
 			
 		}catch(Exception e) {
 			

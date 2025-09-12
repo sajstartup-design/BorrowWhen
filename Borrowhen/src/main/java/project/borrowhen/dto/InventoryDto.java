@@ -32,6 +32,10 @@ public class InventoryDto {
 	@NotNull(message = MessageConstant.QUANTITY_NOT_BLANK)
 	private Integer totalQty;
 	
+	private String createdDate;
+	
+	private String updatedDate;
+	
 	private String dateToBorrow;
 
 	private String dateToReturn;

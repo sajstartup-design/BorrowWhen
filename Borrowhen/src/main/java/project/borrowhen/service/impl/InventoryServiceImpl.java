@@ -1,12 +1,12 @@
 package project.borrowhen.service.impl;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
+import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.InventoryDao;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
@@ -22,6 +23,7 @@ import project.borrowhen.dto.InventoryDto;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
+import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.UserService;
 
@@ -37,13 +39,17 @@ public class InventoryServiceImpl implements InventoryService{
 	@Autowired
 	private CipherUtil cipherUtil;
 	
-	@Value("${inventory.max.display}")
-	private String MAX_USER_DISPLAY;
+	@Autowired
+	private AdminSettingsService adminSettingsService;
+    
+    private int getMaxInventoryDisplay() {
+        return adminSettingsService.getSettings().getInventoryPerPage();
+    }
 
-	@Override
+	@Override 
 	public void saveInventory(InventoryDto inDto) throws Exception {
 		
-		Date dateNow = Date.valueOf(LocalDate.now());
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
 		
 		UserEntity user = userService.getLoggedInUser();
 		
@@ -71,7 +77,7 @@ public class InventoryServiceImpl implements InventoryService{
 			
 		InventoryDto outDto = new InventoryDto();
 		
-		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(MAX_USER_DISPLAY));
+		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(getMaxInventoryDisplay()));
 		
 		FilterAndSearchObj filter = inDto.getFilter();
 		
@@ -88,8 +94,8 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setPrice(inventory.getPrice());
 			obj.setTotalQty(inventory.getTotalQty());
 			obj.setOwner(inventory.getFirstName() + " " + inventory.getFamilyName());
-			obj.setCreatedDate(inventory.getCreatedDate());
-			obj.setUpdatedDate(inventory.getUpdatedDate());		
+			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(inventory.getCreatedDate()));
+			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(inventory.getUpdatedDate()));		
 			
 			inventories.add(obj);
 			
@@ -116,7 +122,7 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		UserEntity user = userService.getLoggedInUser();
 		
-		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(MAX_USER_DISPLAY));
+		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(getMaxInventoryDisplay()));
 		
 		Page<InventoryData> allInventories = inventoryDao.getAllOwnedInventory(pageable, user.getId()); 
 		
@@ -164,6 +170,8 @@ public class InventoryServiceImpl implements InventoryService{
 		outDto.setItemName(inventory.getItemName());
 		outDto.setPrice(inventory.getPrice());
 		outDto.setTotalQty(inventory.getTotalQty());
+		outDto.setCreatedDate(DateFormatUtil.formatTimestampToString(inventory.getCreatedDate()));
+		outDto.setUpdatedDate(DateFormatUtil.formatTimestampToString(inventory.getUpdatedDate()));
 		
 		return outDto;
 	}
