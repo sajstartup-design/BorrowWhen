@@ -397,6 +397,12 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    );
 	}
 
+	@Override
+	public BorrowRequestDto getBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

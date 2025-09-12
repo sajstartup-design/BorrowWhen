@@ -58,6 +58,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+const buttons = {
+    cancel: (request) => `
+        <button class="delete-btn" 
+                data-toggle="modal"
+                data-target="#cancelModal"
+                data-id="${request.encryptedId}"
+                data-item-name="${request.itemName}"
+                data-price="${request.price}"
+                data-date-to-borrow="${request.dateToBorrow}"
+                data-date-to-return="${request.dateToReturn}"
+                data-number-to-borrow="${request.qty}">
+            <img src="/images/cancelled.png">
+        </button>
+    `,
+    received: (request) => `
+        <button class="received-btn"
+                data-toggle="modal"
+                data-target="#confirmModal"
+                data-id="${request.encryptedId}"
+                data-item-name="${request.itemName}"
+                data-price="${request.price}"
+                data-date-to-borrow="${request.dateToBorrow}"
+                data-date-to-return="${request.dateToReturn}"
+                data-number-to-borrow="${request.qty}">
+            <img src="/images/received-icon.png">
+        </button>
+    `,
+    fake: (icon) => `<button class="fake-btn" disabled><img src="/images/${icon}.png"></button>`
+};
+
 
 async function loadRequests(page = 0,
 	search = ""
@@ -81,61 +111,43 @@ async function loadRequests(page = 0,
 		const fragment = document.createDocumentFragment();
 
 		data.requests.forEach(request => {
-		    const row = document.createElement("div");
-		    row.classList.add("table-row");
-		    row.setAttribute('data-id', request.encryptedId);
+            const row = document.createElement("div");
+            row.classList.add("table-row");
+            row.setAttribute('data-id', request.encryptedId);
+
+            const status = request.status?.toLowerCase().replace(' ', '').trim();
+            let actionButtons = '';
+
+			if (status === 'pending') {
+			    actionButtons = buttons.cancel(request) + buttons.fake('received-icon');
+			} else if (status === 'approved') {
+			    actionButtons = buttons.fake('cancelled') + buttons.received(request);
+			} else if (status === 'rejected' || status === 'ongoing' || status === 'completed') {
+			    actionButtons = buttons.fake('cancelled') + buttons.fake('received-icon');
+			}
 			
-			let actionButton = "";
-			
-			if (request.status == "PENDING") {
-		        actionButton = `<button class="delete-btn" 				
-										data-toggle="modal" 
-						                data-target="#cancelModal"
-										data-item-name="${request.itemName}"
-					                    data-price="${request.price}"
-					                    data-date-to-borrow="${request.dateToBorrow}"
-					                    data-date-to-return="${request.dateToReturn}"
-					                    data-number-to-borrow="${request.qty}"
-										data-id="${request.encryptedId}">CANCEL</button>`;
-		    } else if (request.status == "APPROVED") {
-		        actionButton = `<button class="received-btn" 
-										data-toggle="modal" 
-						              	data-target="#confirmModal"
-										data-item-name="${request.itemName}"
-					                    data-price="${request.price}"
-					                    data-date-to-borrow="${request.dateToBorrow}"
-					                    data-date-to-return="${request.dateToReturn}"
-					                    data-number-to-borrow="${request.qty}"
-										data-id="${request.encryptedId}">ITEM RECEIVED</button>`;
-		    }
+            row.innerHTML = `
+                <div class="table-cell">${request.itemName}</div>
+                <div class="table-cell">₱${request.price}</div>
+                <div class="table-cell">${request.qty}</div>
+                <div class="table-cell">${request.dateToBorrow}</div>
+                <div class="table-cell">${request.dateToReturn}</div>
+                <div class="table-cell">
+                    <span class="status ${status}">
+                        <span>${request.status}</span>
+                    </span>
+                </div>
+                <div class="table-cell">
+                    ${actionButtons}
+                </div>
+            `;
 
-		    row.innerHTML = `
-		        <div class="table-cell">${request.itemName}</div>
-		        <div class="table-cell">₱${request.price}</div>
-		        <div class="table-cell">${request.qty}</div>
-		        <div class="table-cell">${request.dateToBorrow}</div>
-		        <div class="table-cell">${request.dateToReturn}</div>
-		        <div class="table-cell">
-					<span class="status ${request.status?.toLowerCase().replace(' ', '').trim()}">
-					    <span>${request.status}</span>
-					</span>
-		        </div>
-		        <div class="table-cell">     		        
-		          ${actionButton}
-		        </div>
-		    `;
-					
-			row.addEventListener('click', function(e) {
-			   
-			    if (e.target.closest('button') || e.target.closest('a')) {
-			        return; 
-			    }
-				
-				const encryptedId = this.getAttribute('data-id');
+            row.addEventListener('click', function(e) {
+                if (e.target.closest('button') || e.target.closest('a')) return;
 
-			    window.location.href="/admin/inventory/details?encryptedId=" + encryptedId;
-			});
-
+                const encryptedId = this.getAttribute('data-id');
+                window.location.href = "/admin/inventory/details?encryptedId=" + encryptedId;
+            });
 
             fragment.appendChild(row);
         });

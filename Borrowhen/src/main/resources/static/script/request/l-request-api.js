@@ -37,6 +37,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+// Helper functions to generate buttons
+const buttons = {
+    approve: (request) => `
+        <button 
+          class="approve-btn" 
+          data-toggle="modal" 
+          data-target="#approveModal"
+          data-id="${request.encryptedId}"
+          data-item-name="${request.itemName}">
+          <img src="/images/approved.png">
+        </button>
+    `,
+    reject: (request) => `
+        <button 
+          class="reject-btn" 
+          data-toggle="modal" 
+          data-target="#rejectModal"
+          data-id="${request.encryptedId}"
+          data-item-name="${request.itemName}">
+          <img src="/images/rejected.png">
+        </button>
+    `,
+    returnBtn: (request) => `
+        <button 
+          class="return-btn" 
+          data-toggle="modal" 
+          data-target="#returnModal"
+          data-id="${request.encryptedId}"
+          data-item-name="${request.itemName}">
+          <img src="/images/return-box.png">
+        </button>
+    `,
+    fake: (icon) => `<button class="fake-btn" disabled><img src="/images/${icon}.png"></button>`
+};
+
 
 async function loadInventories(page = 0) {
     try {
@@ -62,62 +97,37 @@ async function loadInventories(page = 0) {
 		    row.classList.add("table-row");
 		    row.setAttribute('data-id', request.encryptedId);
 
-		    // decide if buttons should be fake (disabled look)
-		    const isFinalStatus = request.status?.toLowerCase() === "approved" || request.status?.toLowerCase() === "rejected";
+			const status = request.status?.toLowerCase().replace(' ', '').trim();
 
-		    row.innerHTML = `
-		        <div class="table-cell">${request.borrower}</div>
-		        <div class="table-cell">${request.itemName}</div>
-		        <div class="table-cell">₱${request.price}</div>
-		        <div class="table-cell">${request.qty}</div>
-		        <div class="table-cell">${request.dateToBorrow}</div>
-		        <div class="table-cell">${request.dateToReturn}</div>
-		        <div class="table-cell">
-		          <span class="status ${request.status?.toLowerCase()}">
-		            <span>${request.status}</span>
-		          </span>
-		        </div>
-		        <div class="table-cell">     
-		          ${
-		            isFinalStatus
-		            ? `
-		                <button class="fake-btn" disabled><img src="/images/approved.png"></button>
-		                <button class="fake-btn" disabled><img src="/images/rejected.png"></button>
-		              `
-		            : `
-		                <button 
-		                  class="approve-btn" 
-		                  data-toggle="modal" 
-		                  data-target="#approveModal"
-		                  data-id="${request.encryptedId}"
-		                  data-item-name="${request.itemName}"
-		                  data-price="${request.price}"
-		                  data-borrower="${request.borrower}"
-		                  data-date-to-borrow="${request.dateToBorrow}"
-		                  data-date-to-return="${request.dateToReturn}"
-		                  data-number-to-borrow="${request.qty}">
-		                  <img src="/images/approved.png">
-		                </button>
-						<button 
-		                  class="reject-btn" 
-		                  data-toggle="modal" 
-		                  data-target="#rejectModal"
-		                  data-id="${request.encryptedId}"
-		                  data-item-name="${request.itemName}"
-		                  data-price="${request.price}"
-		                  data-borrower="${request.borrower}"
-		                  data-date-to-borrow="${request.dateToBorrow}"
-		                  data-date-to-return="${request.dateToReturn}"
-		                  data-number-to-borrow="${request.qty}">
-		                  <img src="/images/rejected.png">
-		                </button>
-		              `
-		          }
-		          <button class="delete-btn" data-id="${request.encryptedId}">
-		            <img src="/images/delete.png">
-		          </button>
-		        </div>
-		    `;
+			    let actionButtons = '';
+
+			    if (status === 'pending') {
+			        actionButtons = buttons.approve(request) + buttons.reject(request) + buttons.fake('return-box');
+			    } else if (status === 'ongoing') {
+			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.returnBtn(request);
+			    } else {
+			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.fake('return-box');
+			    }
+
+			    row.innerHTML = `
+			        <div class="table-cell">${request.borrower}</div>
+			        <div class="table-cell">${request.itemName}</div>
+			        <div class="table-cell">₱${request.price}</div>
+			        <div class="table-cell">${request.qty}</div>
+			        <div class="table-cell">${request.dateToBorrow}</div>
+			        <div class="table-cell">${request.dateToReturn}</div>
+			        <div class="table-cell">
+			            <span class="status ${status}">
+			                <span>${request.status}</span>
+			            </span>
+			        </div>
+			        <div class="table-cell">
+			            ${actionButtons}
+			            <button class="delete-btn" data-id="${request.encryptedId}">
+			                <img src="/images/delete.png">
+			            </button>
+			        </div>
+			    `;
 					
 			row.addEventListener('click', function(e) {
 			   
@@ -127,7 +137,7 @@ async function loadInventories(page = 0) {
 				
 				const encryptedId = this.getAttribute('data-id');
 
-			    window.location.href="/admin/inventory/details?encryptedId=" + encryptedId;
+			    window.location.href="/lender/request/details?encryptedId=" + encryptedId;
 			});
 
 

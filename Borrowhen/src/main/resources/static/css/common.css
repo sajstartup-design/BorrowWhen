@@ -895,6 +895,13 @@ hr.soft-gradient.thin {
 	text-align: center;          /* optional: keep it centered */
 }
 
+.table-cell:last-child{
+	min-width: 15rem;
+	width: max-content !important;
+	display: flex;
+	justify-content: center;
+}
+
 
 .table-cell img{
 	width: 1rem;

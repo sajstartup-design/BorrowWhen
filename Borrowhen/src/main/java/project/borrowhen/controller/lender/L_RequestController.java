@@ -2,10 +2,12 @@ package project.borrowhen.controller.lender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.borrowhen.common.constant.MessageConstant;
@@ -63,5 +65,28 @@ public class L_RequestController {
 		}
 		
 		return "redirect:/lender/request";
+	}
+	
+	@GetMapping("/details")
+	public String showRequestDetailsScreen(Model model,
+			@RequestParam("encryptedId") String encryptedId,
+			RedirectAttributes ra) {
+		
+try {
+			
+
+			
+			model.addAttribute("borrowRequestDto", new BorrowRequestDto());
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			
+			return "redirect:/lender/request";
+		}
+		
+		return "/request/lender/request-html";
 	}
 }
