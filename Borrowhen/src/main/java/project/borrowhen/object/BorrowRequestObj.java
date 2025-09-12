@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class BorrowRequestObj {
 	
+	private String encryptedId;
+	
 	private String borrower;
 	
 	private String lender;

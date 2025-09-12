@@ -12,13 +12,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="borrow_Request")
+@Table(name="borrow_request")
 public class BorrowRequestEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+	 
 	private int inventoryId;
 	
 	private int userId;
@@ -30,6 +30,8 @@ public class BorrowRequestEntity {
 	private Date dateToReturn;
 	
 	private int qty;
+	
+	private double price;
 
 	private String status;
 	

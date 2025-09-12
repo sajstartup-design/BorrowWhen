@@ -20,13 +20,10 @@ async function updateNotificationCount(){
     }
 }
 
-async function updateNotificationModal(e, refresh=false) {
+async function updateNotificationModal(e) {
     try {
-        if (!openedModals.has(e) || refresh) {
+        if (!openedModals.has(e)) {
 			
-			if(refresh){
-				updateNotificationCount();
-			}
 			
             const notificationIcon = document.querySelector('.notification-icon');
             const notificationsList = document.querySelector(".notifications-list");

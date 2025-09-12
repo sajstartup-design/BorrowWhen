@@ -108,7 +108,7 @@
 				APPROVE REQUEST
 			</div>
 			<div class="modal-body">
-				<form id="saveForm" th:action="@{/inventory/request}" method="POST">
+				<form id="saveForm" th:action="@{/admin/request/approve}" method="POST">
 					<input type="hidden" name="encryptedId" value="" id="encryptedId"/>
 					
 					<div class="field">
@@ -141,7 +141,7 @@
 				Once confirmed, this action cannot be undone.
 				<div>
 					<button class="cancel" name="cancel">CANCEL</button>
-					<button class="borrow-btn request-btn" form="saveForm">APPROVE</button>
+					<button class="borrow-btn approve-btn" form="saveForm">APPROVE</button>
 				</div>
 			</div>
 		</div>

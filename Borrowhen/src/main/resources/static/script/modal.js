@@ -28,7 +28,7 @@ function updateBtnsModal(){
 					if(modal.id === 'approveModal'){
 						modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
 
-				     	modal.querySelector(".item-name").textContent = btn.dataset.name;
+				     	modal.querySelector(".item-name").textContent = btn.dataset.itemName;
 				      	modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;					
 						modal.querySelector('.date-to-borrow').textContent = btn.dataset.dateToBorrow;
 						modal.querySelector('.date-to-return').textContent = btn.dataset.dateToReturn;

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpSession;
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
@@ -23,6 +24,7 @@ import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.BorrowRequestDto;
 import project.borrowhen.object.BorrowRequestObj;
+import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.BorrowRequestService;
 import project.borrowhen.service.InventoryService;
@@ -51,6 +53,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	private CipherUtil cipherUtil;
 	
 	@Autowired
+	private HttpSession httpSession;
+	
+	@Autowired
 	private AdminSettingsService adminSettingsService;
     
     private int getMaxRequestDisplay() {
@@ -77,6 +82,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		request.setItemName(inventory.getItemName());		
 		request.setDateToBorrow(Date.valueOf(inDto.getDateToBorrow()));
 		request.setDateToReturn(Date.valueOf(inDto.getDateToReturn()));
+		request.setQty(inDto.getQty());
+		request.setPrice(inventory.getPrice());
 		request.setStatus(CommonConstant.PENDING);;
 		request.setCreatedDate(dateNow);
 		request.setUpdatedDate(dateNow);
@@ -129,6 +136,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    for (BorrowRequestData request : allRequests) {
 	        BorrowRequestObj obj = new BorrowRequestObj();
 	        
+	        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getBorrowRequestId())));
+	        
 	        String borrowerFullName = request.getBorrowerFirstName() + " " + request.getBorrowerFamilyName();
 	        obj.setBorrower(borrowerFullName.trim());
 	        
@@ -147,11 +156,17 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        requests.add(obj);
 	    }
 	    
-	    outDto.setRequests(requests);
-	    outDto.setPagination(inDto.getPagination());
-	    outDto.getPagination().setTotalPages(allRequests.getTotalPages());
-	    outDto.getPagination().setTotalElements(allRequests.getTotalElements());
-	    
+	    PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allRequests.getNumber());
+		pagination.setTotalPages(allRequests.getTotalPages());
+		pagination.setTotalElements(allRequests.getTotalElements());
+		pagination.setHasNext(allRequests.hasNext());
+		pagination.setHasPrevious(allRequests.hasPrevious());
+		
+		outDto.setRequests(requests);
+		outDto.setPagination(pagination);
+		
 	    return outDto;
 	}
 
@@ -162,6 +177,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
 	    
+	    UserEntity user = userService.getLoggedInUser();
+	    
 	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
 
 	    UserEntity borrower = userService.getUser(request.getUserId()); 
@@ -171,13 +188,18 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(request.getUserId());
+	    
+	    String approvedBy = CommonConstant.ROLE_ADMIN.equals(user.getRole())
+	            ? "the admin" 
+	            : "the lender";
 
 	    String message = String.format(
-	        "Your borrow request for '%s' from %s to %s has been approved by the lender.",
-	        request.getItemName(),
-	        request.getDateToBorrow(),
-	        request.getDateToReturn()
-	    );
+	            "Your borrow request for '%s' from %s to %s has been approved by %s.",
+	            request.getItemName(),
+	            request.getDateToBorrow(),
+	            request.getDateToReturn(),
+	            approvedBy
+	        );
 
 	    notification.setMessage(message);
 	    notification.setIsRead(false);

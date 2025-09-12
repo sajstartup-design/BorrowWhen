@@ -20,8 +20,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    " borrower.familyName, " +            
 		    " lender.firstName, " +             
 		    " lender.familyName, " +             
-		    " i.itemName, " +                    
-		    " i.price, " +                     
+		    " br.itemName, " +                    
+		    " br.price, " +                     
 		    " br.qty, " +                        
 		    " br.dateToBorrow, " +                
 		    " br.dateToReturn, " +                

@@ -48,6 +48,8 @@ async function loadInventories(page = 0) {
         const response = await fetch(url);
         const data = await response.json();
 		
+		console.log(data);
+		
         updatePagination(data.pagination);
 
         const tableBody = document.getElementById("table-body");
@@ -81,7 +83,8 @@ async function loadInventories(page = 0) {
 		              data-toggle="modal" 
 		              data-target="#approveModal"
 		              data-id="${request.encryptedId}"
-		              data-item="${request.itemName}"
+		              data-item-name="${request.itemName}"
+					  data-price="${request.price}"
 		              data-borrower="${request.borrower}"
 		              data-date-to-borrow="${request.dateToBorrow}"
 		              data-date-to-return="${request.dateToReturn}"
@@ -92,15 +95,7 @@ async function loadInventories(page = 0) {
                     <button><img src="/images/delete.png"></button>
                 </div>
             `;
-			
-			/*row.querySelector('.edit-btn').addEventListener('click', function(){
-				const form = document.querySelector('#editForm');
-				
-				form.querySelector('#hiddenEncryptedId').value = this.getAttribute('data-id');
-				
-				form.submit();
-			});*/
-			
+					
 			row.addEventListener('click', function(e) {
 			   
 			    if (e.target.closest('button') || e.target.closest('a')) {

@@ -13,7 +13,7 @@ stompClient.onConnect = (frame) => {
 		
 		// Add pulsating effect
 	    const notifIcon = document.querySelector('.notification-icon');
-		updateNotificationModal(notifIcon, true);
+		updateNotificationCount();
 		
 		if(notifIcon){
 			let bellContainer = notifIcon.querySelector('.bell-container');
