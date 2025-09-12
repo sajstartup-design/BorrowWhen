@@ -84,6 +84,21 @@ const buttons = {
           <img src="/images/return-box.png">
         </button>
     `,
+	payBtn: (request) => `
+	        <button 
+	          class="confim-btn" 
+	          data-toggle="modal" 
+	          data-target="#confirmModal"
+	          data-id="${request.encryptedId}"
+	          data-item-name="${request.itemName}"
+			  data-price="${request.price}"
+			  data-date-to-borrow="${request.dateToBorrow}"
+			  data-date-to-return="${request.dateToReturn}"
+			  data-number-to-borrow="${request.qty}"
+			  >
+	          <img src="/images/credit-cards.png">
+	        </button>
+	    `,
     fake: (icon) => `<button class="fake-btn" disabled><img src="/images/${icon}.png"></button>`
 };
 
@@ -117,11 +132,13 @@ async function loadInventories(page = 0) {
 			    let actionButtons = '';
 
 			    if (status === 'pending') {
-			        actionButtons = buttons.approve(request) + buttons.reject(request) + buttons.fake('return-box');
+			        actionButtons = buttons.approve(request) + buttons.reject(request) + buttons.fake('return-box') + buttons.fake('credit-cards');
 			    } else if (status === 'ongoing') {
-			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.returnBtn(request);
+			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.returnBtn(request) + buttons.fake('credit-cards');
+				} else if(status === 'completed'){
+					actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.fake('return-box') + buttons.payBtn(request);
 			    } else {
-			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.fake('return-box');
+			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.fake('return-box') + buttons.fake('credit-cards');
 			    }
 
 			    row.innerHTML = `
@@ -154,6 +171,10 @@ async function loadInventories(page = 0) {
 
 
             fragment.appendChild(row);
+			
+			const hr = document.createElement("hr");
+			hr.className = "soft-gradient";
+			fragment.appendChild(hr);
         });
 
         tableBody.appendChild(fragment);

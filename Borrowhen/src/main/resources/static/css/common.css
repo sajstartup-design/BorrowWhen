@@ -22,7 +22,7 @@
 
 html, body {
   font-family: 'Montserrat', sans-serif;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -40,6 +40,7 @@ html, body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	
 }
 
 p{
@@ -899,7 +900,9 @@ hr.soft-gradient.thin {
 	text-align: center;          /* optional: keep it centered */
 }
 
-
+.table-cell:last-child{
+	width: 10rem;
+}
 
 .table-cell img{
 	width: 1rem;
