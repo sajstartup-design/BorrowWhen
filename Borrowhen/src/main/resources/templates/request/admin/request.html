@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>BW | Request</title>
 <link rel="stylesheet" th:href="@{/css/common.css}" />
-<link rel="stylesheet" th:href="@{/css/inventory/inventory-view.css}" />
+<link rel="stylesheet" th:href="@{/css/request/request-view.css}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -101,12 +101,55 @@
 	<form style="display: none" th:action="@{/admin/inventory/edit}" method="GET" id="editForm">
 		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
 	</form>
-	<script th:inline="javascript">
-		const webDto = /*[[${inventoryDto}]]*/'';
-		console.log(webDto);
-	</script>
+	
+	<div class="modal" id="approveModal">
+		<div class="modal-content">
+			<div class="modal-header">
+				APPROVE REQUEST
+			</div>
+			<div class="modal-body">
+				<form id="saveForm" th:action="@{/inventory/request}" method="POST">
+					<input type="hidden" name="encryptedId" value="" id="encryptedId"/>
+					
+					<div class="field">
+					  <label>Item Name</label>
+					  <span class="item-name">Hammer</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+					  <label>Price</label>
+					  <span class="item-price">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Borrow</label>
+						<span class="date-to-borrow">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Return</label>
+						<span class="date-to-return">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Number to Borrow</label>
+						<span class="number-to-borrow">P100</span>
+					</div>
+				</form>	
+			</div>
+			<div class="modal-footer">
+				Once confirmed, this action cannot be undone.
+				<div>
+					<button class="cancel" name="cancel">CANCEL</button>
+					<button class="borrow-btn request-btn" form="saveForm">APPROVE</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
+	<script th:src="@{/script/submit.js}"></script>
+	<script th:src="@{/script/modal.js}"></script>
 	<script th:src="@{/script/request/a-request-api.js}"></script>
 </body>
 </html>

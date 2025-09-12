@@ -76,7 +76,18 @@ async function loadInventories(page = 0) {
                 <div class="table-cell">${request.createdDate}</div>
                 <div class="table-cell">${request.updatedDate}</div>
                 <div class="table-cell">     
-					<button><img src="/images/approved.png"></button>
+					<button 
+		              class="approve-btn" 
+		              data-toggle="modal" 
+		              data-target="#approveModal"
+		              data-id="${request.encryptedId}"
+		              data-item="${request.itemName}"
+		              data-borrower="${request.borrower}"
+		              data-date-to-borrow="${request.dateToBorrow}"
+		              data-date-to-return="${request.dateToReturn}"
+					  data-number-to-borrow="${request.qty}">
+		              <img src="/images/approved.png">
+		            </button>
 					<button><img src="/images/rejected.png"></button>
                     <button><img src="/images/delete.png"></button>
                 </div>
@@ -106,6 +117,8 @@ async function loadInventories(page = 0) {
         });
 
         tableBody.appendChild(fragment);
+		
+		updateBtnsModal();
 
         document.querySelector(".input-page").value = data.pagination.page + 1;
 		
