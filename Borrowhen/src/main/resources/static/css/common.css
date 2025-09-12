@@ -944,7 +944,8 @@ hr.soft-gradient.thin {
 
 
 
-.table-cell .status.pending {
+.table-cell .status.pending,
+.status.pending {
     color: #856404; 
     background: #fff3cd; 
     border-left: 0.3rem solid #ffc107;
@@ -953,7 +954,8 @@ hr.soft-gradient.thin {
     font-weight: 600;
 }
 
-.table-cell .status.approved {
+.table-cell .status.approved,
+.status.approved {
     color: #155724; 
     background: #d4edda; 
     border-left: 0.3rem solid #28a745; 
@@ -963,7 +965,8 @@ hr.soft-gradient.thin {
 }
 
 
-.table-cell .status.rejected {
+.table-cell .status.rejected,
+.status.rejected  {
     color: #721c24;
     background: #f8d7da;
     border-left: 0.3rem solid #dc3545; 
@@ -972,7 +975,8 @@ hr.soft-gradient.thin {
     font-weight: 600;
 }
 
-.table-cell .status.ongoing {
+.table-cell .status.ongoing,
+.status.ongoing{
     color: #0c5460;
     background: #d1ecf1;
     border-left: 0.3rem solid #17a2b8; 
@@ -981,7 +985,8 @@ hr.soft-gradient.thin {
     font-weight: 600;
 }
 
-.table-cell .status.completed {
+.table-cell .status.completed,
+.status.completed {
     color: #155724;
     background: #c3e6cb;
     border-left: 0.3rem solid #28a745; 

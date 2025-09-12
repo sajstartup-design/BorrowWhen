@@ -6,6 +6,7 @@ import lombok.Data;
 import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
+import project.borrowhen.object.UserObj;
 
 @Data
 public class BorrowRequestDto {
@@ -18,6 +19,9 @@ public class BorrowRequestDto {
 
 	private String dateToReturn;
 	
+	private BorrowRequestObj request;
+	
+	private UserObj borrower;
 	
 	private List<BorrowRequestObj> requests;
 	

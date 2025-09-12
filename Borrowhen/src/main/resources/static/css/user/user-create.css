@@ -4,6 +4,11 @@
 	gap: 1rem;
 }
 
+.content .btn-group{
+	display: flex;
+	gap: 0.5rem;
+}
+
 form{
 	background: rgba(215, 238, 251, 1); /* Semi-transparent */
 	backdrop-filter: blur(10px);

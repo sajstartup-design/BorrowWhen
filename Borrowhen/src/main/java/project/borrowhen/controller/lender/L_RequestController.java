@@ -72,11 +72,15 @@ public class L_RequestController {
 			@RequestParam("encryptedId") String encryptedId,
 			RedirectAttributes ra) {
 		
-try {
+		try {
 			
-
+			BorrowRequestDto inDto = new BorrowRequestDto();
 			
-			model.addAttribute("borrowRequestDto", new BorrowRequestDto());
+			inDto.setEncryptedId(encryptedId);
+			
+			BorrowRequestDto outDto = borrowRequestService.getBorrowRequestDetailsForLender(inDto);
+			
+			model.addAttribute("borrowRequestDto", outDto);
 			
 		} catch(Exception e) {
 			
@@ -87,6 +91,6 @@ try {
 			return "redirect:/lender/request";
 		}
 		
-		return "/request/lender/request-html";
+		return "/request/lender/request-details";
 	}
 }

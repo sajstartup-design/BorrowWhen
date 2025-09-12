@@ -12,96 +12,103 @@
 <body>
 	<div class="container">
 		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
-		<main>
-			<div class="content-header">REQUESTS > REQUEST DETAILS</div>
+		<main th:object="${borrowRequestDto}">
+			<div class="content-header">
+			    REQUESTS > REQUEST DETAILS
+			    <span th:text="*{request.status}"
+				      th:class="'status ' + *{@statusUtil.normalize(request.status)}">
+				</span>
+
+			</div>
+
 			<div class="content-body">
 				<div class="content">
-					<form th:object="${userDto}">
-					    <input type="hidden" name="encryptedId" th:value="${userDto.encryptedId}" />
+					<div class="btn-group">
+						<button><img th:src="@{/images/approved.png}"> APPROVE</button>
+						<button><img th:src="@{/images/rejected.png}"> REJECT</button>
+					</div>
+					<form >
+					    <input type="hidden" name="encryptedId"  />
 					
 					    <div class="field bold">
 					        <label>PERSON INFORMATION</label>
 					    </div>
-					
+						<hr class="soft-gradient">
 					    <div class="field">
 					        <label>FIRST NAME</label>
-					        <div th:text="*{firstName}"></div>
+					        <div th:text="*{borrower.firstName}" ></div>
 					    </div>
 					    <hr class="soft-gradient">
 					
 					    <div class="field">
 					        <label>MIDDLE NAME</label>
-					        <div th:text="*{middleName}"></div>
+					        <div th:text="*{borrower.middleName}"></div>
 					    </div>
 					    <hr class="soft-gradient">
 					
 					    <div class="field">
 					        <label>FAMILY NAME</label>
-					        <div th:text="*{familyName}"></div>
+					        <div th:text="*{borrower.familyName}"></div>
 					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>ADDRESS</label>
-					        <div th:text="*{address}"></div>
-					    </div>
+		
 					    <hr class="soft-gradient">
 					
 					    <div class="field">
 					        <label>EMAIL ADDRESS</label>
-					        <div th:text="*{emailAddress}"></div>
+					        <div th:text="*{borrower.emailAddress}"></div>
 					    </div>
 					    <hr class="soft-gradient">
 					
 					    <div class="field">
 					        <label>PHONE NUMBER</label>
-					        <div th:text="*{phoneNumber}"></div>
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>BIRTH DATE</label>
-					        <div th:text="*{birthDate}"></div>
+					        <div th:text="*{borrower.phoneNumber}"></div>
 					    </div>
 					    <hr class="soft-gradient">
 					
 					    <div class="field">
 					        <label>GENDER</label>
-					        <div th:text="*{gender}"></div>
+					        <div th:text="*{borrower.gender}"></div>
 					    </div>
 					    <hr class="soft-gradient">
-					
+						<br>
 					    <div class="field bold">
-					        <label>ACCOUNT INFORMATION</label>
-					    </div>
-					
-					    <div class="field">
-					        <label>USER ID</label>
-					        <div th:text="*{userId}"></div>
+					        <label>ITEM INFORMATION</label>
 					    </div>
 					    <hr class="soft-gradient">
 					
 					    <div class="field">
-					        <label>ROLE</label>
-					        <div th:text="*{role}"></div>
+					        <label>ITEM NAME</label>
+					        <div th:text="*{request.itemName}" ></div>
+					    </div>
+					    <hr class="soft-gradient">
+					
+					    <div class="field">
+					        <label>PRICE</label>
+					        <div th:text="*{request.price}"></div>
 					    </div>
 					    <hr class="soft-gradient">
 					    
 					    <div class="field">
-					        <label>CREATED DATE</label>
-					        <div th:text="*{createdDate}"></div>
+					        <label>NUMBER TO BORROW</label>
+					        <div th:text="*{request.qty}"></div>
 					    </div>
 					    <hr class="soft-gradient">
 					    
 					    <div class="field">
-					        <label>UPDATED DATE</label>
-					        <div th:text="*{updatedDate}"></div>
+					        <label>DATE TO BORROW</label>
+					        <div th:text="*{request.dateToBorrow}"></div>
+					    </div>
+					    <hr class="soft-gradient">
+					    
+					    <div class="field">
+					        <label>DATE TO RETURN</label>
+					        <div th:text="*{request.dateToReturn}"></div>
 					    </div>
 					</form>
 
 
 					<div class="form-btn">
-						<a class="button" th:href="@{/admin/user}">BACK</a>
+						<a class="button" th:href="@{/lender/request}"><img th:src="@{/images/left-arrow.png}"> BACK</a>
 					</div>
 				</div>			
 			</div>

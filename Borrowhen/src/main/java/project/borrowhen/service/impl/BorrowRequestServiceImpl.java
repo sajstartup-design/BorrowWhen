@@ -25,6 +25,7 @@ import project.borrowhen.dto.BorrowRequestDto;
 import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
+import project.borrowhen.object.UserObj;
 import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.BorrowRequestService;
 import project.borrowhen.service.InventoryService;
@@ -392,7 +393,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    messagingTemplate.convertAndSendToUser(
 	        lender.getUserId().toString(),
-	        "/queue/borrower/notifications", // or a lender-specific queue
+	        "/queue/borrower/notifications",
 	        message
 	    );
 	}
@@ -403,6 +404,40 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		return null;
 	}
 
-
-
+	@Override
+	public BorrowRequestDto getBorrowRequestDetailsForLender(BorrowRequestDto inDto) throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+    
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+	    
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+	    
+	    UserEntity borrower = userService.getUser(request.getUserId());
+	    
+	    BorrowRequestObj obj = new BorrowRequestObj();
+        
+        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getId())));
+        obj.setItemName(request.getItemName());
+        obj.setPrice(request.getPrice());
+        obj.setQty(request.getQty());
+        obj.setDateToBorrow(request.getDateToBorrow());
+        obj.setDateToReturn(request.getDateToReturn());
+        obj.setStatus(request.getStatus());	     
+        
+        UserObj borrowerObj = new UserObj();
+        
+        borrowerObj.setFirstName(borrower.getFirstName());
+        borrowerObj.setMiddleName(borrower.getMiddleName());
+        borrowerObj.setFamilyName(borrower.getFamilyName());
+        borrowerObj.setEmailAddress(borrower.getEmailAddress());
+        borrowerObj.setPhoneNumber(borrower.getPhoneNumber());
+        borrowerObj.setGender(borrower.getGender());       
+	           
+        outDto.setRequest(obj);
+        outDto.setBorrower(borrowerObj);       
+	
+	    return outDto;
+	    
+	}
 }

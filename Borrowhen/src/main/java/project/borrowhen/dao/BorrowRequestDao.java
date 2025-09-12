@@ -117,4 +117,29 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
     @Query(value=GET_BORROW_REQUEST)
     public BorrowRequestEntity getBorrowRequest(@Param("id") int id);
     
+    public final String GET_BORROW_REQUEST_DETAILS_FOR_LENDER =
+		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +
+		    " br.id, " +                         
+		    " borrower.firstName, " +            
+		    " borrower.familyName, " +            
+		    " lender.firstName, " +             
+		    " lender.familyName, " +             
+		    " br.itemName, " +                    
+		    " br.price, " +                     
+		    " br.qty, " +                        
+		    " br.dateToBorrow, " +                
+		    " br.dateToReturn, " +                
+		    " br.status, " +                    
+		    " br.createdDate, " +                 
+		    " br.updatedDate) " +              
+		    "FROM BorrowRequestEntity br " +     
+		    "INNER JOIN InventoryEntity i ON i.id = br.inventoryId " +     
+		    "LEFT JOIN UserEntity borrower ON borrower.id = br.userId " + 
+		    "LEFT JOIN UserEntity lender ON lender.id = i.userId " +
+		    "WHERE br.isDeleted = false " +
+			"AND br.id = :borrowRequestId ";
+	
+	@Query(value=GET_BORROW_REQUEST_DETAILS_FOR_LENDER)
+	public BorrowRequestData getBorrowRequestDetailsForLender(@Param("borrowRequestId") int borrowRequestId) throws DataAccessException; 
+    
 }
