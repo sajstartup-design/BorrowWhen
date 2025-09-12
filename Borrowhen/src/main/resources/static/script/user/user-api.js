@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const inputPage = document.querySelector('.input-page');
+	const search = document.querySelector('.search');
+
 
     // Load first page
     loadUsers(0);
@@ -12,38 +14,65 @@ document.addEventListener("DOMContentLoaded", () => {
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
 			createLoadingScreenBody();
+			const searchValue = search.value;
             let currentPage = Number(inputPage.value);
-            loadUsers(currentPage); 
+            loadUsers(currentPage, searchValue); 
         });
     }
 
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
 			createLoadingScreenBody();
+			const searchValue = search.value;
             let currentPage = Number(inputPage.value);
-            loadUsers(currentPage - 2); 
+            loadUsers(currentPage - 2, searchValue); 
         });
     }
 
     if (inputPage) {
         inputPage.addEventListener('change', () => {
 			createLoadingScreenBody();
+			const searchValue = search.value;
             let newPage = Number(inputPage.value);
             if (newPage < 1) newPage = 1;
             inputPage.value = newPage;
-            loadUsers(newPage - 1);
+            loadUsers(newPage - 1, searchValue);
         });
     }
+	
+	if (search) {
+	    let typingTimer; 
+	    const delay = 500; 
+
+	    search.addEventListener('input', function () {
+	        clearTimeout(typingTimer); 
+
+	        const currentPage = 0;
+	        const searchValue = this.value;
+
+	        typingTimer = setTimeout(() => {
+				createLoadingScreenBody();
+	            loadUsers(currentPage, searchValue);
+	        }, delay);
+	    });
+	}
 
 });
 
 
-async function loadUsers(page = 0) {
+async function loadUsers(page = 0,
+	search = ""
+) {
     try {
-        const response = await fetch(`/api/admin/users?page=${page}`);
+		console.log(search);
+		const params = new URLSearchParams({ page, search });
+				
+		const url = `/api/admin/users?${params.toString()}`;
+				
+        const response = await fetch(url);
         const data = await response.json();
 		
-		
+		console.log(data);
 
         updatePagination(data.pagination);
 
@@ -69,7 +98,11 @@ async function loadUsers(page = 0) {
                 <div class="table-cell">${user.updatedDate}</div>
                 <div class="table-cell">
 					<button class="edit-btn" data-id="${user.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
-                    <button><img src="/images/delete.png"></button>
+					${
+		                user.isDeletable
+		                    ? `<button class="delete-btn" data-id="${user.encryptedId}" type="submit"><img src="/images/delete.png"></button>`
+		                    : `<button class="delete-btn disabled" disabled title="User has pending requests"><img src="/images/delete.png"></button>`
+		            }
                 </div>
             `;
 			

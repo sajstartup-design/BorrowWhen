@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import project.borrowhen.common.constant.MessageConstant;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.object.UserObj;
 
@@ -55,4 +56,6 @@ public class UserDto {
 	private List<UserObj> users;
 	
 	private PaginationObj pagination;
+	
+	private FilterAndSearchObj filter;
 }

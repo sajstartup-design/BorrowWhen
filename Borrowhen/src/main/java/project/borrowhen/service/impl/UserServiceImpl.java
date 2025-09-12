@@ -20,8 +20,10 @@ import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.UserDao;
+import project.borrowhen.dao.entity.UserData;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.UserDto;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.object.UserObj;
 import project.borrowhen.service.AdminSettingsService;
@@ -82,11 +84,13 @@ public class UserServiceImpl implements UserService {
 		
 		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(getMaxUserDisplay()));
 		
-		Page<UserEntity> allUsers = userDao.getAllUsers(pageable);
+		FilterAndSearchObj filter = inDto.getFilter();
+		
+		Page<UserData> allUsers = userDao.getAllUsers(pageable, filter.getSearch());
 		
 		List<UserObj> users = new ArrayList<>();
 		
-		for (UserEntity user : allUsers) {
+		for (UserData user : allUsers) {
 		    UserObj obj = new UserObj();
 
 		    obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(user.getId())));
@@ -105,8 +109,9 @@ public class UserServiceImpl implements UserService {
 		    obj.setUserId(user.getUserId());
 		    obj.setRole(user.getRole());
 			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(user.getCreatedDate()));
-			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(user.getUpdatedDate()));		
-		    
+			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(user.getUpdatedDate()));	
+			obj.setIsDeletable(user.getIsDeletable());
+			
 		    users.add(obj);
 		}
 		
@@ -223,5 +228,11 @@ public class UserServiceImpl implements UserService {
 	public UserEntity getUser(int id) {
 		
 		return userDao.getUser(id);
+	}
+
+	@Override
+	public List<UserEntity> getAllUsersByRole(String role) {
+		
+		return userDao.getAllUsersByRole(role);
 	}
 }

@@ -1,4 +1,4 @@
-package project.borrowhen.controller.admin;
+package project.borrowhen.controller.lender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +13,8 @@ import project.borrowhen.dto.BorrowRequestDto;
 import project.borrowhen.service.BorrowRequestService;
 
 @Controller
-@RequestMapping("/admin/request")
-public class A_RequestController {
+@RequestMapping("/lender/request")
+public class L_RequestController {
 	
 	@Autowired
 	private BorrowRequestService borrowRequestService;
@@ -22,7 +22,7 @@ public class A_RequestController {
 	@GetMapping()
 	public String showRequestViewScreen() {
 		
-		return "request/admin/request";
+		return "request/lender/request";
 	}
 	
 	@PostMapping("/approve")
@@ -42,7 +42,7 @@ public class A_RequestController {
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
-		return "redirect:/admin/request";
+		return "redirect:/lender/request";
 	}
 	
 	@PostMapping("/reject")
@@ -62,6 +62,6 @@ public class A_RequestController {
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
-		return "redirect:/admin/request";
+		return "redirect:/lender/request";
 	}
 }

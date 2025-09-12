@@ -112,7 +112,8 @@ button:disabled:hover,
 input[type="text"], input[type="search"], input[type="date"], input[type="email"], input[type="password"], input[type="number"], input[type="numeric"]
 select,
 textarea,
-.field div{
+.field div,
+.table-buttons .btns .search-container span{
 	background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -123,7 +124,7 @@ textarea,
     color: #0a3d62;
     outline: none;
     transition: all 0.2s ease-in-out;
-    text-align: center;
+    text-align: center !important;
     padding: 0.5rem;
     box-sizing: border-box;
     box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
@@ -392,13 +393,13 @@ aside .notifications .notifications-list{
 aside .notification{
 	display: flex;
 	flex-direction: row !important;
-	font-size: 0.8rem;
 	background: #fff;
 	border-radius: 0.5rem;
 	padding: 0.5rem;
 	box-sizing: border-box;
 	gap: 0.5rem;
 	justify-content: flex-start !important;
+    font-size: 0.65rem;
 }
 
 aside .notifications .title{
@@ -804,6 +805,28 @@ hr.soft-gradient.thin {
 	gap: 0.5rem;
 }
 
+.table-buttons .btns .search-container img{
+	width: 1rem;
+	height: 1rem;
+}
+
+.table-buttons .btns .search-container span{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: -webkit-fill-available;
+	border-radius: 0.5rem 0 0 0.5rem !important;
+}
+
+.table-buttons .btns .search-container input{
+	border-radius: 0 0.5rem 0.5rem 0 !important;
+}
+
+.table-buttons .btns .search-container{
+	display: flex;
+	align-items: center;
+}
+
 .table-buttons .pagination,
 .pagination{
 	display: flex;
@@ -937,6 +960,24 @@ hr.soft-gradient.thin {
     color: #721c24;
     background: #f8d7da;
     border-left: 0.3rem solid #dc3545; 
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+    font-weight: 600;
+}
+
+.table-cell .status.ongoing {
+    color: #0c5460;
+    background: #d1ecf1;
+    border-left: 0.3rem solid #17a2b8; 
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+    font-weight: 600;
+}
+
+.table-cell .status.completed {
+    color: #155724;
+    background: #c3e6cb;
+    border-left: 0.3rem solid #28a745; 
     padding: 0.3rem 0.6rem;
     border-radius: 1rem;
     font-weight: 600;

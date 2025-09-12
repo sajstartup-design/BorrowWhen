@@ -33,7 +33,7 @@ async function updateNotificationModal(e) {
                 const url = `/api/notifications`;
                 const response = await fetch(url);
                 const data = await response.json();
-
+				console.log(data);
                 if (data.notifications && notificationsList) {
                     notificationsList.innerHTML = ""; // clear old list
                     const frag = document.createDocumentFragment();
@@ -45,22 +45,27 @@ async function updateNotificationModal(e) {
                         // pick image based on type
                         let imgSrc = "/images/logo.png";
                         switch (notification.type) {
-                            case "REQUESTED_PENDING":
+                            case "REQUEST_PENDING":
                                 imgSrc = "/images/pending.png";
                                 break;
-                            case "REQUESTED_APPROVED":
-                                imgSrc = "/images/approve.png";
+                            case "REQUEST_APPROVED":
+                                imgSrc = "/images/approved.png";
                                 break;
-                            case "REQUESTED_REJECTED":
-                                imgSrc = "/images/reject.png";
+                            case "REQUEST_REJECTED":
+                                imgSrc = "/images/rejected.png";
                                 break;
+							case "NEW_ITEM":
+								imgSrc = "/images/new.png";
+                                break;
+							case "ITEM_RECEIVED":
+								imgSrc = "/images/received.png";
                         }
 
                         container.innerHTML = `
                             <img src="${imgSrc}" alt="${notification.type}">
                             <div class="details">
                                 <span>${notification.message}</span>
-                                <span>${notification.createdDate || ""}</span>
+                                <span>${notification.dateAndTime || ""}</span>
                             </div>
                         `;
 

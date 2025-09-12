@@ -38,7 +38,32 @@
 		<main>
 			<div class="content-header">BORROW REQUESTS</div>
 			<div class="content-body">
-				
+				<div class="item-statistics">
+					<div>
+						<label><img th:src="@{/images/friends.png}" >Total Request</label>
+						<span>
+							100
+						</span>
+					</div>
+										<div>
+						<label><img th:src="@{/images/friends.png}" >Pending Request</label>
+						<span>
+							100
+						</span>
+					</div>
+					<div>
+						<label><img th:src="@{/images/friends.png}" >Completed Request</label>
+						<span>
+							100
+						</span>
+					</div>
+					<div>
+						<label><img th:src="@{/images/friends.png}" >Rejected Request</label>
+						<span>
+							100
+						</span>
+					</div>
+				</div>
 				<div class="table-container">
 					<div class="table-buttons">
 						<div class="btns">
@@ -57,6 +82,7 @@
 					</div>
 					<div class="table">
 						<div class="table-header">
+							<div class="table-cell"><img th:src="@{/images/user.png}"> BORROWER</div>
 							<div class="table-cell"><img th:src="@{/images/box.png}"> ITEM NAME</div>
 							<div class="table-cell"><img th:src="@{/images/price-tag.png}"> PRICE</div>
 							<div class="table-cell"><img th:src="@{/images/quality.png}"> QTY TO BORROW</div>
@@ -74,21 +100,20 @@
 		</main>
 		<aside th:replace="~{aside/aside :: content}"></aside>
 	</div>
-	<form style="display: none" th:action="@{/request/details}" method="GET" id="editForm">
+	<form style="display: none" th:action="@{/admin/inventory/edit}" method="GET" id="editForm">
 		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
 	</form>
 	
-	<div class="modal" id="confirmModal">
-	    <div class="modal-content">
-	        <div class="modal-header">
-	            ITEM RECEIVED
-	        </div>
-	        <div class="modal-body">
-	            <form id="confirmForm" th:action="@{/request/item-received}" method="POST">
-	                <input type="hidden" name="encryptedId" value="" id="encryptedId"/>
-         	                <p>Have you received the item? Please confirm below to update the status.</p>
-	                <hr class="soft-gradient">
-	                <div class="field">
+	<div class="modal" id="approveModal">
+		<div class="modal-content">
+			<div class="modal-header">
+				APPROVE REQUEST
+			</div>
+			<div class="modal-body">
+				<form id="approveForm" th:action="@{/lender/request/approve}" method="POST">
+					<input type="hidden" name="encryptedId" value="" id="encryptedId"/>
+					
+					<div class="field">
 					  <label>Item Name</label>
 					  <span class="item-name">Hammer</span>
 					</div>
@@ -112,23 +137,67 @@
 						<label>Number to Borrow</label>
 						<span class="number-to-borrow">P100</span>
 					</div>
-	            </form>    
-	        </div>
-	        <div class="modal-footer">
-	            <p>Once confirmed, this action cannot be undone.</p>
-	            <div>
-	                <button type="button" class="cancel" name="cancel">CANCEL</button>
-	                <button type="submit" class="confirm-btn" form="confirmForm">CONFIRM</button>
-	            </div>
-	        </div>
-	    </div>
+				</form>	
+			</div>
+			<div class="modal-footer">
+				Once confirmed, this action cannot be undone.
+				<div>
+					<button class="cancel" name="cancel">CANCEL</button>
+					<button class="borrow-btn approve-btn" form="approveForm">APPROVE</button>
+				</div>
+			</div>
+		</div>
 	</div>
-
+	
+	<div class="modal" id="rejectModal">
+		<div class="modal-content">
+			<div class="modal-header">
+				REJECT REQUEST
+			</div>
+			<div class="modal-body">
+				<form id="rejectForm" th:action="@{/lender/request/reject}" method="POST">
+					<input type="hidden" name="encryptedId" value="" id="encryptedId"/>
+					
+					<div class="field">
+					  <label>Item Name</label>
+					  <span class="item-name">Hammer</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+					  <label>Price</label>
+					  <span class="item-price">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Borrow</label>
+						<span class="date-to-borrow">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Return</label>
+						<span class="date-to-return">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Number to Borrow</label>
+						<span class="number-to-borrow">P100</span>
+					</div>
+				</form>	
+			</div>
+			<div class="modal-footer">
+				Once confirmed, this action cannot be undone.
+				<div>
+					<button class="cancel" name="cancel">CANCEL</button>
+					<button class="borrow-btn reject-btn" form="rejectForm">REJECT</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
 	<script th:src="@{/script/submit.js}"></script>
 	<script th:src="@{/script/modal.js}"></script>
-	<script th:src="@{/script/request/request-api.js}"></script>
+	<script th:src="@{/script/request/l-request-api.js}"></script>
 </body>
 </html>

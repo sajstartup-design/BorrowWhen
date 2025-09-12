@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import project.borrowhen.common.util.CipherUtil;
+import project.borrowhen.common.util.TimeAgoUtil;
 import project.borrowhen.dao.NotificationDao;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
@@ -23,6 +26,9 @@ public class NotificationServiceImpl implements NotificationService{
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SimpMessagingTemplate messagingTemplate;
 	
 	@Autowired
 	private CipherUtil cipherUtil;
@@ -57,6 +63,7 @@ public class NotificationServiceImpl implements NotificationService{
 			obj.setMessage(notification.getMessage());		
 			obj.setIsRead(notification.getIsRead());			
 			obj.setType(notification.getType());
+			obj.setDateAndTime(TimeAgoUtil.toTimeAgo(notification.getCreatedDate()));;
 			
 			notifications.add(obj);
 		}
@@ -80,6 +87,22 @@ public class NotificationServiceImpl implements NotificationService{
 		outDto.setNotificationCount(count);
 		
 		return outDto;
+	}
+
+
+
+	@Async
+	@Override
+	public void sendToBorrowers(List<UserEntity> borrowers, String message) throws Exception {
+		
+		for (UserEntity borrower : borrowers) {
+            messagingTemplate.convertAndSendToUser(
+                borrower.getUserId(),
+                "/queue/new-item/notifications",
+                message
+            );
+        }
+		
 	}
 
 }

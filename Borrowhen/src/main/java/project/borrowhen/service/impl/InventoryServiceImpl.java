@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import project.borrowhen.common.constant.CommonConstant;
@@ -18,6 +19,7 @@ import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.InventoryDao;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
+import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.InventoryDto;
 import project.borrowhen.object.FilterAndSearchObj;
@@ -25,6 +27,7 @@ import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.InventoryService;
+import project.borrowhen.service.NotificationService;
 import project.borrowhen.service.UserService;
 
 @Service
@@ -37,7 +40,13 @@ public class InventoryServiceImpl implements InventoryService{
 	private UserService userService;
 	
 	@Autowired
+	private NotificationService notificationService;
+	
+	@Autowired
 	private CipherUtil cipherUtil;
+	
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 	
 	@Autowired
 	private AdminSettingsService adminSettingsService;
@@ -69,6 +78,27 @@ public class InventoryServiceImpl implements InventoryService{
 		inventory.setIsDeleted(false);
 		
 		inventoryDao.save(inventory);
+		
+		NotificationEntity notification = new NotificationEntity();
+		notification.setUserId(-1);
+		notification.setTargetRole(CommonConstant.ROLE_BORROWER);
+		
+		String message = String.format(
+		    "A new item %s is now available",
+		    inventory.getItemName()
+		);
+		notification.setMessage(message);
+		notification.setIsRead(false);
+		notification.setType(CommonConstant.NEW_ITEM);
+		notification.setCreatedDate(dateNow);
+		notification.setUpdatedDate(dateNow);
+		notification.setIsDeleted(false);
+		
+		notificationService.saveNotification(notification);	
+		
+		List<UserEntity> borrowers = userService.getAllUsersByRole(CommonConstant.ROLE_BORROWER);
+
+		notificationService.sendToBorrowers(borrowers, message);
 		
 	}
 

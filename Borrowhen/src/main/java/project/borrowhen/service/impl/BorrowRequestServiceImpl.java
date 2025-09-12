@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpSession;
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
@@ -24,6 +23,7 @@ import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.BorrowRequestDto;
 import project.borrowhen.object.BorrowRequestObj;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.BorrowRequestService;
@@ -51,9 +51,6 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	
 	@Autowired
 	private CipherUtil cipherUtil;
-	
-	@Autowired
-	private HttpSession httpSession;
 	
 	@Autowired
 	private AdminSettingsService adminSettingsService;
@@ -259,6 +256,147 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		
 	
 	}
+
+	@Override
+	public BorrowRequestDto getAllOwnedBorrowRequestForLender(BorrowRequestDto inDto) throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+	    
+	    Pageable pageable = PageRequest.of(
+	        inDto.getPagination().getPage(),
+	        Integer.valueOf(getMaxRequestDisplay())
+	    );
+	    
+	    UserEntity user = userService.getLoggedInUser();
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForLender(pageable, user.getId());
+	    
+	    List<BorrowRequestObj> requests = new ArrayList<>();
+	    
+	    for (BorrowRequestData request : allRequests) {
+	        BorrowRequestObj obj = new BorrowRequestObj();
+	        
+	        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getBorrowRequestId())));
+	        
+	        String borrowerFullName = request.getBorrowerFirstName() + " " + request.getBorrowerFamilyName();
+	        obj.setBorrower(borrowerFullName.trim());
+	        	        
+	        obj.setItemName(request.getItemName());
+	        obj.setPrice(request.getPrice());
+	        obj.setQty(request.getQty());
+	        obj.setDateToBorrow(request.getDateToBorrow());
+	        obj.setDateToReturn(request.getDateToReturn());
+	        obj.setStatus(request.getStatus());	
+	        
+	        requests.add(obj);
+	    }
+	    
+	    PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allRequests.getNumber());
+		pagination.setTotalPages(allRequests.getTotalPages());
+		pagination.setTotalElements(allRequests.getTotalElements());
+		pagination.setHasNext(allRequests.hasNext());
+		pagination.setHasPrevious(allRequests.hasPrevious());
+		
+		outDto.setRequests(requests);
+		outDto.setPagination(pagination);
+		
+	    return outDto;
+	}
+
+	@Override
+	public BorrowRequestDto getAllOwnedBorrowRequestForBorrower(BorrowRequestDto inDto) throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+	    
+	    Pageable pageable = PageRequest.of(
+	        inDto.getPagination().getPage(),
+	        Integer.valueOf(getMaxRequestDisplay())
+	    );
+	    
+	    UserEntity user = userService.getLoggedInUser();
+	    
+	    FilterAndSearchObj filter = inDto.getFilter();
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForBorrower(pageable, user.getId(), filter.getSearch());
+	    
+	    List<BorrowRequestObj> requests = new ArrayList<>();
+	    
+	    for (BorrowRequestData request : allRequests) {
+	        BorrowRequestObj obj = new BorrowRequestObj();
+	        
+	        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getBorrowRequestId())));
+	        	        
+	        obj.setItemName(request.getItemName());
+	        obj.setPrice(request.getPrice());
+	        obj.setQty(request.getQty());
+	        obj.setDateToBorrow(request.getDateToBorrow());
+	        obj.setDateToReturn(request.getDateToReturn());
+	        obj.setStatus(request.getStatus());	
+	        
+	        requests.add(obj);
+	    }
+	    
+	    PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allRequests.getNumber());
+		pagination.setTotalPages(allRequests.getTotalPages());
+		pagination.setTotalElements(allRequests.getTotalElements());
+		pagination.setHasNext(allRequests.hasNext());
+		pagination.setHasPrevious(allRequests.hasPrevious());
+		
+		outDto.setRequests(requests);
+		outDto.setPagination(pagination);
+		
+	    return outDto;
+	}
+
+	@Override
+	public void itemReceivedBorrowRequest(BorrowRequestDto inDto) throws Exception {
+
+	    Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+
+	    UserEntity borrower = userService.getUser(request.getUserId()); 
+	    
+	    InventoryEntity inventory = inventoryService.getInventory(request.getInventoryId());
+	    
+	    UserEntity lender = userService.getUser(inventory.getUserId());
+	    
+	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.ON_GOING);
+	    
+	    NotificationEntity notification = new NotificationEntity();
+	    notification.setUserId(lender.getId());
+
+	    String message = String.format(
+	        "%s %s has marked the borrow request for '%s' from %s to %s as RECEIVED.",
+	        borrower.getFirstName(),
+	        borrower.getFamilyName(),
+	        request.getItemName(),
+	        request.getDateToBorrow(),
+	        request.getDateToReturn()
+	    );
+
+	    notification.setMessage(message);
+	    notification.setIsRead(false);
+	    notification.setType(CommonConstant.REQUEST_ITEM_RECEIVED);
+	    notification.setCreatedDate(dateNow);
+	    notification.setUpdatedDate(dateNow);
+	    notification.setIsDeleted(false);
+
+	    notificationService.saveNotification(notification);
+
+	    messagingTemplate.convertAndSendToUser(
+	        lender.getUserId().toString(),
+	        "/queue/borrower/notifications", // or a lender-specific queue
+	        message
+	    );
+	}
+
 
 
 }

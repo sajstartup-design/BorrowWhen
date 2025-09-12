@@ -1,26 +1,26 @@
-package project.borrowhen.controller.admin;
+package project.borrowhen.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import project.borrowhen.dto.UserDto;
+import project.borrowhen.dto.BorrowRequestDto;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
-import project.borrowhen.service.UserService;
+import project.borrowhen.service.BorrowRequestService;
 
 @RestController
-public class A_UserRestController {
+public class RequestRestController {
 
 	@Autowired
-    private UserService userService;
+    private BorrowRequestService borrowRequestService;
 
-    @GetMapping("/api/admin/users")
-    public UserDto getUsers(@RequestParam(defaultValue = "0") int page,
+    @GetMapping("/api/request")
+    public BorrowRequestDto getRequests(@RequestParam(defaultValue = "0") int page,
     		@RequestParam(required = false) String search) {
         try {
-            UserDto inDto = new UserDto();
+        	BorrowRequestDto inDto = new BorrowRequestDto();
 
             PaginationObj pagination = new PaginationObj();
             pagination.setPage(page);
@@ -31,13 +31,12 @@ public class A_UserRestController {
             inDto.setPagination(pagination);
             inDto.setFilter(filter);
 
-            return userService.getAllUsers(inDto);
+            return borrowRequestService.getAllOwnedBorrowRequestForBorrower(inDto);
+            
         } catch (Exception e) {
             e.printStackTrace();
 
-            // Return empty UserDto on error
-            return new UserDto();
+            return new BorrowRequestDto();
         }
     }
-	
 }

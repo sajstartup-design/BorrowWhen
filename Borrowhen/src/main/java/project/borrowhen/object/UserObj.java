@@ -1,7 +1,5 @@
 package project.borrowhen.object;
 
-import java.sql.Date;
-
 import lombok.Data;
 
 @Data
@@ -32,6 +30,8 @@ public class UserObj {
 	private String createdDate;
 	
 	private String updatedDate;
+	
+	private Boolean isDeletable;
 	
 	private int page;
 }

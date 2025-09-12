@@ -72,14 +72,19 @@ public class SecurityConfig {
 						
 						
 						.requestMatchers("/lender/inventory/**").hasAuthority("LENDER")
+						.requestMatchers("/lender/request/**").hasAuthority("LENDER")
 						
 						.requestMatchers("/api/lender/inventory/**").hasAuthority("LENDER")
+						.requestMatchers("/api/lender/request/**").hasAuthority("LENDER")
 						
+						.requestMatchers("/request/**").hasAuthority("BORROWER")
+						
+						.requestMatchers("/api/request/**").hasAuthority("BORROWER")
 						
 						.requestMatchers("/api/inventory").authenticated()
 						
 						
-						
+						.requestMatchers("/borrow-when-websocket/**").authenticated()
 						.anyRequest().authenticated()
 						
 						)

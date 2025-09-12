@@ -12,16 +12,36 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import jakarta.transaction.Transactional;
+import project.borrowhen.dao.entity.UserData;
 import project.borrowhen.dao.entity.UserEntity;
 
 public interface UserDao extends JpaRepository<UserEntity, Integer> {
 
-	public final String GET_ALL_USERS = "SELECT e "
-			+ "FROM UserEntity e "
-			+ "WHERE e.isDeleted = false ";
-	
-	@Query(value=GET_ALL_USERS)
-	public Page<UserEntity> getAllUsers(Pageable pageable)  throws DataAccessException;
+	public final String GET_ALL_USERS_NO_GROUP =
+		    "SELECT new project.borrowhen.dao.entity.UserData(" +
+		    "   u.id, u.firstName, u.middleName, u.familyName, u.address, u.emailAddress, " +
+		    "   u.phoneNumber, u.birthDate, u.gender, u.userId, u.password, u.role, " +
+		    "   u.createdDate, u.updatedDate, " +
+		    "   (CASE WHEN (SELECT COUNT(br2) FROM BorrowRequestEntity br2 WHERE br2.userId = u.id AND br2.status <> 'COMPLETED') > 0 THEN false ELSE true END) " +
+		    ") " +
+		    "FROM UserEntity u " +
+		    "WHERE u.isDeleted = false " +
+		    "AND ( " +
+		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
+		    "       LOWER(u.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.middleName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.familyName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.emailAddress) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.phoneNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.userId) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.role) LIKE LOWER(CONCAT('%', :search, '%'))" +
+		    "   )) " +
+		    "   OR (:search IS NULL OR :search = '') " +
+		    ")";
+
+	@Query(GET_ALL_USERS_NO_GROUP)
+	Page<UserData> getAllUsers(Pageable pageable, @Param("search") String search) throws DataAccessException;
+
 	
 	public final String GET_USER_BY_ID = "SELECT e "
 			+ "FROM UserEntity e "
@@ -82,4 +102,12 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
     
     @Query(value=GET_ALL_USER_ID)
     public List<String> getAllUserId() throws DataAccessException;
+    
+    public final String GET_ALL_USERS_BY_ROLE = "SELECT e "
+    		+ "FROM UserEntity e "
+    		+ "WHERE e.role = :role "
+    		+ "AND e.isDeleted = false ";
+    
+    @Query(value=GET_ALL_USERS_BY_ROLE)
+    public List<UserEntity> getAllUsersByRole(String role) throws DataAccessException;
 }

@@ -43,7 +43,7 @@ async function loadInventories(page = 0) {
 		
 		const params = new URLSearchParams({ page });
 				
-		const url = `/api/admin/request?${params.toString()}`;
+		const url = `/api/lender/request?${params.toString()}`;
 		
         const response = await fetch(url);
         const data = await response.json();
@@ -67,7 +67,6 @@ async function loadInventories(page = 0) {
 
 		    row.innerHTML = `
 		        <div class="table-cell">${request.borrower}</div>
-		        <div class="table-cell">${request.lender}</div>
 		        <div class="table-cell">${request.itemName}</div>
 		        <div class="table-cell">₱${request.price}</div>
 		        <div class="table-cell">${request.qty}</div>
@@ -78,8 +77,6 @@ async function loadInventories(page = 0) {
 		            <span>${request.status}</span>
 		          </span>
 		        </div>
-		        <div class="table-cell">${request.createdDate}</div>
-		        <div class="table-cell">${request.updatedDate}</div>
 		        <div class="table-cell">     
 		          ${
 		            isFinalStatus

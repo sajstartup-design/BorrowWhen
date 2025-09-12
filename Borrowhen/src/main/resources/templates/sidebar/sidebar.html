@@ -42,9 +42,17 @@
 				<a th:href="@{/dashboard}" class="option">
 					<span class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</span>
 				</a>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>INVENTORY</p>
 				<a th:href="@{/inventory}" class="option">
-					<span><img th:src="@{/images/supplies.png}"> INVENTORIES</span>
+					<span><img th:src="@{/images/supplies.png}"> AVAILABLE ITEMS</span>
 				</a>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>REQUEST</p>
 				<a th:href="@{/request}" class="option">
 					<span><img th:src="@{/images/supplies.png}"> REQUESTS</span>
 				</a>
@@ -65,7 +73,7 @@
 			</section>
 			<hr class="soft-gradient">
 			<section>
-				<p>NOTIFICATION</p>
+				<p>NOTIFICATIONS</p>
 				<div class="option">
 					<span><img th:src="@{/images/reminder.png}"> NOTIFICATIONS</span>
 				</div>
@@ -94,12 +102,20 @@
 				<p>MAIN</p>
 				<a th:href="@{/lender/dashboard}" class="option">
 					<span class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</span>
-				</a>
+				</a>				
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>INVENTORY</p>
 				<a th:href="@{/lender/inventory}" class="option">
 					<span><img th:src="@{/images/supplies.png}"> INVENTORY</span>
 				</a>
-				<a th:href="@{/lender/inventory}" class="option">
-					<span><img th:src="@{/images/supplies.png}"> REQUEST</span>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>REQUEST</p>
+				<a th:href="@{/lender/request}" class="option">
+					<span><img th:src="@{/images/supplies.png}"> REQUEST LIST</span>
 				</a>
 			</section>
 			<hr class="soft-gradient">
@@ -118,14 +134,21 @@
 			</section>
 			<hr class="soft-gradient">
 			<section>
-				<p>GUIDELINES</p>
+				<p>NOTIFICATIONS</p>
+				<div class="option">
+					<span><img th:src="@{/images/reminder.png}"> NOTIFICATIONS</span>
+				</div>
+			</section>
+			<hr class="soft-gradient">
+			<section>
+				<p>SUPPORT</p>
 				<a th:href="@{/support}" class="option">
 					<span><img th:src="@{/images/rules.png}"> SUPPORT</span>
 				</a>
 			</section>
 			<hr class="soft-gradient">
 			<section>
-				<p>SUPPORT</p>
+				<p>GUIDELINES</p>
 				<a th:href="@{/guidelines/rules}" class="option">
 					<span><img th:src="@{/images/rules.png}"> RULES</span>
 				</a>
@@ -140,17 +163,45 @@
 		        <p>MAIN</p>
 		        <a th:href="@{/admin/dashboard}" class="option">
 		            <span class="active"><img th:src="@{/images/dashboard.png}"> DASHBOARD</span>
-		        </a>
-		        <a th:href="@{/admin/inventory}" class="option">
-		            <span><img th:src="@{/images/supplies.png}"> ALL INVENTORY</span>
-		        </a>
-		        <a th:href="@{/admin/request}" class="option">
-		            <span><img th:src="@{/images/request.png}"> ALL REQUEST</span>
-		        </a>
+		        </a>		        
+		        
 		    </section>
 		    <hr class="soft-gradient">
 		    
 		    <section>
+		        <p>INVENTORY</p>
+		        <a th:href="@{/admin/inventory}" class="option">
+		            <span><img th:src="@{/images/supplies.png}"> ALL INVENTORY</span>
+		        </a>
+		        <div class="option">
+		            <span><img th:src="@{/images/history.png}"> INVENTORY LOGS</span>
+		        </div>
+		    </section>
+		    <hr class="soft-gradient">
+		    
+		     <section>
+		        <p>REQUEST</p>
+		        <a th:href="@{/admin/request}" class="option">
+		            <span><img th:src="@{/images/request.png}"> ALL REQUEST</span>
+		        </a>
+		        <div class="option">
+		            <span><img th:src="@{/images/history.png}"> REQUEST LOGS</span>
+		        </div>
+		    </section>
+		    <hr class="soft-gradient">
+		    		    
+		    <section>
+		        <p>PAYMENT</p>		  
+		        <div class="option">
+		            <span><img th:src="@{/images/history.png}"> PAYMENT</span>
+		        </div>      
+		        <div class="option">
+		            <span><img th:src="@{/images/history.png}"> PAYMENT LOGS</span>
+		        </div>
+		    </section>
+		    <hr class="soft-gradient">
+		    
+   		    <section>
 		        <p>HISTORY</p>
 		        <div class="option">
 		            <span><img th:src="@{/images/history.png}"> HISTORY</span>
@@ -159,20 +210,15 @@
 		    <hr class="soft-gradient">
 		    
 		    <section>
-		        <p>LOGS</p>
+		        <p>NOTIFICATIONS</p>
 		        <div class="option">
-		            <span><img th:src="@{/images/history.png}"> REQUEST LOGS</span>
+		            <span><img th:src="@{/images/history.png}"> NOTIFICATIONS</span>
 		        </div>
 		        <div class="option">
-		            <span><img th:src="@{/images/history.png}"> PAYMENT LOGS</span>
+		            <span><img th:src="@{/images/history.png}"> NOTIFICATION LOGS</span>
 		        </div>
-		    </section>
-		    <hr class="soft-gradient">
-		    
-		    <section>
-		        <p>PAYMENT</p>
 		        <div class="option">
-		            <span><img th:src="@{/images/history.png}"> PAYMENT</span>
+		            <span><img th:src="@{/images/history.png}"> ANNOUNCE</span>
 		        </div>
 		    </section>
 		    <hr class="soft-gradient">

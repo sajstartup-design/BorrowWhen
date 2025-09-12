@@ -1,5 +1,5 @@
 const stompClient = new StompJs.Client({
-    brokerURL: 'ws://localhost:8081/borrow-when-websocket'
+    brokerURL: 'ws://localhost:8080/borrow-when-websocket'
 });
 
 stompClient.onConnect = (frame) => {
@@ -9,6 +9,41 @@ stompClient.onConnect = (frame) => {
     });
 	
 	stompClient.subscribe('/user/queue/lender/notifications', (notification) => {
+        const data = notification.body;
+		
+		// Add pulsating effect
+	    const notifIcon = document.querySelector('.notification-icon');
+		updateNotificationCount();
+		
+		if(notifIcon){
+			let bellContainer = notifIcon.querySelector('.bell-container');
+			bellContainer.classList.add('pulsating-circle');
+			let bellIcon = notifIcon.querySelector('.bell-icon');
+			bellIcon.classList.add('bell');
+			
+			 
+		}
+
+    });
+	
+	stompClient.subscribe('/user/queue/new-item/notifications', (notification) => {
+		
+		// Add pulsating effect
+	    const notifIcon = document.querySelector('.notification-icon');
+		updateNotificationCount();
+		
+		if(notifIcon){
+			let bellContainer = notifIcon.querySelector('.bell-container');
+			bellContainer.classList.add('pulsating-circle');
+			let bellIcon = notifIcon.querySelector('.bell-icon');
+			bellIcon.classList.add('bell');
+			
+			 
+		}
+
+    });
+	
+	stompClient.subscribe('/user/queue/borrower/notifications', (notification) => {
         const data = notification.body;
 		
 		// Add pulsating effect
