@@ -23,5 +23,7 @@ public interface BorrowRequestService {
 	
 	public void itemReceivedBorrowRequest(BorrowRequestDto inDto) throws Exception;
 	
+	public void itemReturnedBorrowRequest(BorrowRequestDto inDto) throws Exception;
+	
 	public BorrowRequestDto getBorrowRequest(BorrowRequestDto inDto) throws Exception;
 }

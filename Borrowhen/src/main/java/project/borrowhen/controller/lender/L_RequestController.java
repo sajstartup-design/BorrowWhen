@@ -93,4 +93,24 @@ public class L_RequestController {
 		
 		return "/request/lender/request-details";
 	}
+	
+	@PostMapping("/item-returned")
+	public String postItemReturnedScreen(@ModelAttribute BorrowRequestDto borrowRequestWebDto,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			borrowRequestService.itemReturnedBorrowRequest(borrowRequestWebDto);
+	
+			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_ITEM_RECEIVED_MSG);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+		}
+		
+		return "redirect:/lender/request";
+	}
 }

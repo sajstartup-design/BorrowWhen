@@ -440,4 +440,42 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    return outDto;
 	    
 	}
+
+	@Override
+	public void itemReturnedBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		
+		 Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+
+	    UserEntity borrower = userService.getUser(request.getUserId()); 
+
+	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.COMPLETED);
+	    
+	    NotificationEntity notification = new NotificationEntity();
+	    notification.setUserId(borrower.getId());
+
+	    String message = String.format(
+    	    "Lender has confirmed that the item '%s' has been returned. Please proceed with the payment. <a href=\"#\">Click here to continue</a>.",
+    	    request.getItemName()
+    	);
+
+	    notification.setMessage(message);
+	    notification.setIsRead(false);
+	    notification.setType(CommonConstant.REQUEST_COMPLETED);
+	    notification.setCreatedDate(dateNow);
+	    notification.setUpdatedDate(dateNow);
+	    notification.setIsDeleted(false);
+
+	    notificationService.saveNotification(notification);
+
+	    messagingTemplate.convertAndSendToUser(
+    		borrower.getUserId().toString(),
+	        "/queue/borrower/notifications",
+	        message
+	    );
+		
+	}
 }

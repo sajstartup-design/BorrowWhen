@@ -71,9 +71,9 @@ const buttons = {
     `,
     returnBtn: (request) => `
         <button 
-          class="return-btn" 
+          class="confim-btn" 
           data-toggle="modal" 
-          data-target="#returnModal"
+          data-target="#confirmModal"
           data-id="${request.encryptedId}"
           data-item-name="${request.itemName}"
 		  data-price="${request.price}"

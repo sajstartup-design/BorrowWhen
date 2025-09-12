@@ -16,6 +16,7 @@ public class MessageConstant {
 	public static final String REQUEST_REJECTED_MSG = "The borrow request has been successfully rejected.";
 	public static final String REQUEST_DELETE_MSG = "The borrow request has been successfully deleted.";
 	public static final String REQUEST_ITEM_RECEIVED_MSG = "The item has been successfully marked as RECEIVED.";
+	public static final String REQUEST_ITEM_COMPLETED_MSG = "The request has been successfully marked as COMPLETED.";
 	
 	public static final String NOT_BLANK = "This field must not be blank.";
 	public static final String QUANTITY_NOT_BLANK = "Quantity must be at least 1 and above.";

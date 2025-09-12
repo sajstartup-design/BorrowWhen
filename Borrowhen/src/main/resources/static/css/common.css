@@ -499,6 +499,10 @@ aside .aside-content .content-item span:nth-child(3){
 	
 }
 
+.modal p{
+	font-size: 0.8rem;
+}
+
 .modal-content {
 	background: var(--bg-color);
 	backdrop-filter: blur(10px);
