@@ -23,6 +23,8 @@ public class BorrowRequestEntity {
 	
 	private int userId;
 	
+	private String itemName;
+	
 	private Date dateToBorrow;
 	
 	private Date dateToReturn;

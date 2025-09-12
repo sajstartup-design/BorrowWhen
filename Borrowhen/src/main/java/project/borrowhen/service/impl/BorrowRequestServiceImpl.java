@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -75,6 +74,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		
 		request.setInventoryId(id);
 		request.setUserId(user.getId());
+		request.setItemName(inventory.getItemName());		
 		request.setDateToBorrow(Date.valueOf(inDto.getDateToBorrow()));
 		request.setDateToReturn(Date.valueOf(inDto.getDateToReturn()));
 		request.setStatus(CommonConstant.PENDING);;
@@ -153,6 +153,89 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    outDto.getPagination().setTotalElements(allRequests.getTotalElements());
 	    
 	    return outDto;
+	}
+
+	@Override
+	public void approveBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+	    
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+	    
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+
+	    UserEntity borrower = userService.getUser(request.getUserId()); 
+
+	    // Update status → APPROVED
+	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.APPROVED);
+
+	    NotificationEntity notification = new NotificationEntity();
+	    notification.setUserId(request.getUserId());
+
+	    String message = String.format(
+	        "Your borrow request for '%s' from %s to %s has been approved by the lender.",
+	        request.getItemName(),
+	        request.getDateToBorrow(),
+	        request.getDateToReturn()
+	    );
+
+	    notification.setMessage(message);
+	    notification.setIsRead(false);
+	    notification.setType(CommonConstant.REQUEST_APPROVED);
+	    notification.setCreatedDate(dateNow);
+	    notification.setUpdatedDate(dateNow);
+	    notification.setIsDeleted(false);
+
+	    notificationService.saveNotification(notification);	
+
+	    messagingTemplate.convertAndSendToUser(
+    		borrower.getUserId().toString(),
+	        "/queue/borrower/notifications",
+	        message
+	    );
+	}
+
+
+	@Override
+	public void rejectBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+	    
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+	    
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+
+	    UserEntity borrower = userService.getUser(request.getUserId()); 
+
+	    // Update status → APPROVED
+	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.REJECTED);
+
+	    NotificationEntity notification = new NotificationEntity();
+	    notification.setUserId(request.getUserId());
+
+	    String message = String.format(
+	        "Your borrow request for '%s' from %s to %s has been rejected by the lender.",
+	        request.getItemName(),
+	        request.getDateToBorrow(),
+	        request.getDateToReturn()
+	    );
+
+	    notification.setMessage(message);
+	    notification.setIsRead(false);
+	    notification.setType(CommonConstant.REQUEST_REJECTED);
+	    notification.setCreatedDate(dateNow);
+	    notification.setUpdatedDate(dateNow);
+	    notification.setIsDeleted(false);
+
+	    notificationService.saveNotification(notification);	
+
+	    messagingTemplate.convertAndSendToUser(
+    		borrower.getUserId().toString(),
+	        "/queue/borrower/notifications",
+	        message
+	    );
+		
+	
 	}
 
 

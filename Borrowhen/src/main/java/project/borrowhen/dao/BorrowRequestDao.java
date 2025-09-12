@@ -3,8 +3,11 @@ package project.borrowhen.dao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 
@@ -33,5 +36,22 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	
 	@Query(value=GET_ALL_BORROW_REQUESTS)
 	public Page<BorrowRequestData> getAllBorrowRequests(Pageable pageable);
+	
+    public final String UPDATE_BORROW_REQUEST_STATUS =
+        "UPDATE BorrowRequestEntity br " +
+        "SET br.status = :status, br.updatedDate = CURRENT_TIMESTAMP " +
+        "WHERE br.id = :id";
 
+    @Transactional
+    @Modifying
+    @Query(UPDATE_BORROW_REQUEST_STATUS)
+    public int updateBorrowRequestStatusById(@Param("id") int id, @Param("status") String status);
+    
+    public final String GET_BORROW_REQUEST = "SELECT e "
+    		+ "FROM BorrowRequestEntity e "
+    		+ "WHERE e.id = :id ";
+    
+    @Query(value=GET_BORROW_REQUEST)
+    public BorrowRequestEntity getBorrowRequest(@Param("id") int id);
+    
 }
