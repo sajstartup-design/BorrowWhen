@@ -14,26 +14,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
 			createLoadingScreenBody();
+			const searchValue = search.value;
             let currentPage = Number(inputPage.value);
-            loadUsers(currentPage); 
+            loadUsers(currentPage, searchValue); 
         });
     }
 
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
 			createLoadingScreenBody();
+			const searchValue = search.value;
             let currentPage = Number(inputPage.value);
-            loadUsers(currentPage - 2); 
+            loadUsers(currentPage - 2, searchValue); 
         });
     }
 
     if (inputPage) {
         inputPage.addEventListener('change', () => {
 			createLoadingScreenBody();
+			const searchValue = search.value;
             let newPage = Number(inputPage.value);
             if (newPage < 1) newPage = 1;
             inputPage.value = newPage;
-            loadUsers(newPage - 1);
+            loadUsers(newPage - 1, searchValue);
         });
     }
 	
@@ -61,6 +64,7 @@ async function loadUsers(page = 0,
 	search = ""
 ) {
     try {
+		console.log(search);
 		const params = new URLSearchParams({ page, search });
 				
 		const url = `/api/admin/users?${params.toString()}`;
