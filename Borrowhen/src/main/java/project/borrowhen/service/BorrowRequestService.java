@@ -13,6 +13,8 @@ public interface BorrowRequestService {
 	
 	public BorrowRequestDto getAllOwnedBorrowRequestForLender(BorrowRequestDto inDto) throws Exception;
 	
+	public BorrowRequestDto getAllOwnedBorrowRequestForBorrower(BorrowRequestDto inDto) throws Exception;
+	
 	public void approveBorrowRequest(BorrowRequestDto inDto) throws Exception;
 	
 	public void rejectBorrowRequest(BorrowRequestDto inDto) throws Exception;

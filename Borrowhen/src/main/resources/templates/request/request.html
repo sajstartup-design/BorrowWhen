@@ -2,9 +2,86 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>BW | Request</title>
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/request/request-view.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-
+	<div class="container">
+		<div class="container-msg" id="msgContainer" >
+			<div class="success-msg" th:if="${successMsg != null}">
+				<div class="icon-msg">
+					<img th:src="@{/images/check.png}" alt="success"/>
+				</div>
+				<div class="content-msg">
+					<span class="header-msg">SUCCESS</span>
+					<span class="body-msg" th:text="${successMsg}"></span>
+				</div>
+				<div class="progress-bar"></div>
+			</div>
+			<div class="error-msg" th:if="${errorMsg != null}">
+				<div class="icon-msg">
+					<img th:src="@{/images/check.png}" alt="success"/>
+				</div>
+				<div class="content-msg">
+					<span class="header-msg">ERROR</span>
+					<span class="body-msg" th:text="${errorMsg}"></span>
+				</div>
+				<div class="progress-bar"></div>
+			</div>
+			
+			
+			
+		</div>
+		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
+		<main>
+			<div class="content-header">BORROW REQUESTS</div>
+			<div class="content-body">
+				
+				<div class="table-container">
+					<div class="table-buttons">
+						<div class="btns">
+							<button>FILTER BY</button>
+							<div class="search-container">
+								<span><img th:src="@{/images/search-user.png}" alt="search"></span>
+								
+								<input type="search" placeholder="Search" class="search" />
+							</div>
+						</div>
+						<div class="pagination">
+							<button class="prev-btn"><img th:src="@{/images/left-arrow.png}"/> PREV</button>
+							<input class="input-page" type="text" value="1"/>
+							<button class="next-btn" disable>NEXT <img th:src="@{/images/right-arrow.png}"/></button>
+						</div>
+					</div>
+					<div class="table">
+						<div class="table-header">
+							<div class="table-cell"><img th:src="@{/images/box.png}"> ITEM NAME</div>
+							<div class="table-cell"><img th:src="@{/images/price-tag.png}"> PRICE</div>
+							<div class="table-cell"><img th:src="@{/images/quality.png}"> QTY TO BORROW</div>
+							<div class="table-cell"><img th:src="@{/images/calendar.png}"> DATE TO BORROW</div>
+							<div class="table-cell"><img th:src="@{/images/calendar.png}"> DATE TO RETURN</div>
+							<div class="table-cell"><img th:src="@{/images/rotate.png}"> STATUS</div>
+							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> ACTION</div>
+						</div>
+						<div class="table-body" id="table-body">
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<aside th:replace="~{aside/aside :: content}"></aside>
+	</div>
+	<form style="display: none" th:action="@{/admin/inventory/edit}" method="GET" id="editForm">
+		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
+	</form>
+	
+	<script th:src="@{/script/pagination.js}"></script>
+	<script th:src="@{/script/loading.js}"></script>
+	<script th:src="@{/script/submit.js}"></script>
+	<script th:src="@{/script/modal.js}"></script>
+	<script th:src="@{/script/request/request-api.js}"></script>
 </body>
 </html>

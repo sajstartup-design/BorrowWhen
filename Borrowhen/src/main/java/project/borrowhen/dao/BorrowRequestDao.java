@@ -38,7 +38,7 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	@Query(value=GET_ALL_BORROW_REQUESTS)
 	public Page<BorrowRequestData> getAllBorrowRequests(Pageable pageable) throws DataAccessException; 
 	
-	public final String GET_ALL_OWNED_BORROW_REQUESTS =
+	public final String GET_ALL_OWNED_BORROW_REQUESTS_FOR_LENDER =
 		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +
 		    " br.id, " +                         
 		    " borrower.firstName, " +            
@@ -60,8 +60,34 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    "WHERE br.isDeleted = false " +
 			"AND i.userId = :userId ";
 	
-	@Query(value=GET_ALL_OWNED_BORROW_REQUESTS)
+	@Query(value=GET_ALL_OWNED_BORROW_REQUESTS_FOR_LENDER)
 	public Page<BorrowRequestData> getAllOwnedBorrowRequestsForLender(Pageable pageable, 
+			@Param("userId") int userId) throws DataAccessException; 
+	
+	public final String GET_ALL_OWNED_BORROW_REQUESTS_FOR_BORROWER =
+		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +
+		    " br.id, " +                         
+		    " borrower.firstName, " +            
+		    " borrower.familyName, " +            
+		    " lender.firstName, " +             
+		    " lender.familyName, " +             
+		    " br.itemName, " +                    
+		    " br.price, " +                     
+		    " br.qty, " +                        
+		    " br.dateToBorrow, " +                
+		    " br.dateToReturn, " +                
+		    " br.status, " +                    
+		    " br.createdDate, " +                 
+		    " br.updatedDate) " +              
+		    "FROM BorrowRequestEntity br " +     
+		    "INNER JOIN InventoryEntity i ON i.id = br.inventoryId " +     
+		    "LEFT JOIN UserEntity borrower ON borrower.id = br.userId " + 
+		    "LEFT JOIN UserEntity lender ON lender.id = i.userId " +
+		    "WHERE br.isDeleted = false " +
+			"AND br.userId = :userId ";
+	
+	@Query(value=GET_ALL_OWNED_BORROW_REQUESTS_FOR_BORROWER)
+	public Page<BorrowRequestData> getAllOwnedBorrowRequestsForBorrower(Pageable pageable, 
 			@Param("userId") int userId) throws DataAccessException; 
 	
     public final String UPDATE_BORROW_REQUEST_STATUS =

@@ -16,40 +16,35 @@ public class TimeAgoUtil {
         long seconds = duration.getSeconds();
 
         if (seconds < 60) {
-            return seconds + " seconds ago";
+            return "Now";
         }
 
         long minutes = seconds / 60;
         if (minutes < 60) {
-            return minutes + " minutes ago";
+            return minutes == 1 ? "A minute ago" : minutes + " minutes ago";
         }
 
         long hours = minutes / 60;
         if (hours < 24) {
-            long min = minutes % 60;
-            return hours + " hours " + min + " minutes ago";
+            return hours == 1 ? "An hour ago" : hours + " hours ago";
         }
 
         long days = hours / 24;
         if (days < 7) {
-            long hr = hours % 24;
-            return days + " days " + hr + " hours ago";
+            return days == 1 ? "A day ago" : days + " days ago";
         }
 
         long weeks = days / 7;
         if (days < 30) {
-            long dayRemainder = days % 7;
-            return weeks + " weeks " + dayRemainder + " days ago";
+            return weeks == 1 ? "A week ago" : weeks + " weeks ago";
         }
 
         long months = days / 30;
         if (days < 365) {
-            long dayRemainder = days % 30;
-            return months + " months " + dayRemainder + " days ago";
+            return months == 1 ? "A month ago" : months + " months ago";
         }
 
         long years = days / 365;
-        long monthRemainder = (days % 365) / 30;
-        return years + " years " + monthRemainder + " months ago";
+        return years == 1 ? "A year ago" : years + " years ago";
     }
 }

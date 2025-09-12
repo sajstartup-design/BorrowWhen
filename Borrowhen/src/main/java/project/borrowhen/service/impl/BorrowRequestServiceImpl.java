@@ -305,5 +305,50 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    return outDto;
 	}
 
+	@Override
+	public BorrowRequestDto getAllOwnedBorrowRequestForBorrower(BorrowRequestDto inDto) throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+	    
+	    Pageable pageable = PageRequest.of(
+	        inDto.getPagination().getPage(),
+	        Integer.valueOf(getMaxRequestDisplay())
+	    );
+	    
+	    UserEntity user = userService.getLoggedInUser();
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForBorrower(pageable, user.getId());
+	    
+	    List<BorrowRequestObj> requests = new ArrayList<>();
+	    
+	    for (BorrowRequestData request : allRequests) {
+	        BorrowRequestObj obj = new BorrowRequestObj();
+	        
+	        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getBorrowRequestId())));
+	        	        
+	        obj.setItemName(request.getItemName());
+	        obj.setPrice(request.getPrice());
+	        obj.setQty(request.getQty());
+	        obj.setDateToBorrow(request.getDateToBorrow());
+	        obj.setDateToReturn(request.getDateToReturn());
+	        obj.setStatus(request.getStatus());	
+	        
+	        requests.add(obj);
+	    }
+	    
+	    PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allRequests.getNumber());
+		pagination.setTotalPages(allRequests.getTotalPages());
+		pagination.setTotalElements(allRequests.getTotalElements());
+		pagination.setHasNext(allRequests.hasNext());
+		pagination.setHasPrevious(allRequests.hasPrevious());
+		
+		outDto.setRequests(requests);
+		outDto.setPagination(pagination);
+		
+	    return outDto;
+	}
+
 
 }
