@@ -43,10 +43,10 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    " br.id, " +                         
 		    " borrower.firstName, " +            
 		    " borrower.familyName, " +            
-		    " lender.firstName, " +             
-		    " lender.familyName, " +             
+		    " lender.firstName, " +              
+		    " lender.familyName, " +              
 		    " br.itemName, " +                    
-		    " br.price, " +                     
+		    " br.price, " +                      
 		    " br.qty, " +                        
 		    " br.dateToBorrow, " +                
 		    " br.dateToReturn, " +                
@@ -58,11 +58,21 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    "LEFT JOIN UserEntity borrower ON borrower.id = br.userId " + 
 		    "LEFT JOIN UserEntity lender ON lender.id = i.userId " +
 		    "WHERE br.isDeleted = false " +
-			"AND i.userId = :userId ";
+		    "AND i.userId = :userId " +
+		    "AND ( :search IS NULL OR :search = '' OR " +
+		    "      LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "      LOWER(CONCAT(borrower.firstName, ' ', borrower.familyName)) LIKE LOWER(CONCAT('%', :search, '%')) OR " + // ✅ search borrower full name
+		    "      CAST(br.price AS string) LIKE CONCAT('%', :search, '%') OR " +
+		    "      CAST(br.qty AS string) LIKE CONCAT('%', :search, '%') OR " +
+		    "      CAST(br.dateToBorrow AS string) LIKE CONCAT('%', :search, '%') OR " +
+		    "      CAST(br.dateToReturn AS string) LIKE CONCAT('%', :search, '%') OR " +
+		    "      LOWER(br.status) LIKE LOWER(CONCAT('%', :search, '%')) " +
+		    "    )";
 	
 	@Query(value=GET_ALL_OWNED_BORROW_REQUESTS_FOR_LENDER)
 	public Page<BorrowRequestData> getAllOwnedBorrowRequestsForLender(Pageable pageable, 
-			@Param("userId") int userId) throws DataAccessException; 
+			@Param("userId") int userId,
+			@Param("search") String search) throws DataAccessException; 
 	
 	public final String GET_ALL_OWNED_BORROW_REQUESTS_FOR_BORROWER =
 		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +

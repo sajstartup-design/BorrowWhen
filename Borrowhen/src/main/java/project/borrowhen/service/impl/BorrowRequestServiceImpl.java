@@ -270,7 +270,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    UserEntity user = userService.getLoggedInUser();
 	    
-	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForLender(pageable, user.getId());
+	    FilterAndSearchObj filter = inDto.getFilter();
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForLender(pageable, user.getId(), filter.getSearch());
 	    
 	    List<BorrowRequestObj> requests = new ArrayList<>();
 	    

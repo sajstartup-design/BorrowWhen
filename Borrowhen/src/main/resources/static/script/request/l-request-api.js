@@ -5,35 +5,56 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const inputPage = document.querySelector('.input-page');
+	const search = document.querySelector('.search');
 
-    // Load first page
-    loadInventories(0);
+	// Load first page
+	    loadRequests(0);
 
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-			createLoadingScreenBody();
-            let currentPage = Number(inputPage.value);
-            loadInventories(currentPage); 
-        });
-    }
+	    if (nextBtn) {
+	        nextBtn.addEventListener('click', () => {
+				createLoadingScreenBody();
+				const searchValue = search.value;
+	            let currentPage = Number(inputPage.value);
+	            loadRequests(currentPage, searchValue); 
+	        });
+	    }
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-			createLoadingScreenBody();
-            let currentPage = Number(inputPage.value);
-            loadInventories(currentPage - 2); 
-        });
-    }
+	    if (prevBtn) {
+	        prevBtn.addEventListener('click', () => {
+				createLoadingScreenBody();
+				const searchValue = search.value;
+	            let currentPage = Number(inputPage.value);
+	            loadRequests(currentPage - 2, searchValue); 
+	        });
+	    }
 
-    if (inputPage) {
-        inputPage.addEventListener('change', () => {
-			createLoadingScreenBody();
-            let newPage = Number(inputPage.value);
-            if (newPage < 1) newPage = 1;
-            inputPage.value = newPage;
-            loadInventories(newPage - 1);
-        });
-    }
+	    if (inputPage) {
+	        inputPage.addEventListener('change', () => {
+				createLoadingScreenBody();
+				const searchValue = search.value;
+	            let newPage = Number(inputPage.value);
+	            if (newPage < 1) newPage = 1;
+	            inputPage.value = newPage;
+	            loadRequests(newPage - 1, searchValue);
+	        });
+	    }
+		
+		if (search) {
+		    let typingTimer; 
+		    const delay = 500; 
+
+		    search.addEventListener('input', function () {
+		        clearTimeout(typingTimer); 
+
+		        const currentPage = 0;
+		        const searchValue = this.value;
+
+		        typingTimer = setTimeout(() => {
+					createLoadingScreenBody();
+		            loadRequests(currentPage, searchValue);
+		        }, delay);
+		    });
+		}
 
 });
 
@@ -103,10 +124,12 @@ const buttons = {
 };
 
 
-async function loadInventories(page = 0) {
+async function loadRequests(page = 0,
+	search = ""
+) {
     try {
 		
-		const params = new URLSearchParams({ page });
+		const params = new URLSearchParams({ page, search });
 				
 		const url = `/api/lender/request?${params.toString()}`;
 		
