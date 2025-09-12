@@ -194,10 +194,7 @@ async function loadRequests(page = 0,
 
 
             fragment.appendChild(row);
-			
-			const hr = document.createElement("hr");
-			hr.className = "soft-gradient";
-			fragment.appendChild(hr);
+
         });
 
         tableBody.appendChild(fragment);
