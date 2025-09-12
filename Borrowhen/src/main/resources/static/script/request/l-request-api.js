@@ -45,7 +45,12 @@ const buttons = {
           data-toggle="modal" 
           data-target="#approveModal"
           data-id="${request.encryptedId}"
-          data-item-name="${request.itemName}">
+          data-item-name="${request.itemName}"
+		  data-price="${request.price}"
+		  data-date-to-borrow="${request.dateToBorrow}"
+		  data-date-to-return="${request.dateToReturn}"
+		  data-number-to-borrow="${request.qty}"
+		  >
           <img src="/images/approved.png">
         </button>
     `,
@@ -55,7 +60,12 @@ const buttons = {
           data-toggle="modal" 
           data-target="#rejectModal"
           data-id="${request.encryptedId}"
-          data-item-name="${request.itemName}">
+          data-item-name="${request.itemName}"
+		  data-price="${request.price}"
+		  data-date-to-borrow="${request.dateToBorrow}"
+		  data-date-to-return="${request.dateToReturn}"
+		  data-number-to-borrow="${request.qty}"
+		  >
           <img src="/images/rejected.png">
         </button>
     `,
@@ -65,7 +75,12 @@ const buttons = {
           data-toggle="modal" 
           data-target="#returnModal"
           data-id="${request.encryptedId}"
-          data-item-name="${request.itemName}">
+          data-item-name="${request.itemName}"
+		  data-price="${request.price}"
+		  data-date-to-borrow="${request.dateToBorrow}"
+		  data-date-to-return="${request.dateToReturn}"
+		  data-number-to-borrow="${request.qty}"
+		  >
           <img src="/images/return-box.png">
         </button>
     `,
@@ -123,9 +138,6 @@ async function loadInventories(page = 0) {
 			        </div>
 			        <div class="table-cell">
 			            ${actionButtons}
-			            <button class="delete-btn" data-id="${request.encryptedId}">
-			                <img src="/images/delete.png">
-			            </button>
 			        </div>
 			    `;
 					

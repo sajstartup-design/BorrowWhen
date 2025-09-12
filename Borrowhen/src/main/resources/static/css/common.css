@@ -435,7 +435,7 @@ aside .notifications.active {
     display: flex;
 }
 
-aside .content,
+aside .aside-content,
 aside .content-two,
 aside .content-three{
     background: rgba(215, 238, 251, 1); /* Semi-transparent */
@@ -451,18 +451,18 @@ aside .content-three{
     font-size: 0.8rem;
 }
 
-aside .content .content-item{
+aside .aside-content .content-item{
 	display: flex;
 	flex-direction: column;
 }
 
-aside .content .content-item span:nth-child(1){
+aside .aside-content .content-item span:nth-child(1){
 	font-weight: 600;
 }
-aside .content .content-item span:nth-child(2){
+aside .aside-content .content-item span:nth-child(2){
 	font-size: 0.6rem;
 }
-aside .content .content-item span:nth-child(3){
+aside .aside-content .content-item span:nth-child(3){
 	font-size: 0.6rem;
 }
 
@@ -895,12 +895,6 @@ hr.soft-gradient.thin {
 	text-align: center;          /* optional: keep it centered */
 }
 
-.table-cell:last-child{
-	min-width: 15rem;
-	width: max-content !important;
-	display: flex;
-	justify-content: center;
-}
 
 
 .table-cell img{
