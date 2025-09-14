@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.service.UserService;
 
@@ -20,6 +21,9 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private HttpSession httpSession;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -36,6 +40,8 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 //			response.sendRedirect("/login");
 //			return;
 //		}
+		
+		httpSession.setAttribute("user", user);
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 

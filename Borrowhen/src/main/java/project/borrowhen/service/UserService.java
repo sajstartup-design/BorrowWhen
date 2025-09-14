@@ -34,5 +34,5 @@ public interface UserService {
 	
 	public UserEntity getUserByUserId(String userId);
 	
-	public List<UserEntity> getAllUsersByRole(String role);
+	public List<UserEntity> getAllUsersByRole(String role, String search);
 }

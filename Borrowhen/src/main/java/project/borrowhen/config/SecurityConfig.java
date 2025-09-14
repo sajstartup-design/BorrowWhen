@@ -83,7 +83,7 @@ public class SecurityConfig {
 						
 						.requestMatchers("/api/inventory").authenticated()
 						
-						
+						.requestMatchers("/chat/**").hasAnyAuthority("BORROWER", "LENDER")
 						.requestMatchers("/borrow-when-websocket/**").authenticated()
 						.anyRequest().authenticated()
 						
