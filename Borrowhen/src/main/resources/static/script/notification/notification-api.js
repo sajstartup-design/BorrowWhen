@@ -59,6 +59,9 @@ async function updateNotificationModal(e) {
                                 break;
 							case "ITEM_RECEIVED":
 								imgSrc = "/images/received.png";
+							case "REQUEST_PICKUP_READY":
+								imgSrc = "/images/location.png";
+								break;
                         }
 
                         container.innerHTML = `

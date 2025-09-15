@@ -120,9 +120,9 @@ async function loadRequests(page = 0,
 
 			if (status === 'pending') {
 			    actionButtons = buttons.cancel(request) + buttons.fake('received-icon');
-			} else if (status === 'approved') {
+			} else if (status === 'pick-upready') {
 			    actionButtons = buttons.fake('cancelled') + buttons.received(request);
-			} else if (status === 'rejected' || status === 'ongoing' || status === 'completed') {
+			} else if (status === 'rejected' || status === 'ongoing' || status === 'approved' || status === 'completed') {
 			    actionButtons = buttons.fake('cancelled') + buttons.fake('received-icon');
 			}
 			

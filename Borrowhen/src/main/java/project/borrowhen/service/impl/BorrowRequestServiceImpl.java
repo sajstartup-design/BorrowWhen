@@ -480,4 +480,44 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    );
 		
 	}
+
+	@Override
+	public void itemPickUpBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+
+	    UserEntity borrower = userService.getUser(request.getUserId()); 
+	      
+	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.PICK_UP_READY);
+	    
+	    NotificationEntity notification = new NotificationEntity();
+	    notification.setUserId(borrower.getId());
+
+	    String message = String.format(
+    	    "Your borrow request for '%s' from %s to %s is now ready for pick-up.",
+    	    request.getItemName(),
+    	    request.getDateToBorrow(),
+    	    request.getDateToReturn()
+    	);
+
+
+	    notification.setMessage(message);
+	    notification.setIsRead(false);
+	    notification.setType(CommonConstant.REQUEST_ITEM_PICK_UP_READY);
+	    notification.setCreatedDate(dateNow);
+	    notification.setUpdatedDate(dateNow);
+	    notification.setIsDeleted(false);
+
+	    notificationService.saveNotification(notification);
+
+	    messagingTemplate.convertAndSendToUser(
+    		borrower.getUserId().toString(),
+	        "/queue/borrower/notifications",
+	        message
+	    );
+	}
 }

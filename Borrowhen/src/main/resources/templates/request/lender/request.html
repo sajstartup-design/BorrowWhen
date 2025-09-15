@@ -241,6 +241,52 @@
 		</div>
 	</div>
 	
+	<div class="modal" id="pickUpModal">
+	    <div class="modal-content">
+	        <div class="modal-header">
+	            READY FOR PICKUP
+	        </div>
+	        <div class="modal-body">
+	            <form id="pickUpForm" th:action="@{/lender/request/pick-up}" method="POST">
+	                <input type="hidden" name="encryptedId" value="" id="encryptedId"/>
+     	                <p>This will notify the borrower that the item is ready for pick up.</p>
+	                <hr class="soft-gradient">
+	                <div class="field">
+					  <label>Item Name</label>
+					  <span class="item-name">Hammer</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+					  <label>Price</label>
+					  <span class="item-price">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Borrow</label>
+						<span class="date-to-borrow">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Return</label>
+						<span class="date-to-return">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Number to Borrow</label>
+						<span class="number-to-borrow">P100</span>
+					</div>
+	            </form>    
+	        </div>
+	        <div class="modal-footer">
+	            <p>Once confirmed, this action cannot be undone.</p>
+	            <div>
+	                <button type="button" class="cancel" name="cancel">CANCEL</button>
+	                <button type="submit" class="confirm-btn" form="pickUpForm">CONFIRM</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
 	<script th:src="@{/script/submit.js}"></script>

@@ -120,6 +120,21 @@ const buttons = {
 	          <img src="/images/credit-cards.png">
 	        </button>
 	    `,
+	pickUpBtn: (request) => 		`
+		        <button 
+		          class="pick-up-btn" 
+		          data-toggle="modal" 
+		          data-target="#pickUpModal"
+		          data-id="${request.encryptedId}"
+		          data-item-name="${request.itemName}"
+				  data-price="${request.price}"
+				  data-date-to-borrow="${request.dateToBorrow}"
+				  data-date-to-return="${request.dateToReturn}"
+				  data-number-to-borrow="${request.qty}"
+				  >
+		          <img src="/images/location.png">
+		        </button>
+		    `,
     fake: (icon) => `<button class="fake-btn" disabled><img src="/images/${icon}.png"></button>`
 };
 
@@ -155,13 +170,15 @@ async function loadRequests(page = 0,
 			    let actionButtons = '';
 
 			    if (status === 'pending') {
-			        actionButtons = buttons.approve(request) + buttons.reject(request) + buttons.fake('return-box') + buttons.fake('credit-cards');
+					actionButtons = buttons.approve(request) + buttons.reject(request) + buttons.fake('location') + buttons.fake('return-box') + buttons.fake('credit-cards');
+				}else if(status === 'approved'){
+			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.pickUpBtn(request) + buttons.fake('return-box') + buttons.fake('credit-cards');
 			    } else if (status === 'ongoing') {
-			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.returnBtn(request) + buttons.fake('credit-cards');
+			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.fake('location') + buttons.returnBtn(request) + buttons.fake('credit-cards');
 				} else if(status === 'completed'){
-					actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.fake('return-box') + buttons.payBtn(request);
+					actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.fake('location') + buttons.fake('return-box') + buttons.payBtn(request);
 			    } else {
-			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.fake('return-box') + buttons.fake('credit-cards');
+			        actionButtons = buttons.fake('approved') + buttons.fake('rejected') + buttons.fake('location') + buttons.fake('return-box') + buttons.fake('credit-cards');
 			    }
 
 			    row.innerHTML = `

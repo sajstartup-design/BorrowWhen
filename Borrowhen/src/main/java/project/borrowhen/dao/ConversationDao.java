@@ -1,7 +1,6 @@
 package project.borrowhen.dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,7 +11,7 @@ import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.ConversationData;
 import project.borrowhen.dao.entity.ConversationEntity;
 
-public interface ConversationDao extends JpaRepository<ConversationEntity, Long> {
+public interface ConversationDao extends JpaRepository<ConversationEntity, Integer> {
 	
 	 
     String FIND_CONVERSATION_BETWEEN_USERS = 
