@@ -37,7 +37,7 @@
 			            
 			            <button th:if="*{@statusUtil.normalize(request.status) == 'approved'}"
 			            	data-toggle="modal"
-							data-target="#pickupModal">
+							data-target="#pickUpModal">
 			                <img th:src="@{/images/location.png}"> READY FOR PICKUP
 			            </button>
 			
@@ -227,13 +227,13 @@
 		</div>
 	</div>
 	
-	<div class="modal" name="no-data" id="pickUpModal">
+	<div class="modal" name="no-data" id="pickUpModal" th:if="*{@statusUtil.normalize(request.status) == 'approved'}">
 		<div class="modal-content">
 			<div class="modal-header">
 				READY FOR PICKUP
 			</div>
 			<div class="modal-body">
-				<form id="rejectForm" th:action="@{/lender/request/reject}" method="POST">
+				<form id="pickUpForm" th:action="@{/lender/request/pick-up}" method="POST">
 					<input type="hidden" name="encryptedId" th:value="*{request.encryptedId}" id="encryptedId"/>
 					 <p>This will notify the borrower that the item is ready for pick up.</p>
 	                <hr class="soft-gradient">
@@ -267,7 +267,7 @@
 				Once confirmed, this action cannot be undone.
 				<div>
 					<button class="cancel" name="cancel">CANCEL</button>
-					<button class="borrow-btn reject-btn" form="rejectForm">REJECT</button>
+					<button class="pick-up-btn" form="pickUpForm">CONFIRM</button>
 				</div>
 			</div>
 		</div>

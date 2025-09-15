@@ -1,4 +1,4 @@
-const openedModals = new WeakSet();
+let openedModals = new WeakSet();
 
 // 🔹 Run this once on page load
 document.addEventListener("DOMContentLoaded", async () => {
@@ -15,6 +15,9 @@ async function updateNotificationCount(){
         if (notificationIcon) {
             notificationIcon.dataset.count = data.notificationCount;
         }
+		
+		openedModals = new WeakSet();
+		updateNotificationModal(notificationIcon);
     } catch (error) {
         console.error("Error fetching inventory count:", error);
     }

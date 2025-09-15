@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const approveBtn = document.querySelector('.approve-btn');
 	const rejectBtn = document.querySelector('.reject-btn');
 	const confirmBtn = document.querySelector('.confirm-btn');
+	const pickUpBtn = document.querySelector('.pick-up-btn');
     const form = document.querySelector('#saveForm'); 
 
     if (updateBtn) {
@@ -94,12 +95,28 @@ document.addEventListener("DOMContentLoaded", () => {
 	        confirmBtn.disabled = true;
 
 	        createLoadingScreenBody();
-			console.log(confirmBtn);
+
 			const form = getForm(confirmBtn);
 			if (form) {
 			    form.submit();
 			} else {
 			    console.error("❌ No form found for confirmBtn");
+			}
+	    });
+	}
+	
+	if(pickUpBtn){
+		pickUpBtn.addEventListener('click', function () {
+	        pickUpBtn.textContent = 'Confirming...';
+	        pickUpBtn.disabled = true;
+
+	        createLoadingScreenBody();
+
+			const form = getForm(pickUpBtn);
+			if (form) {
+			    form.submit();
+			} else {
+			    console.error("❌ No form found for pickUpBtn");
 			}
 	    });
 	}
