@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BW | Messages</title>
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/chat/chat.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+</head>
+<body>
+	<div class="container">
+		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
+		<main>
+			<div class="content-header">CHAT</div>
+			<div class="content-body">
+				<div class="chats">
+					<div class="chats-title">
+						<div class="search-container">
+								<span><img th:src="@{/images/search-user.png}" alt="search"></span>
+								
+								<input type="search" placeholder="Search" class="search" />
+								
+								
+							</div>
+					</div>
+					<div class="chats-content">	
+						
+					</div>
+				</div>
+				<div class="chat-box">
+					<div class="chat-content">
+						<div class="chat-box-title">
+							<div class="pic">
+								<img th:src="@{/images/logo.png}">
+							</div>
+							<div class="name">
+								<span>Julius Basas</span>
+								<span>1000 Messages</span>
+							</div>
+							<span class="dot green" role="img" aria-label="green circle"></span>
+						</div>
+						<hr class="soft-gradient">
+						<div class="message-list">
+		
+						
+							
+							
+						</div>
+					</div>				
+					<div class="chat-input-message">
+						<textarea placeholder="Type your message here" class="input-message"></textarea>
+						<button class="check-btn" >CHECKING</button>
+						<button class="send-btn" >SEND</button>
+					</div>
+				</div>
+			</div>
+		</main>
+		<aside th:replace="~{aside/aside :: content}"></aside>
+	</div>
+	<script th:src="@{/script/chat.js}"></script>
+</body>
+</html>

@@ -18,6 +18,8 @@ public class CommonConstant {
 	
 	public static final String APPROVED = "APPROVED";
 	
+	public static final String PICK_UP_READY = "PICK-UP READY";
+
 	public static final String REJECTED = "REJECTED";
 	
 	public static final String ITEM_RECEIVED = "ITEM RECEIVED";
@@ -41,6 +43,8 @@ public class CommonConstant {
     public static final String REQUEST_APPROVED = "REQUEST_APPROVED";
     
     public static final String REQUEST_REJECTED = "REQUEST_REJECTED";
+    
+    public static final String REQUEST_ITEM_PICK_UP_READY = "REQUEST_PICKUP_READY";
     
     public static final String REQUEST_ITEM_RECEIVED = "ITEM_RECEIVED";
     

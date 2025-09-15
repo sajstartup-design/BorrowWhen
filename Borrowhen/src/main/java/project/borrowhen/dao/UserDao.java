@@ -103,11 +103,26 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
     @Query(value=GET_ALL_USER_ID)
     public List<String> getAllUserId() throws DataAccessException;
     
-    public final String GET_ALL_USERS_BY_ROLE = "SELECT e "
-    		+ "FROM UserEntity e "
-    		+ "WHERE e.role = :role "
-    		+ "AND e.isDeleted = false ";
-    
-    @Query(value=GET_ALL_USERS_BY_ROLE)
-    public List<UserEntity> getAllUsersByRole(String role) throws DataAccessException;
+    public final String GET_ALL_USERS_BY_ROLE =
+    	    "SELECT u " +
+    	    "FROM UserEntity u " +
+    	    "WHERE u.role = :role " +
+    	    "AND u.isDeleted = false " +
+    	    "AND ( " +
+    	    "   (:search IS NULL OR :search = '') " +
+    	    "   OR LOWER(u.firstName) LIKE LOWER(CONCAT('%', :search, '%')) " +
+    	    "   OR LOWER(CONCAT(u.firstName, ' ', u.familyName)) LIKE LOWER(CONCAT('%', :search, '%')) " +
+    	    "   OR LOWER(CONCAT(u.firstName, ' ', u.middleName, ' ', u.familyName)) LIKE LOWER(CONCAT('%', :search, '%')) " +
+    	    "   OR LOWER(u.familyName) LIKE LOWER(CONCAT('%', :search, '%')) " +
+    	    "   OR LOWER(CONCAT(u.familyName, ' ', u.firstName)) LIKE LOWER(CONCAT('%', :search, '%')) " +
+    	    ")";
+
+
+
+	@Query(value = GET_ALL_USERS_BY_ROLE)
+	public List<UserEntity> getAllUsersByRole(
+	        @Param("role") String role,
+	        @Param("search") String search
+	) throws DataAccessException;
+
 }

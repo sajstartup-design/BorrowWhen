@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import project.borrowhen.common.constant.CommonConstant;
@@ -44,10 +43,7 @@ public class InventoryServiceImpl implements InventoryService{
 	
 	@Autowired
 	private CipherUtil cipherUtil;
-	
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
-	
+
 	@Autowired
 	private AdminSettingsService adminSettingsService;
     
@@ -96,7 +92,7 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		notificationService.saveNotification(notification);	
 		
-		List<UserEntity> borrowers = userService.getAllUsersByRole(CommonConstant.ROLE_BORROWER);
+		List<UserEntity> borrowers = userService.getAllUsersByRole(CommonConstant.ROLE_BORROWER, CommonConstant.BLANK);
 
 		notificationService.sendToBorrowers(borrowers, message);
 		

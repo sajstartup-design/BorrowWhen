@@ -34,9 +34,17 @@
 							data-target="#rejectModal">
 			                <img th:src="@{/images/rejected.png}"> REJECT
 			            </button>
+			            
+			            <button th:if="*{@statusUtil.normalize(request.status) == 'approved'}"
+			            	data-toggle="modal"
+							data-target="#pickUpModal">
+			                <img th:src="@{/images/location.png}"> READY FOR PICKUP
+			            </button>
 			
 			            <!-- Show ITEM RETURNED only if status is ONGOING -->
-			            <button th:if="*{@statusUtil.normalize(request.status) == 'ongoing'}">
+			            <button th:if="*{@statusUtil.normalize(request.status) == 'ongoing'}"
+			            	data-toggle="modal"
+							data-target="#pickUpModal">
 			                <img th:src="@{/images/return-box.png}"> ITEM RETURNED
 			            </button>
 					</div>
@@ -214,6 +222,52 @@
 				<div>
 					<button class="cancel" name="cancel">CANCEL</button>
 					<button class="borrow-btn reject-btn" form="rejectForm">REJECT</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal" name="no-data" id="pickUpModal" th:if="*{@statusUtil.normalize(request.status) == 'approved'}">
+		<div class="modal-content">
+			<div class="modal-header">
+				READY FOR PICKUP
+			</div>
+			<div class="modal-body">
+				<form id="pickUpForm" th:action="@{/lender/request/pick-up}" method="POST">
+					<input type="hidden" name="encryptedId" th:value="*{request.encryptedId}" id="encryptedId"/>
+					 <p>This will notify the borrower that the item is ready for pick up.</p>
+	                <hr class="soft-gradient">
+					<div class="field">
+					  <label>Item Name</label>
+					  <span class="item-name" th:text="*{request.itemName}"></span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+					  <label>Price</label>
+					  <span class="item-price" th:text="'₱' + *{request.price}"></span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Borrow</label>
+						<span class="date-to-borrow" th:text="*{request.dateToBorrow}"></span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Return</label>
+						<span class="date-to-return" th:text="*{request.dateToReturn}"></span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Number to Borrow</label>
+						<span class="number-to-borrow" th:text="*{request.qty}"></span>
+					</div>
+				</form>	
+			</div>
+			<div class="modal-footer">
+				Once confirmed, this action cannot be undone.
+				<div>
+					<button class="cancel" name="cancel">CANCEL</button>
+					<button class="pick-up-btn" form="pickUpForm">CONFIRM</button>
 				</div>
 			</div>
 		</div>

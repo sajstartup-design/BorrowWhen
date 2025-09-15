@@ -15,6 +15,7 @@ public class MessageConstant {
 	public static final String REQUEST_APPROVED_MSG = "The borrow request has been successfully approved.";
 	public static final String REQUEST_REJECTED_MSG = "The borrow request has been successfully rejected.";
 	public static final String REQUEST_DELETE_MSG = "The borrow request has been successfully deleted.";
+	public static final String REQUEST_ITEM_PICKUP_READY = "The item has been successfully marked as PICK-UP READY.";
 	public static final String REQUEST_ITEM_RECEIVED_MSG = "The item has been successfully marked as RECEIVED.";
 	public static final String REQUEST_ITEM_COMPLETED_MSG = "The request has been successfully marked as COMPLETED.";
 	

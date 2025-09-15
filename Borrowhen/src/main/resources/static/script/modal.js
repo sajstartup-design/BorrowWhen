@@ -26,7 +26,7 @@ function updateBtnsModal(){
 						  	modal.querySelector(".item-qty").textContent = btn.dataset.qty;
 						}
 
-						if(modal.id === 'approveModal' || modal.id === 'rejectModal' || modal.id === 'confirmModal'){
+						if(modal.id === 'approveModal' || modal.id === 'rejectModal' || modal.id === 'confirmModal' || modal.id === 'pickUpModal'){
 							modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
 
 						 	modal.querySelector(".item-name").textContent = btn.dataset.itemName;

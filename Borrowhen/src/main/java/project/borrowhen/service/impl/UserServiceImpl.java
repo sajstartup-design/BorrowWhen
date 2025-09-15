@@ -187,6 +187,14 @@ public class UserServiceImpl implements UserService {
 				inDto.getRole(),
 				hasChanged,
 				dateNow);
+		
+		UserEntity loggedInUser = getLoggedInUser();
+		
+		if(loggedInUser.getId() == id) {
+			UserEntity user = userDao.getUser(id);
+			
+			httpSession.setAttribute("user", user);
+		}
 	}
 
 	@Override
@@ -210,6 +218,12 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userDao.getUserByUserId(userId);
 
 		return user;
+		
+//		// Try to retrieve cached user from session
+//	    UserEntity user = (UserEntity) httpSession.getAttribute("user");
+//
+//	    // If not yet stored, return null (or you can throw an exception if you want strict behavior)
+//	    return user;
 	}
 
 	@Override
@@ -231,8 +245,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserEntity> getAllUsersByRole(String role) {
+	public List<UserEntity> getAllUsersByRole(String role, String search) {
 		
-		return userDao.getAllUsersByRole(role);
+		return userDao.getAllUsersByRole(role, search);
 	}
 }
