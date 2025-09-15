@@ -59,7 +59,7 @@ public class SecurityConfig {
 						.requestMatchers("/script/**").permitAll()
 						.requestMatchers("/gif/**").permitAll()
 						
-						
+						 
 						
 						
 						.requestMatchers("/admin/user/**").hasAuthority("ADMIN")
@@ -82,6 +82,8 @@ public class SecurityConfig {
 						.requestMatchers("/api/request/**").hasAuthority("BORROWER")
 						
 						.requestMatchers("/api/inventory").authenticated()
+						
+						.requestMatchers("/api/**").authenticated()
 						
 						.requestMatchers("/chat/**").hasAnyAuthority("BORROWER", "LENDER")
 						.requestMatchers("/borrow-when-websocket/**").authenticated()
