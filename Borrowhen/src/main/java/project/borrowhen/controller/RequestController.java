@@ -45,4 +45,23 @@ public class RequestController {
 		return "redirect:/request";
 	}
 	
+	@PostMapping("/paid")
+	public String postPaidScreen(@ModelAttribute BorrowRequestDto borrowRequestWebDto,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			borrowRequestService.paidBorrowRequest(borrowRequestWebDto);
+	
+			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_ITEM_RECEIVED_MSG);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+		}
+		
+		return "redirect:/request";
+	}
 }

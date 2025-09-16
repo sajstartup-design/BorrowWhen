@@ -395,7 +395,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    messagingTemplate.convertAndSendToUser(
 	        lender.getUserId().toString(),
-	        "/queue/borrower/notifications",
+	        "/queue/lender/notifications",
 	        message
 	    );
 	}
@@ -559,5 +559,51 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        message
 	    );
 		
+	}
+
+	@Override
+	public void paidBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+
+	    UserEntity borrower = userService.getUser(request.getUserId()); 
+	    
+	    InventoryEntity inventory = inventoryService.getInventory(request.getInventoryId());
+	    
+	    UserEntity lender = userService.getUser(inventory.getUserId());
+	    
+	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.PAID);
+	    
+	    NotificationEntity notification = new NotificationEntity();
+	    notification.setUserId(lender.getId());
+
+	    String message = String.format(
+    	    "%s %s has paid for the borrow request of '%s' from %s to %s.",
+    	    borrower.getFirstName(),
+    	    borrower.getFamilyName(),
+    	    request.getItemName(),
+    	    request.getDateToBorrow(),
+    	    request.getDateToReturn()
+    	);
+
+
+	    notification.setMessage(message);
+	    notification.setIsRead(false);
+	    notification.setType(CommonConstant.REQUEST_PAID);
+	    notification.setCreatedDate(dateNow);
+	    notification.setUpdatedDate(dateNow);
+	    notification.setIsDeleted(false);
+
+	    notificationService.saveNotification(notification);
+
+	    messagingTemplate.convertAndSendToUser(
+	        lender.getUserId().toString(),
+	        "/queue/lender/notifications",
+	        message
+	    );
 	}
 }
