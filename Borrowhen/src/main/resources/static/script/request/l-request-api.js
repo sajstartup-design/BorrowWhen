@@ -109,7 +109,7 @@ const buttons = {
 	        <button 
 	          class="confim-btn" 
 	          data-toggle="modal" 
-	          data-target="#confirmModal"
+	          data-target="#issuePaymentModal"
 	          data-id="${request.encryptedId}"
 	          data-item-name="${request.itemName}"
 			  data-price="${request.price}"
