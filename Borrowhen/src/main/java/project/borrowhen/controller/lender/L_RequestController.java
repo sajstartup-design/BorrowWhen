@@ -133,4 +133,24 @@ public class L_RequestController {
 		
 		return "redirect:/lender/request";
 	}
+	
+	@PostMapping("/issue-payment")
+	public String postIssuePaymentScreen(@ModelAttribute BorrowRequestDto borrowRequestWebDto,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			borrowRequestService.issuePaymentBorrowRequest(borrowRequestWebDto);
+	
+			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_PAYMENT_PENDING);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+		}
+		
+		return "redirect:/lender/request";
+	}
 }

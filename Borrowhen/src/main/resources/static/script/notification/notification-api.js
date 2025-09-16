@@ -65,6 +65,8 @@ async function updateNotificationModal(e) {
 							case "REQUEST_PICKUP_READY":
 								imgSrc = "/images/location.png";
 								break;
+							case "REQUEST_PAYMENT_PENDING":
+								imgSrc = "/images/pending-payment.png";
                         }
 
                         container.innerHTML = `

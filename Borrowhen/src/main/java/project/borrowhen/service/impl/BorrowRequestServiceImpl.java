@@ -446,7 +446,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	@Override
 	public void itemReturnedBorrowRequest(BorrowRequestDto inDto) throws Exception {
 		
-		 Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
 
 	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
 
@@ -460,9 +460,10 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setUserId(borrower.getId());
 
 	    String message = String.format(
-    	    "Lender has confirmed that the item '%s' has been returned. Please proceed with the payment. <a href=\"#\">Click here to continue</a>.",
+    	    "The item '%s' has been returned. Please wait while the lender processes your payment. You will be notified once the payment has been issued.",
     	    request.getItemName()
     	);
+
 
 	    notification.setMessage(message);
 	    notification.setIsRead(false);
@@ -519,5 +520,44 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        "/queue/borrower/notifications",
 	        message
 	    );
+	}
+
+	@Override
+	public void issuePaymentBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+
+	    UserEntity borrower = userService.getUser(request.getUserId()); 
+
+	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.PENDING_PAYMENT);
+	    
+	    NotificationEntity notification = new NotificationEntity();
+	    notification.setUserId(borrower.getId());
+
+	    String message = String.format(
+    	    "Please complete the payment for the item '%s'. <a href=\"#\">Click here to continue</a>.",
+    	    request.getItemName()
+    	);
+
+
+	    notification.setMessage(message);
+	    notification.setIsRead(false);
+	    notification.setType(CommonConstant.REQUEST_PAYMENT_PENDING);
+	    notification.setCreatedDate(dateNow);
+	    notification.setUpdatedDate(dateNow);
+	    notification.setIsDeleted(false);
+
+	    notificationService.saveNotification(notification);
+
+	    messagingTemplate.convertAndSendToUser(
+    		borrower.getUserId().toString(),
+	        "/queue/borrower/notifications",
+	        message
+	    );
+		
 	}
 }

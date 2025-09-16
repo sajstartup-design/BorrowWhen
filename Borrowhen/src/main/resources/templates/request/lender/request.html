@@ -38,32 +38,6 @@
 		<main>
 			<div class="content-header">BORROW REQUESTS</div>
 			<div class="content-body">
-				<div class="item-statistics">
-					<div>
-						<label><img th:src="@{/images/friends.png}" >Total Request</label>
-						<span>
-							100
-						</span>
-					</div>
-										<div>
-						<label><img th:src="@{/images/friends.png}" >Pending Request</label>
-						<span>
-							100
-						</span>
-					</div>
-					<div>
-						<label><img th:src="@{/images/friends.png}" >Completed Request</label>
-						<span>
-							100
-						</span>
-					</div>
-					<div>
-						<label><img th:src="@{/images/friends.png}" >Rejected Request</label>
-						<span>
-							100
-						</span>
-					</div>
-				</div>
 				<div class="table-container">
 					<div class="table-buttons">
 						<div class="btns">
@@ -286,6 +260,53 @@
 	        </div>
 	    </div>
 	</div>
+	
+	<div class="modal" id="issuePaymentModal">
+	    <div class="modal-content">
+	        <div class="modal-header">
+	            ISSUE PAYMENT
+	        </div>
+	        <div class="modal-body">
+	            <form id="issuePaymentForm" th:action="@{/lender/request/issue-payment}" method="POST">
+	                <input type="hidden" name="encryptedId" value="" id="encryptedId"/>
+	                <p>You are about to issue payment to the borrower.</p>
+	                <hr class="soft-gradient">
+	                <div class="field">
+	                    <label>Item Name</label>
+	                    <span class="item-name">Hammer</span>
+	                </div>
+	                <hr class="soft-gradient">
+	                <div class="field">
+	                    <label>Amount</label>
+	                    <span class="item-price">P100</span>
+	                </div>
+	                <hr class="soft-gradient">
+	                <div class="field">
+	                    <label>Borrow Date</label>
+	                    <span class="date-to-borrow">2025-09-16</span>
+	                </div>
+	                <hr class="soft-gradient">
+	                <div class="field">
+	                    <label>Return Date</label>
+	                    <span class="date-to-return">2025-09-20</span>
+	                </div>
+	                <hr class="soft-gradient">
+	                <div class="field">
+	                    <label>Quantity</label>
+	                    <span class="number-to-borrow">1</span>
+	                </div>
+	            </form>    
+	        </div>
+	        <div class="modal-footer">
+	            <p>Once confirmed, this action cannot be undone.</p>
+	            <div>
+	                <button type="button" class="cancel" name="cancel">CANCEL</button>
+	                <button type="submit" class="issue-payment-btn" form="issuePaymentForm">CONFIRM</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
 	
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>

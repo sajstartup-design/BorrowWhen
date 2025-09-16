@@ -964,6 +964,7 @@ hr.soft-gradient.thin {
     padding: 0.3rem 0.6rem;
     border-radius: 1rem;
     font-weight: 600;
+    font-size: 0.7rem;
 }
 
 .table-cell .status.approved,
@@ -974,8 +975,8 @@ hr.soft-gradient.thin {
     padding: 0.3rem 0.6rem;
     border-radius: 1rem;
     font-weight: 600;
+    font-size: 0.7rem;
 }
-
 
 .table-cell .status.rejected,
 .status.rejected  {
@@ -985,16 +986,18 @@ hr.soft-gradient.thin {
     padding: 0.3rem 0.6rem;
     border-radius: 1rem;
     font-weight: 600;
+    font-size: 0.7rem;
 }
 
 .table-cell .status.ongoing,
-.status.ongoing{
+.status.ongoing {
     color: #0c5460;
     background: #d1ecf1;
     border-left: 0.3rem solid #17a2b8; 
     padding: 0.3rem 0.6rem;
     border-radius: 1rem;
     font-weight: 600;
+    font-size: 0.7rem;
 }
 
 .table-cell .status.completed,
@@ -1005,6 +1008,7 @@ hr.soft-gradient.thin {
     padding: 0.3rem 0.6rem;
     border-radius: 1rem;
     font-weight: 600;
+    font-size: 0.7rem;
 }
 
 .table-cell .status.pick-upready,
@@ -1015,7 +1019,43 @@ hr.soft-gradient.thin {
     padding: 0.3rem 0.6rem;
     border-radius: 1rem;
     font-weight: 600;
+    font-size: 0.7rem;
 }
+
+.table-cell .status.paymentpending,
+.status.paymentpending {
+    color: #084298;               /* deep blue */
+    background: #cfe2ff;          /* light blue */
+    border-left: 0.3rem solid #0d6efd; /* bright blue border */
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 0.7rem;
+}
+
+.table-cell .status.payment-paid,
+.status.payment-paid {
+    color: #5f0f40;               /* deep purple */
+    background: #f3d9fa;          /* lavender */
+    border-left: 0.3rem solid #9d4edd; /* purple border */
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 0.7rem;
+}
+
+.table-cell .status.payment-failed,
+.status.payment-failed {
+    color: #842029;               /* dark red */
+    background: #f8d7da;          /* light red */
+    border-left: 0.3rem solid #dc3545; /* red border */
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 0.7rem;
+}
+
+
 
 
 .ribbon {
