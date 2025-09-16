@@ -12,60 +12,100 @@
       margin-bottom: 12px;
       max-width: 400px;
     }
+    #methods {
+      margin: 1rem 0;
+    }
   </style>
 </head>
 <body>
   <h2>Stripe Payment Example</h2>
 
-  <!-- Card input field -->
+  <!-- Dynamic payment methods will go here -->
+  <div id="methods"></div>
+
+  <!-- Card element (only shown if card is supported) -->
   <div id="card-element"></div>
+
   <div id="card-errors" style="color:red;"></div>
 
-  <!-- One single pay button -->
   <button id="pay-btn">Pay ₱50.00</button>
 
-  <script>
-    // ✅ Initialize Stripe
-    const stripe = Stripe("21312");
+  <script th:inline="javascript">
+  	const publicKey = /*[[${publicKey}]]*/'';
+  	const stripe = Stripe(publicKey);
     const elements = stripe.elements();
     const cardElement = elements.create("card");
-    cardElement.mount("#card-element");
 
     const payBtn = document.getElementById("pay-btn");
     const errorDiv = document.getElementById("card-errors");
+    const methodsDiv = document.getElementById("methods");
 
-    // Show validation errors
-    cardElement.on("change", (ev) => {
-      errorDiv.textContent = ev.error ? ev.error.message : "";
-      payBtn.disabled = !ev.complete;
-    });
+    // 1. Fetch intent + supported payment methods
+    let clientSecret, supportedMethods;
+    fetch("/api/payment/create-intent?amount=5000")
+      .then(res => res.json())
+      .then(data => {
+        clientSecret = data.clientSecret;
+        supportedMethods = data.paymentMethods;
+		
+        // 2. Render radio buttons for each supported method
+        supportedMethods.forEach((m, idx) => {
+		  console.log(m);
+          const label = document.createElement("label");
+          label.innerHTML = `<input type="radio" name="method" value="${m}" ${idx===0 ? "checked":""}> ${m}`;
+          methodsDiv.appendChild(label);
+        });
 
+        // Only mount card element if "card" is in supported methods
+        if (supportedMethods.includes("card")) {
+          cardElement.mount("#card-element");
+        } else {
+          document.getElementById("card-element").style.display = "none";
+        }
+      });
+
+    // 3. Payment button click
     payBtn.addEventListener("click", async () => {
       payBtn.disabled = true;
       payBtn.textContent = "Processing...";
 
-      // Call backend to create PaymentIntent
-      const res = await fetch("/api/payment/create-intent?amount=5000", { method: "GET" });
-      const data = await res.json();
+      const method = document.querySelector("input[name='method']:checked").value;
 
-      const result = await stripe.confirmCardPayment(data.clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: { email: "julius.basas0123@gmail.com" }
-        },
-      receipt_email: "julius.basas0123@gmail.com"
-      });
+      let result;
+      if (method === "card") {
+        result = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: cardElement,
+            billing_details: { email: "julius.basas0123@gmail.com" }
+          },
+          receipt_email: "julius.basas0123@gmail.com"
+        });
+      } else if (method === "alipay") {
+        result = await stripe.confirmAlipayPayment(clientSecret, {
+          return_url: "http://localhost:8080/payment/success"
+        });
+      } else if (method === "grabpay") {
+        result = await stripe.confirmGrabpayPayment(clientSecret, {
+          return_url: "http://localhost:8080/payment/success"
+        });
+      } else {
+        alert("Payment method not yet implemented in frontend: " + method);
+        payBtn.disabled = false;
+        payBtn.textContent = "Pay ₱50.00";
+        return;
+      }
 
+      // 4. Handle result
       if (result.error) {
         errorDiv.textContent = result.error.message;
         payBtn.disabled = false;
         payBtn.textContent = "Pay ₱50.00";
-      } else if (result.paymentIntent.status === 'succeeded') {
+      } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
         alert("Payment successful!");
         payBtn.textContent = "Paid ✅";
-        const res = await fetch(`/api/payment/receipt?paymentIntentId=${result.paymentIntent.id}`);
-        const data = await res.json();
-        window.location.href = data.receiptUrl; // redirect user to Stripe-hosted receipt
+        if (data.receiptUrl) {
+          window.location.href = data.receiptUrl;
+        }
       }
     });
   </script>

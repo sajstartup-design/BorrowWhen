@@ -1,0 +1,153 @@
+.content{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	height: 100%;
+}
+
+.item-information{
+	color: #333;
+	font-size: 0.95rem;
+	background: rgba(215, 238, 251, 1); /* Semi-transparent */
+	backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.05rem solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+	border-radius: 1rem;
+	padding: 0.5rem 1rem;
+	box-sizing: border-box;
+	height: 50%;
+}
+
+.payment-information{
+	height: 50%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.field{
+	display: flex;
+	gap: 0.5rem;
+	width: 100%;
+}
+
+.field label {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #0a3d62;
+    display: flex;
+    align-items: center;
+    width: 20rem;
+}
+
+.field.bold label{
+	font-weight: 600;
+}
+
+/* Inputs (slightly lighter glass look inside form) */
+.field input,
+.field textarea,
+.field select,
+.field div {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 0.05rem solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+    color: #0a3d62;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    width: 16rem;
+    box-sizing: unset;
+    text-align: center;
+    
+}
+
+/* Input focus */
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+    border-color: rgba(0, 123, 255, 0.6);
+    box-shadow: 0 0 0.4rem rgba(0, 123, 255, 0.3);
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.field.card-details{
+	display: flex;
+	flex-direction: column;
+}
+
+
+.payment-field{
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+ #card-element {
+  border: 0.05rem solid #ccc;   /* 1px */
+  padding: 0.6rem;              /* 12px */
+  border-radius: 0.3rem;        /* 6px */     /* 12px */
+  max-width: 20rem;             /* 400px */
+}
+#card-errors {
+  color: red !important;
+  font-size: 0.6rem;
+}
+
+#methods{
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+#methods label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+button{
+	width: 100%;
+}
+
+.payment-field.expcsv{
+	display: flex;
+	flex-grow: 1;
+	flex-direction: row;
+	gap: 2rem;
+}
+
+.payment-field.expcsv div{
+	display: flex;
+	flex-grow: 1;
+}
+
+.expiration-date,
+.csv{
+	display: flex;
+	gap: 0.5rem;
+	flex-direction: column;
+}
+
+.expiration-date div{
+	display: flex;
+	gap: 0.5rem;
+	width: inherit;
+}
+
+.expiration-date input,
+.csv input{
+	display: flex;
+	flex-grow: 1;
+	width: 6rem;
+}
+
+.btns{
+	display: flex;
+	gap: 0.5rem;
+}

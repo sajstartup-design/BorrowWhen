@@ -47,6 +47,12 @@
 							data-target="#pickUpModal">
 			                <img th:src="@{/images/return-box.png}"> ITEM RETURNED
 			            </button>
+			            
+        			    <button th:if="*{@statusUtil.normalize(request.status) == 'completed'}"
+			            	data-toggle="modal"
+							data-target="#issuePaymentModal">
+			                <img th:src="@{/images/pending-payment.png}"> ISSUE PAYMENT
+			            </button>
 					</div>
 					<form >
 					    <input type="hidden" name="encryptedId"  />

@@ -14,6 +14,8 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import project.borrowhen.common.constant.CommonConstant;
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
@@ -62,30 +64,32 @@ public class SecurityConfig {
 						 
 						
 						
-						.requestMatchers("/admin/user/**").hasAuthority("ADMIN")
-						.requestMatchers("/admin/inventory/**").hasAuthority("ADMIN")
-						.requestMatchers("/admin/request/**").hasAuthority("ADMIN")
+						.requestMatchers("/admin/user/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+						.requestMatchers("/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+						.requestMatchers("/admin/request/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						
-						.requestMatchers("/api/admin/user/**").hasAuthority("ADMIN")
-						.requestMatchers("/api/admin/inventory/**").hasAuthority("ADMIN")
-						.requestMatchers("/api/admin/request/**").hasAuthority("ADMIN")
+						.requestMatchers("/api/admin/user/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+						.requestMatchers("/api/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+						.requestMatchers("/api/admin/request/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						
 						
-						.requestMatchers("/lender/inventory/**").hasAuthority("LENDER")
-						.requestMatchers("/lender/request/**").hasAuthority("LENDER")
+						.requestMatchers("/lender/inventory/**").hasAuthority(CommonConstant.ROLE_LENDER)
+						.requestMatchers("/lender/request/**").hasAuthority(CommonConstant.ROLE_LENDER)
 						
-						.requestMatchers("/api/lender/inventory/**").hasAuthority("LENDER")
-						.requestMatchers("/api/lender/request/**").hasAuthority("LENDER")
+						.requestMatchers("/api/lender/inventory/**").hasAuthority(CommonConstant.ROLE_LENDER)
+						.requestMatchers("/api/lender/request/**").hasAuthority(CommonConstant.ROLE_LENDER)
 						
-						.requestMatchers("/request/**").hasAuthority("BORROWER")
+						.requestMatchers("/request/**").hasAuthority(CommonConstant.ROLE_BORROWER)
+						.requestMatchers("/payment/**").hasAuthority(CommonConstant.ROLE_BORROWER)
 						
-						.requestMatchers("/api/request/**").hasAuthority("BORROWER")
+						.requestMatchers("/api/request/**").hasAuthority(CommonConstant.ROLE_BORROWER)
+						.requestMatchers("/api/payment/**").hasAuthority(CommonConstant.ROLE_BORROWER)
 						
 						.requestMatchers("/api/inventory").authenticated()
 						
 						.requestMatchers("/api/**").authenticated()
 						
-						.requestMatchers("/chat/**").hasAnyAuthority("BORROWER", "LENDER")
+						.requestMatchers("/chat/**").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
 						.requestMatchers("/borrow-when-websocket/**").authenticated()
 						.anyRequest().authenticated()
 						
