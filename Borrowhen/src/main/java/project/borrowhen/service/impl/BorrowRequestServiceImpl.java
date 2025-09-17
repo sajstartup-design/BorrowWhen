@@ -442,6 +442,31 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    return outDto;
 	    
 	}
+	
+
+	@Override
+	public BorrowRequestDto getBorrowRequestDetailsForBorrower(BorrowRequestDto inDto) throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+	    
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+	    
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+	    
+	    BorrowRequestObj obj = new BorrowRequestObj();
+        
+        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getId())));
+        obj.setItemName(request.getItemName());
+        obj.setPrice(request.getPrice());
+        obj.setQty(request.getQty());
+        obj.setDateToBorrow(request.getDateToBorrow());
+        obj.setDateToReturn(request.getDateToReturn());
+        obj.setStatus(request.getStatus());	     
+                   
+        outDto.setRequest(obj);    
+	
+	    return outDto;
+	}
 
 	@Override
 	public void itemReturnedBorrowRequest(BorrowRequestDto inDto) throws Exception {
@@ -539,8 +564,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setUserId(borrower.getId());
 
 	    String message = String.format(
-    	    "Please complete the payment for the item '%s'. <a href=\"#\">Click here to continue</a>.",
-    	    request.getItemName()
+    	    "Please complete the payment for the item '%s'. <a href=\"/payment?encryptedId=%s\">Click here to continue</a>.",
+    	    request.getItemName(),
+    	    inDto.getEncryptedId()
     	);
 
 
@@ -606,4 +632,5 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        message
 	    );
 	}
+
 }

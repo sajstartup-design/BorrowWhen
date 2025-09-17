@@ -12,39 +12,39 @@
 </head>
 <body>
   	<div class="content">
-  		<div class="item-information">
+  		<div class="item-information" th:object="${borrowRequestDto}">
   			<div class="field bold">
 	  			<label>ITEM INFORMATION</label>
   			</div>
   			<hr class="soft-gradient">
   			<div class="field">
   				<label>ITEM NAME</label>
-  				<div>POSITION</div>
+  				<div th:text="*{request.itemName}"></div>
   			</div>
   			<hr class="soft-gradient">
   			<div class="field">
   				<label>QUANTITY</label>
-  				<div>POSITION</div>
+  				<div th:text="*{request.qty}"></div>
   			</div>
   			<hr class="soft-gradient">
   			<div class="field">
   				<label>DATE TO BORROW</label>
-  				<div>POSITION</div>
+  				<div th:text="*{request.dateToBorrow}"></div>
   			</div>
   			<hr class="soft-gradient">
   			<div class="field">
-  				<label>DATE TO NUMBER</label>
-  				<div>POSITION</div>
+  				<label>DATE TO RETURN</label>
+  				<div th:text="*{request.dateToReturn}"></div>
   			</div>
   			<hr class="soft-gradient">
   			<div class="field">
   				<label>PRICE</label>
-  				<div>POSITION</div>
+  				<div th:text="*{request.price}"></div>
   			</div>
   			<hr class="soft-gradient">
   			<div class="field">
   				<label>TOTAL AMOUNT</label>
-  				<div>POSITION</div>
+  				<div th:text="*{@calculationUtil.getTotalPrice(request.qty, request.price)}"></div>
   			</div>
   		</div>
   		
@@ -97,7 +97,7 @@
   let clientSecret;
 
   // 1. Fetch PaymentIntent from backend
-  fetch("/api/payment/create-intent?amount=5000")
+  fetch("/api/payment/create-intent?amount=50000")
     .then(res => res.json())
     .then(data => {
       clientSecret = data.clientSecret;
