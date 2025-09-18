@@ -13,6 +13,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import project.borrowhen.common.constant.CommonConstant;
+import project.borrowhen.common.util.CalculationUtil;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.BorrowRequestDao;
@@ -22,6 +23,7 @@ import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.BorrowRequestDto;
+import project.borrowhen.dto.PaymentDto;
 import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
@@ -30,6 +32,7 @@ import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.BorrowRequestService;
 import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.NotificationService;
+import project.borrowhen.service.PaymentService;
 import project.borrowhen.service.UserService;
 
 @Service
@@ -46,6 +49,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	
 	@Autowired
 	private InventoryService inventoryService;
+	
+	@Autowired
+	private PaymentService paymentService;
 	
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
@@ -559,6 +565,13 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    UserEntity borrower = userService.getUser(request.getUserId()); 
 
 	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.PENDING_PAYMENT);
+	    
+	    PaymentDto paymentDto = new PaymentDto();
+	    
+	    paymentDto.setAmount(CalculationUtil.getTotalPrice(request.getQty(), request.getPrice()));
+	    paymentDto.setEmailAddress(borrower.getEmailAddress());
+	    
+	    paymentService.createPaymentIntent(paymentDto);
 	    
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(borrower.getId());

@@ -96,29 +96,6 @@
 
   let clientSecret;
 
-  // 1. Fetch PaymentIntent from backend
-  fetch("/api/payment/create-intent?amount=50000")
-    .then(res => res.json())
-    .then(data => {
-      clientSecret = data.clientSecret;
-
-      // Mount card element
-      cardElement.mount("#card-element");
-
-      // Toggle card input visibility
-      document.querySelectorAll("input[name='method']").forEach(radio => {
-        radio.addEventListener("change", e => {
-          if (e.target.value === "card") {
-            cardDiv.style.display = "block";
-          } else {
-            cardDiv.style.display = "none";
-          }
-        });
-      });
-
-      cardDiv.style.display = "block"; // default visible
-    });
-
   // 2. Payment button click
   payBtn.addEventListener("click", async () => {
     payBtn.disabled = true;
