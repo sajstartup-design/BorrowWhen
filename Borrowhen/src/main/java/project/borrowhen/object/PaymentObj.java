@@ -9,6 +9,10 @@ public class PaymentObj {
 
 	private String encryptedId;
 	
+	private String firstName;
+	
+	private String familyName;
+	
 	private String emailAddress;
 	
 	private String itemName;
@@ -22,4 +26,6 @@ public class PaymentObj {
 	private Timestamp dateCheckout;
 	
 	private String paymentMethod;
+	
+	private String status;
 }

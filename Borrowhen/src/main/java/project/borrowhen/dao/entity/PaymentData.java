@@ -14,6 +14,10 @@ public class PaymentData {
 
 	private int paymentId;
 	
+	private String firstName;
+	
+	private String familyName;
+	
 	private String emailAddress;
 	
 	private String itemName;
@@ -27,4 +31,6 @@ public class PaymentData {
 	private Timestamp dateCheckout;
 	
 	private String paymentMethod;
+	
+	private String status;
 }

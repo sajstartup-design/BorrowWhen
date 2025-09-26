@@ -2,9 +2,58 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>BW | Payment</title>
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/payment/payment-view.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-
+	<div class="container">	
+		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
+		<main>
+			<div class="content-header">PAYMENT</div>
+			<div class="content-body">
+				<div class="table-container">
+					<div class="table-buttons">
+						<div class="btns">
+							<div class="search-container">
+								<span><img th:src="@{/images/search-user.png}" alt="search"></span>
+								
+								<input type="search" placeholder="Search" class="search" />
+							</div>
+						</div>
+						<div class="pagination">
+							<button class="prev-btn"><img th:src="@{/images/left-arrow.png}"/> PREV</button>
+							<input class="input-page" type="text" value="1"/>
+							<button class="next-btn" disable>NEXT <img th:src="@{/images/right-arrow.png}"/></button>
+						</div>
+					</div>
+					<div class="table">
+						<div class="table-header">
+							<div class="table-cell"><img th:src="@{/images/box.png}"> ITEM NAME</div>
+							<div class="table-cell"><img th:src="@{/images/price-tag.png}"> PRICE</div>
+							<div class="table-cell"><img th:src="@{/images/quality.png}"> QTY</div>
+							<div class="table-cell"><img th:src="@{/images/quality.png}"> TOTAL AMOUNT</div>
+							<div class="table-cell"><img th:src="@{/images/in-stock.png}"> STATUS</div>						
+							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> ACTION</div>
+						</div>
+						<div class="table-body " id="table-body">
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<aside th:replace="~{aside/aside :: content}"></aside>
+	</div>
+	<form style="display: none" th:action="@{/lender/inventory/edit}" method="GET" id="editForm">
+		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
+	</form>
+	<script th:inline="javascript">
+		const webDto = /*[[${paymentDto}]]*/'';
+	</script>
+	<script th:src="@{/script/pagination.js}"></script>
+	<script th:src="@{/script/loading.js}"></script>
+	<script th:src="@{/script/payment/payment-api.js}"></script>
 </body>
 </html>

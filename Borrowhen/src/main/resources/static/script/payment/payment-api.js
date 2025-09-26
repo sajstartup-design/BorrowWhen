@@ -61,7 +61,7 @@ async function loadPayments(page = 0, search="") {
 		
 		const params = new URLSearchParams({ page, search });
 						
-		const url = `/api/lender/payment?${params.toString()}`;
+		const url = `/api/payment?${params.toString()}`;
 		
         const response = await fetch(url);
         const data = await response.json();
@@ -81,32 +81,28 @@ async function loadPayments(page = 0, search="") {
 			row.setAttribute('data-id', payment.encryptedId);
 			
 			const status = payment.status?.toLowerCase().replace(' ', '').trim();
-						
+			
 			// Default action cell
 		    let actionCell = "";
 
 		    if (payment.status?.toUpperCase() === "PAYMENT PENDING") {
-		        actionCell = `<span>Awaiting Payment</span>`;
+		        actionCell = `<button>PAY NOW</button>`;
 		    } else if (payment.status?.toUpperCase() === "PAID") {
 		        actionCell = `<button>DOWNLOAD RECEIPT</button>`;
 		    }
 			
             row.innerHTML = `
-			<div class="table-cell">${payment.firstName} ${payment.familyName}</div>
-				<div class="table-cell">${payment.emailAddress}</div>
                 <div class="table-cell">${payment.itemName}</div>
                 <div class="table-cell">₱${payment.price}</div>
                 <div class="table-cell">${payment.qty} pcs</div>
 				<div class="table-cell">₱${payment.totalAmount}</div>
-				<div class="table-cell">${formatCheckoutDate(payment.dateCheckout)}</div>
-				<div class="table-cell">${payment.paymentMethod}</div>
 				<div class="table-cell">
 		            <span class="status ${status}">
 		                <span>${payment.status}</span>
 		            </span>
 		        </div>
                 <div class="table-cell">
-					${actionCell}
+					${actionCell}	
                 </div>
             `;
 			
