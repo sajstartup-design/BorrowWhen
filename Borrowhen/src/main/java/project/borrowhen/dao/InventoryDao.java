@@ -94,18 +94,22 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 			@Param("totalQty") int totalQty, 
 			@Param("updatedDate") Date updatedDate) throws DataAccessException;
     
-    public final String UPDATE_INVENTORY_AVAILABLE_QTY =
-    	    "UPDATE InventoryEntity e " +
-    	    "SET e.availableQty = e.availableQty - :qty, " +
-    	    "    e.updatedDate = :updatedDate " +
-    	    "WHERE e.id = :inventoryId";
-    	    
+    public final String UPDATE_INVENTORY_QTY = 
+    	    "UPDATE inventory " +
+    	    "SET total_qty = total_qty + :deltaQty, " +
+    	    "updated_date = :updatedDate " +
+    	    "WHERE id = :id";
+
 	@Modifying
 	@Transactional
-	@Query(UPDATE_INVENTORY_AVAILABLE_QTY)
-	public void updateInventoryAvailableQty(@Param("inventoryId") int inventoryId,
-	                                        @Param("qty") int qty,
-	                                        @Param("updatedDate") Date updatedDate) throws DataAccessException;
+	@Query(value=UPDATE_INVENTORY_QTY, nativeQuery=true)
+	void updateInventoryQty(
+	    @Param("id") int inventoryId,
+	    @Param("deltaQty") int deltaQty,
+	    @Param("updatedDate") Date updatedDate
+	) throws DataAccessException;
+
+
 
 
 }

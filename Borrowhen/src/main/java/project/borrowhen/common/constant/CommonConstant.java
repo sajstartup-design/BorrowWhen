@@ -61,5 +61,14 @@ public class CommonConstant {
     public static final String NEW_ITEM = "NEW_ITEM";
     
     public static final String GENERAL = "GENERAL";
+    
+    
+    /*
+     * Other
+     */
+    
+    public static final String DECREASE = "DECREASE";
+    
+    public static final String INCREASE = "INCREASE";
 
 }

@@ -96,7 +96,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	
 		borrowRequestDao.save(request);
 		
-		inventoryService.updateInventoryAvailableQty(id, inDto.getQty());
+		inventoryService.updateInventoryAvailableQty(id, inDto.getQty(), CommonConstant.DECREASE);
 		
 		NotificationEntity notification = new NotificationEntity();
 		notification.setUserId(inventory.getUserId());

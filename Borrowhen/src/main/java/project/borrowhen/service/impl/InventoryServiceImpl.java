@@ -236,10 +236,16 @@ public class InventoryServiceImpl implements InventoryService{
 	}
 
 	@Override
-	public void updateInventoryAvailableQty(int id, int qty) {
+	public void updateInventoryAvailableQty(int id, int qty, String status) {
 		
 		Date dateNow = Date.valueOf(LocalDate.now());
 		
-		inventoryDao.updateInventoryAvailableQty(id, qty, dateNow);
+		if(CommonConstant.DECREASE.equals(status)) {
+			inventoryDao.updateInventoryQty(id, -qty, dateNow);
+		}else if(CommonConstant.INCREASE.equals(status)){
+			inventoryDao.updateInventoryQty(id, +qty, dateNow);
+		}else {
+			inventoryDao.updateInventoryQty(id, 0, dateNow);
+		}
 	}
 }
