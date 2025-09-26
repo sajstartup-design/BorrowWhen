@@ -39,4 +39,8 @@ public class InventoryData {
 	private Timestamp createdDate;
 	
 	private Timestamp updatedDate;
+	
+	private Boolean isEditable;
+	
+	private Boolean isDeletable;
 }

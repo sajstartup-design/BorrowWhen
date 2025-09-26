@@ -26,7 +26,15 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    "   e.totalQty, " +
 		    "   e.availableQty, " +
 		    "   e.createdDate, " +
-		    "   e.updatedDate" +
+		    "   e.updatedDate, " +
+		    "   CASE WHEN (EXISTS (" +
+		    "       SELECT 1 FROM BorrowRequestEntity br " +
+		    "       WHERE br.inventoryId = e.id AND br.status <> 'PAID'" +
+		    "   )) THEN false ELSE true END, " + // isEditable
+		    "   CASE WHEN (EXISTS (" +
+		    "       SELECT 1 FROM BorrowRequestEntity br " +
+		    "       WHERE br.inventoryId = e.id AND br.status <> 'PAID'" +
+		    "   )) THEN false ELSE true END " +  // isDeletable
 		    ") " +
 		    "FROM InventoryEntity e " +
 		    "LEFT JOIN UserEntity u ON u.id = e.userId " +
@@ -40,9 +48,7 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    "       CAST(e.totalQty AS string) LIKE CONCAT('%', :search, '%')" +
 		    "   )) " +
 		    "   OR (:search IS NULL OR :search = '') " +
-		    ") ";
-
-
+		    ")";
 
 
 	@Query(value=GET_ALL_INVENTORY)

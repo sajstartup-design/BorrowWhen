@@ -21,4 +21,8 @@ public class InventoryObj {
 	private String createdDate;
 	
 	private String updatedDate;
+	
+	private Boolean isDeletable;
+	
+	private Boolean isEditable;
 }

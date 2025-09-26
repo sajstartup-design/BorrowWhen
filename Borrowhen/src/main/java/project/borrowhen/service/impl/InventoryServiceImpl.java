@@ -124,6 +124,8 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(inventory.getCreatedDate()));
 			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(inventory.getUpdatedDate()));		
 			obj.setAvailableQty(inventory.getAvailableQty());
+			obj.setIsEditable(inventory.getIsEditable());
+			obj.setIsDeletable(inventory.getIsDeletable());
 			
 			inventories.add(obj);
 			
@@ -165,6 +167,8 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setPrice(inventory.getPrice());
 			obj.setTotalQty(inventory.getTotalQty());
 			obj.setAvailableQty(inventory.getAvailableQty());
+			obj.setIsEditable(inventory.getIsEditable());
+			obj.setIsDeletable(inventory.getIsDeletable());
 	
 			inventories.add(obj);
 			

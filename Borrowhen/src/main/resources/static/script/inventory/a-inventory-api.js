@@ -48,6 +48,8 @@ async function loadInventories(page = 0, search = "") {
         const response = await fetch(url);
         const data = await response.json();
 		
+		
+		console.log(data);
         updatePagination(data.pagination);
 
         const tableBody = document.getElementById("table-body");
@@ -69,9 +71,17 @@ async function loadInventories(page = 0, search = "") {
                 <div class="table-cell">${inventory.createdDate}</div>
                 <div class="table-cell">${inventory.updatedDate}</div>
                 <div class="table-cell">
-					<button class="edit-btn darker" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
-                    <button class="darker"><img src="/images/delete.png"></button>
-                </div>
+		            ${
+		                inventory.isEditable
+		                    ? `<button class="edit-btn darker" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>`
+		                    : `<button class="edit-btn darker disabled" disabled title="Inventory has pending requests"><img src="/images/edit.png"></button>`
+		            }
+		            ${
+		                inventory.isDeletable
+		                    ? `<button class="delete-btn darker" data-id="${inventory.encryptedId}" type="submit"><img src="/images/delete.png"></button>`
+		                    : `<button class="delete-btn darker disabled" disabled title="Inventory has pending requests"><img src="/images/delete.png"></button>`
+		            }
+		        </div>
             `;
 			
 			row.querySelector('.edit-btn').addEventListener('click', function(){
