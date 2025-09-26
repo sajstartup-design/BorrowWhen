@@ -499,8 +499,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
     	    "The item '%s' has been returned. Please wait while the lender processes your payment. You will be notified once the payment has been issued.",
     	    request.getItemName()
     	);
-
-
+	    
+	    inventoryService.updateInventoryAvailableQty(request.getInventoryId(), request.getQty(), CommonConstant.INCREASE);
+	    
 	    notification.setMessage(message);
 	    notification.setIsRead(false);
 	    notification.setType(CommonConstant.REQUEST_COMPLETED);
