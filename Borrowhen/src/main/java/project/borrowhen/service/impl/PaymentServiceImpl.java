@@ -158,7 +158,9 @@ public class PaymentServiceImpl implements PaymentService{
 	    
 	    FilterAndSearchObj filter = inDto.getFilter();
 	    
-	    Page<PaymentData> allPayments = paymentDao.getAllPaymentForLender(pageable, user.getId());
+	    System.out.println(filter.getSearch());
+	    
+	    Page<PaymentData> allPayments = paymentDao.getAllPaymentForLender(pageable, user.getId(), filter.getSearch());
 	    
 	    List<PaymentObj> payments = new ArrayList<>();
 	    

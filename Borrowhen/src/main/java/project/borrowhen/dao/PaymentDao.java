@@ -35,21 +35,33 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
     
     public static final String GET_ALL_PAYMENT_FOR_LENDER =
     	    "SELECT new project.borrowhen.dao.entity.PaymentData(" +
-    	    "p.id ," +
+    	    "p.id, " +
     	    "p.emailAddress, " +
     	    "br.itemName, " +
     	    "br.price, " +
     	    "br.qty, " +
-    	    "(br.price * br.qty), " +   
+    	    "(br.price * br.qty), " +
     	    "br.updatedDate, " +
-    	    "p.paymentMethod) " +      
+    	    "p.paymentMethod) " +
     	    "FROM BorrowRequestEntity br " +
     	    "INNER JOIN PaymentEntity p ON p.borrowRequestId = br.id " +
     	    "LEFT JOIN InventoryEntity i ON i.id = br.inventoryId " +
-    	    "WHERE br.status = 'PAID' AND i.userId = :userId ";
-    
-    @Query(value=GET_ALL_PAYMENT_FOR_LENDER)
-	public Page<PaymentData> getAllPaymentForLender(Pageable pageable,
-			@Param("userId") int userId) throws DataAccessException; 
-    
+    	    "WHERE br.status = 'PAID' " +
+    	    "AND i.userId = :userId " +
+    	    "AND ( :search IS NULL OR :search = '' OR " +
+    	    "      LOWER(p.emailAddress) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+    	    "      LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+    	    "      CAST(br.price AS string) LIKE CONCAT('%', :search, '%') OR " +
+    	    "      CAST(br.qty AS string) LIKE CONCAT('%', :search, '%') OR " +
+    	    "      CAST((br.price * br.qty) AS string) LIKE CONCAT('%', :search, '%') OR " +
+    	    "      CAST(br.updatedDate AS string) LIKE CONCAT('%', :search, '%') OR " +
+    	    "      LOWER(p.paymentMethod) LIKE LOWER(CONCAT('%', :search, '%')) " +
+    	    ")";
+
+
+    	@Query(value = GET_ALL_PAYMENT_FOR_LENDER)
+    	Page<PaymentData> getAllPaymentForLender(Pageable pageable,
+    	                                         @Param("userId") int userId,
+    	                                         @Param("search") String search) throws DataAccessException;
+  
 }

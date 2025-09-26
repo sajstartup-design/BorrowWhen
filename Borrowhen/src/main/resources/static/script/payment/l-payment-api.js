@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const inputPage = document.querySelector('.input-page');
+	const search = document.querySelector('.search');
 
     // Load first page
     loadPayments(0);
@@ -34,13 +35,35 @@ document.addEventListener("DOMContentLoaded", () => {
             loadPayments(newPage - 1);
         });
     }
+	
+	if (search) {
+	    let typingTimer; 
+	    const delay = 500; 
+
+	    search.addEventListener('input', function () {
+	        clearTimeout(typingTimer); 
+
+	        const currentPage = 0;
+	        const searchValue = this.value;
+
+	        typingTimer = setTimeout(() => {
+				createLoadingScreenBody();
+	            loadPayments(currentPage, searchValue);
+	        }, delay);
+	    });
+	}
 
 });
 
 
-async function loadPayments(page = 0) {
+async function loadPayments(page = 0, search="") {
     try {
-        const response = await fetch(`/api/lender/payment?page=${page}`);
+		
+		const params = new URLSearchParams({ page, search });
+						
+		const url = `/api/lender/payment?${params.toString()}`;
+		
+        const response = await fetch(url);
         const data = await response.json();
 		
 		console.log(data);
@@ -62,7 +85,7 @@ async function loadPayments(page = 0) {
                 <div class="table-cell">${payment.itemName}</div>
                 <div class="table-cell">₱${payment.price}</div>
                 <div class="table-cell">${payment.qty} pcs</div>
-				<div class="table-cell">${payment.totalAmount}</div>
+				<div class="table-cell">₱${payment.totalAmount}</div>
 				<div class="table-cell">${formatCheckoutDate(payment.dateCheckout)}</div>
 				<div class="table-cell">${payment.paymentMethod}</div>
                 <div class="table-cell">
