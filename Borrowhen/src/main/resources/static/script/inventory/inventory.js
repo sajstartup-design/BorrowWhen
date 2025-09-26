@@ -90,7 +90,7 @@ async function loadInventories(page = 0,
 										₱${inventory.price}
 									</span>
 									<span class="item-quantity">
-										Quantity Left: ${inventory.totalQty}
+										Quantity Left: ${inventory.availableQty}
 									</span>
 									<hr class="soft-gradient">
 									<span class="lender-name">Lender: ${inventory.owner}</span>
@@ -103,7 +103,7 @@ async function loadInventories(page = 0,
 									  data-id="${inventory.encryptedId}"
 									  data-name="${inventory.itemName}"
 									  data-price="${inventory.price}"
-									  data-qty="${inventory.totalQty}">
+									  data-qty="${inventory.availableQty}">
 									  BORROW
 									</button>
 								</div>
