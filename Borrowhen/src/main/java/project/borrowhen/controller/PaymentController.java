@@ -93,6 +93,12 @@ public class PaymentController {
 		}
 	}
 	
+	@GetMapping("/payment/view")
+	public String showPayment() {
+		
+		return "payment/payment-view";
+	}
+	
 	@GetMapping("/payment/testing")
 	public String showPaymentTesting(Model model) {
 		

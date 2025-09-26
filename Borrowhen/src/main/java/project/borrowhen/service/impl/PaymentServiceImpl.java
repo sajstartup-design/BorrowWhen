@@ -215,4 +215,53 @@ public class PaymentServiceImpl implements PaymentService{
 			
 		return outDto;
 	}
+
+	@Override
+	public PaymentDto getAllPaymentForBorrower(PaymentDto inDto) throws Exception {
+	
+		PaymentDto outDto = new PaymentDto();
+		
+		Pageable pageable = PageRequest.of(
+	        inDto.getPagination().getPage(),
+	        Integer.valueOf(getMaxPaymentDisplay())
+	    );
+	    
+	    UserEntity user = userService.getLoggedInUser();
+	    
+	    FilterAndSearchObj filter = inDto.getFilter();
+	    
+	    System.out.println(filter.getSearch());
+	    
+	    Page<PaymentData> allPayments = paymentDao.getAllPaymentForBorrower(pageable, user.getId(), filter.getSearch());
+	    
+	    List<PaymentObj> payments = new ArrayList<>();
+	    
+		for(PaymentData payment : allPayments) {
+			
+			PaymentObj obj = new PaymentObj();
+			
+			obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(payment.getPaymentId())));
+			obj.setItemName(payment.getItemName());
+			obj.setPrice(payment.getPrice());	
+			obj.setQty(payment.getQty());
+			obj.setTotalAmount(payment.getTotalAmount());
+			obj.setStatus(payment.getStatus());
+			
+			payments.add(obj);
+	
+		}
+		
+		PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allPayments.getNumber());
+		pagination.setTotalPages(allPayments.getTotalPages());
+		pagination.setTotalElements(allPayments.getTotalElements());
+		pagination.setHasNext(allPayments.hasNext());
+		pagination.setHasPrevious(allPayments.hasPrevious());
+		
+		outDto.setPayments(payments);
+		outDto.setPagination(pagination);
+		
+	    return outDto;
+	}
 }

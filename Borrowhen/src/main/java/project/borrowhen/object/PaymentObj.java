@@ -22,4 +22,6 @@ public class PaymentObj {
 	private Timestamp dateCheckout;
 	
 	private String paymentMethod;
+	
+	private String status;
 }
