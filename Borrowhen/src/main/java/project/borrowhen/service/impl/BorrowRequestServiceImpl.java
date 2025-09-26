@@ -623,6 +623,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    paymentInDto.setBorrowRequestId(id);
 	    paymentInDto.setStatus(CommonConstant.PAID);
+	    paymentInDto.setEmailAddress(borrower.getEmailAddress());
 	    
 	    paymentService.updatePaymentStatus(paymentInDto);
 	    

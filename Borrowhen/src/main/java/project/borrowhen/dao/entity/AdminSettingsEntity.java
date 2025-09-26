@@ -13,17 +13,13 @@ public class AdminSettingsEntity {
 	@Id
 	private int id;
 	
-	private int userPerPage;
+	private int userPerPage = 10;
+    private int inventoryPerPage = 10;
+    private int requestPerPage = 10;
+    private int paymentPerPage = 10;
 
-	private int inventoryPerPage;
-	
-	private int requestPerPage;
-	
-	private boolean showInventoryPage;
-	
-	private boolean showNotificationPage;
-	
-	private boolean showHistoryPage;
-	
-	private boolean showPaymentPage;
+    private boolean showInventoryPage = true;
+    private boolean showNotificationPage = true;
+    private boolean showHistoryPage = true;
+    private boolean showPaymentPage = true;
 }

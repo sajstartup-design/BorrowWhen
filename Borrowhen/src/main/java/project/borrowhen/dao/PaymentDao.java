@@ -28,7 +28,7 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
     @Transactional
     @Modifying
     @Query(UPDATE_PAYMENT_STATUS)
-    public int updatePaymentStatusByBorrowRequestId(@Param("id") int id, 
+    public int updatePaymentStatusByBorrowRequestId(@Param("borrowRequestId") int borrowRequestId, 
     		@Param("status") String status, 
     		@Param("paymentMethod") String paymentMethod,
     		@Param("emailAddress") String emailAddress) throws DataAccessException;
@@ -45,7 +45,7 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
     	    "p.paymentMethod) " +      
     	    "FROM BorrowRequestEntity br " +
     	    "INNER JOIN PaymentEntity p ON p.borrowRequestId = br.id " +
-    	    "LEFT JOIN IventoryEntity i ON i.id = br.inventoryId " +
+    	    "LEFT JOIN InventoryEntity i ON i.id = br.inventoryId " +
     	    "WHERE br.status = 'PAID' AND i.userId = :userId ";
     
     @Query(value=GET_ALL_PAYMENT_FOR_LENDER)

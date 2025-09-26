@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>BW | Payment</title>
 <link rel="stylesheet" th:href="@{/css/common.css}" />
-<link rel="stylesheet" th:href="@{/css/inventory/payment-view.css}" />
+<link rel="stylesheet" th:href="@{/css/payment/payment-view.css}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -30,12 +30,13 @@
 					</div>
 					<div class="table">
 						<div class="table-header">
+							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> EMAIL</div>
 							<div class="table-cell"><img th:src="@{/images/box.png}"> ITEM NAME</div>
 							<div class="table-cell"><img th:src="@{/images/price-tag.png}"> PRICE</div>
 							<div class="table-cell"><img th:src="@{/images/quality.png}"> QTY</div>
+							<div class="table-cell"><img th:src="@{/images/quality.png}"> TOTAL AMOUNT</div>
 							<div class="table-cell"><img th:src="@{/images/in-stock.png}"> DATE CHECKOUT</div>
-							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> PAYMENT METHOD</div>
-							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> EMAIL</div>
+							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> PAYMENT METHOD</div>							
 							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> ACTION</div>
 						</div>
 						<div class="table-body " id="table-body">
@@ -51,10 +52,10 @@
 		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
 	</form>
 	<script th:inline="javascript">
-		const webDto = /*[[${inventoryDto}]]*/'';
+		const webDto = /*[[${paymentDto}]]*/'';
 	</script>
 	<script th:src="@{/script/pagination.js}"></script>
 	<script th:src="@{/script/loading.js}"></script>
-	<script th:src="@{/script/inventory/l-inventory-api.js}"></script>
+	<script th:src="@{/script/payment/l-payment-api.js}"></script>
 </body>
 </html>

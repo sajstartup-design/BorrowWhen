@@ -22,6 +22,7 @@ public class AdminSettingsService {
             settings.setUserPerPage(10);
             settings.setInventoryPerPage(10);
             settings.setRequestPerPage(10);
+            settings.setPaymentPerPage(10);
             settings.setShowInventoryPage(true);
             settings.setShowNotificationPage(true);
             settings.setShowHistoryPage(true);
