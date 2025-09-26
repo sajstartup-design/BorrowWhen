@@ -23,4 +23,6 @@ public interface InventoryService {
 	 * To be used from another services
 	 */
 	public InventoryEntity getInventory(int id);
+	
+	public void updateInventoryAvailableQty(int id, int qty);
 }
