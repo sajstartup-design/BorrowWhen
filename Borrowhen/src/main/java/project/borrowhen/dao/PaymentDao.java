@@ -1,12 +1,15 @@
 package project.borrowhen.dao;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import jakarta.transaction.Transactional;
+import project.borrowhen.dao.entity.PaymentData;
 import project.borrowhen.dao.entity.PaymentEntity;
 
 public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
@@ -19,11 +22,34 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 	
     public final String UPDATE_PAYMENT_STATUS =
         "UPDATE PaymentEntity p " +
-        "SET p.status = :status, p.updatedDate = CURRENT_TIMESTAMP " +
+        "SET p.status = :status, p.paymentMethod = :paymentMethod , p.updatedDate = CURRENT_TIMESTAMP, p.emailAddress = :emailAddress  " +
         "WHERE p.borrowRequestId = :borrowRequestId";
 
     @Transactional
     @Modifying
     @Query(UPDATE_PAYMENT_STATUS)
-    public int updatePaymentStatusByBorrowRequestId(@Param("id") int id, @Param("status") String status) throws DataAccessException;
+    public int updatePaymentStatusByBorrowRequestId(@Param("id") int id, 
+    		@Param("status") String status, 
+    		@Param("paymentMethod") String paymentMethod,
+    		@Param("emailAddress") String emailAddress) throws DataAccessException;
+    
+    public static final String GET_ALL_PAYMENT_FOR_LENDER =
+    	    "SELECT new project.borrowhen.dao.entity.PaymentData(" +
+    	    "p.id ," +
+    	    "p.emailAddress, " +
+    	    "br.itemName, " +
+    	    "br.price, " +
+    	    "br.qty, " +
+    	    "(br.price * br.qty), " +   
+    	    "br.updatedDate, " +
+    	    "p.paymentMethod) " +      
+    	    "FROM BorrowRequestEntity br " +
+    	    "INNER JOIN PaymentEntity p ON p.borrowRequestId = br.id " +
+    	    "LEFT JOIN IventoryEntity i ON i.id = br.inventoryId " +
+    	    "WHERE br.status = 'PAID' AND i.userId = :userId ";
+    
+    @Query(value=GET_ALL_PAYMENT_FOR_LENDER)
+	public Page<PaymentData> getAllPaymentForLender(Pageable pageable,
+			@Param("userId") int userId) throws DataAccessException; 
+    
 }
