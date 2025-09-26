@@ -166,17 +166,6 @@
   color: orange;
 }
 
-.borrow-btn {
-    background: #4CAF50;
-    color: #fff;
-    transition: background 0.3s, color 0.3s; /* smooth effect */
-}
-
-.borrow-btn:hover {
-    background: #45a049; /* slightly darker green */
-    color: #ffffff;      /* keeps text white */
-}
-
 .filter-title{
 	font-size: 0.8rem;
 	font-weight: 500;

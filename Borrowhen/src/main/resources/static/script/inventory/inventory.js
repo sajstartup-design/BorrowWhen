@@ -81,8 +81,32 @@ async function loadInventories(page = 0,
 				const item = document.createElement('div');
 				item.classList.add("item-container");
 				
+				const isAvailable = inventory.availableQty > 0;
+        		const ribbonColor = isAvailable ? "green" : "red";
+        		const ribbonText = isAvailable ? "IN STOCK" : "NO STOCK";
+        		
+        		let borrowBtn = "";
+		        if (isAvailable) {
+		            borrowBtn = `
+		                <button 
+		                  class="borrow-btn darker" 
+		                  data-toggle="modal" 
+		                  data-target="#borrowModal"
+		                  data-id="${inventory.encryptedId}"
+		                  data-name="${inventory.itemName}"
+		                  data-price="${inventory.price}"
+		                  data-qty="${inventory.availableQty}">
+		                  BORROW
+		                </button>`;
+		        } else {
+		            borrowBtn = `
+		                <button class="borrow-btn" disabled>
+		                  BORROW
+		                </button>`;
+		        }
+				
 				item.innerHTML = `<div class="item-details">
-									<div class="ribbon green"><span>AVAILABLE</span></div>
+									<div class="ribbon ${ribbonColor}"><span>${ribbonText}</span></div>
 									<span class="item-name">
 									    ${inventory.itemName}
 									</span>
@@ -96,16 +120,7 @@ async function loadInventories(page = 0,
 									<span class="lender-name">Lender: ${inventory.owner}</span>
 								</div>
 								<div class="item-btns">
-									<button 
-									  class="borrow-btn" 
-									  data-toggle="modal" 
-									  data-target="#borrowModal"
-									  data-id="${inventory.encryptedId}"
-									  data-name="${inventory.itemName}"
-									  data-price="${inventory.price}"
-									  data-qty="${inventory.availableQty}">
-									  BORROW
-									</button>
+									${borrowBtn}
 								</div>
 								<div class="item-ratings">
 									<span class="fa fa-star checked"></span>
