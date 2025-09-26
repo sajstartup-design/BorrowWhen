@@ -192,8 +192,25 @@ public class PaymentServiceImpl implements PaymentService{
 		
 	    return outDto;
 	}
-	
-	
 
+	@Override
+	public PaymentDto hasPaid(PaymentDto inDto) throws Exception {
+		
+		PaymentDto outDto = new PaymentDto();
+		
+		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
 
+	    PaymentEntity payment = paymentDao.getPaymentByBorrowRequestId(id);
+	    if (payment == null) {
+	        throw new RuntimeException("No payment found for borrowRequestId: " + inDto.getBorrowRequestId());
+	    }
+	    
+	    outDto.setPaid(false);
+	    
+	    if(CommonConstant.PAID.equals(payment.getStatus())) {
+	    	outDto.setPaid(true);
+	    }
+			
+		return outDto;
+	}
 }

@@ -14,4 +14,6 @@ public interface PaymentService {
 	public void updatePaymentStatus(PaymentDto inDto) throws Exception;
 	
 	public PaymentDto getAllPaymentForLender(PaymentDto inDto) throws Exception;
+	
+	public PaymentDto hasPaid(PaymentDto inDto) throws Exception;
 }

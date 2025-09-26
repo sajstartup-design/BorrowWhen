@@ -29,4 +29,6 @@ public class PaymentDto {
 	private PaginationObj pagination;
 	
 	private FilterAndSearchObj filter;
+	
+	private boolean paid;
 }

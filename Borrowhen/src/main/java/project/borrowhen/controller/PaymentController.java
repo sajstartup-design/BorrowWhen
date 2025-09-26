@@ -32,6 +32,16 @@ public class PaymentController {
 		
 		try {
 			
+			PaymentDto paymentInDto = new PaymentDto();
+			
+			paymentInDto.setEncryptedId(encryptedId);
+			
+			PaymentDto outDto = paymentService.hasPaid(paymentInDto);
+			
+			if(outDto.isPaid()) {
+				return "redirect:/dashboard";
+			}
+			
 			model.addAttribute("publicKey", StripeUtil.STRIPE_API_PUBLISHABLE_KEY);
 			
 			BorrowRequestDto borrowRequestInDto = new BorrowRequestDto();
@@ -41,11 +51,7 @@ public class PaymentController {
 			BorrowRequestDto borrowRequestOutDto = borrowRequestService.getBorrowRequestDetailsForBorrower(borrowRequestInDto);
 			
 			borrowRequestOutDto.setEncryptedId(encryptedId);
-			
-			PaymentDto paymentInDto = new PaymentDto();
-			
-			paymentInDto.setEncryptedId(encryptedId);
-			
+					
 			PaymentDto paymentOutDto = paymentService.getPaymentIntent(paymentInDto);
 			
 			model.addAttribute("borrowRequestDto", borrowRequestOutDto);
