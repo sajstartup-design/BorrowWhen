@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.borrowhen.dto.PaymentDto;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.PaymentService;
 
@@ -18,14 +19,19 @@ public class L_PaymentRestController {
     private PaymentService paymentService;
 
     @GetMapping("payment")
-    public PaymentDto getPaymentsForLender(@RequestParam(defaultValue = "0") int page) {
+    public PaymentDto getPaymentsForLender(@RequestParam(defaultValue = "0") int page,
+    		@RequestParam(required = false) String search) {
         try {
             PaymentDto inDto = new PaymentDto();
 
             PaginationObj pagination = new PaginationObj();
             pagination.setPage(page);
 
+            FilterAndSearchObj filter = new FilterAndSearchObj();
+            filter.setSearch(search);
+
             inDto.setPagination(pagination);
+            inDto.setFilter(filter);
 
             return paymentService.getAllPaymentForLender(inDto);
             
