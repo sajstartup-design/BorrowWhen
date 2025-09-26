@@ -661,4 +661,51 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    );
 	}
 
+	@Override
+	public void cancelBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		
+	    Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+	    
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+
+	    UserEntity borrower = userService.getUser(request.getUserId()); 
+	    
+	    InventoryEntity inventory = inventoryService.getInventory(request.getInventoryId());
+	    
+	    UserEntity lender = userService.getUser(inventory.getUserId());
+
+	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.CANCELLED);
+	    
+	    inventoryService.updateInventoryAvailableQty(request.getInventoryId(), request.getQty(), CommonConstant.INCREASE);
+
+	    NotificationEntity notification = new NotificationEntity();
+	    notification.setUserId(lender.getId());
+	    
+	    String message = String.format(
+	            "The borrower '%s %s' has cancelled their request for your item '%s' scheduled from %s to %s.",
+	    	    borrower.getFirstName(),
+	    	    borrower.getFamilyName(),
+	            request.getItemName(),
+	            request.getDateToBorrow(),
+	            request.getDateToReturn()
+	    );
+	    
+	    notification.setMessage(message);
+	    notification.setIsRead(false);
+	    notification.setType(CommonConstant.REQUEST_CANCELLED);
+	    notification.setCreatedDate(dateNow);
+	    notification.setUpdatedDate(dateNow);
+	    notification.setIsDeleted(false);
+
+	    notificationService.saveNotification(notification);
+
+	    messagingTemplate.convertAndSendToUser(
+	        lender.getUserId().toString(),
+	        "/queue/lender/notifications",
+	        message
+	    );
+	}
+
 }

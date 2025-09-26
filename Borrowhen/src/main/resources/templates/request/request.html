@@ -78,6 +78,52 @@
 		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
 	</form>
 	
+	<div class="modal" id="cancelModal">
+	    <div class="modal-content">
+	        <div class="modal-header">
+	            CANCEL REQUEST
+	        </div>
+	        <div class="modal-body">
+	            <form id="cancelForm" th:action="@{/request/cancel}" method="POST">
+	                <input type="hidden" name="encryptedId" value="" id="encryptedId"/>
+                	<p>Are you sure you want to cancel this borrow request?</p>
+	                <hr class="soft-gradient">
+	                <div class="field">
+					  <label>Item Name</label>
+					  <span class="item-name">Hammer</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+					  <label>Price</label>
+					  <span class="item-price">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Borrow</label>
+						<span class="date-to-borrow">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Date to Return</label>
+						<span class="date-to-return">P100</span>
+					</div>
+					<hr class="soft-gradient">
+					<div class="field">
+						<label>Number to Borrow</label>
+						<span class="number-to-borrow">P100</span>
+					</div>
+	            </form>    
+	        </div>
+	        <div class="modal-footer">
+	            <p>Once confirmed, this action cannot be undone.</p>
+	            <div>
+	                <button type="button" class="cancel" name="cancel">CANCEL</button>
+	                <button type="submit" class="cancel-btn" form="cancelForm">CONFIRM</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
 	<div class="modal" id="confirmModal">
 	    <div class="modal-content">
 	        <div class="modal-header">

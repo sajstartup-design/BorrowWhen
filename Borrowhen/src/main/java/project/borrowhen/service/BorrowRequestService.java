@@ -21,6 +21,8 @@ public interface BorrowRequestService {
 	
 	public void approveBorrowRequest(BorrowRequestDto inDto) throws Exception;
 	
+	public void cancelBorrowRequest(BorrowRequestDto inDto) throws Exception;
+	
 	public void rejectBorrowRequest(BorrowRequestDto inDto) throws Exception;
 	
 	public void itemReceivedBorrowRequest(BorrowRequestDto inDto) throws Exception;

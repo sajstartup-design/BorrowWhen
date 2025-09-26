@@ -16,6 +16,8 @@ public class CommonConstant {
 	
 	public static final String PENDING = "PENDING";
 	
+	public static final String CANCELLED = "CANCELLED";
+	
 	public static final String APPROVED = "APPROVED";
 	
 	public static final String PICK_UP_READY = "PICK-UP READY";
@@ -43,6 +45,8 @@ public class CommonConstant {
 	 * For Notification Type
 	 */
 	public static final String REQUEST_PENDING = "REQUEST_PENDING";
+	
+	public static final String REQUEST_CANCELLED = "REQUEST_CANCELLED";
 	
     public static final String REQUEST_APPROVED = "REQUEST_APPROVED";
     
