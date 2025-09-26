@@ -238,6 +238,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    // Update status → APPROVED
 	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.REJECTED);
+	    
+	    inventoryService.updateInventoryAvailableQty(request.getInventoryId(), request.getQty(), CommonConstant.INCREASE);
 
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(request.getUserId());
