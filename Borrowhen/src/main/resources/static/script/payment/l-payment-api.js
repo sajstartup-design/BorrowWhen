@@ -88,7 +88,7 @@ async function loadPayments(page = 0, search="") {
 		    if (payment.status?.toUpperCase() === "PAYMENT PENDING") {
 		        actionCell = `<span>Awaiting Payment</span>`;
 		    } else if (payment.status?.toUpperCase() === "PAID") {
-		        actionCell = `<button>DOWNLOAD RECEIPT</button>`;
+		        actionCell = `<button class="darker">DOWNLOAD RECEIPT</button>`;
 		    }
 			
             row.innerHTML = `

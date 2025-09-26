@@ -89,9 +89,21 @@ button,
     color: #0a3d62;
 }
 
+button.darker,
+.button.darker{
+	background: #6fb7e9;
+	color: #fff !important;
+}
+
 button:hover,
 .button:hover{
 	background: rgba(180, 220, 245, 1); /* darker shade */
+    box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.15);
+}
+
+button.darker:hover,
+.button.darker:hover{
+	background: #bae3fc; /* darker shade */
     box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.15);
 }
 
@@ -103,7 +115,7 @@ button img,
 
 button:disabled,
 .button:disabled {
-	background: rgba(160, 200, 230, 1); /* darker shade */
+	background: #b0b0b0; /* darker shade */
 	box-shadow: none;
 	cursor: not-allowed;
 	opacity: 0.9; /* slightly dimmed */

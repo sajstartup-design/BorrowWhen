@@ -16,7 +16,13 @@ public class InventoryObj {
 
 	private Integer totalQty;
 	
+	private Integer availableQty;
+	
 	private String createdDate;
 	
 	private String updatedDate;
+	
+	private Boolean isDeletable;
+	
+	private Boolean isEditable;
 }

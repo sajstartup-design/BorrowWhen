@@ -97,11 +97,11 @@ async function loadUsers(page = 0,
                 <div class="table-cell">${user.createdDate}</div>
                 <div class="table-cell">${user.updatedDate}</div>
                 <div class="table-cell">
-					<button class="edit-btn" data-id="${user.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
+					<button class="edit-btn darker" data-id="${user.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
 					${
 		                user.isDeletable
-		                    ? `<button class="delete-btn" data-id="${user.encryptedId}" type="submit"><img src="/images/delete.png"></button>`
-		                    : `<button class="delete-btn disabled" disabled title="User has pending requests"><img src="/images/delete.png"></button>`
+		                    ? `<button class="delete-btn darker" data-id="${user.encryptedId}" type="submit"><img src="/images/delete.png"></button>`
+		                    : `<button class="delete-btn darker disabled" disabled title="User has pending requests"><img src="/images/delete.png"></button>`
 		            }
                 </div>
             `;

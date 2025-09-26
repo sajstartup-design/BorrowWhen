@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const buttons = {
     approve: (request) => `
         <button 
-          class="approve-btn" 
+          class="approve-btn darker" 
           data-toggle="modal" 
           data-target="#approveModal"
           data-id="${request.encryptedId}"
@@ -77,7 +77,7 @@ const buttons = {
     `,
     reject: (request) => `
         <button 
-          class="reject-btn" 
+          class="reject-btn darker" 
           data-toggle="modal" 
           data-target="#rejectModal"
           data-id="${request.encryptedId}"
@@ -92,7 +92,7 @@ const buttons = {
     `,
     returnBtn: (request) => `
         <button 
-          class="confim-btn" 
+          class="confim-btn darker" 
           data-toggle="modal" 
           data-target="#confirmModal"
           data-id="${request.encryptedId}"
@@ -107,7 +107,7 @@ const buttons = {
     `,
 	payBtn: (request) => `
 	        <button 
-	          class="confim-btn" 
+	          class="confim-btn darker" 
 	          data-toggle="modal" 
 	          data-target="#issuePaymentModal"
 	          data-id="${request.encryptedId}"
@@ -122,7 +122,7 @@ const buttons = {
 	    `,
 	pickUpBtn: (request) => 		`
 		        <button 
-		          class="pick-up-btn" 
+		          class="pick-up-btn darker" 
 		          data-toggle="modal" 
 		          data-target="#pickUpModal"
 		          data-id="${request.encryptedId}"
@@ -135,7 +135,7 @@ const buttons = {
 		          <img src="/images/location.png">
 		        </button>
 		    `,
-    fake: (icon) => `<button class="fake-btn" disabled><img src="/images/${icon}.png"></button>`
+    fake: (icon) => `<button class="fake-btn darker" disabled><img src="/images/${icon}.png"></button>`
 };
 
 

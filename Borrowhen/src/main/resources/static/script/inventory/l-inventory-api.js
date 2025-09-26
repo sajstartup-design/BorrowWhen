@@ -49,6 +49,8 @@ async function loadInventories(page = 0) {
 		tableBody.innerHTML = '';
 
         const fragment = document.createDocumentFragment();
+        
+        console.log(data);
 
         data.inventories.forEach(inventory => {
             const row = document.createElement("div");
@@ -60,10 +62,10 @@ async function loadInventories(page = 0) {
                 <div class="table-cell">${inventory.itemName}</div>
                 <div class="table-cell">₱${inventory.price}</div>
                 <div class="table-cell">${inventory.totalQty}</div>
-				<div class="table-cell">${inventory.totalQty}</div>
+				<div class="table-cell">${inventory.availableQty}</div>
                 <div class="table-cell">
-					<button class="edit-btn" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
-                    <button><img src="/images/delete.png"></button>
+					<button class="edit-btn darker" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
+                    <button class="darker"><img src="/images/delete.png"></button>
                 </div>
             `;
 			

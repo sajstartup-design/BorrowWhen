@@ -25,6 +25,26 @@ public class RequestController {
 		return "request/request";
 	}
 	
+	@PostMapping("/cancel")
+	public String postCancelRequestScreen(@ModelAttribute BorrowRequestDto borrowRequestWebDto,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			borrowRequestService.cancelBorrowRequest(borrowRequestWebDto);
+	
+			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_CANCELLED_MSG);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+		}
+		
+		return "redirect:/request";
+	}
+	
 	@PostMapping("/item-received")
 	public String postItemReceivedScreen(@ModelAttribute BorrowRequestDto borrowRequestWebDto,
 			RedirectAttributes ra) {

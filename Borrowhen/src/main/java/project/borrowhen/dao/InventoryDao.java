@@ -18,7 +18,24 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	
 	public final String GET_ALL_INVENTORY =
 		    "SELECT new project.borrowhen.dao.entity.InventoryData(" +
-		    " e.id, u.firstName, u.familyName, e.itemName, e.price, e.totalQty, e.createdDate, e.updatedDate) " +
+		    "   e.id, " +
+		    "   u.firstName, " +
+		    "   u.familyName, " +
+		    "   e.itemName, " +
+		    "   e.price, " +
+		    "   e.totalQty, " +
+		    "   e.availableQty, " +
+		    "   e.createdDate, " +
+		    "   e.updatedDate, " +
+		    "   CASE WHEN (EXISTS (" +
+		    "       SELECT 1 FROM BorrowRequestEntity br " +
+		    "       WHERE br.inventoryId = e.id AND br.status <> 'PAID'" +
+		    "   )) THEN false ELSE true END, " + // isEditable
+		    "   CASE WHEN (EXISTS (" +
+		    "       SELECT 1 FROM BorrowRequestEntity br " +
+		    "       WHERE br.inventoryId = e.id AND br.status <> 'PAID'" +
+		    "   )) THEN false ELSE true END " +  // isDeletable
+		    ") " +
 		    "FROM InventoryEntity e " +
 		    "LEFT JOIN UserEntity u ON u.id = e.userId " +
 		    "WHERE e.isDeleted = false " +
@@ -34,7 +51,6 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    ")";
 
 
-
 	@Query(value=GET_ALL_INVENTORY)
 	public Page<InventoryData> getAllInventory(Pageable pageable, 
 			@Param("search") String search) throws DataAccessException;
@@ -42,10 +58,17 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	
 	
 	
-	public final String GET_ALL_OWNER_INVENTORY = "SELECT new project.borrowhen.dao.entity.InventoryData(e.id, e.itemName, e.price, e.totalQty)"
-			+ "FROM InventoryEntity e "
-			+ "WHERE e.userId = :userId "
-			+ "AND e.isDeleted = false ";
+	public final String GET_ALL_OWNER_INVENTORY =
+		    "SELECT new project.borrowhen.dao.entity.InventoryData(" +
+		    "   e.id, " +
+		    "   e.itemName, " +
+		    "   e.price, " +
+		    "   e.totalQty, " +
+		    "   e.availableQty " +
+		    ") " +
+		    "FROM InventoryEntity e " +
+		    "WHERE e.userId = :userId " +
+		    "AND e.isDeleted = false ";
 
 	@Query(value = GET_ALL_OWNER_INVENTORY)
 	public Page<InventoryData> getAllOwnedInventory(Pageable pageable, @Param("userId") int userId) throws DataAccessException;
@@ -75,5 +98,23 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 			@Param("price") double price, 
 			@Param("totalQty") int totalQty, 
 			@Param("updatedDate") Date updatedDate) throws DataAccessException;
+    
+    public final String UPDATE_INVENTORY_QTY = 
+    	    "UPDATE inventory " +
+    	    "SET available_qty = available_qty + :deltaQty, " +
+    	    "updated_date = :updatedDate " +
+    	    "WHERE id = :id";
+
+	@Modifying
+	@Transactional
+	@Query(value=UPDATE_INVENTORY_QTY, nativeQuery=true)
+	void updateInventoryQty(
+	    @Param("id") int inventoryId,
+	    @Param("deltaQty") int deltaQty,
+	    @Param("updatedDate") Date updatedDate
+	) throws DataAccessException;
+
+
+
 
 }

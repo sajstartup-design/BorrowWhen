@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const confirmBtn = document.querySelector('.confirm-btn');
 	const pickUpBtn = document.querySelector('.pick-up-btn');
 	const issuePaymentBtn = document.querySelector('.issue-payment-btn');
+	const cancelBtn = document.querySelector('.cancel-btn');
     const form = document.querySelector('#saveForm'); 
 
     if (updateBtn) {
@@ -134,6 +135,22 @@ document.addEventListener("DOMContentLoaded", () => {
 			    form.submit();
 			} else {
 			    console.error("❌ No form found for issuePaymentBtn");
+			}
+	    });
+	}
+	
+	if(cancelBtn){
+		cancelBtn.addEventListener('click', function () {
+	        cancelBtn.textContent = 'Confirming...';
+	        cancelBtn.disabled = true;
+
+	        createLoadingScreenBody();
+
+			const form = getForm(cancelBtn);
+			if (form) {
+			    form.submit();
+			} else {
+			    console.error("❌ No form found for cancelBtn");
 			}
 	    });
 	}

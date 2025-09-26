@@ -30,7 +30,8 @@ function updateBtnsModal(){
 							modal.id === 'rejectModal' || 
 							modal.id === 'confirmModal' || 
 							modal.id === 'pickUpModal' || 
-							modal.id === 'issuePaymentModal'){
+							modal.id === 'issuePaymentModal' ||
+							modal.id === 'cancelModal'){
 								
 							modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
 

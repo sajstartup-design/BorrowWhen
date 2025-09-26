@@ -26,6 +26,8 @@ public class InventoryEntity {
 	
 	private int totalQty;
 	
+	private int availableQty;
+	
 	private String status;
 	
 	private Timestamp createdDate;

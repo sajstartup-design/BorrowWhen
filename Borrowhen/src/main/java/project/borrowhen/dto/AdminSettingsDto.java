@@ -11,6 +11,8 @@ public class AdminSettingsDto {
 	
 	private int requestPerPage;
 	
+	private int paymentPerPage;
+	
 	private boolean showInventoryPage;
 	
 	private boolean showNotificationPage;

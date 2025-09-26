@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const buttons = {
     cancel: (request) => `
-        <button class="delete-btn" 
+        <button class="delete-btn darker" 
                 data-toggle="modal"
                 data-target="#cancelModal"
                 data-id="${request.encryptedId}"
@@ -73,7 +73,7 @@ const buttons = {
         </button>
     `,
     received: (request) => `
-        <button class="received-btn"
+        <button class="received-btn darker"
                 data-toggle="modal"
                 data-target="#confirmModal"
                 data-id="${request.encryptedId}"
@@ -85,7 +85,7 @@ const buttons = {
             <img src="/images/received-icon.png">
         </button>
     `,
-    fake: (icon) => `<button class="fake-btn" disabled><img src="/images/${icon}.png"></button>`
+    fake: (icon) => `<button class="fake-btn darker" disabled><img src="/images/${icon}.png"></button>`
 };
 
 

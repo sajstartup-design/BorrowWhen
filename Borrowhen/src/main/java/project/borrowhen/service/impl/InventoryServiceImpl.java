@@ -68,6 +68,7 @@ public class InventoryServiceImpl implements InventoryService{
 		inventory.setItemName(inDto.getItemName());
 		inventory.setPrice(inDto.getPrice());
 		inventory.setTotalQty(inDto.getTotalQty());
+		inventory.setAvailableQty(inDto.getTotalQty());
 		inventory.setStatus(CommonConstant.AVAILABLE);
 		inventory.setCreatedDate(dateNow);
 		inventory.setUpdatedDate(dateNow);
@@ -122,6 +123,9 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setOwner(inventory.getFirstName() + " " + inventory.getFamilyName());
 			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(inventory.getCreatedDate()));
 			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(inventory.getUpdatedDate()));		
+			obj.setAvailableQty(inventory.getAvailableQty());
+			obj.setIsEditable(inventory.getIsEditable());
+			obj.setIsDeletable(inventory.getIsDeletable());
 			
 			inventories.add(obj);
 			
@@ -162,6 +166,9 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setItemName(inventory.getItemName());
 			obj.setPrice(inventory.getPrice());
 			obj.setTotalQty(inventory.getTotalQty());
+			obj.setAvailableQty(inventory.getAvailableQty());
+			obj.setIsEditable(inventory.getIsEditable());
+			obj.setIsDeletable(inventory.getIsDeletable());
 	
 			inventories.add(obj);
 			
@@ -230,5 +237,19 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		return inventoryDao.getInventory(id);
 		
+	}
+
+	@Override
+	public void updateInventoryAvailableQty(int id, int qty, String status) {
+		
+		Date dateNow = Date.valueOf(LocalDate.now());
+		
+		if(CommonConstant.DECREASE.equals(status)) {
+			inventoryDao.updateInventoryQty(id, -qty, dateNow);
+		}else if(CommonConstant.INCREASE.equals(status)){
+			inventoryDao.updateInventoryQty(id, +qty, dateNow);
+		}else {
+			inventoryDao.updateInventoryQty(id, 0, dateNow);
+		}
 	}
 }

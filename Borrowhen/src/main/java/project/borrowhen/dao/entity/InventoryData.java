@@ -12,14 +12,17 @@ import lombok.Data;
 @Scope("prototype")
 public class InventoryData {
 	
-	public InventoryData(int inventoryId, String itemName, double price, int totalQty) {
+	public InventoryData(Integer inventoryId, String itemName, Double price, Integer totalQty, Integer availableQty) {
 		this.inventoryId = inventoryId;
 		this.itemName = itemName;
 		this.price = price;
 		this.totalQty = totalQty;
+		this.availableQty = availableQty;
 	}
+	
+	
 
-	private int inventoryId;
+	private Integer inventoryId;
 	
 	private String firstName;
 	
@@ -29,9 +32,15 @@ public class InventoryData {
 	
 	private Double price;
 	
-	private int totalQty;
+	private Integer totalQty;
+	
+	private Integer availableQty;
 	
 	private Timestamp createdDate;
 	
 	private Timestamp updatedDate;
+	
+	private Boolean isEditable;
+	
+	private Boolean isDeletable;
 }
