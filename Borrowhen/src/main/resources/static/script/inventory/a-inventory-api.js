@@ -69,8 +69,8 @@ async function loadInventories(page = 0, search = "") {
                 <div class="table-cell">${inventory.createdDate}</div>
                 <div class="table-cell">${inventory.updatedDate}</div>
                 <div class="table-cell">
-					<button class="edit-btn" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
-                    <button><img src="/images/delete.png"></button>
+					<button class="edit-btn darker" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
+                    <button class="darker"><img src="/images/delete.png"></button>
                 </div>
             `;
 			

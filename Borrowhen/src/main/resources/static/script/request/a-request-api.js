@@ -84,12 +84,12 @@ async function loadInventories(page = 0) {
 		          ${
 		            isFinalStatus
 		            ? `
-		                <button class="fake-btn" disabled><img src="/images/approved.png"></button>
-		                <button class="fake-btn" disabled><img src="/images/rejected.png"></button>
+		                <button class="fake-btn darker" disabled><img src="/images/approved.png"></button>
+		                <button class="fake-btn darker" disabled><img src="/images/rejected.png"></button>
 		              `
 		            : `
 		                <button 
-		                  class="approve-btn" 
+		                  class="approve-btn darker" 
 		                  data-toggle="modal" 
 		                  data-target="#approveModal"
 		                  data-id="${request.encryptedId}"
@@ -102,7 +102,7 @@ async function loadInventories(page = 0) {
 		                  <img src="/images/approved.png">
 		                </button>
 						<button 
-		                  class="reject-btn" 
+		                  class="reject-btn darker" 
 		                  data-toggle="modal" 
 		                  data-target="#rejectModal"
 		                  data-id="${request.encryptedId}"
@@ -116,7 +116,7 @@ async function loadInventories(page = 0) {
 		                </button>
 		              `
 		          }
-		          <button class="delete-btn" data-id="${request.encryptedId}">
+		          <button class="delete-btn darker" data-id="${request.encryptedId}">
 		            <img src="/images/delete.png">
 		          </button>
 		        </div>
