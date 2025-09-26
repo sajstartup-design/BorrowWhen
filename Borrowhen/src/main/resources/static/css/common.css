@@ -32,6 +32,11 @@ html, body {
   display: flex;
   justify-content: center;
   letter-spacing: 0.1rem;
+  color: #0a3d62 !important;
+}
+
+*{
+	  color: #0a3d62 !important;
 }
 
 .container{
@@ -868,6 +873,7 @@ hr.soft-gradient.thin {
 
 .table-header .table-cell{
 	font-weight: bold;
+	color: #0a3d62 !important;
 }
 
 .table-header,
@@ -1033,8 +1039,8 @@ hr.soft-gradient.thin {
     font-size: 0.7rem;
 }
 
-.table-cell .status.payment-paid,
-.status.payment-paid {
+.table-cell .status.paid,
+.status.paid {
     color: #5f0f40;               /* deep purple */
     background: #f3d9fa;          /* lavender */
     border-left: 0.3rem solid #9d4edd; /* purple border */

@@ -13,15 +13,18 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import project.borrowhen.common.constant.CommonConstant;
+import project.borrowhen.common.util.CalculationUtil;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.BorrowRequestDao;
+import project.borrowhen.dao.PaymentDao;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.BorrowRequestDto;
+import project.borrowhen.dto.PaymentDto;
 import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
@@ -30,6 +33,7 @@ import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.BorrowRequestService;
 import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.NotificationService;
+import project.borrowhen.service.PaymentService;
 import project.borrowhen.service.UserService;
 
 @Service
@@ -46,6 +50,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	
 	@Autowired
 	private InventoryService inventoryService;
+	
+	@Autowired
+	private PaymentService paymentService;
 	
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
@@ -310,7 +317,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	@Override
 	public BorrowRequestDto getAllOwnedBorrowRequestForBorrower(BorrowRequestDto inDto) throws Exception {
-		
+			
 		BorrowRequestDto outDto = new BorrowRequestDto();
 	    
 	    Pageable pageable = PageRequest.of(
@@ -395,7 +402,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    messagingTemplate.convertAndSendToUser(
 	        lender.getUserId().toString(),
-	        "/queue/borrower/notifications",
+	        "/queue/lender/notifications",
 	        message
 	    );
 	}
@@ -441,6 +448,31 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	
 	    return outDto;
 	    
+	}
+	
+
+	@Override
+	public BorrowRequestDto getBorrowRequestDetailsForBorrower(BorrowRequestDto inDto) throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+	    
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+	    
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+	    
+	    BorrowRequestObj obj = new BorrowRequestObj();
+        
+        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getId())));
+        obj.setItemName(request.getItemName());
+        obj.setPrice(request.getPrice());
+        obj.setQty(request.getQty());
+        obj.setDateToBorrow(request.getDateToBorrow());
+        obj.setDateToReturn(request.getDateToReturn());
+        obj.setStatus(request.getStatus());	     
+                   
+        outDto.setRequest(obj);    
+	
+	    return outDto;
 	}
 
 	@Override
@@ -535,12 +567,21 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.PENDING_PAYMENT);
 	    
+	    PaymentDto paymentDto = new PaymentDto();
+	    
+	    paymentDto.setAmount(CalculationUtil.getTotalPrice(request.getQty(), request.getPrice()));
+	    paymentDto.setEmailAddress(borrower.getEmailAddress());
+	    paymentDto.setBorrowRequestId(id);
+	    
+	    paymentService.createPaymentIntent(paymentDto);
+	    
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(borrower.getId());
 
 	    String message = String.format(
-    	    "Please complete the payment for the item '%s'. <a href=\"#\">Click here to continue</a>.",
-    	    request.getItemName()
+    	    "Please complete the payment for the item '%s'. <a href=\"/payment?encryptedId=%s\">Click here to continue</a>.",
+    	    request.getItemName(),
+    	    inDto.getEncryptedId()
     	);
 
 
@@ -560,4 +601,59 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    );
 		
 	}
+
+	@Override
+	public void paidBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+
+	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
+
+	    UserEntity borrower = userService.getUser(request.getUserId()); 
+	    
+	    InventoryEntity inventory = inventoryService.getInventory(request.getInventoryId());
+	    
+	    UserEntity lender = userService.getUser(inventory.getUserId());
+	    
+	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.PAID);
+	    
+	    PaymentDto paymentInDto = new PaymentDto();
+	    
+	    paymentInDto.setBorrowRequestId(id);
+	    paymentInDto.setStatus(CommonConstant.PAID);
+	    paymentInDto.setEmailAddress(borrower.getEmailAddress());
+	    
+	    paymentService.updatePaymentStatus(paymentInDto);
+	    
+	    NotificationEntity notification = new NotificationEntity();
+	    notification.setUserId(lender.getId());
+
+	    String message = String.format(
+    	    "%s %s has paid for the borrow request of '%s' from %s to %s.",
+    	    borrower.getFirstName(),
+    	    borrower.getFamilyName(),
+    	    request.getItemName(),
+    	    request.getDateToBorrow(),
+    	    request.getDateToReturn()
+    	);
+
+
+	    notification.setMessage(message);
+	    notification.setIsRead(false);
+	    notification.setType(CommonConstant.REQUEST_PAID);
+	    notification.setCreatedDate(dateNow);
+	    notification.setUpdatedDate(dateNow);
+	    notification.setIsDeleted(false);
+
+	    notificationService.saveNotification(notification);
+
+	    messagingTemplate.convertAndSendToUser(
+	        lender.getUserId().toString(),
+	        "/queue/lender/notifications",
+	        message
+	    );
+	}
+
 }

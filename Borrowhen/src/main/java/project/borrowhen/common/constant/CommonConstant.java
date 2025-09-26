@@ -34,6 +34,8 @@ public class CommonConstant {
 	
 	public static final String PENDING_PAYMENT = "PAYMENT PENDING";
 	
+	public static final String PAID = "PAID";
+	
 	public static final String RETURNED_LATE = "RETURNED LATE";
 	
 	
@@ -51,6 +53,8 @@ public class CommonConstant {
     public static final String REQUEST_ITEM_RECEIVED = "ITEM_RECEIVED";
     
     public static final String REQUEST_PAYMENT_PENDING = "REQUEST_PAYMENT_PENDING";
+    
+    public static final String REQUEST_PAID = "REQUEST_PAID";
     
     public static final String REQUEST_COMPLETED = "REQUEST_COMPLETED";
     
