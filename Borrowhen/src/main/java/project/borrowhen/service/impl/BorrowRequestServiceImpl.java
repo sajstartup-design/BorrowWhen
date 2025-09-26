@@ -17,6 +17,7 @@ import project.borrowhen.common.util.CalculationUtil;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.BorrowRequestDao;
+import project.borrowhen.dao.PaymentDao;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.InventoryEntity;
@@ -316,7 +317,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	@Override
 	public BorrowRequestDto getAllOwnedBorrowRequestForBorrower(BorrowRequestDto inDto) throws Exception {
-		
+			
 		BorrowRequestDto outDto = new BorrowRequestDto();
 	    
 	    Pageable pageable = PageRequest.of(
@@ -570,6 +571,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    paymentDto.setAmount(CalculationUtil.getTotalPrice(request.getQty(), request.getPrice()));
 	    paymentDto.setEmailAddress(borrower.getEmailAddress());
+	    paymentDto.setBorrowRequestId(id);
 	    
 	    paymentService.createPaymentIntent(paymentDto);
 	    
@@ -616,6 +618,13 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    UserEntity lender = userService.getUser(inventory.getUserId());
 	    
 	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.PAID);
+	    
+	    PaymentDto paymentInDto = new PaymentDto();
+	    
+	    paymentInDto.setBorrowRequestId(id);
+	    paymentInDto.setStatus(CommonConstant.PAID);
+	    
+	    paymentService.updatePaymentStatus(paymentInDto);
 	    
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(lender.getId());

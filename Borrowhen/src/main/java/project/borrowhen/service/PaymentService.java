@@ -8,4 +8,8 @@ import project.borrowhen.dto.PaymentDto;
 public interface PaymentService {
 
 	public void createPaymentIntent(PaymentDto inDto) throws Exception;
+	
+	public PaymentDto getPaymentIntent(PaymentDto inDto) throws Exception;
+	
+	public void updatePaymentStatus(PaymentDto inDto) throws Exception;
 }

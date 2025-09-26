@@ -3,143 +3,182 @@
 <head>
   <meta charset="UTF-8">
   <title>Stripe Payment Demo</title>
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
   <link rel="stylesheet" th:href="@{/css/common.css}" />
   <link rel="stylesheet" th:href="@{/css/payment/payment.css}" />
   <script src="https://js.stripe.com/v3/"></script>
-  <style>
-
-  </style>
 </head>
 <body>
-  	<div class="content">
-  		<div class="item-information" th:object="${borrowRequestDto}">
-  			<div class="field bold">
-	  			<label>ITEM INFORMATION</label>
-  			</div>
-  			<hr class="soft-gradient">
-  			<div class="field">
-  				<label>ITEM NAME</label>
-  				<div th:text="*{request.itemName}"></div>
-  			</div>
-  			<hr class="soft-gradient">
-  			<div class="field">
-  				<label>QUANTITY</label>
-  				<div th:text="*{request.qty}"></div>
-  			</div>
-  			<hr class="soft-gradient">
-  			<div class="field">
-  				<label>DATE TO BORROW</label>
-  				<div th:text="*{request.dateToBorrow}"></div>
-  			</div>
-  			<hr class="soft-gradient">
-  			<div class="field">
-  				<label>DATE TO RETURN</label>
-  				<div th:text="*{request.dateToReturn}"></div>
-  			</div>
-  			<hr class="soft-gradient">
-  			<div class="field">
-  				<label>PRICE</label>
-  				<div th:text="*{request.price}"></div>
-  			</div>
-  			<hr class="soft-gradient">
-  			<div class="field">
-  				<label>TOTAL AMOUNT</label>
-  				<div th:text="*{@calculationUtil.getTotalPrice(request.qty, request.price)}"></div>
-  			</div>
-  		</div>
-  		
-  		<div class="payment-information">
-  			<div class="item-information">
-	  			<div class="field bold">
-		  			<label>PAYMENT</label>
-	  			</div>
-	  			<hr class="soft-gradient">
-	  			
-	  			<!-- Stripe Payment Section -->
-	  			<div class="payment-field">
-	  				<label>Choose Payment Method</label>
-	  				<div id="methods">
-					  <label>
-					    <input type="radio" name="method" value="card" checked> Card
-					  </label>
-					  <label>
-					    <input type="radio" name="method" value="link"> Link
-					  </label>
-					  <!-- If you later want GCash/GrabPay, just add more radios here -->
-					</div>
-	
-	  			</div>
-	  			<hr class="soft-gradient">
-	  			
-	  			<div class="payment-field">
-	  				<label>Card Details</label>
-	  				<div id="card-element"></div>
-	  				<span class="error" id="card-errors"></span>
-	  			</div>
-  			</div>
-  			<div class="btns">
-  				<a class="button" th:href="@{/dashboard}">CANCEL</a>
-  				<button id="pay-btn">CONFIRM PAYMENT</button>
-  			</div>
-  		</div>
-  	</div>
+  <div class="content">
+    <!-- Item Information -->
+    <div class="item-information" th:object="${borrowRequestDto}">
+      <div class="field bold">
+        <label>ITEM INFORMATION</label>
+      </div>
+      <hr class="soft-gradient">
 
+      <div class="field">
+        <label>ITEM NAME</label>
+        <div th:text="*{request.itemName}"></div>
+      </div>
+      <hr class="soft-gradient">
+
+      <div class="field">
+        <label>QUANTITY</label>
+        <div th:text="*{request.qty}"></div>
+      </div>
+      <hr class="soft-gradient">
+
+      <div class="field">
+        <label>DATE TO BORROW</label>
+        <div th:text="*{request.dateToBorrow}"></div>
+      </div>
+      <hr class="soft-gradient">
+
+      <div class="field">
+        <label>DATE TO RETURN</label>
+        <div th:text="*{request.dateToReturn}"></div>
+      </div>
+      <hr class="soft-gradient">
+
+      <div class="field">
+        <label>PRICE</label>
+        <div th:text="*{request.price}"></div>
+      </div>
+      <hr class="soft-gradient">
+
+      <div class="field">
+        <label>TOTAL AMOUNT</label>
+        <div th:text="*{@calculationUtil.getTotalPrice(request.qty, request.price)}"></div>
+      </div>
+    </div>
+
+    <!-- Payment Information -->
+    <div class="payment-information">
+      <div class="item-information">
+        <div class="field bold">
+          <label>PAYMENT</label>
+        </div>
+        <hr class="soft-gradient">
+
+        <!-- Choose Payment Method -->
+        <div class="payment-field">
+          <label>Choose Payment Method</label>
+          <div id="methods">
+            <label>
+              <input type="radio" name="method" value="card" checked> Card
+            </label>
+            <label>
+              <input type="radio" name="method" value="link"> Link
+            </label>
+          </div>
+        </div>
+        <hr class="soft-gradient">
+
+        <!-- Card Input -->
+        <div class="payment-field">
+          <label>Card Details</label>
+          <div id="card-element"></div>
+          <span class="error" id="card-errors"></span>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="btns">
+        <a class="button" th:href="@{/dashboard}">CANCEL</a>
+        <button id="pay-btn">CONFIRM PAYMENT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stripe Script -->
   <script th:inline="javascript">
-  const publicKey = /*[[${publicKey}]]*/'';
-  const stripe = Stripe(publicKey);
-  const elements = stripe.elements();
-  const cardElement = elements.create("card");
+    const publicKey = /*[[${publicKey}]]*/ '';
+    const clientSecret = /*[[${paymentDto.clientSecret}]]*/ ''; // ✅ injected from backend
 
-  const payBtn = document.getElementById("pay-btn");
-  const errorDiv = document.getElementById("card-errors");
-  const cardDiv = document.getElementById("card-element");
+    const stripe = Stripe(publicKey);
+    const elements = stripe.elements();
+    const cardElement = elements.create("card");
+    cardElement.mount("#card-element");
 
-  let clientSecret;
+    const payBtn = document.getElementById("pay-btn");
+    const errorDiv = document.getElementById("card-errors");
 
-  // 2. Payment button click
-  payBtn.addEventListener("click", async () => {
-    payBtn.disabled = true;
-    payBtn.textContent = "Processing...";
+    // Payment button click
+    payBtn.addEventListener("click", async () => {
 
-    const method = document.querySelector("input[name='method']:checked").value;
-    let result;
+    	
+    	
+    	
+      payBtn.disabled = true;
+      payBtn.textContent = "Processing...";
 
-    if (method === "card") {
-      // Card payment
-      result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: { email: "julius.basas0123@gmail.com" }
-        },
-        receipt_email: "julius.basas0123@gmail.com"
-      });
-    } else if (method === "link") {
-      // Link payment
-      result = await stripe.confirmPayment({
-        elements,
-        clientSecret,
-        confirmParams: {
-          return_url: "http://localhost:8080/payment/success",
-        },
-      });
-    }
+      const method = document.querySelector("input[name='method']:checked").value;
+      let result;
 
-    // 3. Handle result
-    if (result.error) {
-      errorDiv.textContent = result.error.message;
-      payBtn.disabled = false;
-      payBtn.textContent = "CONFIRM PAYMENT";
-    } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
-      alert("Payment successful!");
-      payBtn.textContent = "Paid ✅";
-      if (result.paymentIntent.charges?.data?.[0]?.receipt_url) {
-        window.location.href = result.paymentIntent.charges.data[0].receipt_url;
+      if (method === "card") {
+        // Card Payment
+        result = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: cardElement,
+            billing_details: { email: /*[[${paymentDto.emailAddress}]]*/ '' }
+          },
+          receipt_email: /*[[${paymentDto.emailAddress}]]*/ ''
+        });
+      } else if (method === "link") {
+        // Link Payment
+        result = await stripe.confirmPayment({
+          elements,
+          clientSecret,
+          confirmParams: {
+            return_url: "http://localhost:8080/payment/success",
+          },
+        });
       }
-    }
-  });
+
+      // Handle result
+      if (result.error) {
+        errorDiv.textContent = result.error.message;
+        payBtn.disabled = false;
+        payBtn.textContent = "CONFIRM PAYMENT";
+      } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
+    	  alert("Payment successful!");
+    	  payBtn.textContent = "Paid ✅";
+
+    	  // Get CSRF token from meta tags
+    	  const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    	  const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
+    	  // Send POST request with CSRF token
+    	  fetch("/payment/confirmed", {
+    	    method: "POST",
+    	    headers: {
+    	      "Content-Type": "application/x-www-form-urlencoded",
+    	      [csrfHeader]: csrfToken
+    	    },
+    	    body: new URLSearchParams({
+    	      encryptedId: /*[[${borrowRequestDto.encryptedId}]]*/ ''
+    	    })
+    	  })
+    	  .then(response => {
+    	    if (response.redirected) {
+    	      window.location.href = response.url;
+    	    }
+    	  })
+    	  .catch(err => {
+    	    console.error("Error confirming payment:", err);
+    	    alert("Payment succeeded but failed to notify server!");
+    	  });
+
+    	  // Optional: open Stripe receipt
+    	  if (result.paymentIntent.charges?.data?.[0]?.receipt_url) {
+    	    window.open(result.paymentIntent.charges.data[0].receipt_url, "_blank");
+    	  }
+    	}
+
+
+    });
   </script>
-
-
-
 </body>
 </html>
