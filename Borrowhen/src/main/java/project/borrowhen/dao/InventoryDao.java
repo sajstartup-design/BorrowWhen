@@ -30,7 +30,6 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    ") " +
 		    "FROM InventoryEntity e " +
 		    "LEFT JOIN UserEntity u ON u.id = e.userId " +
-		    "LEFT JOIN BorrowRequestEntity r ON r.inventoryId = e.id " +
 		    "WHERE e.isDeleted = false " +
 		    "AND ( " +
 		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
@@ -96,7 +95,7 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
     
     public final String UPDATE_INVENTORY_QTY = 
     	    "UPDATE inventory " +
-    	    "SET total_qty = total_qty + :deltaQty, " +
+    	    "SET available_qty = available_qty + :deltaQty, " +
     	    "updated_date = :updatedDate " +
     	    "WHERE id = :id";
 

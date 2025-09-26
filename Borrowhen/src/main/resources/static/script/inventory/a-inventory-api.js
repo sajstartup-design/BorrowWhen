@@ -65,7 +65,7 @@ async function loadInventories(page = 0, search = "") {
                 <div class="table-cell">${inventory.itemName}</div>
                 <div class="table-cell">₱${inventory.price}</div>
                 <div class="table-cell">${inventory.totalQty}</div>
-				<div class="table-cell">${inventory.totalQty}</div>
+				<div class="table-cell">${inventory.availableQty}</div>
                 <div class="table-cell">${inventory.createdDate}</div>
                 <div class="table-cell">${inventory.updatedDate}</div>
                 <div class="table-cell">
