@@ -1039,8 +1039,8 @@ hr.soft-gradient.thin {
     font-size: 0.7rem;
 }
 
-.table-cell .status.payment-paid,
-.status.payment-paid {
+.table-cell .status.paid,
+.status.paid {
     color: #5f0f40;               /* deep purple */
     background: #f3d9fa;          /* lavender */
     border-left: 0.3rem solid #9d4edd; /* purple border */
