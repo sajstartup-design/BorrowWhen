@@ -9,6 +9,10 @@ public class PaymentObj {
 
 	private String encryptedId;
 	
+	private String firstName;
+	
+	private String familyName;
+	
 	private String emailAddress;
 	
 	private String itemName;

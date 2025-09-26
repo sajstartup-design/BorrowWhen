@@ -92,6 +92,7 @@ async function loadPayments(page = 0, search="") {
 		    }
 			
             row.innerHTML = `
+			<div class="table-cell">${payment.firstName} ${payment.familyName}</div>
 				<div class="table-cell">${payment.emailAddress}</div>
                 <div class="table-cell">${payment.itemName}</div>
                 <div class="table-cell">₱${payment.price}</div>
