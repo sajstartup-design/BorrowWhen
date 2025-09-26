@@ -176,6 +176,7 @@ public class PaymentServiceImpl implements PaymentService{
 			obj.setTotalAmount(payment.getTotalAmount());
 			obj.setDateCheckout(payment.getDateCheckout());
 			obj.setPaymentMethod(payment.getPaymentMethod().toUpperCase());
+			obj.setStatus(payment.getStatus());
 			
 			payments.add(obj);
 	

@@ -67,13 +67,13 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
     public static final String GET_ALL_PAYMENT_FOR_LENDER =
     	    "SELECT new project.borrowhen.dao.entity.PaymentData(" +
     	    "p.id, " +
-    	    "p.emailAddress, " +
+    	    "COALESCE(p.emailAddress, '-'), " +
     	    "br.itemName, " +
     	    "br.price, " +
     	    "br.qty, " +
     	    "(br.price * br.qty), " +
     	    "br.updatedDate, " +
-    	    "p.paymentMethod, " +
+    	    "COALESCE(p.paymentMethod, '-'), " +
     	    "p.status ) " +
     	    "FROM BorrowRequestEntity br " +
     	    "INNER JOIN PaymentEntity p ON p.borrowRequestId = br.id " +
