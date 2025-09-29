@@ -5,6 +5,104 @@
 <meta charset="UTF-8">
 </head>
 <body>
+	
+	<div th:fragment="profile">
+		<div class="profile">
+			<span class="notification-icon" data-count="0">
+				<span class="bell-container">
+					<img class="bell-icon" th:src="@{/images/notification-bell.png}" alt="bell">
+				</span>
+			</span>			
+			<div>
+				<label th:text="${session.role}">User</label>
+				<span th:text="${session.fullname}">User</span>
+			</div>
+			<img class="down" th:src="@{/images/down.png}" alt="down">
+			<div class="settings inactive">
+				<form th:action="@{/logout}" method="post">
+				    <button type="submit">Profile</button>
+				</form>
+				<hr class="soft-gradient">
+				<form th:action="@{/logout}" method="post">
+				    <button type="submit">Settings</button>
+				</form>
+				<hr class="soft-gradient">
+           		<form th:action="@{/logout}" method="post">
+				    <button type="submit">Logout</button>
+				</form>
+			</div>
+			<div class="notifications inactive">
+				<div class="title">Notifications</div>
+				<hr class="soft-gradient">
+				<div class="notifications-list">
+				</div>
+				<button class="darker">SHOW ALL NOTIFICATIONS</button>
+			</div>
+		</div> 
+		
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    		<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+			<script th:src="@{/script/notification/websocket.js}"></script>
+			<script th:src="@{/script/notification/notification-api.js}"></script>
+			<script>
+			document.addEventListener("DOMContentLoaded", () => {
+			    const downIcon = document.querySelector(".profile .down");
+			    const notificationIcon = document.querySelector('.profile .notification-icon'); 
+			    const settings = document.querySelector(".profile .settings");
+			    const notifications = document.querySelector('.profile .notifications');
+			    const profile = document.querySelector(".profile");
+
+			    downIcon.addEventListener("click", () => {
+			        settings.classList.toggle("active");
+			        settings.classList.toggle("inactive");
+
+			        if (settings.classList.contains("active")) {
+ 	
+			            // Get profile position
+			            const rect = profile.getBoundingClientRect();
+						
+			            console.log(rect);
+			            // Position dropdown relative to profile
+			            settings.style.position = "absolute";
+			            settings.style.right = `${0}rem`;
+			            
+			            
+			      		
+			        }
+			    });
+			    
+			    notificationIcon.addEventListener("click", () => {
+			    	notifications.classList.toggle("active");
+			    	notifications.classList.toggle("inactive");
+			    	
+			    	const bellContainer = notificationIcon.querySelector('.bell-container');
+			    	
+			    	if(bellContainer) bellContainer.classList.remove('pulsating-circle');
+			    	
+			    	const bell = notificationIcon.querySelector('.bell-icon');
+			    	
+			    	if(bell) bell.classList.remove('bell');
+			    	
+			        if (notifications.classList.contains("active")) {
+
+			        	
+
+			        	updateNotificationModal(notificationIcon);
+			        	
+			            // Get profile position
+			            const rect = profile.getBoundingClientRect();
+						
+			            console.log(rect);
+			            // Position dropdown relative to profile
+			            notifications.style.position = "absolute";
+			            notifications.style.right = `${0}rem`;
+			      
+			        }
+			    });
+			});
+		</script>
+	</div>
+
 	<aside th:fragment="content">	
 			<div class="profile">
 				<span class="notification-icon" data-count="0">
