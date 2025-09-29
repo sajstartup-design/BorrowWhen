@@ -20,6 +20,12 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 	
 	public PaymentEntity getPaymentByBorrowRequestId(@Param("borrowRequestId") int borrowRequestId);
 	
+	public static final String GET_PAYMENT_BY_ID = "SELECT e "
+			+ "FROM PaymentEntity e "
+			+ "WHERE e.id = :id ";
+	
+	public PaymentEntity getPaymentById(@Param("id") int id);
+	
     public final String UPDATE_PAYMENT_STATUS =
         "UPDATE PaymentEntity p " +
         "SET p.status = :status, p.paymentMethod = :paymentMethod , p.updatedDate = CURRENT_TIMESTAMP, p.emailAddress = :emailAddress  " +

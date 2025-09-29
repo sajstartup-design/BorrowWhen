@@ -88,7 +88,7 @@ async function loadPayments(page = 0, search="") {
 		    if (payment.status?.toUpperCase() === "PAYMENT PENDING") {
 		        actionCell = `<span>Awaiting Payment</span>`;
 		    } else if (payment.status?.toUpperCase() === "PAID") {
-		        actionCell = `<button class="darker">DOWNLOAD RECEIPT</button>`;
+		        actionCell = `<a class="button darker view-receipt" href="/payment/receipt?encryptedId=${payment.encryptedId}">VIEW RECEIPT</a>`;
 		    }
 			
             row.innerHTML = `
@@ -116,6 +116,12 @@ async function loadPayments(page = 0, search="") {
         tableBody.appendChild(fragment);
 
         document.querySelector(".input-page").value = data.pagination.page + 1;
+		
+		document.querySelectorAll(".view-receipt").forEach(link => {
+		    link.addEventListener("click", () => {
+		        createLoadingScreenBody();
+		    });
+		});
 		
 		removeLoadingScreenBody();
 

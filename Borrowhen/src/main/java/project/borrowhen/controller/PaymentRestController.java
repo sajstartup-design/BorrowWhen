@@ -4,6 +4,7 @@ import com.stripe.model.PaymentIntent;
 import com.stripe.net.RequestOptions;
 import com.stripe.param.PaymentIntentCreateParams;
 
+import project.borrowhen.common.constant.MessageConstant;
 import project.borrowhen.common.util.StripeUtil;
 import project.borrowhen.dto.PaymentDto;
 import project.borrowhen.object.FilterAndSearchObj;
@@ -12,6 +13,7 @@ import project.borrowhen.service.PaymentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,21 +59,6 @@ public class PaymentRestController {
 //
 //	    return response;
 //	}
-
-    
-//    @GetMapping("/receipt")
-//    public Map<String, Object> getReceipt(@RequestParam String paymentIntentId) throws Exception {
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("expand", java.util.Arrays.asList("latest_charge"));
-//
-//        PaymentIntent intent = PaymentIntent.retrieve(paymentIntentId, params, null);
-//
-//        Map<String, Object> response = new HashMap<>();
-//        if (intent.getLatestChargeObject() != null) {
-//            response.put("receiptUrl", intent.getLatestChargeObject().getReceiptUrl());
-//        }
-//        return response;
-//    }
 
     @GetMapping("/payment")
     public PaymentDto getPaymentsForBorrower(@RequestParam(defaultValue = "0") int page,

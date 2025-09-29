@@ -31,4 +31,5 @@ public class PaymentDto {
 	private FilterAndSearchObj filter;
 	
 	private boolean paid;
+	
 }

@@ -62,7 +62,7 @@ public class SecurityConfig {
 						.requestMatchers("/gif/**").permitAll()
 						
 						 
-						
+						.requestMatchers("/payment/receipt").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
 						
 						.requestMatchers("/admin/user/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
@@ -91,6 +91,7 @@ public class SecurityConfig {
 						.requestMatchers("/api/**").authenticated()
 						
 						.requestMatchers("/chat/**").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
+						
 						.requestMatchers("/borrow-when-websocket/**").authenticated()
 						.anyRequest().authenticated()
 						
