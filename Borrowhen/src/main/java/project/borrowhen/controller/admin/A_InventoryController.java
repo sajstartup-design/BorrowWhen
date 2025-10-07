@@ -20,6 +20,8 @@ import jakarta.validation.Valid;
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.constant.MessageConstant;
 import project.borrowhen.dto.InventoryDto;
+import project.borrowhen.object.FilterAndSearchObj;
+import project.borrowhen.object.PaginationObj;
 import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.UserService;
 
@@ -34,7 +36,23 @@ public class A_InventoryController {
 	private UserService userService;
 	
 	@GetMapping()
-	public String showInventoryScreen() {
+	public String showInventoryScreen(Model model) throws Exception {
+		
+		InventoryDto inDto = new InventoryDto();
+
+        PaginationObj pagination = new PaginationObj();
+        pagination.setPage(1);
+        
+        FilterAndSearchObj filter = new FilterAndSearchObj();
+        filter.setSearch(CommonConstant.BLANK);
+
+        inDto.setPagination(pagination);
+        inDto.setFilter(filter);
+        
+
+        InventoryDto outDto = inventoryService.getAllInventory(inDto);
+
+        model.addAttribute("inventoryDto", outDto);
 		
 		return "inventory/admin/inventory-view";
 	}

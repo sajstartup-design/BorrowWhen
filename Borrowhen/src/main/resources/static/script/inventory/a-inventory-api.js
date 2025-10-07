@@ -58,30 +58,33 @@ async function loadInventories(page = 0, search = "") {
         const fragment = document.createDocumentFragment();
 
         data.inventories.forEach(inventory => {
-            const row = document.createElement("div");
-            row.classList.add("table-row");
+            const row = document.createElement("tr");
+			row.classList.add("border-gray-200")
+            row.classList.add("border-b");
 			row.setAttribute('data-id', inventory.encryptedId);
 			
             row.innerHTML = `
-				<div class="table-cell">${inventory.owner}</div>
-                <div class="table-cell">${inventory.itemName}</div>
-                <div class="table-cell">₱${inventory.price}</div>
-                <div class="table-cell">${inventory.totalQty}</div>
-				<div class="table-cell">${inventory.availableQty}</div>
-                <div class="table-cell">${inventory.createdDate}</div>
-                <div class="table-cell">${inventory.updatedDate}</div>
-                <div class="table-cell">
-		            ${
-		                inventory.isEditable
-		                    ? `<button class="edit-btn darker" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>`
-		                    : `<button class="edit-btn darker disabled" disabled title="Inventory has pending requests"><img src="/images/edit.png"></button>`
-		            }
-		            ${
-		                inventory.isDeletable
-		                    ? `<button class="delete-btn darker" data-id="${inventory.encryptedId}" type="submit"><img src="/images/delete.png"></button>`
-		                    : `<button class="delete-btn darker disabled" disabled title="Inventory has pending requests"><img src="/images/delete.png"></button>`
-		            }
-		        </div>
+				<td><input type="checkbox" class="checkbox checkbox-sm checkbox-primary row-select-checkbox" ></td>
+	              <td>${inventory.owner}</td>
+	              <td>${inventory.itemName}</td>
+	              <td>${inventory.price}</td>
+	              <td>${inventory.totalQty}</td>
+	              <td>${inventory.availableQty}</td>
+	              <td>${inventory.createdDate}</td>
+	              <td>${inventory.updatedDate}</td>
+	              <td>
+	               <div class="flex items-center gap-2">
+		              <a href="ecommerce-vendor-details.html" class="btn btn-circle btn-text btn-sm view-btn" title="View Details">
+		                <span class="icon-[tabler--eye] size-5 text-base-content"></span>
+		              </a>
+		              <a href="ecommerce-vendor-create.html" class="btn btn-circle btn-text btn-sm edit-btn" title="Edit">
+		                <span class="icon-[tabler--edit] size-5 text-base-content"></span>
+		              </a>
+		              <button class="delete-record btn btn-circle btn-text btn-sm" title="Delete" fdprocessedid="f9dg1f">
+		                <span class="icon-[tabler--trash] size-5 text-base-content"></span>
+		              </button>
+	            	</div>
+	              </td>
             `;
 			
 			row.querySelector('.edit-btn').addEventListener('click', function(){
@@ -92,11 +95,7 @@ async function loadInventories(page = 0, search = "") {
 				form.submit();
 			});
 			
-			row.addEventListener('click', function(e) {
-			   
-			    if (e.target.closest('button') || e.target.closest('a')) {
-			        return; 
-			    }
+			row.querySelector('.view-btn').addEventListener('click', function(e) {
 				
 				const encryptedId = this.getAttribute('data-id');
 
