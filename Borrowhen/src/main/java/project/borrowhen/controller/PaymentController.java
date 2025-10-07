@@ -106,4 +106,26 @@ public class PaymentController {
 		
 		return "payment";
 	}
+	
+    @GetMapping("/payment/receipt")
+    public String getReceipt(@RequestParam String encryptedId, RedirectAttributes ra) throws Exception {
+    	
+    	try {
+        	PaymentDto inDto = new PaymentDto();
+        	
+        	inDto.setEncryptedId(encryptedId);
+        	
+        	PaymentDto outDto = paymentService.getPaymentReceipt(inDto);
+            
+        	return "redirect:" + outDto.getReceiptUrl();
+            
+    	} catch (Exception e) {
+    		
+    		e.printStackTrace();
+    		
+    		ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+    		
+    		return "redirect:/payment/view";
+    	}
+    }
 }

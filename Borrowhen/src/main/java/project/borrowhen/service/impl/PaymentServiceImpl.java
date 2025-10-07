@@ -2,7 +2,9 @@ package project.borrowhen.service.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -266,5 +268,35 @@ public class PaymentServiceImpl implements PaymentService{
 		outDto.setPagination(pagination);
 		
 	    return outDto;
+	}
+
+	@Override
+	public PaymentDto getPaymentReceipt(PaymentDto inDto) throws Exception {
+		
+		 PaymentDto outDto = new PaymentDto();
+		
+		Stripe.apiKey = StripeUtil.STRIPE_API_SECRET_KEY;
+
+        int id = Integer.parseInt(cipherUtil.decrypt(inDto.getEncryptedId()));
+        PaymentEntity payment = paymentDao.getPaymentById(id);
+
+        // Expand latest_charge when retrieving PaymentIntent
+        Map<String, Object> params = new HashMap<>();
+        params.put("expand", java.util.Arrays.asList("latest_charge"));
+
+        PaymentIntent intent = PaymentIntent.retrieve(payment.getStripePaymentId(), params, null);
+
+        Charge latestCharge = intent.getLatestChargeObject();
+
+        if (latestCharge != null) {
+            String chargeStatus = latestCharge.getStatus();
+            String receiptUrl   = latestCharge.getReceiptUrl();
+
+            if ("succeeded".equalsIgnoreCase(chargeStatus) && receiptUrl != null) {
+                outDto.setReceiptUrl(receiptUrl);
+            } 
+        } 
+        
+        return outDto;
 	}
 }

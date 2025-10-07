@@ -18,4 +18,6 @@ public interface PaymentService {
 	public PaymentDto getAllPaymentForBorrower(PaymentDto inDto) throws Exception;
 	
 	public PaymentDto hasPaid(PaymentDto inDto) throws Exception;
+	
+	public PaymentDto getPaymentReceipt(PaymentDto inDto) throws Exception;
 }

@@ -4,16 +4,43 @@
 <meta charset="UTF-8">
 <title>BW | Dashboard</title>
 <link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/dashboard/lender-dashboard.css}" />
 </head>
 <body>
 	<div class="container">
 		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
 		<main>
 			<div class="main-content">
-				
+				<div class="content-header">
+					<span>DASHBOARD</span>
+					<div th:replace="~{/aside/aside :: profile}"></div>
+				</div>
+				<div class="content-body">
+					<div class="overview-one">
+						<div class="overview-container">
+							<div>RECENT BORROWERS</div>
+							<div>
+								<ul>
+									<li>asdas</li>
+									<li>asdas</li>
+									<li>asdas</li>
+									<li>asdas</li>
+									<li>asdas</li>
+								</ul>
+							</div>
+						</div>
+						<hr class="vertical-line">
+						<div class="overview-container">
+							WEEKLY INCOME
+						</div>
+						<hr class="vertical-line">
+						<div class="overview-container">
+							INVENTORY OVERVIEW 
+						</div>
+					</div>
+				</div>
 			</div>
 		</main>
-		<aside th:replace="~{aside/aside :: content}"></aside>
 	</div>
 </body>
 </html>
