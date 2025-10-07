@@ -12,13 +12,8 @@
 
   <!-- Canonical SEO -->
   <meta name="keywords" content="FlyonUI dashboard, FlyonUI dashboard, flyonui, html dashboard, web dashboard, frontend dashboard, responsive FlyonUI theme" />
-  <meta property="og:title" content="Tailwind CSS Dashboard by FlyonUI" />
-  <meta property="og:type" content="product" />
-  <meta property="og:url" content="https://flyonui.com/templates" />
-  <meta property="og:image" content="https://cdn.flyonui.com/fy-assets/landing-page/template-page/dashboard/dashboard-default-1.png" />
-  <meta property="og:description" content=" FlyonUIPro is the best FlyonUI dashboard for responsive web apps. Streamline your app development process with ease." />
-  <meta property="og:site_name" content="FlyonUI" />
   <link rel="canonical" href="https://flyonui.com/templates" />
+  
   
   <script>
     (function (w, d, s, l, i) {
@@ -61,6 +56,7 @@
 
   <!-- build:css -->
   <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/css/output.css" />
+  <link rel="stylesheet" th:href="@{/css/output.css}" />
 
   <!-- Page CSS -->
 
@@ -115,11 +111,11 @@
 
   <!-- Layout wrapper -->
 <!-- Layout wrapper -->
-<div class="bg-base-200 flex min-h-screen flex-col">
+	<div class="bg-base-200 flex min-h-screen flex-col">
   <!-- Layout Navbar -->
 
 <!-- ---------- HEADER ---------- -->
-	
+
 	<div th:replace="~{header :: header}"></div>
 
 <!-- ---------- END HEADER ---------- -->
@@ -128,45 +124,33 @@
   <main class="hmc58">
     <div class="bg-primary wedi4"></div>
     <!-- Content -->
-    <div class="max-w-[1536px] hmos0 yt5gg djsg9 pvq5y">
-      <div class="flex wcs4q items-center justify-between p-2">
-          <div class="ymtjh">
-    <ul class="yknjh">
-      
-      <li>
-        <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="t0ywj hover:text-white">
-          <span class="icon-[tabler--smart-home] size-5"></span>
-        </a>
-      </li>
-
-      
-        
-        <li class="y8z3g rtl:rotate-180">
-          <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
-        </li>
-
-        
-        <li >
-            <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="t0ywj hover:text-white text-sm">Dashboard</a>
-        </li>
-        
-        <li class="y8z3g rtl:rotate-180">
-          <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
-        </li>
-
-        
-        <li aria-current="page">
-            <span class="t0ywj text-sm i9hfu">eCommerce</span>
-        </li>
-    </ul>
-  </div>
+	    <div class="max-w-[1536px] hmos0 yt5gg djsg9 pvq5y">
+	      <div class="flex wcs4q items-center justify-between p-2">
+	          <div class="ymtjh">
+	    			<ul class="yknjh">
+					    <li>
+					      <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="t0ywj hover:text-white">
+					        <span class="icon-[tabler--smart-home] size-5"></span>
+					      </a>
+					    </li>
+					      <li class="y8z3g rtl:rotate-180">
+					        <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
+					      </li>
+					        <li >
+					            <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="t0ywj hover:text-white text-sm">Dashboard</a>
+					        </li>
+	       
+					        <li class="y8z3g rtl:rotate-180">
+					          <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
+					        </li>
+					         <li aria-current="page">
+					            <span class="t0ywj text-sm i9hfu">Borrowhen</span>
+					        </li> 
+	  					 </ul>
+	 				</div>
 
         <div class="dropdown relative inline-flex [--placement:bottom-end]">
-          <button id="app-dropdown" type="button" class="dropdown-toggle btn ifc49 rounded-field flex items-center gap-3 [--btn-color:#fff]" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-            <span class="icon-[tabler--building-store] size-5 shrink-0"></span>
-            <span class="i9hfu">Amazon Fresh</span>
-            <span class="icon-[tabler--chevron-down] dropdown-open:rotate-180 size-4 hvz19 duration-300"></span>
-          </button>
+      
           <div class="dropdown-menu dropdown-open:opacity-100 gfsnm hidden w-full" role="menu" aria-orientation="vertical" aria-labelledby="app-dropdown">
             <div class="uygfv justify-between uafca d2kpi sn3hb">
               <span class="text-base-content text-sm font-medium">user@example.com</span>
@@ -876,310 +860,7 @@
 <!-- / Layout Wrapper -->
 
   <!-- Theme Customizer -->
-  <div class="dropdown fixed top-[30%] -end-1 x9u35">
-    <span class="tglh5 j17sd">Customize Theme</span>
-    <button type="button" class="btn btn-primary btn-square hg2ja q7vz5 group" aria-haspopup="dialog" aria-expanded="false" aria-controls="theme-customizer" data-overlay="#theme-customizer">
-      <span class="icon-[tabler--settings] size-6 shrink-0 group-hover:animate-spin"></span>
-    </button>
-    <!-- Theme Customizer Content -->
-    <div id="theme-customizer" class="overlay overlay-open:translate-x-0 b2g6b ytpwj hidden sm:max-w-104" role="dialog" tabindex="-1">
-      <div class="bzzaa border-base-content/20 zz0fc p-4 flex items-center justify-between">
-        <h3 class="bjutc text-base i9hfu">Theme Customizer</h3>
-        <div class="flex items-center gap-2">
-          <!-- Reset Button -->
-          <button type="button" id="reset-customizer" class="btn btn-text btn-circle hcre6 relative group">
-            <span class="icon-[tabler--refresh] size-5"></span>
-            <!-- Notification Badge -->
-            <span id="reset-badge" class="cq5es accgl rounded-full absolute -top-1 -end-1 hidden group-[.update-customizer]:block"></span>
-          </button>
-          <!-- Close Button -->
-          <button type="button" class="btn btn-text btn-circle hcre6" aria-label="Close" data-overlay="#theme-customizer">
-            <span class="icon-[tabler--x] size-5"></span>
-          </button>
-        </div>
-      </div>
-      <div class="ev393 c49nc">
-<!-- Theme Customizer Content -->
-<div class="wanr8 p-4">
-  <!-- Layout Direction Section -->
-  <div class="fcw8q">
-    <h4 class="sqpdw text-sm font-medium uppercase kq1dl">Layout Direction</h4>
-    <div class="w7btb u9i46 gap-2">
-      <button type="button" class="direction-btn [&.direction-active]:text-primary [&.direction-active]:border-primary [&.direction-active]:bg-primary/10 border-base-content/20 c1ztq hover:border-primary/30 group flex items-center justify-center gap-2 rounded-lg p-3 transition-all ja6ua" data-direction="ltr">
-        <span class="icon-[tabler--text-direction-ltr] size-5 shrink-0"></span>
-        <span class="text-md font-medium">LTR</span>
-      </button>
-      <button type="button" class="direction-btn [&.direction-active]:text-primary [&.direction-active]:border-primary [&.direction-active]:bg-primary/10 border-base-content/20 c1ztq hover:border-primary/30 group flex items-center justify-center gap-2 rounded-lg p-3 transition-all ja6ua" data-direction="rtl">
-        <span class="icon-[tabler--text-direction-rtl] size-5 shrink-0"></span>
-        <span class="text-md font-medium">RTL</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Theme Selection Section -->
-  <div class="fcw8q">
-    <h4 class="sqpdw text-sm font-medium uppercase kq1dl">Theme</h4>
-    <div class="fcw8q">
-      <!-- Light Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="light">
-        <span class="text-md font-medium">Light</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Dark Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="dark">
-        <span class="text-md font-medium">Dark</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Black Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="black">
-        <span class="text-md font-medium">Black</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Claude Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="claude">
-        <span class="text-md font-medium">Claude</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Corporate Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="corporate">
-        <span class="text-md font-medium">Corporate</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Ghibli Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="ghibli">
-        <span class="text-md font-medium">Ghibli</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Gourmet Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="gourmet">
-        <span class="text-md font-medium">Gourmet</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Luxury Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="luxury">
-        <span class="text-md font-medium">Luxury</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Mintlify Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="mintlify">
-        <span class="text-md font-medium">Mintlify</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Pastel Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="pastel">
-        <span class="text-md font-medium">Pastel</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Perplexity Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="perplexity">
-        <span class="text-md font-medium">Perplexity</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Shadcn Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="shadcn">
-        <span class="text-md font-medium">Shadcn</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Slack Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="slack">
-        <span class="text-md font-medium">Slack</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Soft Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="soft">
-        <span class="text-md font-medium">Soft</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Spotify Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="spotify">
-        <span class="text-md font-medium">Spotify</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- Valorant Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="valorant">
-        <span class="text-md font-medium">Valorant</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-
-      <!-- VSCode Theme -->
-      <button type="button" class="theme-btn btn btn-soft btn-primary ring-primary group w-full justify-between x7b0l [&.theme-active]:ring" data-theme="vscode">
-        <span class="text-md font-medium">VSCode</span>
-        <span class="flex items-center gap-4">
-          <span class="flex items-center bqrxk">
-            <span class="bg-primary xqqwy h84ju"></span>
-            <span class="ovtv7 xqqwy h84ju"></span>
-            <span class="t06xk xqqwy h84ju"></span>
-            <span class="sd1jw xqqwy h84ju"></span>
-          </span>
-          <span class="icon-[tabler--circle-check] group-[.theme-active]:text-primary hidden size-5 shrink-0 group-[.theme-active]:block"></span>
-          <span class="icon-[tabler--circle] size-5 shrink-0 group-[.theme-active]:hidden"></span>
-        </span>
-      </button>
-    </div>
-  </div>
-</div>
-      </div>
-    </div>
-  </div>
+  <div th:replace="~{theme-customizer :: theme-customizer}"></div>
 
   <!-- Vendors JS -->
   <script src="https://demos.flyonui.com/templates/assets/dist/libs/jquery/dist/jquery.min.js"></script>
