@@ -56,14 +56,20 @@ public class SecurityConfig {
 	protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 				.authorizeHttpRequests((requests) -> requests
+						
+						
 						.requestMatchers("/images/**").permitAll()
 						.requestMatchers("/css/**").permitAll()
 						.requestMatchers("/script/**").permitAll()
 						.requestMatchers("/gif/**").permitAll()
+						.requestMatchers("/assets/**").permitAll()
+						.requestMatchers("/admin/assets/**").permitAll()
+
 						
 						 
 						.requestMatchers("/payment/receipt").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
 						
+						.requestMatchers("/admin/dashboard/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/user/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/request/**").hasAuthority(CommonConstant.ROLE_ADMIN)
@@ -93,8 +99,7 @@ public class SecurityConfig {
 						.requestMatchers("/chat/**").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
 						
 						.requestMatchers("/borrow-when-websocket/**").authenticated()
-						.anyRequest().authenticated()
-						
+										
 						)
 				.formLogin((form) -> form
 						.loginPage("/login")
