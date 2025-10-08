@@ -45,7 +45,13 @@ public class A_UserController {
 		return "user/user-create";
 	}
 	
-	@PostMapping("/create")
+	@GetMapping("/admin/lenders/create")
+	public String showLendersCreateScreen(@ModelAttribute UserDto userWebDto) {
+		
+		return "user/user-lender-create";
+	}
+	
+	@PostMapping("/admin/lenders/create")
 	public String postUserCreateScreen(Model model,
 			@ModelAttribute @Valid UserDto userWebDto,
 			BindingResult result,
@@ -66,7 +72,7 @@ public class A_UserController {
 	        
 	        ra.addFlashAttribute("userDto", userWebDto);
 	        
-	        return "redirect:/admin/user/create";
+	        return "redirect:/admin/borrowers/create";
 		}
 		
 		try {
@@ -82,7 +88,7 @@ public class A_UserController {
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 		}
 
-		return "redirect:/admin/user";
+		return "redirect:/admin/borrowers";
 	}
 	
 	@GetMapping("/edit")

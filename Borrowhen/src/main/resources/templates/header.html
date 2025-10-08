@@ -352,7 +352,7 @@
                <ul class="ose9t menu-sm lg:menu-horizontal bqrxk c49nc">
                   <!-- Regular Menu Item (Level 0) -->
                   <li>
-                     <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/dashboard-ecommerce.html" class="bolet px-2" >
+                     <a th:href="@{/admin/dashboard}" class="bolet px-2" >
                      <span class="icon-[tabler--chart-bar] size-4.5"></span>
                      <span >Dashboard</span>
                      </a>
@@ -418,7 +418,7 @@
                         <!-- Simple Link Item (for nested items) -->
                         <li><a class="dropdown-item " th:href="@{/admin/lenders}" >Lender List</a></li>
                         <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-vendor-create.html" >Lender Create</a></li>
+                        <li><a class="dropdown-item " th:href="@{/admin/lenders/create}" >Lender Create</a></li>
                         <!-- Simple Link Item (for nested items) -->
                         <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-vendor-details.html" >Lender Details</a></li>
                      </ul>
