@@ -53,20 +53,32 @@ async function loadInventories(page = 0) {
         console.log(data);
 
         data.inventories.forEach(inventory => {
-            const row = document.createElement("div");
-            row.classList.add("table-row");
-			row.classList.add("full-width");
+			const row = document.createElement("tr");
+			row.classList.add("border-gray-200")
+	        row.classList.add("border-b");
 			row.setAttribute('data-id', inventory.encryptedId);
 			
-            row.innerHTML = `
-                <div class="table-cell">${inventory.itemName}</div>
-                <div class="table-cell">₱${inventory.price}</div>
-                <div class="table-cell">${inventory.totalQty}</div>
-				<div class="table-cell">${inventory.availableQty}</div>
-                <div class="table-cell">
-					<button class="edit-btn darker" data-id="${inventory.encryptedId}" type="submit"><img src="/images/edit.png"></button>           
-                    <button class="darker"><img src="/images/delete.png"></button>
-                </div>
+			row.innerHTML = `
+				<td><input type="checkbox" class="checkbox checkbox-sm checkbox-primary row-select-checkbox" ></td>   
+				<td>${inventory.itemName}</td>           
+				<td>${inventory.price}</td>
+				<td>${inventory.totalQty}</td>
+              	<td>${inventory.availableQty}</td>
+              	<td>
+					<div class="flex items-center gap-2">
+					  <button type="button" class="btn btn-circle btn-text btn-sm view-btn" data-id="${inventory.encryptedId}" title="View Details">
+					    <span class="icon-[tabler--eye] size-5 text-base-content"></span>
+					  </button>
+	
+					  <button type="button" class="btn btn-circle btn-text btn-sm edit-btn" data-id="${inventory.encryptedId}" title="Edit">
+					    <span class="icon-[tabler--edit] size-5 text-base-content"></span>
+					  </button>
+	
+					  <button type="button" class="btn btn-circle btn-text btn-sm delete-record" data-id="${inventory.encryptedId}" title="Delete">
+					    <span class="icon-[tabler--trash] size-5 text-base-content"></span>
+					  </button>
+					</div>
+              	</td>
             `;
 			
 			row.querySelector('.edit-btn').addEventListener('click', function(){
@@ -77,12 +89,8 @@ async function loadInventories(page = 0) {
 				form.submit();
 			});
 			
-			row.addEventListener('click', function(e) {
+			row.querySelector('.view-btn').addEventListener('click', function(e) {
 			   
-			    if (e.target.closest('button') || e.target.closest('a')) {
-			        return; 
-			    }
-				
 				const encryptedId = this.getAttribute('data-id');
 
 			    window.location.href="/lender/inventory/details?encryptedId=" + encryptedId;
