@@ -22,14 +22,13 @@ import project.borrowhen.dto.UserDto;
 import project.borrowhen.service.UserService;
 
 @Controller
-@RequestMapping("/admin/user")
 public class A_UserController {
 	
 	@Autowired
 	private UserService userService;
 
-	@GetMapping()
-	public String showUserScreen() {
+	@GetMapping("/admin/borrower")
+	public String showBorrowerScreen() {
 
 		return "user/user-view";
 	}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BW | User</title>
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/user/user-view.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="container-msg" id="msgContainer" >
+			<div class="success-msg" th:if="${successMsg != null}">
+				<div class="icon-msg">
+					<img th:src="@{/images/check.png}" alt="success"/>
+				</div>
+				<div class="content-msg">
+					<span class="header-msg">SUCCESS</span>
+					<span class="body-msg" th:text="${successMsg}"></span>
+				</div>
+				<div class="progress-bar"></div>
+			</div>
+			<div class="error-msg" th:if="${errorMsg != null}">
+				<div class="icon-msg">
+					<img th:src="@{/images/check.png}" alt="success"/>
+				</div>
+				<div class="content-msg">
+					<span class="header-msg">ERROR</span>
+					<span class="body-msg" th:text="${errorMsg}"></span>
+				</div>
+				<div class="progress-bar"></div>
+			</div>
+		</div>
+		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
+		<main th:object="${userDto}">
+			<div class="content-header">USERS</div>
+			<div class="content-body">
+				<div class="user-statistics">
+					<div>
+						<label><img th:src="@{/images/friends.png}" >Total Borrower</label>
+						<span>
+							100
+						</span>
+					</div>
+					<div>
+						<label><img th:src="@{/images/friends.png}" >Total Lender</label>
+						<span>
+							100
+						</span>
+					</div>
+				</div>
+				<div class="table-container">
+					<div class="table-buttons">
+						<div class="btns">
+							<a th:href="@{/admin/user/create}" class="button"><img th:src="@{/images/add.png}">ADD USER</a>
+							<div class="search-container">
+								<span><img th:src="@{/images/search-user.png}" alt="search"></span>
+								
+								<input type="search" placeholder="Search" class="search" />
+							</div>
+							
+						</div>
+						<div class="pagination">
+							<button class="prev-btn"><img th:src="@{/images/left-arrow.png}"/> PREV</button>
+							<input class="input-page" type="text" value="1"/>
+							<button class="next-btn" disable>NEXT <img th:src="@{/images/right-arrow.png}"/></button>
+						</div>
+					</div>
+					<div class="table">
+						<div class="table-header">
+							<div class="table-cell"><img th:src="@{/images/user.png}"> NAME</div>
+							<div class="table-cell"><img th:src="@{/images/user.png}"> USER ID</div>
+							<div class="table-cell"><img th:src="@{/images/email.png}"> MOBILE NUMBER</div>
+							<div class="table-cell"><img th:src="@{/images/email.png}"> EMAIL</div>
+							<div class="table-cell"><img th:src="@{/images/email.png}"> ADDRESS</div>
+							<div class="table-cell"><img th:src="@{/images/email.png}"> BIRTH DATE</div>
+							<div class="table-cell"><img th:src="@{/images/setting.png}"> ROLE</div>
+							<div class="table-cell"><img th:src="@{/images/setting.png}"> CREATED DATE</div>
+							<div class="table-cell"><img th:src="@{/images/setting.png}"> UPDATED DATE</div>
+							<div class="table-cell"><img th:src="@{/images/double-tap.png}"> ACTION</div>
+						</div>
+						<div class="table-body" id="table-body">
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<aside th:replace="~{aside/aside :: content}"></aside>
+	</div>
+	<form style="display: none" th:action="@{/admin/user/edit}" method="GET" id="editForm">
+		<input type="hidden" name="encryptedId" value="" id="hiddenEncryptedId"/>
+	</form>
+	<script th:inline="javascript">
+		const webDto = /*[[${userDto}]]*/'';
+		console.log(webDto);
+	</script>
+	<script th:src="@{/script/pagination.js}"></script>
+	<script th:src="@{/script/loading.js}"></script>
+	<script th:src="@{/script/user/user-api.js}"></script>
+</body>
+</html>

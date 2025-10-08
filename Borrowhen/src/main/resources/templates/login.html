@@ -1,33 +1,197 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+<html lang="en" data-theme="corporate" data-assets-path="../../assets/" data-layout-path="dashboard-ecommerce/" dir="ltr" class="rwfrf">
+
+
+<!-- Mirrored from demos.flyonui.com/templates/html/dashboard-ecommerce/auth-login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Oct 2025 01:45:02 GMT -->
 <head>
-<meta charset="UTF-8">
-<title>BORROWHEN | Login</title>
-<link rel="stylesheet" th:href="@{/css/common.css}">
-<link rel="stylesheet" th:href="@{/css/login.css}">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Borrowhen | Login</title>
+
+  <!-- Canonical SEO -->
+  <meta name="keywords" content="FlyonUI dashboard, FlyonUI dashboard, flyonui, html dashboard, web dashboard, frontend dashboard, responsive FlyonUI theme" />
+  <meta property="og:title" content="Tailwind CSS Dashboard by FlyonUI" />
+  <meta property="og:type" content="product" />
+  <meta property="og:url" content="https://flyonui.com/templates" />
+  <meta property="og:image" content="https://cdn.flyonui.com/fy-assets/landing-page/template-page/dashboard/dashboard-default-1.png" />
+  <meta property="og:description" content=" FlyonUIPro is the best FlyonUI dashboard for responsive web apps. Streamline your app development process with ease." />
+  <meta property="og:site_name" content="FlyonUI" />
+  <link rel="canonical" href="https://flyonui.com/templates" />
+  
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-XXXXXX');
+  </script>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://demos.flyonui.com/templates/assets/img/common/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Fira+Code:wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
+
+  <!-- Core CSS -->
+  <!-- endbuild -->
+
+  <!-- Vendor CSS -->
+
+  <!-- build:css -->
+  <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/css/output.css" />
+
+  <!-- Page CSS -->
+
+  <!-- Theme JS -->
+  <script type="text/javascript">
+    (function () {
+      try {
+        const root = document.documentElement;
+        const layoutPath = root.getAttribute('data-layout-path')?.replace('https://demos.flyonui.com/', '') || 'dashboard-default';
+        const localStorageKey = `${layoutPath}-theme`;
+
+        // Theme configuration loaded from page-config.json at build time
+        window.THEME_CONFIG = {"dashboard-ecommerce":{"default":"corporate","light":"corporate","dark":"corporate-dark","system":{"light":"corporate","dark":"corporate-dark"}}};
+
+        // Get current system theme preference
+        const getSystemPreference = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        // Resolve theme based on user selection and layout configuration
+        const resolveTheme = (selectedTheme, layoutPath) => {
+          const layoutConfig = window.THEME_CONFIG[layoutPath];
+          if (!layoutConfig) return selectedTheme === 'system' ?
+            (getSystemPreference() ? 'dark' : 'light') : selectedTheme;
+
+          if (selectedTheme === 'system') {
+            const systemConfig = layoutConfig.system;
+            const prefersDark = getSystemPreference();
+            return prefersDark ? systemConfig.dark : systemConfig.light;
+          }
+
+          return layoutConfig[selectedTheme] || selectedTheme || layoutConfig.default || 'light';
+        };
+
+        const savedTheme = localStorage.getItem(localStorageKey) || 'system';
+        const resolvedTheme = resolveTheme(savedTheme, layoutPath);
+
+        root.setAttribute('data-theme', resolvedTheme);
+      } catch (e) {
+        console.warn('Early theme script error:', e);
+      }
+    }) ();
+  </script>
 </head>
+
 <body>
-	
-	<main class="container">
-		<div class="content">
-			<div class="content-header">USER LOGIN</div>
-			<form th:action="@{/login}" method="POST">
-				
-					<input type="text" placeholder="Enter username" name="userId" class="glass-input">
-				
-			
-					<input type="password" placeholder="Enter password" name="password" class="glass-input">
-			
-				<div class="btn-group">
-					<button class="glass-button">SIGN IN</button>
-				</div>
-			</form>
-			<div class="link-group">
-				<div>Forgot Password? <a href="#">Click Here</a></div>
-				<div>Don't have an account? <a href="#">Sign up</a></div>
-			</div>
-		</div>
-		
-	</main>
+  
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+  
+
+  <div class="fixed kimw1 iujut z-[3]">
+    <a href="https://flyonui.com/pro#pricing" target="_blank" class="btn l9lk7 shadow-lg o4s8d">Buy Now</a>
+  </div>
+
+  <!-- Layout wrapper -->
+<!-- Content -->
+<div class="h-dvh lg:grid lg:grid-cols-6">
+  <div class="max-lg:hidden lg:col-span-3 xl:col-span-4 bg-blue-500">
+    <div class="flex j5zp5 items-center justify-center bg- uddq3 exf6f vlaa8 bg-blue-500">
+      
+      <img th:src="@{/images/logo.png}" class="mst32 hw1uo" alt="Dashboards" />
+    </div>
+  </div>
+  <div class="bg-base-100 flex flex-col items-center justify-center lg:col-span-3 xl:col-span-2">
+    <div class="w-full cq3xr ae2xj">
+      <div class="group lmos1 flex items-center gap-2 sm:mb-16 lg:mb-24">
+        <span class="icon-[tabler--chevron-left] size-5.5 shrink-0 hvz19 group-hover:-translate-x-1 rtl:rotate-180"></span>
+        <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="cdtv8 tmsli">Back to the website</a>
+      </div>
+      <div class="flex flex-col wanr8">
+        <div class="flex items-center gap-3">
+          <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="flex items-center gap-3">
+              
+				<img th:src="@{/images/logo.png}" class="w-6 h-6" />
+
+
+            	<h2 class="text-base-content runqr w31vy">Borrowhen</h2>
+          </a>
+        </div>
+        <div>
+          <h3 class="text-base-content f7e7a yw602 i9hfu">Sign in</h3>
+          <p class="text-base-content/80">Borrow</p>
+        </div>
+        <div class="flex wcs4q gap-4 sm:gap-6">
+          <a href="#" class="btn ifc49 btn-primary ij0d7">Login as Borrower</a>
+          <a href="#" class="btn ifc49 btn-primary ij0d7">Login as Lender</a>
+        </div>
+        <form class="l72c0 otg2n" th:action="@{/login}" method="POST">
+          <div>
+            <label class="tglh5" for="userEmail">User Id*</label>
+            <input type="text" placeholder="Enter your user id" class="eamhj" id="userEmail" name="userId" required />
+          </div>
+          <div>
+            <label class="tglh5" for="userPassword">Password*</label>
+            <div class="eamhj">
+              <input id="userPassword" type="password" placeholder="············" name="password" required />
+              <button type="button" data-toggle-password='{ "target": "#userPassword" }' class="block cursor-pointer" aria-label="userPassword">
+                <span class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
+                <span class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
+              </button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between y6pzn">
+            <div class="flex items-center gap-2">
+              <input type="checkbox" class="checkbox checkbox-primary checkbox-sm" id="rememberMe" />
+              <label class="tglh5 text-base-content/80 c49nc text-base" for="rememberMe">Remember Me</label>
+            </div>
+            <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/auth-forgot-password-2.html" class="cdtv8 tmsli kfxi3 k1ga8">Forgot Password?</a>
+          </div>
+          <button class="btn q7vz5 btn-primary hg2ja ccu1y" type="submit">Sign in</button>
+        </form>
+        <p class="text-base-content/80 l72c0 text-center">
+          New on our platform?
+          <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/auth-register-2.html" class="cdtv8 tmsli kfxi3 k1ga8">Create an account</a>
+        </p>
+        <div class="g5y2o">or</div>
+        <button class="btn btn-text ccu1y">
+          <img src="https://demos.flyonui.com/templates/assets/img/common/icons/brands/google.png" alt="google icon" class="size-5 hw1uo" />
+          Sign in with google
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- / Content -->
+  <!-- Theme Customizer -->
+    <div th:replace="~{theme-customizer :: theme-customizer}"></div>
+
+  <script src="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/flyonui.js"></script>
+  <script src="https://demos.flyonui.com/templates/assets/dist/js/theme-utils.js"></script>
+  <script src="https://demos.flyonui.com/templates/assets/dist/js/main.js"></script>
+  <script src="https://demos.flyonui.com/templates/assets/dist/js/common/theme-customizer.js"></script>
+  <script src="https://demos.flyonui.com/templates/assets/dist/js/common/search.js"></script>
+  <button id="scrollToTopBtn" class="btn btn-circle btn-soft btn-secondary/20 vzdkh m5eeu lf7e7 s0ezv pv2yq fixed absolute z-[3] hidden" aria-label="Circle Soft Icon Button"><span class="icon-[tabler--chevron-up] size-5 shrink-0"></span></button>
 </body>
+
+
+<!-- Mirrored from demos.flyonui.com/templates/html/dashboard-ecommerce/auth-login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Oct 2025 01:45:02 GMT -->
 </html>

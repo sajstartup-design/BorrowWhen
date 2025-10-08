@@ -345,12 +345,16 @@
 	              Orders
 	            </a>
 	          </li>
-	          <li class="jnyiq p-2 rtqzx">
-	            <a class="btn btn-text l9lk7 ccu1y f0n0f d7ium px-3 k1ga8">
-	              <span class="icon-[tabler--logout] size-5"></span>
-	              Logout
-	            </a>
-	          </li>
+				<li class="jnyiq p-2 rtqzx">
+				  <form th:action="@{/logout}" method="post" class="w-full">
+				    <button type="submit"
+				      class="btn btn-text l9lk7 ccu1y f0n0f d7ium px-2 k1ga8 w-full flex items-center">
+				      <span class="icon-[tabler--logout] size-5 mr-2"></span>
+				      Logout
+				    </button>
+				  </form>
+				</li>
+
 	        </ul>
 	      </div>
 	    </div>
@@ -358,18 +362,7 @@
 	    <!-- Layout Menu -->
 	    <div class="collapse hidden tvu2i overflow-x-auto transition-[height] duration-300 [scrollbar-width:thin] max-lg:w-full max-lg:overflow-hidden lg:order-3 lg:block lg:basis-auto" id="navbar-collapse-heading" aria-labelledby="navbar-collapse">
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	<ul class="ose9t menu-sm lg:menu-horizontal bqrxk c49nc">
 	    
 	    <!-- Regular Menu Item (Level 0) -->
@@ -436,7 +429,7 @@
 	        <ul class="dropdown-menu dropdown-open:opacity-100 max-lg:before:bg-base-content/10 hidden before:absolute before:start-0 before:top-3 before:w-px max-lg:ms-4 max-lg:mt-1 max-lg:p-0 max-lg:ps-2 max-lg:shadow-none max-lg:duration-100 max-lg:before:bottom-3 lg:before:-top-4 lg:before:h-5 lg:before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-ecommerce-customer">
 	            
 	    <!-- Simple Link Item (for nested items) -->
-	    <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-customer-all.html" >All Borrowers</a></li>
+	    <li><a class="dropdown-item " th:href="@{/admin/borrower}" >All Borrowers</a></li>
 	
 	            
 	    <!-- Simple Link Item (for nested items) -->

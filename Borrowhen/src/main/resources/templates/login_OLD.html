@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BORROWHEN | Login</title>
+<link rel="stylesheet" th:href="@{/css/common.css}">
+<link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+	
+	<main class="container">
+		<div class="content">
+			<div class="content-header">USER LOGIN</div>
+			<form th:action="@{/login}" method="POST">
+				
+					<input type="text" placeholder="Enter username" name="userId" class="glass-input">
+				
+			
+					<input type="password" placeholder="Enter password" name="password" class="glass-input">
+			
+				<div class="btn-group">
+					<button class="glass-button">SIGN IN</button>
+				</div>
+			</form>
+			<div class="link-group">
+				<div>Forgot Password? <a href="#">Click Here</a></div>
+				<div>Don't have an account? <a href="#">Sign up</a></div>
+			</div>
+		</div>
+		
+	</main>
+</body>
+</html>

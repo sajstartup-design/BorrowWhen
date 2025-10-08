@@ -70,7 +70,7 @@ public class SecurityConfig {
 						.requestMatchers("/payment/receipt").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
 						
 						.requestMatchers("/admin/dashboard/**").hasAuthority(CommonConstant.ROLE_ADMIN)
-						.requestMatchers("/admin/user/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+						.requestMatchers("/admin/borrower/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/request/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						
@@ -99,7 +99,8 @@ public class SecurityConfig {
 						.requestMatchers("/chat/**").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
 						
 						.requestMatchers("/borrow-when-websocket/**").authenticated()
-										
+						
+						.anyRequest().authenticated()										
 						)
 				.formLogin((form) -> form
 						.loginPage("/login")
