@@ -47,15 +47,18 @@ public class L_InventoryController {
 		
 		if(result.hasErrors()) {
 			
-			Map<String, String> fieldErrors = result.getFieldErrors()
-	                .stream()
-	                .collect(Collectors.toMap(
-	                        FieldError::getField, 
-	                        DefaultMessageSourceResolvable::getDefaultMessage,
-	                        (existing, replacement) -> existing 
-	                ));
-
-	        ra.addFlashAttribute("fieldErrors", fieldErrors);
+//			Map<String, String> fieldErrors = result.getFieldErrors()
+//	                .stream()
+//	                .collect(Collectors.toMap(
+//	                        FieldError::getField, 
+//	                        DefaultMessageSourceResolvable::getDefaultMessage,
+//	                        (existing, replacement) -> existing 
+//	                ));
+//
+//	        ra.addFlashAttribute("fieldErrors", fieldErrors);
+	        
+	        ra.addFlashAttribute("isError", true);
+	        ra.addFlashAttribute("errorMsg", MessageConstant.FIELDS_BLANK);
 	        
 	        ra.addFlashAttribute("inventoryDto", inventoryWebDto);
 	        
@@ -66,12 +69,14 @@ public class L_InventoryController {
 			
 			inventoryService.saveInventory(inventoryWebDto);
 			
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.INVENTORY_CREATE_MSG);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 		}
 		

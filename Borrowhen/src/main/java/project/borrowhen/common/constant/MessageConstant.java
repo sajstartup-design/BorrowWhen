@@ -26,6 +26,8 @@ public class MessageConstant {
 	public static final String OWNER_BLANK = "This field mst not be blank.";
 	
     public static final String REGISTER_SUCCESS = "Thank you for registering with us. Enjoy!";
+    
+    public static final String FIELDS_BLANK = "Please fill all the fields!";
 	
 	
 	

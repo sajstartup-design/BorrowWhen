@@ -1,62 +1,207 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>BW | Inventory Add</title>
-<link rel="stylesheet" th:href="@{/css/common.css}" />
-<link rel="stylesheet" th:href="@{/css/user/user-create.css}" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
-<body>
-	<div class="container">
-		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
-		<main>
-			<div class="content-header">INVENTORY > ADD ITEM</div>
-			<div class="content-body">
-				<div class="content">
-					<form th:action="@{/lender/inventory/create}" th:object="${inventoryDto}" method="POST" id="saveForm">
-					    <div class="field bold">
-					        <label>ITEM INFORMATION</label>
-					    </div>
-						<hr class="soft-gradient">
-					    <div class="field">
-					        <label>ITEM NAME</label>
-					        <input type="text" name="itemName"  th:value="*{itemName}" />
-					        <span class="error"
-					              th:if="${fieldErrors != null and fieldErrors.containsKey('itemName')}"
-					              th:text="${fieldErrors['itemName']}"></span>
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>PRICE</label>
-					        <input type="text" name="price" class="price-input"  th:value="*{price}" />
-					        <span class="error"
-					              th:if="${fieldErrors != null and fieldErrors.containsKey('price')}"
-					              th:text="${fieldErrors['price']}"></span>
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>TOTAL QTY</label>
-					        <input type="number" name="totalQty" th:value="*{totalQty}"/>
-					        <span class="error"
-					              th:if="${fieldErrors != null and fieldErrors.containsKey('totalQty')}"
-					              th:text="${fieldErrors['totalQty']}"></span>
-					    </div>
-					    
-					</form>
-					<div class="form-btn">
-						<a class="button" th:href="@{/lender/inventory}"><img th:src="@{/images/left-arrow.png}"> BACK</a>
-						<button type="submit" form="saveForm" class="save-btn">SAVE</button>
-					</div>
-				</div>			
-			</div>
-		</main>
-		<aside th:replace="~{aside/aside :: content}"></aside>
-	</div>
-	<script th:src="@{/script/loading.js}"></script>
-	<script th:src="@{/script/submit.js}"></script>
-	<!-- <script th:src="@{/script/inputUtil.js}"></script> -->
-</body>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-theme="corporate" data-assets-path="../../assets/" data-layout-path="dashboard-ecommerce/" dir="ltr" class="rwfrf">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Borrowhen | Borrower | Create</title>
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" href="https://demos.flyonui.com/templates/assets/img/common/favicon/favicon.ico" />
+      <!-- Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com/" />
+      <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Fira+Code:wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/css/output.css" />
+      <link rel="stylesheet" th:href="@{/css/input.css}" />
+      <!-- Theme JS -->
+      <script type="text/javascript" th:src="@{/script/theme.js}"></script>
+   </head>
+   <body>
+      <th:block th:if="${isSuccess}">
+		 <div th:replace="~{alert :: success}"></div>
+	  </th:block>
+      <th:block th:if="${isError}">
+	     <div th:replace="~{alert :: error}"></div>
+	  </th:block>
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+      <div class="bg-base-200 flex min-h-screen flex-col">
+         <!-- Layout Navbar -->
+         <!-- ---------- HEADER ---------- -->
+         <div th:replace="~{header :: header-lender}"></div>
+         <!-- ---------- END HEADER ---------- -->
+         <!-- Layout Container -->
+         <main class="hmc58">
+            <div class="bg-primary wedi4"></div>
+            <div class="max-w-[1536px] hmos0 yt5gg djsg9 pvq5y">
+               <!-- Breadcrumb -->
+               <div class="flex wcs4q items-center justify-between p-2">
+                  <div class="ymtjh">
+                     <ul class="yknjh">
+                        <li>
+                           <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="t0ywj hover:text-white">
+                           <span class="icon-[tabler--smart-home] size-5"></span>
+                           </a>
+                        </li>
+                        <li class="y8z3g rtl:rotate-180">
+                           <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
+                        </li>
+                        <li>
+                           <a th:href="@{/lender/dashboard}" class="t0ywj hover:text-white text-sm">Borrowhen</a>
+                        </li>
+                        <li class="y8z3g rtl:rotate-180">
+                           <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
+                        </li>
+                        <li>
+                           <a th:href="@{/lender/inventory}" class="t0ywj hover:text-white text-sm">Inventory</a>
+                        </li>
+                        <li class="y8z3g rtl:rotate-180">
+                           <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
+                        </li>
+                        <li aria-current="page">
+                           <span class="t0ywj text-sm i9hfu">Add Item</span>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <hr class="cql0n" />
+               <div class="flex wcs4q justify-between gap-4 s2upt">
+                  <div class="flex items-center gap-4">
+                     <div class="avatar avatar-placeholder">
+                        <div class="text-primary rounded-box ijx64 nzh2g">
+                           <span class="icon-[tabler--chart-pie] jgmt6"></span>
+                        </div>
+                     </div>
+                     <div class="flex flex-col gap-0.5">
+                        <span class="t0ywj runqr i9hfu">Add Item</span>
+                     </div>
+                  </div>
+               </div>
+               <!-- ✅ FORM START -->
+               <form th:action="@{/lender/inventory/create}" method="POST" class="yzl9f bg-base-100 wanr8 e2zhm djsg9 shadow-md">
+                  <div class="lg:gap-7.5 w7btb bkumc ytmr9 xl:grid-cols-3">
+                     <!-- Main Content -->
+                     <div class="vax7b xl:col-span-2">
+                        <!-- Basic Information -->
+                        <div class="z5a1v jvk09 tqj18">
+                           <div class="i6aot">
+                              <h5 class="text-base-content e9cu5 font-medium">Item Information</h5>
+                           </div>
+                           <div class="od7oo">
+                              <div class="w7btb bkumc ytmr9 md:grid-cols-2">
+                                 <!-- Name -->
+                                 <div>
+                                    <label class="tglh5" for="itemName">Item Name</label>
+                                    <input type="text" class="eamhj" id="itemName" name="itemName" placeholder="Sample Item" required />
+                                 </div>
+                                 <!-- Price -->
+                                 <div>
+                                    <label class="tglh5" for="itemPrice">Price</label>
+                                    <input type="text" class="eamhj" id="itemPrice" name="price" placeholder="100.00" required />
+                                 </div>
+                                 <!-- Total Qty -->
+                                 <div>
+                                    <label class="tglh5" for="itemQty">Total Qty</label>
+                                    <input type="text" class="eamhj" id="itemQty" name="totalQty" placeholder="10" required />
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Sidebar -->
+                     <div class="wanr8">
+                        <!-- Store Information Preview -->
+                        <div class="z5a1v jvk09 tqj18">
+                           <div class="i6aot">
+                              <h5 class="text-base-content e9cu5 font-medium">Item Information Preview</h5>
+                           </div>
+                           <div class="od7oo otg2n space-y-3">
+                              <div>
+                                 <p class="font-medium text-sm text-gray-500">Item Name</p>
+                                 <p id="previewName" class="text-base-content break-all whitespace-pre-wrap w-full block">—</p>
+                              </div>
+                              <div>
+                                 <p class="font-medium text-sm text-gray-500">Price</p>
+                                 <p id="previewGender" class="text-base-content break-all whitespace-pre-wrap w-full block">—</p>
+                              </div>
+                              <div>
+                                 <p class="font-medium text-sm text-gray-500">Total Qty</p>
+                                 <p id="previewBirthDate" class="text-base-content break-all whitespace-pre-wrap w-full block">—</p>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Action Buttons -->
+                        <div class="flex items-center lg4ss gap-3 mt-4">
+                           <a th:href="@{/admin/lenders}" class="btn btn-soft iiu9r">Cancel</a>
+                           <button type="submit" class="btn btn-primary">
+                           <span class="icon-[tabler--check] size-4"></span>
+                           Add Item
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+               <!-- ✅ FORM END -->
+            </div>
+            <!-- Footer -->
+            <footer th:replace="~{footer :: footer}"></footer>
+         </main>
+         <!-- / Layout Container -->
+      </div>
+      <!-- / Layout Wrapper -->
+      <!-- Theme Customizer -->
+      <div th:replace="~{theme-customizer :: theme-customizer}"></div>
+      <script src="https://demos.flyonui.com/templates/assets/dist/libs/dropzone/dist/dropzone-min.js"></script>
+      <script src="https://demos.flyonui.com/templates/assets/dist/libs/lodash/lodash.min.js"></script>
+      <script src="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/flyonui.js"></script>
+      <script src="https://demos.flyonui.com/templates/assets/dist/js/theme-utils.js"></script>
+      <script src="https://demos.flyonui.com/templates/assets/dist/js/main.js"></script>
+      <script src="https://demos.flyonui.com/templates/assets/dist/js/common/theme-customizer.js"></script>
+      <script src="https://demos.flyonui.com/templates/assets/dist/js/common/search.js"></script>
+      <button id="scrollToTopBtn" class="btn btn-circle btn-soft btn-secondary/20 vzdkh m5eeu lf7e7 s0ezv pv2yq fixed absolute z-[3] hidden" aria-label="Circle Soft Icon Button"><span class="icon-[tabler--chevron-up] size-5 shrink-0"></span></button>
+      <script>
+         document.addEventListener("DOMContentLoaded", function () {
+           const inputs = {
+             name: document.getElementById("itemName"),
+             price: document.getElementById("itemPrice"),
+             qty: document.getElementById("itemQty"),
+           };
+         
+           const preview = {
+             name: document.getElementById("previewName"),
+             price: document.getElementById("previewGender"),   // price placeholder
+             qty: document.getElementById("previewBirthDate"), // qty placeholder
+           };
+         
+           function updatePreview() {
+             preview.name.textContent = inputs.name.value || "—";
+         
+             // Format price: only numbers and dot
+             let priceVal = inputs.price.value.replace(/[^\d.]/g, '');
+             inputs.price.value = priceVal; // update field to remove invalid chars
+             preview.price.textContent = priceVal ? `₱ ${priceVal}` : "—";
+         
+             // Format qty: only numbers
+             let qtyVal = inputs.qty.value.replace(/\D/g, '');
+             inputs.qty.value = qtyVal; // update field to remove invalid chars
+             preview.qty.textContent = qtyVal ? `${qtyVal} pcs` : "—";
+           }
+         
+           Object.values(inputs).forEach((input) => {
+             input.addEventListener("input", updatePreview);
+           });
+         
+           updatePreview();
+         });
+      </script>
+   </body>
 </html>
