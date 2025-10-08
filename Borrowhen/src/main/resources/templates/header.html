@@ -147,7 +147,7 @@
                         <!-- Simple Link Item (for nested items) -->
                         <li><a class="dropdown-item " th:href="@{/admin/inventory}" >Inventory List</a></li>
                         <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-product-add.html" >Inventory Create</a></li>
+                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-product-add.html" >Add Item</a></li>
                      </ul>
                   </li>
                   <!-- Dropdown Menu Item (Level 0) -->
@@ -185,7 +185,7 @@
                         <!-- Simple Link Item (for nested items) -->
                         <li><a class="dropdown-item " th:href="@{/admin/lenders}" >Lender List</a></li>
                         <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " th:href="@{/admin/lenders/create}" >Lender Create</a></li>
+                        <li><a class="dropdown-item " th:href="@{/admin/lenders/create}" >Add Lender</a></li>
                         <!-- Simple Link Item (for nested items) -->
                         <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-vendor-details.html" >Lender Details</a></li>
                      </ul>
@@ -336,8 +336,8 @@
                            </div>
                         </div>
                         <div>
-                           <h6 class="text-base-content mb-0.5 i9hfu">Phil Ohme</h6>
-                           <p class="font-medium">@philOhme</p>
+                           <h6 class="text-base-content mb-0.5 i9hfu" th:text="${session.fullname}">Lender</h6>
+                           <p class="font-medium" th:text="'@' + ${session.userId}">@userId</p>
                         </div>
                      </li>
                      <li>
@@ -412,7 +412,7 @@
                         <!-- Simple Link Item (for nested items) -->
                         <li><a class="dropdown-item " th:href="@{/lender/inventory}" >Inventory List</a></li>
                         <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " th:href="@{/lender/inventory/create}">Inventory Create</a></li>
+                        <li><a class="dropdown-item " th:href="@{/lender/inventory/create}">Add Item</a></li>
                      </ul>
                   </li>
                   <!-- Dropdown Menu Item (Level 0) -->
