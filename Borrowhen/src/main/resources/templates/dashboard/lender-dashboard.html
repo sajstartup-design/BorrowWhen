@@ -33,9 +33,6 @@
    </head>
    <body>
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
-      <div class="fixed kimw1 iujut z-[3]">
-         <a href="https://flyonui.com/pro#pricing" target="_blank" class="btn l9lk7 shadow-lg o4s8d">Buy Now</a>
-      </div>
       <!-- Layout wrapper -->
       <!-- Layout wrapper -->
       <div class="bg-base-200 flex min-h-screen flex-col">
@@ -115,7 +112,7 @@
                      </div>
                      <div class="flex flex-col gap-0.5">
                         <span class="t0ywj runqr i9hfu">eCommerce Dashboard</span>
-                        <span class="t0ywj">Earning Reports</span>
+                        <span class="t0ywj" th:text="'Hello, ' + ${session.userId}"></span>
                      </div>
                   </div>
                   <div class="flex items-center gap-4 sm:gap-9">
