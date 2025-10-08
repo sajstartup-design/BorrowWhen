@@ -554,7 +554,7 @@
                            </div>
                         </div>
                         <div>
-                           <h6 class="text-base-content mb-0.5 i9hfu" th:text="${session.fullname}">Lender</h6>
+                           <h6 class="text-base-content mb-0.5 i9hfu" th:text="${session.fullname}">Borrower</h6>
                            <p class="font-medium" th:text="'@' + ${session.userId}">@userId</p>
                         </div>
                      </li>
@@ -628,9 +628,7 @@
                      </button>
                      <ul class="dropdown-menu dropdown-open:opacity-100 max-lg:before:bg-base-content/10 hidden before:absolute before:start-0 before:top-3 before:w-px max-lg:ms-4 max-lg:mt-1 max-lg:p-0 max-lg:ps-2 max-lg:shadow-none max-lg:duration-100 max-lg:before:bottom-3 lg:before:-top-4 lg:before:h-5 lg:before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-ecommerce">
                         <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " th:href="@{/lender/inventory}" >Inventory List</a></li>
-                        <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " th:href="@{/lender/inventory/create}">Add Item</a></li>
+                        <li><a class="dropdown-item " th:href="@{/inventory}" >Inventory List</a></li>
                      </ul>
                   </li>
                   <!-- Dropdown Menu Item (Level 0) -->
