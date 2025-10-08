@@ -27,10 +27,16 @@ public class A_UserController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/admin/borrower")
+	@GetMapping("/admin/borrowers")
 	public String showBorrowerScreen() {
 
-		return "user/user-view";
+		return "user/user-borrower-view";
+	}
+	
+	@GetMapping("/admin/lenders")
+	public String showLenderScreen() {
+
+		return "user/user-lender-view";
 	}
 	
 	@GetMapping("/create")

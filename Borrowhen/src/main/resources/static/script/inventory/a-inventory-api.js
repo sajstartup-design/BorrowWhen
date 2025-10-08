@@ -74,7 +74,7 @@ async function loadInventories(page = 0, search = "") {
 	              <td>${inventory.updatedDate}</td>
 	              <td>
 	               <div class="flex items-center gap-2">
-		              <a href="ecommerce-vendor-details.html" class="btn btn-circle btn-text btn-sm view-btn" title="View Details">
+		              <a class="btn btn-circle btn-text btn-sm view-btn" title="View Details">
 		                <span class="icon-[tabler--eye] size-5 text-base-content"></span>
 		              </a>
 		              <a href="ecommerce-vendor-create.html" class="btn btn-circle btn-text btn-sm edit-btn" title="Edit">

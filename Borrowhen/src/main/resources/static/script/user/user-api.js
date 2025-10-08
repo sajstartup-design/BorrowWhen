@@ -64,7 +64,6 @@ async function loadUsers(page = 0,
 	search = ""
 ) {
     try {
-		console.log(search);
 		const params = new URLSearchParams({ page, search });
 				
 		const url = `/api/admin/users?${params.toString()}`;
@@ -72,8 +71,6 @@ async function loadUsers(page = 0,
         const response = await fetch(url);
         const data = await response.json();
 		
-		console.log(data);
-
         updatePagination(data.pagination);
 
         const tableBody = document.getElementById("table-body");
@@ -82,11 +79,42 @@ async function loadUsers(page = 0,
         const fragment = document.createDocumentFragment();
 
         data.users.forEach(user => {
-            const row = document.createElement("div");
-            row.classList.add("table-row");
+			const row = document.createElement("tr");
+			row.classList.add("border-gray-200")
+            row.classList.add("border-b");
 			row.setAttribute('data-id', user.encryptedId);
+			
+			row.innerHTML = `
+				<td><input type="checkbox" class="checkbox checkbox-sm checkbox-primary row-select-checkbox" ></td>
+				<td>
+				  <div class="flex flex-col">
+				    <span class="font-medium">${user.firstName} ${user.familyName}</span>
+				    <span class="text-sm text-gray-500">${user.userId}</span>
+				  </div>
+				</td>	              
+				<td>${user.emailAddress}</td>
+				<td>${user.phoneNumber}</td>
+              	<td>${user.birthDate}</td>
+              	<td>${user.createdDate}</td>
+              	<td>${user.updatedDate}</td>
+              	<td>
+					<div class="flex items-center gap-2">
+					  <button type="button" class="btn btn-circle btn-text btn-sm view-btn" data-id="${user.encryptedId}" title="View Details">
+					    <span class="icon-[tabler--eye] size-5 text-base-content"></span>
+					  </button>
+	
+					  <button type="button" class="btn btn-circle btn-text btn-sm edit-btn" data-id="${user.encryptedId}" title="Edit">
+					    <span class="icon-[tabler--edit] size-5 text-base-content"></span>
+					  </button>
+	
+					  <button type="button" class="btn btn-circle btn-text btn-sm delete-record" data-id="${user.encryptedId}" title="Delete">
+					    <span class="icon-[tabler--trash] size-5 text-base-content"></span>
+					  </button>
+					</div>
+              	</td>
+            `;
 
-            row.innerHTML = `
+/*            row.innerHTML = `
                 <div class="table-cell">${user.firstName} ${user.familyName}</div>
                 <div class="table-cell">${user.userId}</div>
                 <div class="table-cell">${user.phoneNumber}</div>
@@ -104,7 +132,7 @@ async function loadUsers(page = 0,
 		                    : `<button class="delete-btn darker disabled" disabled title="User has pending requests"><img src="/images/delete.png"></button>`
 		            }
                 </div>
-            `;
+            `;*/
 			
 			row.querySelector('.edit-btn').addEventListener('click', function(){
 				const form = document.querySelector('#editForm');
@@ -114,12 +142,8 @@ async function loadUsers(page = 0,
 				form.submit();
 			});
 			
-			row.addEventListener('click', function(e) {
-			   
-			    if (e.target.closest('button') || e.target.closest('a')) {
-			        return; 
-			    }
-				
+			row.querySelector('.view-btn').addEventListener('click', function() {
+			   				
 				const encryptedId = this.getAttribute('data-id');
 
 			    window.location.href="/admin/user/details?encryptedId=" + encryptedId;
