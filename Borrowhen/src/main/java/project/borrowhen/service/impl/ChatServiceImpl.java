@@ -150,11 +150,9 @@ public class ChatServiceImpl implements ChatService {
 			obj.setEncryptedConversationId(cipherUtil.encrypt(String.valueOf(conversation.getConversationId())));
 			
 			if(conversation.getSenderId() == sessionUser.getId()) {
-				obj.setFirstName(conversation.getReceiverFirstName());
-				obj.setFamilyName(conversation.getReceiverFamilyName());
+				obj.setFullName(conversation.getReceiverFullName());
 			}else {
-				obj.setFirstName(conversation.getSenderFirstName()); 
-				obj.setFamilyName(conversation.getSenderFamilyName());
+				obj.setFullName(conversation.getSenderFullName());
 			}
 			
 			boolean isLastMessage = sessionUser.getId() == conversation.getLastSenderId();

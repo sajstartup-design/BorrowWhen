@@ -9,9 +9,7 @@ public class ChatObj {
 
 	private String encryptedConversationId;
 	
-	private String firstName;
-	
-	private String familyName;
+	private String fullName;
 	
 	private String lastMessage;
 	

@@ -19,8 +19,7 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	public final String GET_ALL_INVENTORY =
 		    "SELECT new project.borrowhen.dao.entity.InventoryData(" +
 		    "   e.id, " +
-		    "   u.firstName, " +
-		    "   u.familyName, " +
+		    "   u.fullName, " +
 		    "   e.itemName, " +
 		    "   e.price, " +
 		    "   e.totalQty, " +
@@ -42,8 +41,7 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    "AND ( " +
 		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
 		    "       LOWER(e.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "       LOWER(u.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "       LOWER(u.familyName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
 		    "       CAST(e.price AS string) LIKE CONCAT('%', :search, '%') OR " +
 		    "       CAST(e.totalQty AS string) LIKE CONCAT('%', :search, '%')" +
 		    "   )) " +

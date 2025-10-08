@@ -17,10 +17,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	public final String GET_ALL_BORROW_REQUESTS =
 		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +
 		    " br.id, " +                         
-		    " borrower.firstName, " +            
-		    " borrower.familyName, " +            
-		    " lender.firstName, " +             
-		    " lender.familyName, " +             
+		    " borrower.fullName, " +                    
+		    " lender.fullName, " +                     
 		    " br.itemName, " +                    
 		    " br.price, " +                     
 		    " br.qty, " +                        
@@ -41,10 +39,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	public final String GET_ALL_OWNED_BORROW_REQUESTS_FOR_LENDER =
 		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +
 		    " br.id, " +                         
-		    " borrower.firstName, " +            
-		    " borrower.familyName, " +            
-		    " lender.firstName, " +              
-		    " lender.familyName, " +              
+		    " borrower.fullName, " +                       
+		    " lender.fullName, " +                       
 		    " br.itemName, " +                    
 		    " br.price, " +                      
 		    " br.qty, " +                        
@@ -61,7 +57,7 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    "AND i.userId = :userId " +
 		    "AND ( :search IS NULL OR :search = '' OR " +
 		    "      LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "      LOWER(CONCAT(borrower.firstName, ' ', borrower.familyName)) LIKE LOWER(CONCAT('%', :search, '%')) OR " + // ✅ search borrower full name
+		    "      LOWER(borrower.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " + // ✅ search borrower full name
 		    "      CAST(br.price AS string) LIKE CONCAT('%', :search, '%') OR " +
 		    "      CAST(br.qty AS string) LIKE CONCAT('%', :search, '%') OR " +
 		    "      CAST(br.dateToBorrow AS string) LIKE CONCAT('%', :search, '%') OR " +
@@ -77,10 +73,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	public final String GET_ALL_OWNED_BORROW_REQUESTS_FOR_BORROWER =
 		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +
 		    " br.id, " +                         
-		    " borrower.firstName, " +            
-		    " borrower.familyName, " +            
-		    " lender.firstName, " +             
-		    " lender.familyName, " +             
+		    " borrower.fullName, " +                     
+		    " lender.fullName, " +                      
 		    " br.itemName, " +                    
 		    " br.price, " +                     
 		    " br.qty, " +                        
@@ -130,10 +124,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
     public final String GET_BORROW_REQUEST_DETAILS_FOR_LENDER =
 		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +
 		    " br.id, " +                         
-		    " borrower.firstName, " +            
-		    " borrower.familyName, " +            
-		    " lender.firstName, " +             
-		    " lender.familyName, " +             
+		    " borrower.fullName, " +                        
+		    " lender.fullName, " +                       
 		    " br.itemName, " +                    
 		    " br.price, " +                     
 		    " br.qty, " +                        

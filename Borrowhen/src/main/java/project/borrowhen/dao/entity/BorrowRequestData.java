@@ -16,14 +16,10 @@ public class BorrowRequestData {
 
 	private int borrowRequestId;
 	
-	private String borrowerFirstName;
+	private String borrowerFullName;
 	
-	private String borrowerFamilyName;
-	
-	private String lenderFirstName;
-	
-	private String lenderFamilyName;
-	
+	private String lenderFullName;
+
 	private String itemName;
 	
 	private double price;

@@ -49,6 +49,8 @@ public class UserDto {
 	@NotBlank(message = MessageConstant.NOT_BLANK)
 	private String postalCode;
 	
+	private String about;
+	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
 	private String userId;
 	

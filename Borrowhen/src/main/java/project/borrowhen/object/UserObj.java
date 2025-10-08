@@ -7,21 +7,27 @@ public class UserObj {
 	
 	private String encryptedId;
 	
-	private String firstName;
-	
-	private String middleName;
-	
-	private String familyName;
-	
-	private String address;
-	
-	private String emailAddress;
-	
-	private String phoneNumber;
+	private String gender;
 	
 	private String birthDate;
 	
-	private String gender;
+	private String fullName;
+	
+	private String phoneNumber;
+	
+	private String emailAddress;
+	
+	private String barangay;
+	
+	private String street;
+	
+	private String city;
+	
+	private String province;
+	
+	private String postalCode;
+	
+	private String about;
 	
 	private String userId;
 		

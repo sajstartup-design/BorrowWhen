@@ -14,9 +14,7 @@ public class PaymentData {
 
 	private int paymentId;
 	
-	private String firstName;
-	
-	private String familyName;
+	private String fullName;
 	
 	private String emailAddress;
 	

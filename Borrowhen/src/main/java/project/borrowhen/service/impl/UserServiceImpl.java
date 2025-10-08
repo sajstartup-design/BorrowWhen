@@ -92,18 +92,21 @@ public class UserServiceImpl implements UserService {
 		    UserObj obj = new UserObj();
 
 		    obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(user.getId())));
-		    obj.setFirstName(user.getFirstName());
-		    obj.setMiddleName(user.getMiddleName());
-		    obj.setFamilyName(user.getFamilyName());
-		    obj.setAddress(user.getAddress());
-		    obj.setEmailAddress(user.getEmailAddress());
-		    obj.setPhoneNumber(user.getPhoneNumber());
-
+		    obj.setFullName(user.getFullName());
+		    obj.setGender(user.getGender());
+		    
 		    if (user.getBirthDate() != null) {
 		        obj.setBirthDate(user.getBirthDate().toString());
 		    }
-
-		    obj.setGender(user.getGender());
+		    
+		    obj.setPhoneNumber(user.getPhoneNumber());
+		    obj.setEmailAddress(user.getEmailAddress());
+		    obj.setBarangay(user.getBarangay());
+		    obj.setStreet(user.getStreet());
+		    obj.setCity(user.getCity());
+		    obj.setProvince(user.getProvince());
+		    obj.setPostalCode(user.getPostalCode());
+		    obj.setAbout(user.getAbout());		    
 		    obj.setUserId(user.getUserId());
 		    obj.setRole(user.getRole());
 			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(user.getCreatedDate()));
@@ -170,14 +173,18 @@ public class UserServiceImpl implements UserService {
 		
 		userDao.updateUser(id,
 				inDto.getFullName(),
-				inDto.getAddress(),
-				inDto.getEmailAddress(),
-				inDto.getPhoneNumber(),
-				Date.valueOf(inDto.getBirthDate()),
 				inDto.getGender(),
+				Date.valueOf(inDto.getBirthDate()),
+				inDto.getPhoneNumber(),
+				inDto.getEmailAddress(),
+				inDto.getBarangay(),
+				inDto.getStreet(),
+				inDto.getCity(),
+				inDto.getProvince(),
+				inDto.getPostalCode(),
+				inDto.getAbout(),
 				inDto.getUserId(),
 				encoder.encode(inDto.getPassword()),
-				inDto.getRole(),
 				hasChanged,
 				dateNow);
 		

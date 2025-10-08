@@ -144,10 +144,10 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        
 	        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getBorrowRequestId())));
 	        
-	        String borrowerFullName = request.getBorrowerFirstName() + " " + request.getBorrowerFamilyName();
+	        String borrowerFullName = request.getBorrowerFullName();
 	        obj.setBorrower(borrowerFullName.trim());
 	        
-	        String lenderFullName = request.getLenderFirstName() + " " + request.getLenderFamilyName();
+	        String lenderFullName = request.getLenderFullName();
 	        obj.setLender(lenderFullName.trim());
 	        
 	        obj.setItemName(request.getItemName());
@@ -291,7 +291,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        
 	        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getBorrowRequestId())));
 	        
-	        String borrowerFullName = request.getBorrowerFirstName() + " " + request.getBorrowerFamilyName();
+	        String borrowerFullName = request.getBorrowerFullName();
 	        obj.setBorrower(borrowerFullName.trim());
 	        	        
 	        obj.setItemName(request.getItemName());
@@ -438,7 +438,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
         
         UserObj borrowerObj = new UserObj();
         
-        borrowerObj.setFirstName(borrower.getFullName());
+        borrowerObj.setFullName(borrower.getFullName());
         borrowerObj.setEmailAddress(borrower.getEmailAddress());
         borrowerObj.setPhoneNumber(borrower.getPhoneNumber());
         borrowerObj.setGender(borrower.getGender());       

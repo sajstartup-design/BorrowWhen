@@ -15,21 +15,27 @@ public class UserData {
 
 	private Integer id;
 	
-	private String firstName;
+	private String fullName;
 	
-	private String middleName;
-	
-	private String familyName;
-	
-	private String address;
-	
-	private String emailAddress;
-	
-	private String phoneNumber;
+	private String gender;
 	
 	private Date birthDate;
 	
-	private String gender;
+	private String phoneNumber;
+	
+	private String emailAddress;
+	
+	private String barangay;
+	
+	private String street;
+	
+	private String city;
+	
+	private String province;
+	
+	private String postalCode;
+	
+	private String about;
 	
 	private String userId;
 	

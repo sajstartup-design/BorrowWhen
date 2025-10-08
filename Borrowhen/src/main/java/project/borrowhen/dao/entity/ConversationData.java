@@ -16,15 +16,11 @@ public class ConversationData {
 	
 	private int senderId;
 	
-	private String senderFirstName;
-	
-	private String senderFamilyName;
-	
+	private String senderFullName;
+		
 	private int receiverId;
 	
-	private String receiverFirstName;
-	
-	private String receiverFamilyName;
+	private String receiverFullName;
 	
 	private int lastSenderId;
 	

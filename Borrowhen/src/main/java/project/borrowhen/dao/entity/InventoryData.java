@@ -24,9 +24,7 @@ public class InventoryData {
 
 	private Integer inventoryId;
 	
-	private String firstName;
-	
-	private String familyName;
+	private String fullName;
 	
 	private String itemName;
 	

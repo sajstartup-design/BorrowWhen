@@ -42,8 +42,7 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
     public static final String GET_ALL_PAYMENT_FOR_BORROWER =
     	    "SELECT new project.borrowhen.dao.entity.PaymentData(" +
     	    "p.id, " +
-    	    "'' AS firstName, " +
-    	    "'' AS familyName, " +
+    	    "'' AS fullName, " +
     	    "p.emailAddress, " +
     	    "br.itemName, " +
     	    "br.price, " +
@@ -75,8 +74,7 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 	public static final String GET_ALL_PAYMENT_FOR_LENDER =
 		    "SELECT new project.borrowhen.dao.entity.PaymentData(" +
 		    "p.id, " +
-		    "u.firstName, " +
-		    "u.familyName, " +
+		    "u.fullName, " +
 		    "COALESCE(p.emailAddress, '-'), " +
 		    "br.itemName, " +
 		    "br.price, " +
@@ -94,9 +92,8 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 		    "AND ( :search IS NULL OR :search = '' OR " +
 		    "      LOWER(p.emailAddress) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
 		    "      LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "      LOWER(u.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +              // ✅ first name
-		    "      LOWER(u.familyName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +             // ✅ last name
-		    "      LOWER(CONCAT(u.firstName, ' ', u.familyName)) LIKE LOWER(CONCAT('%', :search, '%')) OR " + // ✅ full name
+		    "      LOWER(u.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +             
+		    "      LOWER(u.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " + 
 		    "      CAST(br.price AS string) LIKE CONCAT('%', :search, '%') OR " +
 		    "      CAST(br.qty AS string) LIKE CONCAT('%', :search, '%') OR " +
 		    "      CAST((br.price * br.qty) AS string) LIKE CONCAT('%', :search, '%') OR " +

@@ -171,8 +171,7 @@ public class PaymentServiceImpl implements PaymentService{
 			PaymentObj obj = new PaymentObj();
 			
 			obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(payment.getPaymentId())));
-			obj.setFirstName(payment.getFirstName());
-			obj.setFamilyName(payment.getFamilyName());		
+			obj.setFullName(payment.getFullName());
 			obj.setEmailAddress(payment.getEmailAddress());
 			obj.setItemName(payment.getItemName());
 			obj.setPrice(payment.getPrice());	

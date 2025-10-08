@@ -32,7 +32,7 @@ public interface ConversationDao extends JpaRepository<ConversationEntity, Integ
 
     String FIND_ALL_BY_USER = 
         "SELECT new project.borrowhen.dao.entity.ConversationData( "
-        + "c.id, sender.id, sender.firstName, sender.familyName, receiver.id, receiver.firstName, receiver.familyName, c.lastSenderId, c.lastMessage, c.lastMessageDate "
+        + "c.id, sender.id, sender.fullName, receiver.id, receiver.fullName, c.lastSenderId, c.lastMessage, c.lastMessageDate "
         + ") FROM ConversationEntity c "
         + "LEFT JOIN UserEntity sender ON sender.id = c.senderId "
         + "LEFT JOIN UserEntity receiver ON receiver.id = c.receiverId "
