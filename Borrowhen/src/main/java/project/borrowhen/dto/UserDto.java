@@ -16,29 +16,38 @@ public class UserDto {
 	private String encryptedId;
 
 	@NotBlank(message = MessageConstant.NOT_BLANK)
-	private String firstName;
+	private String fullName;
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
-	private String middleName;
+	private String gender;
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
-	private String familyName;
+	private String birthDate;
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
 	private String address;
-	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
-	private String emailAddress;
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
 	@Pattern(regexp = "\\d{10,11}", message = "Phone number must be 10-11 digits")
 	private String phoneNumber;
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
-	private String birthDate;
+	private String emailAddress;
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
-	private String gender;
+	private String barangay;
+	
+	@NotBlank(message = MessageConstant.NOT_BLANK)
+	private String street;
+	
+	@NotBlank(message = MessageConstant.NOT_BLANK)
+	private String city;
+	
+	@NotBlank(message = MessageConstant.NOT_BLANK)
+	private String province;
+	
+	@NotBlank(message = MessageConstant.NOT_BLANK)
+	private String postalCode;
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
 	private String userId;
@@ -46,7 +55,6 @@ public class UserDto {
 	@NotBlank(message = MessageConstant.NOT_BLANK)
 	private String password;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
 	private String role;
 	
 	private String createdDate;

@@ -58,49 +58,49 @@ public class SecurityConfig {
 				.authorizeHttpRequests((requests) -> requests
 						
 						
-						.requestMatchers("/images/**").permitAll()
-						.requestMatchers("/css/**").permitAll()
-						.requestMatchers("/script/**").permitAll()
-						.requestMatchers("/gif/**").permitAll()
-						.requestMatchers("/assets/**").permitAll()
-						.requestMatchers("/admin/assets/**").permitAll()
-
+//						.requestMatchers("/images/**").permitAll()
+//						.requestMatchers("/css/**").permitAll()
+//						.requestMatchers("/script/**").permitAll()
+//						.requestMatchers("/gif/**").permitAll()
+//						.requestMatchers("/assets/**").permitAll()
+//						.requestMatchers("/admin/assets/**").permitAll()
+//
+//						
+//						 
+//						.requestMatchers("/payment/receipt").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
+//						
+//						.requestMatchers("/admin/dashboard/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+//						.requestMatchers("/admin/borrower/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+//						.requestMatchers("/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+//						.requestMatchers("/admin/request/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+//						
+//						.requestMatchers("/api/admin/user/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+//						.requestMatchers("/api/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+//						.requestMatchers("/api/admin/request/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+//						
+//						
+//						.requestMatchers("/lender/inventory/**").hasAuthority(CommonConstant.ROLE_LENDER)
+//						.requestMatchers("/lender/request/**").hasAuthority(CommonConstant.ROLE_LENDER)
+//						
+//						.requestMatchers("/api/lender/inventory/**").hasAuthority(CommonConstant.ROLE_LENDER)
+//						.requestMatchers("/api/lender/request/**").hasAuthority(CommonConstant.ROLE_LENDER)
+//						.requestMatchers("/api/lender/payment/**").hasAuthority(CommonConstant.ROLE_LENDER)
+//						
+//						.requestMatchers("/request/**").hasAuthority(CommonConstant.ROLE_BORROWER)
+//						.requestMatchers("/payment/**").hasAuthority(CommonConstant.ROLE_BORROWER)
+//						
+//						.requestMatchers("/api/request/**").hasAuthority(CommonConstant.ROLE_BORROWER)
+//						.requestMatchers("/api/payment/**").hasAuthority(CommonConstant.ROLE_BORROWER)
+//						
+//						.requestMatchers("/api/inventory").authenticated()
+//						
+//						.requestMatchers("/api/**").authenticated()
+//						
+//						.requestMatchers("/chat/**").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
+//						
+//						.requestMatchers("/borrow-when-websocket/**").authenticated()
 						
-						 
-						.requestMatchers("/payment/receipt").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
-						
-						.requestMatchers("/admin/dashboard/**").hasAuthority(CommonConstant.ROLE_ADMIN)
-						.requestMatchers("/admin/borrower/**").hasAuthority(CommonConstant.ROLE_ADMIN)
-						.requestMatchers("/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
-						.requestMatchers("/admin/request/**").hasAuthority(CommonConstant.ROLE_ADMIN)
-						
-						.requestMatchers("/api/admin/user/**").hasAuthority(CommonConstant.ROLE_ADMIN)
-						.requestMatchers("/api/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
-						.requestMatchers("/api/admin/request/**").hasAuthority(CommonConstant.ROLE_ADMIN)
-						
-						
-						.requestMatchers("/lender/inventory/**").hasAuthority(CommonConstant.ROLE_LENDER)
-						.requestMatchers("/lender/request/**").hasAuthority(CommonConstant.ROLE_LENDER)
-						
-						.requestMatchers("/api/lender/inventory/**").hasAuthority(CommonConstant.ROLE_LENDER)
-						.requestMatchers("/api/lender/request/**").hasAuthority(CommonConstant.ROLE_LENDER)
-						.requestMatchers("/api/lender/payment/**").hasAuthority(CommonConstant.ROLE_LENDER)
-						
-						.requestMatchers("/request/**").hasAuthority(CommonConstant.ROLE_BORROWER)
-						.requestMatchers("/payment/**").hasAuthority(CommonConstant.ROLE_BORROWER)
-						
-						.requestMatchers("/api/request/**").hasAuthority(CommonConstant.ROLE_BORROWER)
-						.requestMatchers("/api/payment/**").hasAuthority(CommonConstant.ROLE_BORROWER)
-						
-						.requestMatchers("/api/inventory").authenticated()
-						
-						.requestMatchers("/api/**").authenticated()
-						
-						.requestMatchers("/chat/**").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
-						
-						.requestMatchers("/borrow-when-websocket/**").authenticated()
-						
-						.anyRequest().authenticated()										
+						.anyRequest().permitAll()									
 						)
 				.formLogin((form) -> form
 						.loginPage("/login")

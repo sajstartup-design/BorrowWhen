@@ -62,8 +62,8 @@ public class ChatServiceImpl implements ChatService {
 			
 			obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(user.getId())));
 			
-			obj.setFirstName(user.getFirstName());
-			obj.setFamilyName(user.getFamilyName());
+//			obj.setFirstName(user.getFirstName());
+//			obj.setFamilyName(user.getFamilyName());
 			obj.setRole(user.getRole());
 			
 			users.add(obj);

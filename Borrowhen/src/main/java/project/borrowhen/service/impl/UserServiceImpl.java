@@ -58,10 +58,8 @@ public class UserServiceImpl implements UserService {
 		
 		UserEntity user = new UserEntity();
 		
-		user.setFirstName(inDto.getFirstName());
-		user.setMiddleName(inDto.getMiddleName());
-		user.setFamilyName(inDto.getFamilyName());
-		user.setAddress(inDto.getAddress());
+		user.setFullName(inDto.getFullName());
+	
 		user.setEmailAddress(inDto.getEmailAddress());
 		user.setPhoneNumber(inDto.getPhoneNumber());
 		user.setBirthDate(Date.valueOf(inDto.getBirthDate()));
@@ -139,10 +137,7 @@ public class UserServiceImpl implements UserService {
 		UserEntity user = userDao.getUser(id);
 		
 	    outDto.setEncryptedId(inDto.getEncryptedId());
-	    outDto.setFirstName(user.getFirstName());
-	    outDto.setMiddleName(user.getMiddleName());
-	    outDto.setFamilyName(user.getFamilyName());
-	    outDto.setAddress(user.getAddress());
+	    outDto.setFullName(user.getFullName());
 	    outDto.setEmailAddress(user.getEmailAddress());
 	    outDto.setPhoneNumber(user.getPhoneNumber());
 
@@ -174,9 +169,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		userDao.updateUser(id,
-				inDto.getFirstName(),
-				inDto.getMiddleName(),
-				inDto.getFamilyName(),
+				inDto.getFullName(),
 				inDto.getAddress(),
 				inDto.getEmailAddress(),
 				inDto.getPhoneNumber(),

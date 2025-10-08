@@ -103,8 +103,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		
 		String message = String.format(
 		    "%s %s has requested to borrow '%s' from %s to %s.",
-		    user.getFirstName(),
-		    user.getFamilyName(),
+		    user.getFullName(),
 		    inventory.getItemName(),
 		    inDto.getDateToBorrow(),
 		    inDto.getDateToReturn()
@@ -388,8 +387,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    String message = String.format(
 	        "%s %s has marked the borrow request for '%s' from %s to %s as RECEIVED.",
-	        borrower.getFirstName(),
-	        borrower.getFamilyName(),
+	        borrower.getFullName(),
 	        request.getItemName(),
 	        request.getDateToBorrow(),
 	        request.getDateToReturn()
@@ -440,9 +438,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
         
         UserObj borrowerObj = new UserObj();
         
-        borrowerObj.setFirstName(borrower.getFirstName());
-        borrowerObj.setMiddleName(borrower.getMiddleName());
-        borrowerObj.setFamilyName(borrower.getFamilyName());
+        borrowerObj.setFirstName(borrower.getFullName());
         borrowerObj.setEmailAddress(borrower.getEmailAddress());
         borrowerObj.setPhoneNumber(borrower.getPhoneNumber());
         borrowerObj.setGender(borrower.getGender());       
@@ -637,8 +633,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    String message = String.format(
     	    "%s %s has paid for the borrow request of '%s' from %s to %s.",
-    	    borrower.getFirstName(),
-    	    borrower.getFamilyName(),
+    	    borrower.getFullName(),
     	    request.getItemName(),
     	    request.getDateToBorrow(),
     	    request.getDateToReturn()
@@ -685,8 +680,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    String message = String.format(
 	            "The borrower '%s %s' has cancelled their request for your item '%s' scheduled from %s to %s.",
-	    	    borrower.getFirstName(),
-	    	    borrower.getFamilyName(),
+	    	    borrower.getFullName(),
 	            request.getItemName(),
 	            request.getDateToBorrow(),
 	            request.getDateToReturn()

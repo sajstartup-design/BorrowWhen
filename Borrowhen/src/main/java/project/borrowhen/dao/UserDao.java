@@ -61,9 +61,7 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 	
 	public final String UPDATE_USER = 
 		    "UPDATE users " +
-		    "SET first_name = :firstName, " +
-		    "middle_name = :middleName, " +
-		    "family_name = :familyName, " +
+		    "SET full_name = :fullName, " +
 		    "address = :address, " +
 		    "email_address = :emailAddress, " +
 		    "phone_number = :phoneNumber, " +
@@ -80,9 +78,7 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
     @Query(value = UPDATE_USER, nativeQuery = true)
     public void updateUser(
             @Param("id") int id,
-            @Param("firstName") String firstName,
-            @Param("middleName") String middleName,
-            @Param("familyName") String familyName,
+            @Param("fullName") String fullName,
             @Param("address") String address,
             @Param("emailAddress") String emailAddress,
             @Param("phoneNumber") String phoneNumber,
