@@ -88,7 +88,7 @@ async function loadUsers(page = 0,
 				<td><input type="checkbox" class="checkbox checkbox-sm checkbox-primary row-select-checkbox" ></td>
 				<td>
 				  <div class="flex flex-col">
-				    <span class="font-medium">${user.firstName} ${user.familyName}</span>
+				    <span class="font-medium">${user.fullName}</span>
 				    <span class="text-sm text-gray-500">${user.userId}</span>
 				  </div>
 				</td>	              

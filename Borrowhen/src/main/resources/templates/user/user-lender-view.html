@@ -28,10 +28,17 @@
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/src/vendor/datatables.css" />
       <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/css/output.css" />
+      
+      <link rel="stylesheet" th:href="@{/css/input.css}" />
+
       <!-- Theme JS -->
       <script type="text/javascript" th:src="@{/script/theme.js}"></script>
    </head>
    <body>
+		<div th:if="${isSuccess}" th:replace="~{alert :: success}"></div>
+		<div th:if="${isError}" th:replace="~{alert :: error}"></div>
+
+		
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
       <div class="bg-base-200 flex min-h-screen flex-col">
       	 <!--  Header : Start  -->

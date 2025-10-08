@@ -58,12 +58,12 @@ public class SecurityConfig {
 				.authorizeHttpRequests((requests) -> requests
 						
 						
-//						.requestMatchers("/images/**").permitAll()
-//						.requestMatchers("/css/**").permitAll()
-//						.requestMatchers("/script/**").permitAll()
-//						.requestMatchers("/gif/**").permitAll()
-//						.requestMatchers("/assets/**").permitAll()
-//						.requestMatchers("/admin/assets/**").permitAll()
+						.requestMatchers("/images/**").permitAll()
+						.requestMatchers("/css/**").permitAll()
+						.requestMatchers("/script/**").permitAll()
+						.requestMatchers("/gif/**").permitAll()
+						.requestMatchers("/assets/**").permitAll()
+						.requestMatchers("/admin/assets/**").permitAll()
 //
 //						
 //						 
@@ -100,7 +100,7 @@ public class SecurityConfig {
 //						
 //						.requestMatchers("/borrow-when-websocket/**").authenticated()
 						
-						.anyRequest().permitAll()									
+						.anyRequest().authenticated()									
 						)
 				.formLogin((form) -> form
 						.loginPage("/login")

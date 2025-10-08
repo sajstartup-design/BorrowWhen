@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
+import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.constant.MessageConstant;
 import project.borrowhen.dto.UserDto;
 import project.borrowhen.service.UserService;
@@ -58,6 +59,8 @@ public class A_UserController {
 			RedirectAttributes ra
 			) {
 		
+		System.out.println(userWebDto);
+		
 		if(result.hasErrors()) {
 			
 			Map<String, String> fieldErrors = result.getFieldErrors()
@@ -72,23 +75,25 @@ public class A_UserController {
 	        
 	        ra.addFlashAttribute("userDto", userWebDto);
 	        
-	        return "redirect:/admin/borrowers/create";
+	        return "redirect:/admin/lenders/create";
 		}
 		
 		try {
 			
 			userService.saveUser(userWebDto);
 			
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.USER_CREATE_MSG);
 			
 		} catch(Exception e) {
 			
 			e.printStackTrace();
 			
-			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 
-		return "redirect:/admin/borrowers";
+		return "redirect:/admin/lenders";
 	}
 	
 	@GetMapping("/edit")

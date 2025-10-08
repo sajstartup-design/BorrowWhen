@@ -25,10 +25,6 @@ public class UserDto {
 	private String birthDate;
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK)
-	private String address;
-	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
-	@Pattern(regexp = "\\d{10,11}", message = "Phone number must be 10-11 digits")
 	private String phoneNumber;
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK)

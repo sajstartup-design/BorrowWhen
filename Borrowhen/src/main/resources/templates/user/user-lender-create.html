@@ -83,7 +83,7 @@
                   </div>
                </div>
                <!-- ✅ FORM START -->
-               <form th:action="@{/admin/lenders/save}" method="post" class="yzl9f bg-base-100 wanr8 e2zhm djsg9 shadow-md">
+               <form th:action="@{/admin/lenders/create}" method="POST" class="yzl9f bg-base-100 wanr8 e2zhm djsg9 shadow-md">
                   <div class="lg:gap-7.5 w7btb bkumc ytmr9 xl:grid-cols-3">
                      <!-- Main Content -->
                      <div class="vax7b xl:col-span-2">
@@ -97,7 +97,7 @@
                                  <!-- Name -->
                                  <div>
                                     <label class="tglh5" for="vendorName">Name</label>
-                                    <input type="text" class="eamhj" id="vendorName" name="name" placeholder="Esther Howard" required />
+                                    <input type="text" class="eamhj" id="vendorName" name="fullName" placeholder="Esther Howard" required />
                                  </div>
                                  <!-- Gender -->
                                  <div>
@@ -117,13 +117,13 @@
                                  <!-- Phone Number -->
                                  <div>
                                     <label class="tglh5" for="vendorPhone">Phone Number</label>
-                                    <input type="tel" class="eamhj" id="vendorPhone" name="phone" placeholder="(583) 8745 8745" maxlength="10" required />
+                                    <input type="tel" class="eamhj" id="vendorPhone" name="phoneNumber" placeholder="(63) 8745 8745" maxlength="10" required />
                                  </div>
                                  <!-- Email Address -->
                                  <div>
                                     <label class="tglh5" for="vendorEmail">Email Address</label>
                                     <div class="eamhj">
-                                       <input type="email" class="ij0d7" id="vendorEmail" name="email" placeholder="Email Address" required />
+                                       <input type="email" class="ij0d7" id="vendorEmail" name="emailAddress" placeholder="Email Address" required />
                                        <span class="icon-[tabler--mail] text-base-content/80 eqbwg hdtap size-5 shrink-0"></span>
                                     </div>
                                  </div>
@@ -151,6 +151,7 @@
                                        <option value="Laguna">Laguna</option>
                                        <option value="Quezon">Quezon</option>
                                        <option value="Rizal">Rizal</option>
+                                       <option value="Cebu">Cebu</option>
                                        <!-- etc... -->
                                     </select>
                                  </div>

@@ -59,13 +59,18 @@ public class UserServiceImpl implements UserService {
 		UserEntity user = new UserEntity();
 		
 		user.setFullName(inDto.getFullName());
-	
-		user.setEmailAddress(inDto.getEmailAddress());
-		user.setPhoneNumber(inDto.getPhoneNumber());
-		user.setBirthDate(Date.valueOf(inDto.getBirthDate()));
 		user.setGender(inDto.getGender());
+		user.setBirthDate(Date.valueOf(inDto.getBirthDate()));
+		user.setPhoneNumber(inDto.getPhoneNumber());
+		user.setEmailAddress(inDto.getEmailAddress());
+		user.setBarangay(inDto.getBarangay());
+		user.setStreet(inDto.getStreet());
+		user.setCity(inDto.getCity());
+		user.setProvince(inDto.getProvince());
+		user.setPostalCode(inDto.getPostalCode());
+		user.setAbout(inDto.getAbout());
 		user.setUserId(inDto.getUserId());
-		user.setRole(inDto.getRole());
+		user.setRole(CommonConstant.ROLE_LENDER);
 		user.setPassword(encoder.encode(inDto.getPassword()));
 		user.setCreatedDate(dateNow);
 		user.setUpdatedDate(dateNow);
