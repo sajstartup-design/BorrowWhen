@@ -79,6 +79,35 @@ public class UserServiceImpl implements UserService {
 		userDao.save(user);
 		
 	}
+	
+	@Override
+	public void registerUser(UserDto inDto) throws Exception {
+		
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+		
+		UserEntity user = new UserEntity();
+		
+		user.setFullName(inDto.getFullName());
+		user.setGender(CommonConstant.BLANK);
+		user.setBirthDate(null);
+		user.setPhoneNumber(CommonConstant.BLANK);
+		user.setEmailAddress(inDto.getEmailAddress());
+		user.setBarangay(CommonConstant.BLANK);
+		user.setStreet(CommonConstant.BLANK);
+		user.setCity(CommonConstant.BLANK);
+		user.setProvince(CommonConstant.BLANK);
+		user.setPostalCode(CommonConstant.BLANK);
+		user.setAbout(CommonConstant.BLANK);
+		user.setUserId(inDto.getUserId());
+		user.setRole(CommonConstant.ROLE_BORROWER);
+		user.setPassword(encoder.encode(inDto.getPassword()));
+		user.setCreatedDate(dateNow);
+		user.setUpdatedDate(dateNow);
+		user.setIsDeleted(false);
+		
+		userDao.save(user);
+		
+	}
 
 	@Override
 	public UserDto getAllUsers(UserDto inDto) throws Exception {
@@ -254,4 +283,6 @@ public class UserServiceImpl implements UserService {
 		
 		return userDao.getAllUsersByRole(role, search);
 	}
+
+
 }

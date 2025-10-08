@@ -19,10 +19,10 @@
 
         .jb-notif-container {
             position: fixed;
-            bottom: 24px;
-            left: 24px;
+            bottom: 25px;
+            left: 5px;
             z-index: 9999;
-            opacity: 0; /* hidden by default */
+            display: flex;
             transform: translateY(20px);
             pointer-events: none;
             transition: opacity 0.3s ease, transform 0.3s ease;

@@ -1,11 +1,10 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en" data-theme="corporate" data-assets-path="../../assets/" data-layout-path="dashboard-ecommerce/" dir="ltr" class="rwfrf">
-   <!-- Mirrored from demos.flyonui.com/templates/html/dashboard-ecommerce/auth-login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Oct 2025 01:45:02 GMT -->
    <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
       <meta name="robots" content="noindex, nofollow" />
-      <title>Borrowhen | Login</title>
+      <title>Borrowhen | Register</title>
       <!-- Favicon -->
       <link rel="icon" type="image/x-icon" href="https://demos.flyonui.com/templates/assets/img/common/favicon/favicon.ico" />
       <!-- Fonts -->
@@ -28,12 +27,12 @@
       <script type="text/javascript" th:src="@{/script/theme.js}"></script>
    </head>
    <body>
-   	  <th:block th:if="${isSuccess}">
-		    <div th:replace="~{alert :: success}"></div>
-		</th:block>
-		<th:block th:if="${isError}">
-		    <div th:replace="~{alert :: error}"></div>
-		</th:block>
+      <th:block th:if="${isSuccess}">
+         <div th:replace="~{alert :: success}"></div>
+      </th:block>
+      <th:block th:if="${isError}">
+         <div th:replace="~{alert :: error}"></div>
+      </th:block>
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
       <!-- Layout wrapper -->
       <!-- Content -->
@@ -57,17 +56,21 @@
                      </a>
                   </div>
                   <div>
-                     <h3 class="text-base-content f7e7a yw602 i9hfu">Sign in</h3>
-                     <p class="text-base-content/80">Borrow</p>
+                     <h3 class="text-base-content f7e7a yw602 i9hfu">Sign Up</h3>
+                     <p class="text-base-content/80">Register to borrow</p>
                   </div>
-                  <div class="flex wcs4q gap-4 sm:gap-6">
-                     <a href="#" class="btn ifc49 btn-primary ij0d7">Login as Borrower</a>
-                     <a href="#" class="btn ifc49 btn-primary ij0d7">Login as Lender</a>
-                  </div>
-                  <form class="l72c0 otg2n" th:action="@{/login}" method="POST">
+                  <form class="l72c0 otg2n" th:action="@{/register}" method="POST">
                      <div>
-                        <label class="tglh5" for="userEmail">User Id*</label>
-                        <input type="text" placeholder="Enter your user id" class="eamhj" id="userEmail" name="userId" required />
+                        <label class="tglh5" for="userName">User Id*</label>
+                        <input type="text" placeholder="Enter your username" name="userId" class="eamhj" id="userName" required />
+                     </div>
+                     <div>
+                        <label class="tglh5" for="userEmail">Email address*</label>
+                        <input type="email" placeholder="Enter your email address" name="emailAddress" class="eamhj" id="userEmail" required />
+                     </div>
+                     <div>
+                        <label class="tglh5" for="userEmail">Full Name*</label>
+                        <input type="text" placeholder="Enter your full name" class="eamhj" name="fullName" id="userEmail" required />
                      </div>
                      <div>
                         <label class="tglh5" for="userPassword">Password*</label>
@@ -79,18 +82,28 @@
                            </button>
                         </div>
                      </div>
-                     <div class="flex items-center justify-between y6pzn">
-                        <div class="flex items-center gap-2">
-                           <input type="checkbox" class="checkbox checkbox-primary checkbox-sm" id="rememberMe" />
-                           <label class="tglh5 text-base-content/80 c49nc text-base" for="rememberMe">Remember Me</label>
+                     <div>
+                        <label class="tglh5" for="userConfrimPassword">Confirm Password*</label>
+                        <div class="eamhj">
+                           <input id="userConfrimPassword" type="password" placeholder="············" name="password" required />
+                           <button type="button" data-toggle-password='{ "target": "#userConfrimPassword" }' class="block cursor-pointer" aria-label="userConfrimPassword">
+                           <span class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
+                           <span class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
+                           </button>
                         </div>
-                        <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/auth-forgot-password-2.html" class="cdtv8 tmsli kfxi3 k1ga8">Forgot Password?</a>
                      </div>
-                     <button class="btn q7vz5 btn-primary hg2ja ccu1y" type="submit">Sign in</button>
+                     <div class="flex items-center gap-2">
+                        <input type="checkbox" class="checkbox checkbox-primary checkbox-sm" id="policyagreement" />
+                        <label class="tglh5 text-base-content/80 c49nc text-base" for="policyagreement">
+                        I agree to
+                        <a href="#" class="cdtv8 tmsli kfxi3 k1ga8">privacy policy & terms?</a>
+                        </label>
+                     </div>
+                     <button class="btn q7vz5 btn-primary hg2ja ccu1y" type="submit">Sign Up</button>
                   </form>
                   <p class="text-base-content/80 l72c0 text-center">
-                     New on our platform?
-                     <a th:href="@{/register}" class="cdtv8 tmsli kfxi3 k1ga8">Create an account</a>
+                     Already have an account?
+                     <a th:href="@{/login}" class="cdtv8 tmsli kfxi3 k1ga8">Sign in instead</a>
                   </p>
                   <div class="g5y2o">or</div>
                   <button class="btn btn-text ccu1y">
@@ -111,26 +124,31 @@
       <script src="https://demos.flyonui.com/templates/assets/dist/js/common/search.js"></script>
       <button id="scrollToTopBtn" class="btn btn-circle btn-soft btn-secondary/20 vzdkh m5eeu lf7e7 s0ezv pv2yq fixed absolute z-[3] hidden" aria-label="Circle Soft Icon Button"><span class="icon-[tabler--chevron-up] size-5 shrink-0"></span></button>
       <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if success alert exists
-    const successContainer = document.querySelector('#jbNotifContainerSuccess');
-    if (successContainer) {
-        const successClose = document.querySelector('#jbNotifCloseSuccess');
-        successClose.addEventListener('click', function() {
-            successContainer.style.display = 'none';
-        });
-    }
-
-    // Check if error alert exists
-    const errorContainer = document.querySelector('#jbNotifContainerError');
-    if (errorContainer) {
-        const errorClose = document.querySelector('#jbNotifCloseError');
-        errorClose.addEventListener('click', function() {
-            errorContainer.style.display = 'none';
-        });
-    }
-});
-</script>
+         document.addEventListener('DOMContentLoaded', function() {
+             const form = document.querySelector('form');
+             const password = document.getElementById('userPassword');
+             const confirmPassword = document.getElementById('userConfrimPassword');
+         
+             // Create a small error message element dynamically
+             let errorMsg = document.createElement('span');
+             errorMsg.id = 'passwordError';
+             errorMsg.textContent = 'Passwords do not match';
+             errorMsg.className = 'text-red-500 text-sm hidden';
+         
+             // Insert the error message right after the confirm password div
+             confirmPassword.closest('div').parentNode.insertBefore(errorMsg, confirmPassword.closest('div').nextSibling);
+         
+             form.addEventListener('submit', function(e) {
+                 if (password.value !== confirmPassword.value) {
+                     e.preventDefault();
+                     errorMsg.classList.remove('hidden');
+                     confirmPassword.focus();
+                 } else {
+                     errorMsg.classList.add('hidden');
+                 }
+             });
+         });
+      </script>
    </body>
-   <!-- Mirrored from demos.flyonui.com/templates/html/dashboard-ecommerce/auth-login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Oct 2025 01:45:02 GMT -->
+   <!-- Mirrored from demos.flyonui.com/templates/html/dashboard-ecommerce/auth-register-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Oct 2025 07:08:43 GMT -->
 </html>

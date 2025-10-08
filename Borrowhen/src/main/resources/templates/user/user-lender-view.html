@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="corporate" data-assets-path="../../assets/" data-layout-path="dashboard-ecommerce/" dir="ltr" class="rwfrf">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-theme="corporate" data-assets-path="../../assets/" data-layout-path="dashboard-ecommerce/" dir="ltr" class="rwfrf">
    <!-- Mirrored from demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-product-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Oct 2025 06:45:08 GMT -->
    <head>
       <meta charset="utf-8" />
@@ -28,20 +28,16 @@
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/src/vendor/datatables.css" />
       <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/css/output.css" />
-      
       <link rel="stylesheet" th:href="@{/css/input.css}" />
-
       <!-- Theme JS -->
       <script type="text/javascript" th:src="@{/script/theme.js}"></script>
    </head>
    <body>
-		<div th:if="${isSuccess}" th:replace="~{alert :: success}"></div>
-		<div th:if="${isError}" th:replace="~{alert :: error}"></div>
-
-		
+      <div th:if="${isSuccess}" th:replace="~{alert :: success}"></div>
+      <div th:if="${isError}" th:replace="~{alert :: error}"></div>
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
       <div class="bg-base-200 flex min-h-screen flex-col">
-      	 <!--  Header : Start  -->
+         <!--  Header : Start  -->
          <div th:replace="~{header :: header}"></div>
          <!--  Header : End -->
          <main class="hmc58">
@@ -91,7 +87,7 @@
                   </div>
                </div>
                <div class="yzl9f bg-base-100 wanr8 e2zhm djsg9 shadow-md">
-                 <!--  <div class="z5a1v jvk09 rr32e tqj18">
+                  <!--  <div class="z5a1v jvk09 rr32e tqj18">
                      <div class="od7oo">
                         <div class="ygb9i flex ytmr9 max-xl:flex-col">
                            <div class="flex hmc58 ytmr9 max-sm:flex-col">
@@ -156,7 +152,7 @@
                            </div>
                         </div>
                      </div>
-                  </div> -->
+                     </div> -->
                   <div
                      class="bg-base-100 z5a1v jvk09 flex flex-col rounded-md tqj18">
                      <!-- Filter Section -->
@@ -291,10 +287,6 @@
       <script src="https://demos.flyonui.com/templates/assets/dist/js/main.js"></script>
       <script src="https://demos.flyonui.com/templates/assets/dist/js/common/theme-customizer.js"></script>	
       <script src="https://demos.flyonui.com/templates/assets/dist/js/common/search.js"></script>
-      <script th:inline="javascript">
-         const webDto = /*[[${inventoryDto}]]*/'';
-         console.log(webDto);
-      </script>
       <script th:src="@{/script/pagination.js}"></script>
       <script th:src="@{/script/loading.js}"></script>
       <script th:src="@{/script/user/user-api.js}"></script>

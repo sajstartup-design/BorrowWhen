@@ -64,6 +64,8 @@ public class SecurityConfig {
 						.requestMatchers("/gif/**").permitAll()
 						.requestMatchers("/assets/**").permitAll()
 						.requestMatchers("/admin/assets/**").permitAll()
+						.requestMatchers("/register/**").permitAll()
+						.requestMatchers("/login").permitAll()
 //
 //						
 //						 
