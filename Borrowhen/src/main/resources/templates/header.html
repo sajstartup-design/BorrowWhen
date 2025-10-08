@@ -6,253 +6,93 @@
       <title>Borrowhen | Header</title>
    </head>
    <body>
-      <div th:fragment="header-admin" class="bg-base-100 jhqlw sticky top-0">
-         <nav class="fx55w zdx6u yt5gg pze9o items-center qhvfg jw63w max-lg:flex-wrap xl:gap-x-8">
-            <div class="flex shrink-0 gap-2 lg:order-1">
-               <button type="button" class="collapse-toggle btn btn-soft btn-square btn-sm lg:hidden" id="navbar-collapse" aria-expanded="false" aria-controls="navbar-collapse-heading" data-collapse="#navbar-collapse-heading">
-               <span class="icon-[tabler--menu-2] size-4.5"></span>
-               </button>
-               <!-- Logo -->
-               <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="flex items-center gap-3">
-                  <span class="text-primary">
-                  <img th:src="@{/images/logo.png}" class="size-6" />
-                  </span>
-                  <h3 class="text-base-content runqr w31vy max-sm:hidden">Borrowhen</h3>
-               </a>
-            </div>
-            <div class="ms-auto flex shrink-0 items-center lg4ss gap-4 lg:order-4">
-               <div class="flex items-center">
-                  <!-- Search  -->
-                  <button type="button" class="btn btn-square btn-sm btn-text" aria-haspopup="dialog" aria-expanded="false" aria-controls="search-modal" data-overlay="#search-modal">
-                  <span class="icon-[tabler--search] size-4.5 text-base-content"></span>
-                  </button>
-                  <!-- Theme Dropdown  -->
-                  <div class="dropdown relative inline-flex">
-                     <button id="dropdown-toggle-theme" type="button" class="dropdown-toggle btn btn-square btn-sm btn-text" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                     <span class="icon-[tabler--sun] size-4.5 theme-icon text-base-content hidden"></span>
-                     <span class="icon-[tabler--moon] size-4.5 theme-icon text-base-content hidden"></span>
-                     <span class="icon-[tabler--sun-moon] size-4.5 theme-icon text-base-content"></span>
-                     </button>
-                     <ul class="dropdown-menu dropdown-open:opacity-100 hidden min-w-60" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-toggle-theme">
-                        <li>
-                           <button type="button" data-theme-value="corporate" data-icon="sun" class="dropdown-item" aria-pressed="false">Light</button>
-                        </li>
-                        <li>
-                           <button type="button" data-theme-value="corporate-dark" data-icon="moon" class="dropdown-item" aria-pressed="false">Dark</button>
-                        </li>
-                        <li>
-                           <button type="button" data-theme-value="system" data-icon="sun-moon" class="dropdown-item dropdown-active" aria-pressed="true">System</button>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-               <!-- Profile Dropdown -->
-               <div class="dropdown relative inline-flex [--offset:21]">
-                  <button id="profile-dropdown" type="button" class="dropdown-toggle shrink-0" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                  <img src="https://demos.flyonui.com/templates/assets/img/common/avatars/19.png" alt="User Avatar" class="rounded-box wq84k" />
-                  </button>
-                  <ul class="dropdown-menu dropdown-open:opacity-100 gfsnm hidden w-full trkhp" role="menu" aria-orientation="vertical" aria-labelledby="profile-dropdown">
-                     <li class="uygfv dcljy mb-1 gap-4 uafca w92yp">
-                        <div class="avatar vr94x">
-                           <div class="u66a9 rounded-full">
-                              <img src="https://demos.flyonui.com/templates/assets/img/common/avatars/19.png" alt="avatar" />
-                           </div>
-                        </div>
-                        <div>
-                           <h6 class="text-base-content mb-0.5 i9hfu">ADMIN</h6>
-                           <p class="font-medium">@ADMIN</p>
-                        </div>
-                     </li>
-                     <li>
-                        <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/pages-user-profile.html" class="dropdown-item px-3">
-                        <span class="icon-[tabler--user] size-5"></span>
-                        My account
-                        </a>
-                     </li>
-                     <li>
-                        <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-settings-detail.html" class="dropdown-item px-3">
-                        <span class="icon-[tabler--settings] size-5"></span>
-                        Setting
-                        </a>
-                     </li>
-                     <li>
-                        <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/pages-user-teams.html" class="dropdown-item px-3">
-                        <span class="icon-[tabler--users] size-5"></span>
-                        Manage team
-                        </a>
-                     </li>
-                     <li>
-                        <hr class="border-base-content/20 -mx-2 nst9i" />
-                     </li>
-                     <li>
-                        <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-manage-reviews.html" class="dropdown-item px-3">
-                        <span class="icon-[tabler--star] size-5"></span>
-                        Reviews
-                        </a>
-                     </li>
-                     <li>
-                        <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-vendor-list.html" class="dropdown-item px-3">
-                        <span class="icon-[tabler--edit] size-5"></span>
-                        Vendors
-                        </a>
-                     </li>
-                     <li class="mb-1">
-                        <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-order-list.html" class="dropdown-item px-3">
-                        <span class="icon-[tabler--box] size-5"></span>
-                        Orders
-                        </a>
-                     </li>
-                     <li class="jnyiq p-2 rtqzx">
-                        <form th:action="@{/logout}" method="post" class="w-full">
-                           <button type="submit"
-                              class="btn btn-text l9lk7 ccu1y f0n0f d7ium px-2 k1ga8 w-full flex items-center">
-                           <span class="icon-[tabler--logout] size-5 mr-2"></span>
-                           Logout
-                           </button>
-                        </form>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-            <!-- Layout Menu -->
-            <div class="collapse hidden tvu2i overflow-x-auto transition-[height] duration-300 [scrollbar-width:thin] max-lg:w-full max-lg:overflow-hidden lg:order-3 lg:block lg:basis-auto" id="navbar-collapse-heading" aria-labelledby="navbar-collapse">
-               <ul class="ose9t menu-sm lg:menu-horizontal bqrxk c49nc">
-                  <!-- Regular Menu Item (Level 0) -->
-                  <li>
-                     <a th:href="@{/admin/dashboard}" class="bolet px-2" >
-                     <span class="icon-[tabler--chart-bar] size-4.5"></span>
-                     <span >Dashboard</span>
-                     </a>
-                  </li>
-                  <!-- Dropdown Menu Item (Level 0) -->
-                  <li class="dropdown rounded-field group relative inline-flex [--adaptive:none] [--offset:15] max-lg:[--strategy:static] lg:inline-block lg:[--adaptive:adaptive]">
-                     <button id="dropdown-ecommerce" type="button" class="dropdown-toggle dropdown-open:bg-base-content/10 dropdown-open:text-base-content group-has-[.menu-active]:bg-neutral/10 px-2" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                     <span class="icon-[tabler--box] size-4.5"></span>
-                     Inventory
-                     <span class="icon-[tabler--chevron-down] dropdown-open:rotate-180 size-4.5 hvz19 duration-300"></span>
-                     </button>
-                     <ul class="dropdown-menu dropdown-open:opacity-100 max-lg:before:bg-base-content/10 hidden before:absolute before:start-0 before:top-3 before:w-px max-lg:ms-4 max-lg:mt-1 max-lg:p-0 max-lg:ps-2 max-lg:shadow-none max-lg:duration-100 max-lg:before:bottom-3 lg:before:-top-4 lg:before:h-5 lg:before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-ecommerce">
-                        <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " th:href="@{/admin/inventory}" >Inventory List</a></li>
-                        <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-product-add.html" >Add Item</a></li>
-                     </ul>
-                  </li>
-                  <!-- Dropdown Menu Item (Level 0) -->
-                  <li class="dropdown rounded-field group relative inline-flex [--adaptive:none] [--offset:15] max-lg:[--strategy:static] lg:inline-block lg:[--adaptive:adaptive]">
-                     <button id="dropdown-ecommerce-order" type="button" class="dropdown-toggle dropdown-open:bg-base-content/10 dropdown-open:text-base-content group-has-[.menu-active]:bg-neutral/10 px-2" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                     <span class="icon-[tabler--receipt] size-4.5"></span>
-                     Request
-                     <span class="icon-[tabler--chevron-down] dropdown-open:rotate-180 size-4.5 hvz19 duration-300"></span>
-                     </button>
-                     <ul class="dropdown-menu dropdown-open:opacity-100 max-lg:before:bg-base-content/10 hidden before:absolute before:start-0 before:top-3 before:w-px max-lg:ms-4 max-lg:mt-1 max-lg:p-0 max-lg:ps-2 max-lg:shadow-none max-lg:duration-100 max-lg:before:bottom-3 lg:before:-top-4 lg:before:h-5 lg:before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-ecommerce-order">
-                        <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-order-list.html" >Request List</a></li>
-                     </ul>
-                  </li>
-                  <!-- Dropdown Menu Item (Level 0) -->
-                  <li class="dropdown rounded-field group relative inline-flex [--adaptive:none] [--offset:15] max-lg:[--strategy:static] lg:inline-block lg:[--adaptive:adaptive]">
-                     <button id="dropdown-ecommerce-customer" type="button" class="dropdown-toggle dropdown-open:bg-base-content/10 dropdown-open:text-base-content group-has-[.menu-active]:bg-neutral/10 px-2" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                     <span class="icon-[tabler--users] size-4.5"></span>
-                     Borrower
-                     <span class="icon-[tabler--chevron-down] dropdown-open:rotate-180 size-4.5 hvz19 duration-300"></span>
-                     </button>
-                     <ul class="dropdown-menu dropdown-open:opacity-100 max-lg:before:bg-base-content/10 hidden before:absolute before:start-0 before:top-3 before:w-px max-lg:ms-4 max-lg:mt-1 max-lg:p-0 max-lg:ps-2 max-lg:shadow-none max-lg:duration-100 max-lg:before:bottom-3 lg:before:-top-4 lg:before:h-5 lg:before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-ecommerce-customer">
-                        <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " th:href="@{/admin/borrowers}" >All Borrowers</a></li>
-                     </ul>
-                  </li>
-                  <!-- Dropdown Menu Item (Level 0) -->
-                  <li class="dropdown rounded-field group relative inline-flex [--adaptive:none] [--offset:15] max-lg:[--strategy:static] lg:inline-block lg:[--adaptive:adaptive]">
-                     <button id="dropdown-ecommerce-vendor" type="button" class="dropdown-toggle dropdown-open:bg-base-content/10 dropdown-open:text-base-content group-has-[.menu-active]:bg-neutral/10 px-2" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                     <span class="icon-[tabler--building-store] size-4.5"></span>
-                     Lender
-                     <span class="icon-[tabler--chevron-down] dropdown-open:rotate-180 size-4.5 hvz19 duration-300"></span>
-                     </button>
-                     <ul class="dropdown-menu dropdown-open:opacity-100 max-lg:before:bg-base-content/10 hidden before:absolute before:start-0 before:top-3 before:w-px max-lg:ms-4 max-lg:mt-1 max-lg:p-0 max-lg:ps-2 max-lg:shadow-none max-lg:duration-100 max-lg:before:bottom-3 lg:before:-top-4 lg:before:h-5 lg:before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-ecommerce-vendor">
-                        <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " th:href="@{/admin/lenders}" >Lender List</a></li>
-                        <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " th:href="@{/admin/lenders/create}" >Add Lender</a></li>
-                        <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-vendor-details.html" >Lender Details</a></li>
-                     </ul>
-                  </li>
-                  <!-- Dropdown Menu Item (Level 0) -->
-                  <li class="dropdown rounded-field group relative inline-flex [--adaptive:none] [--offset:15] max-lg:[--strategy:static] lg:inline-block lg:[--adaptive:adaptive]">
-                     <button id="dropdown-ecommerce-settings" type="button" class="dropdown-toggle dropdown-open:bg-base-content/10 dropdown-open:text-base-content group-has-[.menu-active]:bg-neutral/10 px-2" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                     <span class="icon-[tabler--settings] size-4.5"></span>
-                     Settings
-                     <span class="icon-[tabler--chevron-down] dropdown-open:rotate-180 size-4.5 hvz19 duration-300"></span>
-                     </button>
-                     <ul class="dropdown-menu dropdown-open:opacity-100 max-lg:before:bg-base-content/10 hidden before:absolute before:start-0 before:top-3 before:w-px max-lg:ms-4 max-lg:mt-1 max-lg:p-0 max-lg:ps-2 max-lg:shadow-none max-lg:duration-100 max-lg:before:bottom-3 lg:before:-top-4 lg:before:h-5 lg:before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-ecommerce-settings">
-                        <!-- Simple Link Item (for nested items) -->
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-manage-reviews.html" >Reviews</a></li>
-                       <!--  <!-- Simple Link Item (for nested items) -->
-                        <!-- <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-referral.html" >Referrals</a></li>
-                        Dropdown Title
-                        <li class="mscgy px-3">Store Settings</li>
-                        Simple Link Item (for nested items)
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-settings-detail.html" >Store Details</a></li>
-                        Simple Link Item (for nested items)
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-settings-payments.html" >Payments</a></li>
-                        Simple Link Item (for nested items)
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-settings-checkout.html" >Checkout</a></li>
-                        Simple Link Item (for nested items)
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-settings-shipping.html" >Shipping & Delivery</a></li>
-                        Simple Link Item (for nested items)
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-settings-locations.html" >Locations</a></li>
-                        Simple Link Item (for nested items)
-                        <li><a class="dropdown-item " href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-settings-notifications.html" >Notifications</a></li> -->
-                     </ul>
-                  </li>
-               </ul>
-            </div>
-         </nav>
+      <!-- Admin Header -->
+<!-- header-admin fragment -->
+<!-- header-admin fragment -->
+<div th:fragment="header-admin" class="bg-neutral text-neutral-content shadow">
+  <div class="max-w-[1280px] mx-auto px-4">
+    <div class="flex items-center justify-between py-3">
+
+      <!-- Left side -->
+      <div class="flex items-center gap-8">
+
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+          <div class="bg-primary text-white w-8 h-8 flex items-center justify-center rounded-lg">
+            <i class="icon-[tabler--bolt-filled] text-lg"></i>
+          </div>
+          <span class="font-semibold text-lg">eCommerce</span>
+        </div>
+
+        <!-- Nav links -->
+        <div id="nav-links" class="hidden md:flex items-center gap-5">
+          <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition">
+            <i class="icon-[tabler--layout-dashboard]"></i> Dashboard
+          </a>
+          <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition">
+            <i class="icon-[tabler--cube]"></i> Products <i class="icon-[tabler--chevron-down] text-xs"></i>
+          </a>
+          <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition">
+            <i class="icon-[tabler--receipt-2]"></i> Order <i class="icon-[tabler--chevron-down] text-xs"></i>
+          </a>
+          <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition">
+            <i class="icon-[tabler--users]"></i> Customer <i class="icon-[tabler--chevron-down] text-xs"></i>
+          </a>
+          <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition">
+            <i class="icon-[tabler--building-store]"></i> Vendors <i class="icon-[tabler--chevron-down] text-xs"></i>
+          </a>
+          <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition">
+            <i class="icon-[tabler--settings]"></i> Settings <i class="icon-[tabler--chevron-down] text-xs"></i>
+          </a>
+          <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition">
+            <i class="icon-[tabler--file-text]"></i> Pages <i class="icon-[tabler--chevron-down] text-xs"></i>
+          </a>
+        </div>
       </div>
-      <!-- SearchBox Modal -->
-      <div id="search-modal" class="overlay u0gcc overlay-open:opacity-100 overlay-open:duration-300 hidden" role="dialog" tabindex="-1">
-         <div class="tr4z9 overlay-open:opacity-100 overlay-open:duration-300">
-            <div class="ulf13">
-               <div
-                  class="relative"
-                  data-combo-box='{"preventVisibility":true,"preventSelection":true,"groupingType":"default","apiUrl":"../../assets/json/dashboard-ecommerce/search.json","apiGroupField":"section","outputItemTemplate":"<li class=\"rounded-field focus-within:outline-0 focus-within:bg-base-200\" data-combo-box-output-item> <a class=\"dropdown-item combo-box-selected:dropdown-active\" data-combo-box-output-item-attr=&apos;[{\"valueFrom\": \"url\", \"attr\": \"href\"}]&apos;> <div class=\"flex items-center justify-between w-full\"> <div class=\"flex items-center gap-3\"> <span class=\"size-5\" data-combo-box-output-item-attr=&apos;[{\"valueFrom\": \"icon\", \"attr\": \"class\"}]&apos;></span> <div data-combo-box-output-item-field=\"name\" data-combo-box-search-text data-combo-box-value></div> </div> <span class=\"icon-[tabler--check] text-primary combo-box-selected:block hidden size-4 shrink-0\"></span> </div> </a></li>","groupingTitleTemplate":"<li class=\"block text-xs text-base-content/50 jn8at mb-1\"></li>"}'>
-                  <!-- SearchBox -->
-                  <div class="yevbv block">
-                     <div class="relative">
-                        <input class="eamhj ptak5" type="text" placeholder="Search or type a command" role="combobox" aria-expanded="false" value="" autofocus="" data-combo-box-input="" />
-                        <span class="icon-[tabler--search] text-base-content absolute ng2ql top-1/2 size-4 shrink-0 qyvn3"></span>
-                        <div class="absolute hhkai end-0 flex items-center justify-center qhks3">
-                           <button id="searchbox-clear" type="button" class="focus:outline-hidden inline-flex size-6 shrink-0 items-center justify-center rounded-full knwap hover:text-blue-600 focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" aria-label="Close" data-combo-box-close>
-                           <span class="j17sd">Close</span>
-                           <span class="icon-[tabler--circle-x] size-5 shrink-0"></span>
-                           </button>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- SearchBox Modal Body -->
-                  <div class="onulj" data-combo-box-output="">
-                     <ul class="nujh6 menu-sm trkhp overflow-y-auto" data-combo-box-output-items-wrapper=""></ul>
-                  </div>
-                  <div class="w614x border-base-content/20 text-base-content/50 mhx6q gap-4 yknjh max-sm:hidden">
-                     <div class="flex ij0d7 items-center gap-2 text-sm">
-                        <kbd class="pjrnf uumgh">esc</kbd>
-                        <span>To close</span>
-                     </div>
-                     <div class="flex items-center gap-2 text-sm">
-                        <kbd class="pjrnf uumgh c49nc"><span class="icon-[tabler--arrow-back] size-4"></span></kbd>
-                        <span>To Select</span>
-                     </div>
-                     <div class="flex items-center gap-2 text-sm">
-                        <kbd class="pjrnf uumgh c49nc"><span class="icon-[tabler--arrow-up] size-4"></span></kbd>
-                        <kbd class="pjrnf uumgh c49nc"><span class="icon-[tabler--arrow-down] size-4"></span></kbd>
-                        <span>To Navigate</span>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
+
+      <!-- Right side -->
+      <div class="flex items-center gap-5">
+        <i class="icon-[tabler--search] text-base cursor-pointer hover:text-primary"></i>
+        <i class="icon-[tabler--bell] text-base cursor-pointer hover:text-primary"></i>
+        <i class="icon-[tabler--heart] text-base cursor-pointer hover:text-primary"></i>
+        <i class="icon-[tabler--shopping-cart] text-base cursor-pointer hover:text-primary"></i>
+        <img src="/images/user-avatar.png" alt="Profile" class="w-8 h-8 rounded-full border border-primary/50">
       </div>
+
+      <!-- Burger for mobile -->
+      <button id="burger-btn" class="md:hidden absolute left-4 text-xl focus:outline-none">
+        <i class="icon-[tabler--menu-2]"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile dropdown -->
+  <div id="mobile-menu" class="hidden flex-col items-start gap-4 px-6 pb-4 md:hidden bg-neutral border-t border-neutral-content/10">
+    <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition"><i class="icon-[tabler--layout-dashboard]"></i> Dashboard</a>
+    <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition"><i class="icon-[tabler--cube]"></i> Products</a>
+    <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition"><i class="icon-[tabler--receipt-2]"></i> Order</a>
+    <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition"><i class="icon-[tabler--users]"></i> Customer</a>
+    <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition"><i class="icon-[tabler--building-store]"></i> Vendors</a>
+    <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition"><i class="icon-[tabler--settings]"></i> Settings</a>
+    <a href="#" class="flex items-center gap-1 text-sm hover:text-primary transition"><i class="icon-[tabler--file-text]"></i> Pages</a>
+  </div>
+
+  <script>
+    const burgerBtn = document.getElementById('burger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    burgerBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</div>
+
+
+<!-- Script -->
+
+
+<!-- Script for burger menu toggle -->
+
+
       
       
       <!-- LENDER HEADER -->

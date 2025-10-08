@@ -1,16 +1,13 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" data-theme="corporate" data-assets-path="../../assets/" data-layout-path="dashboard-ecommerce/" dir="ltr" class="rwfrf">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
    <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
       <meta name="robots" content="noindex, nofollow" />
       <title>Borrowhen | Dashboard</title>
-      <meta name="keywords" content="FlyonUI dashboard, FlyonUI dashboard, flyonui, html dashboard, web dashboard, frontend dashboard, responsive FlyonUI theme" />
       <!-- Favicon -->
       <link rel="icon" type="image/x-icon" href="https://demos.flyonui.com/templates/assets/img/common/favicon/favicon.ico" />
-      <!-- Fonts -->
-      <link rel="preconnect" href="https://fonts.googleapis.com/" />
-      <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/css/output.css" />
       <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
       <link href="https://fonts.googleapis.com/css?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
       <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
@@ -22,19 +19,10 @@
       <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/libs/apexcharts/dist/apexcharts.css" />
-      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/src/vendor/apexcharts.css" />
-      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/src/vendor/datatables.css" />
-      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/css/output.css" />
       <link rel="stylesheet" th:href="@{/css/output.css}" />
-      <!-- Theme JS -->
-      <script type="text/javascript" th:src="@{/script/theme.js}"></script>
+      <link rel="stylesheet" th:href="@{/css/input.css}" />
    </head>
    <body>
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
-      <div class="fixed kimw1 iujut z-[3]">
-         <a href="https://flyonui.com/pro#pricing" target="_blank" class="btn l9lk7 shadow-lg o4s8d">Buy Now</a>
-      </div>
       <!-- Layout wrapper -->
       <!-- Layout wrapper -->
       <div class="bg-base-200 flex min-h-screen flex-col">
@@ -43,523 +31,234 @@
          <div th:replace="~{header :: header-admin}"></div>
          <!-- ---------- END HEADER ---------- -->
          <!-- Layout Container -->
-         <main class="hmc58">
-            <div class="bg-primary wedi4"></div>
+         <main class="flex-1">
+            <div class="bg-primary" style="height: calc(var(--spacing) * 105)"></div>
             <!-- Content -->
-            <div class="max-w-[1536px] hmos0 yt5gg djsg9 pvq5y">
-               <div class="flex wcs4q items-center justify-between p-2">
-                  <div class="ymtjh">
-                     <ul class="yknjh">
-                        <li>
-                           <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="t0ywj hover:text-white">
-                           <span class="icon-[tabler--smart-home] size-5"></span>
+            <div class="max-w-[1280px] mx-auto mt-[calc(var(--spacing)*-105)] px-[calc(var(--spacing)*6)] pt-0 box-border">
+               <div class="flex flex-wrap items-center justify-between p-2">
+                  <div class="w-full text-white  py-[6px] flex items-center">
+                     <ul class="flex items-center space-x-2 py-[calc(var(--spacing)*2)]">
+                        <li class="flex items-center">
+                           <a href="#" class="hover:text-white flex items-center">
+                           <span class="icon-[tabler--smart-home] text-[16px]"></span>
                            </a>
                         </li>
-                        <li class="y8z3g rtl:rotate-180">
-                           <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
+                        <li class="flex items-center">
+                           <span class="icon-[tabler--chevron-right] text-[14px]"></span>
                         </li>
-                        <li >
-                           <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="t0ywj hover:text-white text-sm">Dashboard</a>
+                        <li class="flex items-center">
+                           <a href="#" class="hover:text-white text-sm">Dashboard</a>
                         </li>
-                        <li class="y8z3g rtl:rotate-180">
-                           <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
+                        <li class="flex items-center">
+                           <span class="icon-[tabler--chevron-right] text-[14px]"></span>
                         </li>
-                        <li aria-current="page">
-                           <span class="t0ywj text-sm i9hfu">Borrowhen</span>
+                        <li class="flex items-center">
+                           <span class="text-sm font-semibold">eCommerce</span>
                         </li>
                      </ul>
                   </div>
-                  <div class="dropdown relative inline-flex [--placement:bottom-end]">
-                     <div class="dropdown-menu dropdown-open:opacity-100 gfsnm hidden w-full" role="menu" aria-orientation="vertical" aria-labelledby="app-dropdown">
-                        <div class="uygfv justify-between uafca d2kpi sn3hb">
-                           <span class="text-base-content text-sm font-medium">user@example.com</span>
-                           <span class="text-sm">Sign out</span>
-                        </div>
-                        <ul id="drag-dropdown" class="trkhp">
-                           <li class="dropdown-item dropdown-active group px-3">
-                              <div class="avatar">
-                                 <div class="tivun">
-                                    <img src="https://demos.flyonui.com/templates/assets/img/dashboard-ecommerce/brands/store-logo-1.png" alt="Amazon Fresh logo" />
-                                 </div>
-                              </div>
-                              <h6 class="text-base-content hmc58">Amazon Fresh</h6>
-                              <span class="icon-[tabler--check] hidden size-6 group-[.dropdown-active]:block"></span>
-                           </li>
-                           <li class="dropdown-item group px-3">
-                              <div class="avatar">
-                                 <div class="tivun">
-                                    <img src="https://demos.flyonui.com/templates/assets/img/dashboard-ecommerce/brands/store-logo-2.png" alt="Instacart logo" />
-                                 </div>
-                              </div>
-                              <h6 class="text-base-content hmc58">Instacart</h6>
-                              <span class="icon-[tabler--check] hidden size-6 group-[.dropdown-active]:block"></span>
-                           </li>
-                        </ul>
-                        <div class="jnyiq p-2 rtqzx">
-                           <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-settings-detail.html" class="btn btn-text ccu1y d7ium text-sm">
-                           <span class="icon-[tabler--circle-plus] size-4"></span>
-                           Add another store
-                           </a>
-                        </div>
-                     </div>
-                  </div>
                </div>
-               <hr class="cql0n" />
-               <div class="flex wcs4q justify-between gap-4 s2upt">
+               <hr class="border-t w-full m-0" style="border-color: color-mix(in oklab, var(--color-primary-content) 40%, transparent);" />
+               <div class="flex flex-wrap justify-between gap-4 py-[calc(var(--spacing)*6)]">
                   <div class="flex items-center gap-4">
                      <div class="avatar avatar-placeholder">
-                        <div class="text-primary rounded-box ijx64 nzh2g">
-                           <span class="icon-[tabler--chart-pie] jgmt6"></span>
+                        <div class="text-primary rounded-xl w-[calc(var(--spacing)*12.5)] h-[calc(var(--spacing)*12.5)] bg-[var(--color-white)]">
+                           <span class="icon-[tabler--chart-pie] w-[calc(var(--spacing)*8.5)] h-[calc(var(--spacing)*8.5)]	"></span>
                         </div>
                      </div>
                      <div class="flex flex-col gap-0.5">
-                        <span class="t0ywj runqr i9hfu">Admin Dashboard</span>
-                        <span class="t0ywj">Hello, ADMIN</span>
+                        <span class="text-white text-[var(--text-xl)] leading-[var(--tw-leading,var(--text-xl--line-height))] font-[var(--font-weight-semibold)]">Admin Dashboard</span>
+                        <span class="text-white">Hello, ADMIN</span>
                      </div>
                   </div>
                   <div class="flex items-center gap-4 sm:gap-9">
-                     <div class="trkhp text-center">
-                        <h3 class="t0ywj runqr i9hfu">$23k</h3>
-                        <p class="t0ywj text-center">Sales</p>
+                     <div class="text-center">
+                        <h3 class="text-white text-[var(--text-xl)] leading-[var(--tw-leading,var(--text-xl--line-height))] font-[var(--font-weight-semibold)]">$23k</h3>
+                        <p class="text-white text-center">Sales</p>
                      </div>
-                     <div class="trkhp text-center">
-                        <h3 class="t0ywj runqr i9hfu">8.51k</h3>
-                        <p class="t0ywj text-center">Customers</p>
+                     <div class="text-center">
+                        <h3 class="text-white text-[var(--text-xl)] leading-[var(--tw-leading,var(--text-xl--line-height))] font-[var(--font-weight-semibold)]">8.51k</h3>
+                        <p class="text-white text-center">Customers</p>
                      </div>
-                     <div class="trkhp text-center">
-                        <h3 class="t0ywj runqr i9hfu">2.5k</h3>
-                        <p class="t0ywj text-center">Products</p>
+                     <div class="text-center">
+                        <h3 class="text-white text-[var(--text-xl)] leading-[var(--tw-leading,var(--text-xl--line-height))] font-[var(--font-weight-semibold)]">2.5k</h3>
+                        <p class="text-white text-center">Products</p>
                      </div>
-                     <div class="trkhp text-center">
-                        <h3 class="t0ywj runqr i9hfu">$1.2k</h3>
-                        <p class="t0ywj text-center">Revenue</p>
+                     <div class="text-center">
+                        <h3 class="text-white text-[var(--text-xl)] leading-[var(--tw-leading,var(--text-xl--line-height))] font-[var(--font-weight-semibold)]">$1.2k</h3>
+                        <p class="text-white text-center">Revenue</p>
                      </div>
                   </div>
                </div>
-               <div class="yzl9f bg-base-100 wanr8 e2zhm djsg9 shadow-md">
-                  <div class="w7btb bkumc i8294 md:grid-cols-2 xl:grid-cols-3">
-                     <div class="w7btb bkumc i8294 xl:grid-cols-2">
-                        <!-- Order Card -->
-                        <div class="z5a1v jvk09 justify-between tqj18">
-                           <div class="od7oo">
-                              <div>
-                                 <p class="text-base-content/50 mb-0.5">Order</p>
-                                 <div class="flex items-center gap-2">
-                                    <h3 class="text-base-content runqr i9hfu">276k</h3>
-                                    <span class="icon-[tabler--trending-up] text-success size-6"></span>
-                                 </div>
-                              </div>
-                           </div>
-                           <div id="order-chart" class="xsppy w-full"></div>
-                        </div>
-                        <!-- Sales Card -->
-                        <div class="z5a1v jvk09 justify-between tqj18">
-                           <div class="od7oo">
-                              <div>
-                                 <p class="text-base-content/50 mb-0.5">Sales</p>
-                                 <h3 class="text-base-content runqr i9hfu">482k</h3>
-                              </div>
-                              <div id="sales-chart" class="mb-2 flex justify-center"></div>
-                              <p class="text-base-content/80 text-center text-xs font-medium">
-                                 $88k Sales
-                                 <br />
-                                 more than last month
-                              </p>
-                           </div>
+               <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
+                  <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
+                     <!-- Card 1 -->
+                     <div class="rounded-lg border border-gray-500 shadow-md p-4 bg-transparent"></div>
+                     <!-- Card 2 -->
+                     <div class="rounded-lg border border-gray-500 shadow-md p-4 bg-transparent"></div>
+                     <!-- Card 3 -->
+                     <div class="rounded-lg border border-gray-500 shadow-md p-4 bg-transparent"></div>
+                     <!-- Card 4 -->
+                     <div class="rounded-lg border border-gray-500 shadow-md p-4 bg-transparent"></div>
+                     <!-- Full-width row (for charts / lists) -->
+                     <div class="col-span-full grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div class="rounded-lg border border-gray-500 shadow-md p-4 bg-transparent"></div>
+                        <div class="rounded-lg border border-gray-500 shadow-md p-4 bg-transparent"></div>
+                        <div class="rounded-lg border border-gray-500 shadow-md p-4 bg-transparent"></div>
+                     </div>
+                  </div>
+                  <div class="text-gray-200 rounded-lg shadow-md flex flex-col border border-gray-500">
+                     <!-- Filter Header -->
+                     <div class="border-b border-gray-500 p-5">
+                        <h2 class="text-lg font-semibold mb-4">Filter</h2>
+                        <div class="flex flex-wrap gap-4">
+                           <select class="border border-gray-500 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                              <option>Status</option>
+                              <option>Scheduled</option>
+                              <option>Publish</option>
+                              <option>Inactive</option>
+                           </select>
+                           <select class="border border-gray-500 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                              <option>Category</option>
+                              <option>Household</option>
+                              <option>Office</option>
+                              <option>Electronics</option>
+                              <option>Shoes</option>
+                              <option>Accessories</option>
+                              <option>Game</option>
+                           </select>
+                           <select class="border border-gray-500 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                              <option>Stock</option>
+                              <option>Out of Stock</option>
+                              <option>In Stock</option>
+                           </select>
                         </div>
                      </div>
-                     <!-- New Visitors And Activity -->
-                     <div class="ickhf max-lg:stats-vertical zw0dx s2upt tqj18 max-xl:order-2 md:col-span-2">
-                        <div class="wg2w1 min-lg:py-0">
-                           <div class="flex items-center justify-between gap-2">
-                              <h5 class="text-base-content runqr i9hfu">New Visitors</h5>
-                              <p class="text-base-content/50 text-sm">Last Week</p>
-                           </div>
-                           <div class="flex mnnhp justify-between gap-3 max-sm:flex-wrap">
-                              <div>
-                                 <div class="b819s runqr">$17,356</div>
-                                 <div class="text-success inline-flex items-center bqrxk text-sm i9hfu">
-                                    <span class="icon-[tabler--arrow-up] size-4"></span>
-                                    25.6%
-                                 </div>
-                              </div>
-                              <div id="new-visitors-chart"></div>
-                           </div>
+                     <!-- Search & Actions -->
+                     <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-800 p-5">
+                        <div class="flex items-center bg-[#2a2a2a] border border-gray-500 rounded-md px-3 py-2 w-full sm:w-64">
+                           <i class="icon-[tabler--search] text-gray-500 mr-2 text-sm"></i>
+                           <input
+                              type="search"
+                              placeholder="Search Product"
+                              class="bg-transparent focus:outline-none w-full text-sm text-gray-200 placeholder-gray-500"
+                              />
                         </div>
-                        <div class="wg2w1 min-lg:py-0">
-                           <div class="flex items-center justify-between gap-2">
-                              <h5 class="text-base-content runqr i9hfu">Activity</h5>
-                              <p class="text-base-content/50 text-sm">Last Week</p>
-                           </div>
-                           <div class="flex mnnhp justify-between gap-3 max-sm:flex-wrap">
-                              <div>
-                                 <div class="b819s runqr font-medium">$4,698</div>
-                                 <div class="text-error inline-flex items-center bqrxk text-sm i9hfu">
-                                    <span class="icon-[tabler--arrow-down] size-4"></span>
-                                    25.6%
-                                 </div>
-                              </div>
-                              <div id="activity-chart"></div>
-                           </div>
+                        <div class="flex items-center gap-3">
+                           <button class="flex items-center gap-2 bg-[#2a2a2a] hover:bg-[#343434] border border-gray-700 rounded-md px-4 py-2 text-sm transition">
+                           <i class="icon-[tabler--upload] text-gray-500 text-sm"></i>
+                           Export
+                           <i class="icon-[tabler--chevron-down] text-xs"></i>
+                           </button>
+                           <button class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 rounded-md px-4 py-2 text-sm text-white transition">
+                           <i class="icon-[tabler--plus] text-white"></i>
+                           Add Product
+                           </button>
                         </div>
                      </div>
-                     <!-- Sale Country -->
-                     <div class="z5a1v jvk09 tqj18 max-xl:order-2">
-                        <div class="i6aot border-base-content/20 flex xw218 justify-between gap-2 zz0fc">
-                           <div>
-                              <h4 class="lwjh7 runqr">Sale Country</h4>
-                              <span class="text-base-content/80 text-sm">until your daily purchase target</span>
-                           </div>
-                           <div class="dropdown relative inline-flex">
-                              <button id="dropdown-sale-country" type="button" class="dropdown-toggle btn btn-text text-base-content/50 btn-circle btn-sm" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                              <span class="icon-[tabler--dots-vertical] size-5.5"></span>
-                              </button>
-                              <ul class="dropdown-menu dropdown-open:opacity-100 hidden" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-sale-country">
-                                 <li><a class="dropdown-item" href="#">Last 28 Days</a></li>
-                                 <li><a class="dropdown-item" href="#">Last Month</a></li>
-                                 <li><a class="dropdown-item" href="#">Last Year</a></li>
-                              </ul>
-                           </div>
-                        </div>
-                        <div class="od7oo u3g0w">
-                           <div id="sale-report-chart" class="w-full"></div>
-                        </div>
-                     </div>
-                     <!-- Payment History -->
-                     <div class="z5a1v jvk09 tqj18">
-                        <div class="i6aot flex items-center justify-between gap-2">
-                           <h4 class="lwjh7 runqr">Payment History</h4>
-                           <div class="dropdown relative inline-flex">
-                              <button id="dropdown-payment-history" type="button" class="dropdown-toggle btn btn-text text-base-content/50 btn-circle btn-sm" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                              <span class="icon-[tabler--dots-vertical] size-5.5"></span>
-                              </button>
-                              <ul class="dropdown-menu dropdown-open:opacity-100 hidden" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-payment-history">
-                                 <li><a class="dropdown-item" href="#">Last 28 Days</a></li>
-                                 <li><a class="dropdown-item" href="#">Last Month</a></li>
-                                 <li><a class="dropdown-item" href="#">Last Year</a></li>
-                              </ul>
-                           </div>
-                        </div>
-                        <div class="od7oo gj0wu c49nc">
-                           <div class="border-base-content/20 w7btb plgup z8zx2 vlaa8 yknjh">
-                              <h6 class="text-base-content/80 x3s63 text-sm">Card</h6>
-                              <div class="text-center text-sm">Date</div>
-                              <div class="zg6eg text-sm">Spend</div>
-                           </div>
-                           <ul class="flex j5zp5 flex-col justify-between i8294 djsg9">
-                              <li>
-                                 <div class="w7btb plgup items-center">
-                                    <div class="x3s63 flex items-center gap-3">
-                                       <div class="bg-base-200 rounded-box ightg flex ffayq items-center justify-center">
-                                          <img src="https://cdn.flyonui.com/fy-assets/blocks/dashboard-app/widgets/visa.png" alt="visa logo" class="w-7.5" />
-                                       </div>
-                                       <div>
-                                          <h6 class="text-base-content text-base font-medium">*4399</h6>
-                                          <p class="text-base-content/50 text-sm">Credit Card</p>
+                     <!-- Table -->
+                     <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm text-gray-300">
+                           <!-- HEADER -->
+                           <thead class="border-b border-gray-500">
+                              <tr>
+                                 <th class="py-3 px-4 text-left font-medium">
+                                    <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded" />
+                                 </th>
+                                 <th class="py-3 px-4 text-left font-medium">PRODUCT</th>
+                                 <th class="py-3 px-4 text-left font-medium">CATEGORY</th>
+                                 <th class="py-3 px-4 text-left font-medium">STOCK</th>
+                                 <th class="py-3 px-4 text-left font-medium">PRICE</th>
+                                 <th class="py-3 px-4 text-left font-medium">QTY</th>
+                                 <th class="py-3 px-4 text-left font-medium">STATUS</th>
+                                 <th class="py-3 px-4 text-left font-medium">ACTIONS</th>
+                              </tr>
+                           </thead>
+                           <!-- BODY -->
+                           <tbody class="divide-y divide-gray-500">
+                              <tr class="hover:bg-[#1f1f1f] transition">
+                                 <!-- Checkbox -->
+                                 <td class="py-5 px-4 align-middle">
+                                    <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded" />
+                                 </td>
+                                 <!-- Product -->
+                                 <td class="py-3 px-4 align-middle">
+                                    <div class="flex items-center gap-3">
+                                       <div class="min-w-0">
+                                          <p class="text-sm font-semibold text-gray-100 truncate">TechMart Electronics</p>
+                                          <p class="text-xs text-gray-500 truncate">Electronics</p>
                                        </div>
                                     </div>
-                                    <div class="text-base-content/50 text-center text-sm">05/Jan</div>
-                                    <div class="zg6eg">
-                                       <p class="text-base-content font-medium">-$2,820</p>
-                                       <p class="text-base-content/50 text-sm">$10,450</p>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="w7btb plgup items-center">
-                                    <div class="x3s63 flex items-center gap-3">
-                                       <div class="bg-base-200 rounded-box ightg flex ffayq items-center justify-center">
-                                          <img src="https://cdn.flyonui.com/fy-assets/blocks/dashboard-app/widgets/american-express.png" alt="american express logo" class="qzmh9" />
-                                       </div>
-                                       <div>
-                                          <h6 class="text-base-content text-base font-medium">*9860</h6>
-                                          <p class="text-base-content/50 text-sm">ATM Card</p>
-                                       </div>
-                                    </div>
-                                    <div class="text-base-content/50 text-center text-sm">24/Feb</div>
-                                    <div class="zg6eg">
-                                       <p class="text-base-content font-medium">-$1,650</p>
-                                       <p class="text-base-content/50 text-sm">$8,900</p>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="w7btb plgup items-center">
-                                    <div class="x3s63 flex items-center gap-3">
-                                       <div class="bg-base-200 rounded-box ightg flex ffayq items-center justify-center">
-                                          <img src="https://cdn.flyonui.com/fy-assets/blocks/dashboard-app/widgets/visa.png" alt="visa logo" class="w-7.5" />
-                                       </div>
-                                       <div>
-                                          <h6 class="text-base-content text-base font-medium">*4300</h6>
-                                          <p class="text-base-content/50 text-sm">Credit Card</p>
-                                       </div>
-                                    </div>
-                                    <div class="text-base-content/50 text-center text-sm">08/Mar</div>
-                                    <div class="zg6eg">
-                                       <p class="text-base-content font-medium">-$3,250</p>
-                                       <p class="text-base-content/50 text-sm">$12,800</p>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="w7btb plgup items-center">
-                                    <div class="x3s63 flex items-center gap-3">
-                                       <div class="bg-base-200 rounded-box ightg flex ffayq items-center justify-center">
-                                          <img src="https://cdn.flyonui.com/fy-assets/blocks/dashboard-app/widgets/master-card.png" alt="mastercard logo" class="w-7.5" />
-                                       </div>
-                                       <div>
-                                          <h6 class="text-base-content text-base font-medium">*5545</h6>
-                                          <p class="text-base-content/50 text-sm">Debit Card</p>
-                                       </div>
-                                    </div>
-                                    <div class="text-base-content/50 text-center text-sm">15/Apr</div>
-                                    <div class="zg6eg">
-                                       <p class="text-base-content font-medium">-$890</p>
-                                       <p class="text-base-content/50 text-sm">$5,200</p>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="w7btb plgup items-center">
-                                    <div class="x3s63 flex items-center gap-3">
-                                       <div class="bg-base-200 rounded-box ightg flex ffayq items-center justify-center">
-                                          <img src="https://cdn.flyonui.com/fy-assets/blocks/dashboard-app/widgets/visa.png" alt="visa logo" class="w-7.5" />
-                                       </div>
-                                       <div>
-                                          <h6 class="text-base-content text-base font-medium">*4399</h6>
-                                          <p class="text-base-content/50 text-sm">Credit Card</p>
-                                       </div>
-                                    </div>
-                                    <div class="text-base-content/50 text-center text-sm">28/Apr</div>
-                                    <div class="zg6eg">
-                                       <p class="text-base-content font-medium">-$1,980</p>
-                                       <p class="text-base-content/50 text-sm">$7,650</p>
-                                    </div>
-                                 </div>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                     <!-- Performance Card -->
-                     <div class="z5a1v jvk09 tqj18 max-xl:order-2">
-                        <div class="i6aot flex items-center justify-between gap-2">
-                           <div class="flex items-center gap-2">
-                              <span class="icon-[tabler--chart-bar] size-6"></span>
-                              <h4 class="lwjh7 runqr">Performance</h4>
-                           </div>
-                           <div class="dropdown relative inline-flex">
-                              <button id="dropdown-performance" type="button" class="dropdown-toggle btn btn-text text-base-content/50 btn-circle btn-sm" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                              <span class="icon-[tabler--dots-vertical] size-5.5"></span>
-                              </button>
-                              <ul class="dropdown-menu dropdown-open:opacity-100 hidden" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-performance">
-                                 <li><a class="dropdown-item" href="#">Last 28 Days</a></li>
-                                 <li><a class="dropdown-item" href="#">Last Month</a></li>
-                                 <li><a class="dropdown-item" href="#">Last Year</a></li>
-                              </ul>
-                           </div>
-                        </div>
-                        <div class="od7oo gj0wu c49nc">
-                           <nav class="j0dpb vkok0 n4mnp" aria-label="Tabs" role="tablist">
-                              <button type="button" class="edv38 active-tab:tab-active w-full font-medium" id="new-user" data-tab="#new-user-content" aria-controls="new-user-content" role="tab" aria-selected="true">New Users</button>
-                              <button type="button" class="edv38 active-tab:tab-active active w-full font-medium" id="online-sale" data-tab="#online-sale-content" aria-controls="online-sale-content" role="tab" aria-selected="false">Online Sales</button>
-                              <button type="button" class="edv38 active-tab:tab-active w-full font-medium" id="daily-sales" data-tab="#daily-sales-content" aria-controls="daily-sales-content" role="tab" aria-selected="false">Daily Sales</button>
-                           </nav>
-                           <div class="djsg9">
-                              <div id="new-user-content" class="w6g2l hidden" role="tabpanel" aria-labelledby="new-user">
-                                 <!-- Profile Section -->
-                                 <div class="border-base-content/20 rounded-box border p-3">
-                                    <div class="flex items-center gap-2">
-                                       <div class="avatar">
-                                          <div class="brt3n rounded-full">
-                                             <img src="https://cdn.flyonui.com/fy-assets/avatar/avatar-7.png" alt="Angel George" />
-                                          </div>
-                                       </div>
-                                       <div>
-                                          <p class="text-base-content/50 text-sm">Product Manager</p>
-                                          <h6 class="text-base-content e9cu5 font-medium">Angel George</h6>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!-- Daily Purchase Section -->
-                                 <div class="border-base-content/20 rounded-box border p-3">
-                                    <div class="flex items-center justify-between">
-                                       <span class="badge badge-soft kq287 rounded-full">Daily Purchase</span>
-                                       <h4 class="text-base-content runqr font-medium">10 Items</h4>
-                                    </div>
-                                 </div>
-                                 <!-- Physical Product Section -->
-                                 <div class="border-base-content/20 rounded-box border p-3">
-                                    <div class="mb-1 flex items-center justify-between">
-                                       <p class="text-base-content/50 ij0d7 text-sm font-medium">Physical Product</p>
-                                       <div class="flex items-center nn4o7">
-                                          <div class="avatar avatar-placeholder">
-                                             <div class="m0ejn w-6 rounded-full">
-                                                <span class="icon-[tabler--arrow-up] size-4"></span>
-                                             </div>
-                                          </div>
-                                          <span class="text-success text-sm i9hfu">14.78%</span>
-                                       </div>
-                                    </div>
-                                    <h3 class="text-base-content l72c0 yw602 i9hfu">$78,263</h3>
-                                    <div class="flex items-center justify-between">
-                                       <div class="avatar-group w84sr">
-                                          <div class="avatar">
-                                             <div class="tivun">
-                                                <img src="https://cdn.flyonui.com/fy-assets/avatar/avatar-1.png" alt="User 1" />
-                                             </div>
-                                          </div>
-                                          <div class="avatar">
-                                             <div class="tivun">
-                                                <img src="https://cdn.flyonui.com/fy-assets/avatar/avatar-2.png" alt="User 2" />
-                                             </div>
-                                          </div>
-                                          <div class="avatar">
-                                             <div class="tivun">
-                                                <img src="https://cdn.flyonui.com/fy-assets/avatar/avatar-3.png" alt="User 3" />
-                                             </div>
-                                          </div>
-                                          <div class="avatar">
-                                             <div class="tivun">
-                                                <img src="https://cdn.flyonui.com/fy-assets/avatar/avatar-4.png" alt="User 4" />
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <button class="btn btn-soft btn-sm btn-primary rounded-full">
-                                       View all
-                                       <span class="icon-[tabler--arrow-right] size-4"></span>
+                                 </td>
+                                 <!-- Category -->
+                                 <td class="py-3 px-4 align-middle text-gray-400">Gadgets</td>
+                                 <!-- Stock -->
+                                 <td class="py-3 px-4 align-middle text-gray-500">245</td>
+                                 <!-- Price -->
+                                 <td class="py-3 px-4 align-middle text-gray-200">$199.99</td>
+                                 <!-- Quantity -->
+                                 <td class="py-3 px-4 align-middle text-gray-300">12</td>
+                                 <!-- Status -->
+                                 <td class="py-3 px-4 align-middle">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-800 text-green-200">
+                                    Active
+                                    </span>
+                                 </td>
+                                 <!-- Actions -->
+                                 <td class="py-5 px-4 align-middle">
+                                    <div class="flex items-center gap-3 text-gray-400">
+                                       <!-- View -->
+                                       <button class="p-1 hover:text-gray-200" aria-label="View">
+                                          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
+                                             viewBox="0 0 24 24">
+                                             <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/>
+                                             <circle cx="12" cy="12" r="3"/>
+                                          </svg>
+                                       </button>
+                                       <!-- Edit -->
+                                       <button class="p-1 hover:text-gray-200" aria-label="Edit">
+                                          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
+                                             viewBox="0 0 24 24">
+                                             <path d="M12 20h9" />
+                                             <path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                                          </svg>
+                                       </button>
+                                       <!-- Delete -->
+                                       <button class="p-1 hover:text-red-400" aria-label="Delete">
+                                          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
+                                             viewBox="0 0 24 24">
+                                             <polyline points="3 6 5 6 21 6"/>
+                                             <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+                                             <path d="M10 11v6M14 11v6"/>
+                                          </svg>
                                        </button>
                                     </div>
-                                 </div>
-                                 <!-- Bottom Message -->
-                                 <div class="text-center">
-                                    <p class="text-base-content/80 text-sm">
-                                       <span class="i9hfu">Increase 24%</span>
-                                       more email marketing to reach your user acquisition target.
-                                    </p>
-                                 </div>
-                              </div>
-                              <div id="online-sale-content" class="otg2n" role="tabpanel" aria-labelledby="online-sale">
-                                 <!-- Comparison Cards -->
-                                 <div class="border-base-content/20 rounded-box flex justify-between border dhqgx eaqvd">
-                                    <div class="u04vp">
-                                       <p class="text-base-content/50 text-sm font-medium">Digital Product</p>
-                                       <div class="flex items-center gap-2">
-                                          <div class="avatar avatar-placeholder">
-                                             <div class="atiek w-6 rounded-full">
-                                                <span class="icon-[tabler--arrow-down] size-4"></span>
-                                             </div>
-                                          </div>
-                                          <span class="text-base-content runqr i9hfu">7,589</span>
-                                       </div>
-                                    </div>
-                                    <div class="u04vp">
-                                       <p class="text-base-content/50 text-sm font-medium">Physical Product</p>
-                                       <div class="flex items-center gap-2">
-                                          <div class="avatar avatar-placeholder">
-                                             <div class="m0ejn w-6 rounded-full">
-                                                <span class="icon-[tabler--arrow-up] size-4"></span>
-                                             </div>
-                                          </div>
-                                          <span class="tex-tbase-content runqr i9hfu">8,365</span>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!-- Physical Product Section with Chart -->
-                                 <div class="border-base-content/20 rounded-box border dhqgx py-2">
-                                    <div class="mb-1 flex items-center justify-between">
-                                       <p class="text-base-content/50 text-sm font-medium">Physical Product</p>
-                                       <span class="badge badge-soft badge-success rounded-full">
-                                       <span class="icon-[tabler--arrow-up] size-4"></span>
-                                       5.6%
-                                       </span>
-                                    </div>
-                                    <h3 class="text-base-content yw602 i9hfu">$78,263</h3>
-                                    <!-- Chart Container -->
-                                    <div id="online-sales-chart" class="w-full"></div>
-                                 </div>
-                                 <!-- Target Message -->
-                                 <div class="text-center">
-                                    <p class="text-base-content/80 text-sm">
-                                       <span class="i9hfu">18%</span>
-                                       until your target this month
-                                    </p>
-                                 </div>
-                              </div>
-                              <div id="daily-sales-content" class="hidden otg2n" role="tabpanel" aria-labelledby="daily-sales">
-                                 <!-- Comparison Cards -->
-                                 <div class="border-base-content/20 rounded-box flex justify-between border dhqgx eaqvd">
-                                    <div class="u04vp">
-                                       <p class="text-base-content/50 text-sm">Digital Product</p>
-                                       <div class="flex items-center gap-2">
-                                          <div class="avatar avatar-placeholder">
-                                             <div class="rcrsl text-success w-6 rounded-full">
-                                                <span class="icon-[tabler--arrow-up] size-4"></span>
-                                             </div>
-                                          </div>
-                                          <span class="text-base-content runqr i9hfu">8,365</span>
-                                       </div>
-                                    </div>
-                                    <div class="u04vp">
-                                       <p class="text-base-content/50 text-sm">Physical Product</p>
-                                       <div class="flex items-center gap-2">
-                                          <div class="avatar avatar-placeholder">
-                                             <div class="w1ndn text-warning w-6 rounded-full">
-                                                <span class="icon-[tabler--arrow-down] size-4"></span>
-                                             </div>
-                                          </div>
-                                          <span class="text-base-content runqr i9hfu">7,589</span>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!-- Daily Sales Section with Chart -->
-                                 <div class="border-base-content/20 rounded-box border dhqgx py-2">
-                                    <div class="mb-1 flex items-center justify-between">
-                                       <p class="text-base-content/50 text-sm">Daily Sales</p>
-                                       <span class="badge badge-soft badge-warning rounded-full">
-                                       <span class="icon-[tabler--arrow-down] size-4"></span>
-                                       3.4%
-                                       </span>
-                                    </div>
-                                    <h3 class="text-base-content l72c0 yw602 i9hfu">$78,263</h3>
-                                    <!-- Chart Container -->
-                                    <div id="daily-sales-chart" class="w-full"></div>
-                                 </div>
-                                 <!-- Target Message -->
-                                 <div class="text-center">
-                                    <p class="text-base-content/80 text-sm">
-                                       <span class="i9hfu">12%</span>
-                                       until your daily purchase target
-                                    </p>
-                                 </div>
-                              </div>
-                           </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- Pagination -->
+                     <div class="flex flex-wrap items-center justify-between border-t border-gray-500 p-5 text-sm text-gray-400">
+                        <p>Showing 1 to 5 of 100 entries</p>
+                        <div class="flex items-center gap-2">
+                           <button class="bg-[#2a2a2a] hover:bg-[#343434] rounded-md px-3 py-1">1</button>
+                           <button class="bg-transparent hover:bg-[#2a2a2a] rounded-md px-3 py-1">2</button>
+                           <button class="bg-transparent hover:bg-[#2a2a2a] rounded-md px-3 py-1">3</button>
+                           <span>...</span>
+                           <button class="bg-transparent hover:bg-[#2a2a2a] rounded-md px-3 py-1">20</button>
                         </div>
                      </div>
                   </div>
                </div>
             </div>
-            <!-- / Content -->
-            <!-- Footer: Start -->
-            <footer th:replace="~{footer :: footer}"></footer>
-            <!-- Footer: End -->
-         </main>
-         <!-- / Layout Container -->
       </div>
-      <!-- / Layout Wrapper -->
-      <!-- Theme Customizer -->
-      <div th:replace="~{theme-customizer :: theme-customizer}"></div>
-      <!-- Vendors JS -->
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/jquery/dist/jquery.min.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/jszip/dist/jszip.min.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/lodash/lodash.min.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/dist/helper-apexcharts.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/flyonui.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/theme-utils.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/main.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/common/theme-customizer.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/common/search.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/dashboard-ecommerce/ecommerce-dashboard.js"></script>
-      <button id="scrollToTopBtn" class="btn btn-circle btn-soft btn-secondary/20 vzdkh m5eeu lf7e7 s0ezv pv2yq fixed absolute z-[3] hidden" aria-label="Circle Soft Icon Button"><span class="icon-[tabler--chevron-up] size-5 shrink-0"></span></button>
+      <!-- / Content -->
+      <!-- Footer: Start -->
+      <footer th:replace="~{footer :: footer}"></footer>
+      <!-- Footer: End -->
+      </main>
+      <!-- / Layout Container -->
+      </div>
    </body>
 </html>
