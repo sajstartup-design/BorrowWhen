@@ -80,39 +80,60 @@ async function loadUsers(page = 0,
 
         data.users.forEach(user => {
 			const row = document.createElement("tr");
-			row.classList.add("border-gray-200")
-            row.classList.add("border-b");
-			row.setAttribute('data-id', user.encryptedId);
-			
-			row.innerHTML = `
-				<td><input type="checkbox" class="checkbox checkbox-sm checkbox-primary row-select-checkbox" ></td>
-				<td>
-				  <div class="flex flex-col">
-				    <span class="font-medium">${user.fullName}</span>
-				    <span class="text-sm text-gray-500">${user.userId}</span>
-				  </div>
-				</td>	              
-				<td>${user.emailAddress}</td>
-				<td>${user.phoneNumber}</td>
-              	<td>${user.birthDate}</td>
-              	<td>${user.createdDate}</td>
-              	<td>${user.updatedDate}</td>
-              	<td>
-					<div class="flex items-center gap-2">
-					  <button type="button" class="btn btn-circle btn-text btn-sm view-btn" data-id="${user.encryptedId}" title="View Details">
-					    <span class="icon-[tabler--eye] size-5 text-base-content"></span>
-					  </button>
-	
-					  <button type="button" class="btn btn-circle btn-text btn-sm edit-btn" data-id="${user.encryptedId}" title="Edit">
-					    <span class="icon-[tabler--edit] size-5 text-base-content"></span>
-					  </button>
-	
-					  <button type="button" class="btn btn-circle btn-text btn-sm delete-record" data-id="${user.encryptedId}" title="Delete">
-					    <span class="icon-[tabler--trash] size-5 text-base-content"></span>
-					  </button>
-					</div>
-              	</td>
-            `;
+			  row.className = "text-gray-500 border-b border-gray-300";
+			  row.setAttribute("data-id", user.encryptedId);
+
+			  row.innerHTML = `
+			    <!-- Checkbox -->
+			    <td class="py-3 px-4 align-middle">
+			      <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded row-select-checkbox">
+			    </td>
+
+			    <!-- Name & ID -->
+			    <td class="px-4 align-middle">
+			      <div class="flex items-center gap-3">
+			        <div class="min-w-0">
+			          <p class="text-sm font-semibold text-gray-500 truncate">${user.fullName}</p>
+			          <p class="text-xs text-gray-500 truncate">${user.userId}</p>
+			        </div>
+			      </div>
+			    </td>
+
+			    <!-- Email -->
+			    <td class="px-4 align-middle">${user.emailAddress}</td>
+
+			    <!-- Phone -->
+				<td class="px-4 align-middle">${user.phoneNumber && user.phoneNumber.trim() !== '' ? user.phoneNumber : '-'}</td>
+
+				<!-- Birth Date -->
+				<td class="px-4 align-middle">${user.birthDate && user.birthDate.trim() !== '' ? user.birthDate : '-'}</td>
+
+			    <!-- Created -->
+			    <td class="px-4 align-middle">${user.createdDate}</td>
+
+			    <!-- Updated -->
+			    <td class="px-4 align-middle">${user.updatedDate}</td>
+
+			    <!-- Actions -->
+			    <td class="px-4 align-middle">
+			      <div class="flex items-center gap-3 text-gray-500">
+			        <!-- View -->
+			        <button class="p-1 hover:text-gray-200 view-btn" data-id="${user.encryptedId}" aria-label="View">
+			          <i class="fa-regular fa-eye text-[18px]"></i>
+			        </button>
+
+			        <!-- Edit -->
+			        <button class="p-1 hover:text-gray-200 edit-btn" data-id="${user.encryptedId}" aria-label="Edit">
+			          <i class="fa-regular fa-pen-to-square text-[18px]"></i>
+			        </button>
+
+			        <!-- Delete -->
+			        <button class="p-1 hover:text-red-400 delete-record" data-id="${user.encryptedId}" aria-label="Delete">
+			          <i class="fa-regular fa-trash-can text-[18px]"></i>
+			        </button>
+			      </div>
+			    </td>
+			  `;
 
 /*            row.innerHTML = `
                 <div class="table-cell">${user.firstName} ${user.familyName}</div>

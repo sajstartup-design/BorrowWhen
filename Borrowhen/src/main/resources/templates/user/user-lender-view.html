@@ -1,20 +1,12 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" data-theme="corporate" data-assets-path="../../assets/" data-layout-path="dashboard-ecommerce/" dir="ltr" class="rwfrf">
-   <!-- Mirrored from demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-product-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Oct 2025 06:45:08 GMT -->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
    <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
       <meta name="robots" content="noindex, nofollow" />
-      <title>Borrowhen | Lender</title>
-      <link rel="canonical" href="https://flyonui.com/templates" />
-      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-      <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+      <title>Borrowhen | Dashboard</title>
       <!-- Favicon -->
-      <link rel="icon" type="image/x-icon" href="https://demos.flyonui.com/templates/assets/img/common/favicon/favicon.ico" />
-      <!-- Fonts -->
-      <link rel="preconnect" href="https://fonts.googleapis.com/" />
-      <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
       <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
       <link href="https://fonts.googleapis.com/css?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
       <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
@@ -26,271 +18,211 @@
       <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/src/vendor/datatables.css" />
-      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/css/output.css" />
-      <link rel="stylesheet" th:href="@{/css/input.css}" />
-      <!-- Theme JS -->
-      <script type="text/javascript" th:src="@{/script/theme.js}"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
    </head>
    <body>
-      <div th:if="${isSuccess}" th:replace="~{alert :: success}"></div>
-      <div th:if="${isError}" th:replace="~{alert :: error}"></div>
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
       <div class="bg-base-200 flex min-h-screen flex-col">
-         <!--  Header : Start  -->
-         <div th:replace="~{header :: header-admin}"></div>
-         <!--  Header : End -->
-         <main class="hmc58">
-            <div class="bg-primary wedi4"></div>
-            <!-- Content -->
-            <div class="max-w-[1536px] hmos0 yt5gg djsg9 pvq5y">
-               <div class="flex wcs4q items-center justify-between p-2">
-                  <div class="ymtjh">
-                     <ul class="yknjh">
-                        <li>
-                           <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="t0ywj hover:text-white">
-                           <span class="icon-[tabler--smart-home] size-5"></span>
-                           </a>
-                        </li>
-                        <li class="y8z3g rtl:rotate-180">
-                           <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
-                        </li>
-                        <li >
-                           <a th:href="@{/admin/dashboard}" class="t0ywj hover:text-white text-sm">Borrowhen</a>
-                        </li>
-                        <li class="y8z3g rtl:rotate-180">
-                           <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
-                        </li>
-                        <li >
-                           <a th:href="@{/admin/borrower}" class="t0ywj hover:text-white text-sm">Lenders</a>
-                        </li>
-                        <li class="y8z3g rtl:rotate-180">
-                           <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
-                        </li>
-                        <li aria-current="page">
-                           <span class="t0ywj text-sm i9hfu">Lenders List</span>
-                        </li>
-                     </ul>
+      <!-- ---------- HEADER ---------- -->
+      <div th:replace="~{header :: admin-header}"></div>
+      <main class="flex-1 relative">
+         <!-- Blue background section (stays fixed within main) -->
+         <div class="absolute top-0 left-0 w-full h-64 bg-blue-500 z-0"></div>
+         <!-- Content that appears over the blue section -->
+         <div class="relative z-10 pe-6 max-w-[1280px] mx-auto w-full gap-y-3">
+            <div class="flex flex-wrap items-center justify-between py-3">
+               <div class="max-w-auto overflow-x-auto">
+                  <ul class="py-3 flex items-center text-white text-sm">
+                     <li>
+                        <a th:href="@{/admin/other}" class="px-2 flex items-center gap-2">
+                        <i class="fa-solid fa-house inline-flex items-center"></i>
+                        </a>
+                     </li>
+                     <li>
+                        <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 "></i>
+                     </li>
+                     <li>
+                        <a th:href="@{/admin/dashboard}" class="px-2 flex items-center gap-2">
+                        <span>Borrwhen</span>
+                        </a>
+                     </li>
+                     <li>
+                        <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 "></i>
+                     </li>
+                     <li>
+                        <a href="#" class="px-2 flex items-center gap-2 font-bold">
+                        <span>Lender List</span>
+                        </a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <hr class="border-t border-white opacity-80" />
+            <div class="flex">
+               <div class="flex items-center py-6 gap-3">
+                  <div class="text-base rounded-sm bg-white w-12.5 h-12.5 flex items-center justify-center">
+                     <i class="fa-solid fa-chart-pie text-3xl text-blue-500" ></i>
+                  </div>
+                  <div class="flex flex-col gap-0.5 text-white">
+                     <span class="text-xl font-bold">Lenders</span>
                   </div>
                </div>
-               <hr class="cql0n" />
-               <div class="flex wcs4q justify-between gap-4 s2upt">
-                  <div class="flex items-center gap-4">
-                     <div class="avatar avatar-placeholder">
-                        <div class="text-primary rounded-box ijx64 nzh2g">
-                           <span class="icon-[tabler--chart-pie] jgmt6"></span>
-                        </div>
-                     </div>
-                     <div class="flex flex-col gap-0.5">
-                        <span class="t0ywj runqr i9hfu">Lenders</span>
-                     </div>
-                  </div>
-               </div>
-               <div class="yzl9f bg-base-100 wanr8 e2zhm djsg9 shadow-md">
-                  <!--  <div class="z5a1v jvk09 rr32e tqj18">
-                     <div class="od7oo">
-                        <div class="ygb9i flex ytmr9 max-xl:flex-col">
-                           <div class="flex hmc58 ytmr9 max-sm:flex-col">
-                              <div class="flex hmc58 justify-between gap-4">
-                                 <div class="space-y-1">
-                                    <p>Total Inventories</p>
-                                    <div class="text-base-content yw602 font-medium">$5,345.43</div>
-                                 </div>
-                                 <div class="avatar avatar-placeholder">
-                                    <div class="bg-neutral/10 rounded-field ij6o7">
-                                       <span class="icon-[tabler--building-store] text-base-content size-6"></span>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="g5y2o sm:divider-horizontal"></div>
-                              <div class="flex hmc58 justify-between gap-4">
-                                 <div class="space-y-1">
-                                    <p>Total Quantity</p>
-                                    <div class="text-base-content yw602 font-medium">$674,347.12</div>
-                                    <div class="flex items-center gap-2 text-sm">
-                                       <p>21k orders</p>
-                                       <p class="badge badge-soft badge-success">+12.4%</p>
-                                    </div>
-                                 </div>
-                                 <div class="avatar avatar-placeholder">
-                                    <div class="bg-neutral/10 rounded-field ij6o7">
-                                       <span class="icon-[tabler--device-laptop] text-base-content size-6"></span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="g5y2o xl:divider-horizontal"></div>
-                           <div class="flex hmc58 ytmr9 max-sm:flex-col">
-                              <div class="flex hmc58 justify-between gap-4">
-                                 <div class="space-y-1">
-                                    <p>Total Available</p>
-                                    <div class="text-base-content yw602 font-medium">$14,235.12</div>
-                                    <p>6k orders</p>
-                                 </div>
-                                 <div class="avatar avatar-placeholder">
-                                    <div class="bg-neutral/10 rounded-field ij6o7">
-                                       <span class="icon-[tabler--gift] text-base-content size-6"></span>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="g5y2o sm:divider-horizontal"></div>
-                              <div class="flex hmc58 justify-between gap-4">
-                                 <div class="space-y-1">
-                                    <p>Total Unavailable</p>
-                                    <div class="text-base-content yw602 font-medium">$8,345.23</div>
-                                    <div class="flex items-center gap-2 text-sm">
-                                       <p>150 orders</p>
-                                       <p class="badge badge-soft badge-error">-3.5%</p>
-                                    </div>
-                                 </div>
-                                 <div class="avatar avatar-placeholder">
-                                    <div class="bg-neutral/10 rounded-field ij6o7">
-                                       <span class="icon-[tabler--wallet] text-base-content size-6"></span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     </div> -->
-                  <div
-                     class="bg-base-100 z5a1v jvk09 flex flex-col rounded-md tqj18">
-                     <!-- Filter Section -->
-                     <div class="rr6pu zz0fc djsg9">
-                        <h2 class="text-base-content l72c0 runqr font-medium">Filter</h2>
-                        <div class="flex items-center justify-between i8294 max-sm:flex-col">
-                           <select class="select" id="select-status">
-                              <option value="all">Status</option>
-                              <option value="Scheduled">Scheduled</option>
-                              <option value="Publish">Publish</option>
-                              <option value="Inactive">Inactive</option>
+            </div>
+            <div class="bg-white rounded-md">
+               <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
+                  <div class="text-gray-200 rounded-lg shadow-md flex flex-col border border-gray-300 text-gray-500">
+                     <!-- Filter Header -->
+                     <div class="border-b border-gray-300 p-5">
+                        <h2 class="text-lg font-semibold mb-4">Filter</h2>
+                        <div class="flex flex-wrap gap-4">
+                           <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                              <option>Status</option>
+                              <option>Scheduled</option>
+                              <option>Publish</option>
+                              <option>Inactive</option>
                            </select>
-                           <select class="select" id="select-category">
-                              <option value="all">Category</option>
-                              <option value="Household">Household</option>
-                              <option value="Office">Office</option>
-                              <option value="Electronics">Electronics</option>
-                              <option value="Shoes">Shoes</option>
-                              <option value="Accessories">Accessories</option>
-                              <option value="Game">Game</option>
+                           <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                              <option>Category</option>
+                              <option>Household</option>
+                              <option>Office</option>
+                              <option>Electronics</option>
+                              <option>Shoes</option>
+                              <option>Accessories</option>
+                              <option>Game</option>
                            </select>
-                           <select class="select" id="select-stock">
-                              <option value="all">Stock</option>
-                              <option value="Out_of_Stock">Out_of_Stock</option>
-                              <option value="In_Stock">In_Stock</option>
+                           <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                              <option>Stock</option>
+                              <option>Out of Stock</option>
+                              <option>In Stock</option>
                            </select>
                         </div>
                      </div>
                      <!-- Search & Actions -->
-                     <div class="rr6pu flex flex-col items-center gap-3 zz0fc djsg9 md:flex-row">
-                        <div class="eamhj md:w-50 max-sm:w-full flex items-center">
-                           <span class="icon-[tabler--search] text-base-content/80 eqbwg v0qmd size-4 shrink-0 mr-2"></span>
-                           <input type="search" class="ij0d7 search" placeholder="Search User" id="filter-search" />
+                     <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-300 p-5">
+                        <!-- Search Bar -->
+                        <div class="flex items-center border border-gray-300 rounded-md px-3 py-2 w-full sm:w-64">
+                           <i class="fa-solid fa-magnifying-glass text-gray-500 mr-2 text-sm"></i>
+                           <input
+                              type="search"
+                              placeholder="Search Lender"
+                              class="bg-transparent focus:outline-none w-full text-sm text-gray-500 placeholder-gray-500 search"
+                              />
                         </div>
-                        <div class="flex hmc58 items-center lg4ss gap-4">
-                           <select class="hidden">
-                              <option value="10" selected>10</option>
-                              <option value="25">25</option>
-                              <option value="50">50</option>
-                              <option value="100">100</option>
+                        <!-- Actions -->
+                        <div class="flex items-center gap-3">
+                           <select
+                              class="h-[40px] px-3 bg-transparent border border-gray-300 rounded-md text-sm text-gray-500 focus:outline-none input-page"
+                              >
+                              <option>1</option>
                            </select>
-                           <div class="dropdown relative inline-flex">
-                              <button type="button" class="dropdown-toggle max-sm:btn-square btn btn-soft flex items-center gap-3">
-                              <span class="icon-[tabler--upload] size-5"></span>
-                              <span class="max-sm:hidden">Export</span>
-                              <span class="icon-[tabler--chevron-down] dropdown-open:rotate-180 size-5 max-sm:hidden"></span>
-                              </button>
-                              <div class="dropdown-menu hidden w-full pv4cq">
-                                 <button type="button" class="dropdown-item cursor-pointer">
-                                 <span class="icon-[tabler--printer] size-4 shrink-0"></span> Print
-                                 </button>
-                                 <button type="button" class="dropdown-item cursor-pointer">
-                                 <span class="icon-[tabler--file-type-csv] size-4 shrink-0"></span> CSV
-                                 </button>
-                                 <button type="button" class="dropdown-item cursor-pointer">
-                                 <span class="icon-[tabler--file-excel] size-4 shrink-0"></span> Excel
-                                 </button>
-                                 <button type="button" class="dropdown-item cursor-pointer">
-                                 <span class="icon-[tabler--file-type-pdf] size-4 shrink-0"></span> PDF
-                                 </button>
-                                 <button type="button" class="dropdown-item cursor-pointer">
-                                 <span class="icon-[tabler--clipboard-copy] size-4 shrink-0"></span> Copy
-                                 </button>
-                              </div>
-                           </div>
-                           <a th:href="@{/admin/lenders/create}" class="btn btn-primary max-sm:btn-square flex items-center gap-2">
-                           <span class="icon-[tabler--plus] size-5 shrink-0"></span>
-                           <span class="max-sm:hidden">Add Lender</span>
-                           </a>
+                           <button
+                              class="h-[40px] flex items-center gap-2 bg-blue-200 rounded-md px-4 text-sm text-gray-700 hover:bg-blue-300 transition"
+                              >
+                           <i class="fa-solid fa-upload text-gray-600 text-sm"></i>
+                           Export
+                           </button>
+                           <button
+                              class="h-[40px] flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 rounded-md px-4 text-sm text-white transition"
+                              >
+                           <i class="fa-solid fa-plus text-white text-sm"></i>
+                           Add Lender
+                           </button>
                         </div>
                      </div>
                      <!-- Table -->
                      <div class="overflow-x-auto">
-                        <div class="inline-block if13j hbx0z">
-                           <div class="overflow-hidden">
-                              <table class="datatables-users nk20c if13j min-w-full" id="table">
-                                 <thead>
-                                    <tr>
-                                       <th class="--exclude-from-ordering dfaeg">
-                                          <div class="flex j06yw items-center">
-                                             <input id="table-ajax-all" type="checkbox" class="checkbox checkbox-primary checkbox-sm" />
-                                             <label for="table-ajax-all" class="j17sd">Checkbox</label>
-                                          </div>
-                                       </th>
-                                       <th class="group uxtf2">LENDER</th>
-                                       <th class="group uxtf2">EMAIL</th>
-                                       <th class="group uxtf2 ">MOBILE NUMBER</th>
-                                       <th class="group uxtf2 ">BIRTH DATE</th>
-                                       <th class="group uxtf2 ">CREATED DATE</th>
-                                       <th class="group uxtf2 ">UPDATED DATE</th>
-                                       <th class="--exclude-from-ordering ">Actions</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody id="table-body">                              
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
+                        <table class="min-w-full text-sm text-gray-300">
+                           <!-- HEADER -->
+                           <thead class="border-b border-gray-300">
+                              <tr>
+                                 <th class="py-2 px-4 text-left font-medium">
+                                    <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded" />
+                                 </th>
+                                 <th class="py-2 px-4 text-left text-gray-500">LENDER</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">EMAIL</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">PHONE NUBER</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">BIRTH DATE</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">CREATED DATE</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">UPDATED DATE</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">ACTIONS</th>
+                              </tr>
+                           </thead>
+                           <!-- BODY -->
+                           <tbody class="divide-y divide-gray-500" id="table-body">
+                              <tr class="text-gray-500">
+                                 <!-- Checkbox -->
+                                 <td class="py-3 px-4 align-middle">
+                                    <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded" />
+                                 </td>
+                                 <!-- Product -->
+                                 <td class="px-4 align-middle">
+                                    <div class="flex items-center gap-3">
+                                       <div class="min-w-0">
+                                          <p class="text-sm font-semibold text-gray-500 truncate">TechMart Electronics</p>
+                                          <p class="text-xs text-gray-500 truncate">Electronics</p>
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <!-- Category -->
+                                 <td class="px-4 align-middle">Gadgets</td>
+                                 <!-- Stock -->
+                                 <td class="px-4 align-middle">245</td>
+                                 <!-- Price -->
+                                 <td class="px-4 align-middle">$199.99</td>
+                                 <!-- Quantity -->
+                                 <td class="px-4 align-middle">12</td>
+                                 <!-- Status -->
+                                 <td class="px-4 align-middle">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-800 text-green-200">
+                                    Active
+                                    </span>
+                                 </td>
+                                 <!-- Actions -->
+                                 <td class="px-4 align-middle">
+                                    <div class="flex items-center gap-3 text-gray-500">
+                                       <!-- View -->
+                                       <button class="p-1 hover:text-gray-200" aria-label="View">
+                                       <i class="fa-regular fa-eye text-[18px]"></i>
+                                       </button>
+                                       <!-- Edit -->
+                                       <button class="p-1 hover:text-gray-200" aria-label="Edit">
+                                       <i class="fa-regular fa-pen-to-square text-[18px]"></i>
+                                       </button>
+                                       <!-- Delete -->
+                                       <button class="p-1 hover:text-red-400" aria-label="Delete">
+                                       <i class="fa-regular fa-trash-can text-[18px]"></i>
+                                       </button>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
                      </div>
-                     <!-- Pagination & Info -->
-                     <div class="rr6pu flex items-center justify-between gap-3 xidew vlaa8 eaqvd max-md:flex-wrap max-md:justify-center">
-                        <div class="text-base-content/50 text-sm" id="table-info">
-                           Showing 1 to 10 of 50 entries
-                        </div>
-                        <div class="flex gap-2" id="table-pagination">
-                           <button class="btn btn-text btn-square prev-btn">
-                           <span class="icon-[tabler--chevrons-left] size-5.5 rtl:rotate-180"></span>
-                           </button>
-                           <input type="text" 
-                              value="1"
-                              class="btn btn-text btn-square w-12 text-center input-page" />
-                           <button class="btn btn-text btn-square next-btn">
-                           <span class="icon-[tabler--chevrons-right] size-5.5 rtl:rotate-180"></span>
-                           </button>
+                     <!-- Pagination -->
+                     <div class="flex flex-wrap items-center justify-between border-t border-gray-300 p-5 text-sm text-gray-400">
+                        <p id="table-info">Showing 1 to 10 of 100 entries</p>
+                        <div class="flex items-center gap-1">
+                           <!-- Previous -->
+                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff] text-lg leading-none prev-btn">&laquo;</button>
+                           <!-- Page Numbers -->
+                           <button class="px-3 py-1 rounded bg-[#eef2ff] text-blue-800 font-medium">1</button>
+                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">2</button>
+                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">3</button>
+                           <span class="px-2">...</span>
+                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">10</button>
+                           <!-- Next -->
+                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff] text-lg leading-none next-btn">&raquo;</button>
                         </div>
                      </div>
                   </div>
                </div>
             </div>
-            <!-- / Content -->
-            <!-- Footer: Start -->
             <footer th:replace="~{footer :: footer}"></footer>
-            <!-- Footer: End -->
-         </main>
-         <!-- / Layout Container -->
+      </main>
       </div>
-      <div th:replace="~{theme-customizer :: theme-customizer}"></div>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/jquery/dist/jquery.min.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/jszip/dist/jszip.min.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/flyonui.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/theme-utils.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/main.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/common/theme-customizer.js"></script>	
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/common/search.js"></script>
       <script th:src="@{/script/pagination.js}"></script>
       <script th:src="@{/script/loading.js}"></script>
       <script th:src="@{/script/user/user-api.js}"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/dashboard-ecommerce/ecommerce-product-list.js"></script>
-      <button id="scrollToTopBtn" class="btn btn-circle btn-soft btn-secondary/20 vzdkh m5eeu lf7e7 s0ezv pv2yq fixed absolute z-[3] hidden" aria-label="Circle Soft Icon Button"><span class="icon-[tabler--chevron-up] size-5 shrink-0"></span></button>
    </body>
 </html>
