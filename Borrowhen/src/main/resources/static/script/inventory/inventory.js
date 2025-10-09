@@ -104,7 +104,7 @@ async function loadInventories(page = 0, search = "") {
         card.innerHTML = `
           <h2 class="text-gray-800 text-lg font-semibold mb-1">${inventory.itemName}</h2>
 
-          <!-- Ratings (4 out of 5) -->
+          <!-- Ratings -->
           <div class="flex mb-2 text-yellow-400">
             <i class="fa-solid fa-star"></i>
             <i class="fa-solid fa-star"></i>
@@ -129,6 +129,8 @@ async function loadInventories(page = 0, search = "") {
 
       itemList.appendChild(fragment);
 
+      // ✅ Add this line to reattach modal event listeners
+      updateBtnsModal();
     }
 
     removeLoadingScreenBody();
@@ -136,6 +138,7 @@ async function loadInventories(page = 0, search = "") {
     console.error("Error fetching inventories:", error);
   }
 }
+
 
 
 

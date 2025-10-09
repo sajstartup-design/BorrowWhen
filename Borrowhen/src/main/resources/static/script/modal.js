@@ -12,14 +12,21 @@ function updateBtnsModal(){
 		        const modal = document.querySelector(modalTarget);
 
 		        if (modal) {
+					
+					console.log("YAWA");
 
 		            const modalBackground = document.createElement("div");
 		            modalBackground.classList.add("modal-background");
 					
+					console.log(modal.getAttribute('name'))
+					
 					if(!modal.getAttribute('name')){
+						console.log("AW");
 						if(modal.id === 'borrowModal'){
+							
 							// Fill hidden input
-						 	modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
+						 	modal.querySelector("#encryptedId").value = btn.dataset.id;
+							console.log("ID: " + btn.dataset.id);
 
 						 	modal.querySelector(".item-name").textContent = btn.dataset.name;
 						  	modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;
@@ -51,14 +58,17 @@ function updateBtnsModal(){
 
 		            modalBackground.style.display = "flex";
 		            modal.style.display = "flex";
+					
+					console.log(modal)
 
-		           	modalBackground.addEventListener("click", (e) => {
-						if (e.target === modal || e.target.name.includes('cancel') ) {
-							modal.style.display = "none";
-							document.body.appendChild(modal);
-		                    modalBackground.remove();
-						}
-		            });
+					modal.addEventListener("click", (e) => {
+						console.log(e.target)
+					  if (e.target === modal || e.target.name?.includes('cancel')) {
+					    modal.style.display = "none";
+					    document.body.appendChild(modal);
+					    modalBackground.remove();
+					  }
+					});
 		        }
 		    });
 		});

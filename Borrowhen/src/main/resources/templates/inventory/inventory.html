@@ -1,181 +1,280 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>Borrowhen | Inventory</title>
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
-
-    <!-- Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-
-    <!-- Tailwind & Custom -->
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <link rel="stylesheet" th:href="@{/css/output.css}" />
-  </head>
-
-  <body>
-    <div class="bg-base-200 flex min-h-screen flex-col">
-      <!-- ---------- HEADER ---------- -->
-      <div th:replace="~{header :: header-borrower}"></div>
-
-      <main class="flex-1 relative">
-        <!-- Blue background section -->
-        <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
-
-        <!-- Main content -->
-        <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
-          <!-- Breadcrumb -->
-          <div class="flex flex-wrap items-center justify-between py-3">
-            <div class="max-w-auto overflow-x-auto">
-              <ul class="py-3 flex items-center text-white text-sm">
-                <li>
-                  <a th:href="@{/dashboard}" class="px-2 flex items-center gap-2">
-                    <i class="fa-solid fa-house inline-flex items-center"></i>
-                  </a>
-                </li>
-                <li>
-                  <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1"></i>
-                </li>
-                <li>
-                  <a th:href="@{/dashboard}" class="px-2 flex items-center gap-2">
-                    <span>Borrowhen</span>
-                  </a>
-                </li>
-                <li>
-                  <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1"></i>
-                </li>
-                <li>
-                  <a class="px-2 flex items-center gap-2 font-bold">
-                    <span>Inventory</span>
-                  </a>
-                </li>
-              </ul>
+   <head>
+      <meta charset="utf-8" />
+      <meta
+         name="viewport"
+         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+         />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Borrowhen | Inventory</title>
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <!-- Fonts -->
+      <link
+         href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+         rel="stylesheet"
+         />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap"
+         rel="stylesheet"
+         />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+         rel="stylesheet"
+         />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap"
+         rel="stylesheet"
+         />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+         rel="stylesheet"
+         />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&display=swap"
+         rel="stylesheet"
+         />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+         rel="stylesheet"
+         />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap"
+         rel="stylesheet"
+         />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+         />
+      <!-- Tailwind & Custom -->
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+   </head>
+   <body>
+      <th:block th:if="${isSuccess}">
+         <div th:replace="~{alert :: success}"></div>
+      </th:block>
+      <th:block th:if="${isError}">
+      	<div th:replace="~{alert :: alert}"></div>
+      </th:block>
+      <div class="bg-base-200 flex min-h-screen flex-col">
+         <!-- ---------- HEADER ---------- -->
+         <div th:replace="~{header :: header-borrower}"></div>
+         <main class="flex-1 relative">
+            <!-- Blue background section -->
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
+            <!-- Main content -->
+            <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <!-- Breadcrumb -->
+               <div class="flex flex-wrap items-center justify-between py-3">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white text-sm">
+                        <li>
+                           <a th:href="@{/dashboard}" class="px-2 flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/dashboard}" class="px-2 flex items-center gap-2">
+                           <span>Borrowhen</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1"></i>
+                        </li>
+                        <li>
+                           <a class="px-2 flex items-center gap-2 font-bold">
+                           <span>Inventory</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <hr class="border-t border-white opacity-80" />
+               <!-- Page Header -->
+               <div class="flex items-center py-6 gap-3">
+                  <div
+                     class="text-base rounded-sm bg-white w-12.5 h-12.5 flex items-center justify-center"
+                     >
+                     <i class="fa-solid fa-chart-pie text-3xl text-blue-500"></i>
+                  </div>
+                  <div class="flex flex-col gap-0.5 text-white">
+                     <span class="text-xl font-bold">Inventory</span>
+                     <span class="italic text-base-content/70"
+                        >“Keep track of what you borrow, and return with care.”</span
+                        >
+                  </div>
+               </div>
+               <!-- Content Card -->
+               <div class="bg-white rounded-md shadow-md p-6">
+                  <!-- Search & Filters -->
+                  <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+                     <!-- Search -->
+                     <div class="flex items-center w-full sm:w-auto max-sm:order-2">
+                        <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           class="w-5 h-5 text-gray-500 mr-2"
+                           fill="none"
+                           viewBox="0 0 24 24"
+                           stroke="currentColor"
+                           >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 6.65a7.5 7.5 0 010 10.6z"
+                              />
+                        </svg>
+                        <input
+                           type="search"
+                           id="filter-search"
+                           placeholder="Search Inventory"
+                           class="w-full sm:w-64 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                           />
+                     </div>
+                     <!-- Filters -->
+                     <div class="flex items-center gap-3 flex-wrap">
+                        <select
+                           id="categoryFilter"
+                           class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
+                           >
+                           <option value="">All Categories</option>
+                           <option>Books</option>
+                           <option>Tools</option>
+                           <option>Equipment</option>
+                           <option>Gadgets</option>
+                        </select>
+                        <select
+                           id="availabilityFilter"
+                           class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
+                           >
+                           <option value="">All Status</option>
+                           <option value="available">Available</option>
+                           <option value="borrowed">Borrowed</option>
+                        </select>
+                     </div>
+                  </div>
+                  <!-- Item Grid -->
+                  <div id="itemList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
+               </div>
+               <!-- Footer -->
+               <footer th:replace="~{footer :: footer}"></footer>
             </div>
-          </div>
-
-          <hr class="border-t border-white opacity-80" />
-
-          <!-- Page Header -->
-          <div class="flex items-center py-6 gap-3">
-            <div
-              class="text-base rounded-sm bg-white w-12.5 h-12.5 flex items-center justify-center"
-            >
-              <i class="fa-solid fa-chart-pie text-3xl text-blue-500"></i>
+         </main>
+      </div>
+      <!-- Overlay -->
+      <div id="borrowModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+         <!-- Modal -->
+         <div class="bg-gradient-to-br from-white via-blue-50 to-blue-100 border border-blue-200 shadow-2xl rounded-2xl w-full max-w-2xl overflow-hidden animate-fade-in-up">
+            <!-- Header -->
+            <div class="bg-blue-500 py-3 text-center text-white font-semibold text-lg tracking-wide shadow-sm">
+               BORROW REQUEST
             </div>
-            <div class="flex flex-col gap-0.5 text-white">
-              <span class="text-xl font-bold">Inventory</span>
-              <span class="italic text-base-content/70"
-                >“Keep track of what you borrow, and return with care.”</span
-              >
+            <!-- Body -->
+            <div class="px-8 py-6">
+               <!-- Preview Image -->
+               <div class="flex justify-center mb-6">
+                  <div class="w-32 h-32 bg-white border border-blue-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+                     <img
+                        th:src="@{/images/logo.png}"
+                        alt="Item Preview"
+                        class="object-contain w-full h-full"
+                        />
+                  </div>
+               </div>
+               <!-- Borrower Message -->
+               <p class="text-gray-600 text-sm mb-5 text-center">
+                  Please fill out all the fields below to request to borrow this item. Double-check your details before submitting.
+               </p>
+               <!-- Form -->
+               <form id="saveForm" th:action="@{/inventory/request}" method="POST" class="space-y-3">
+                  <input type="hidden" name="encryptedId" id="encryptedId" />
+                  <!-- Two-column grid -->
+                  <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                     <!-- Item Name -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Item Name</label>
+                        <span class="item-name text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        Hammer
+                        </span>
+                     </div>
+                     <!-- Price -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Price</label>
+                        <span class="item-price text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        ₱100
+                        </span>
+                     </div>
+                     <!-- Available Qty -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Available Qty</label>
+                        <span class="item-qty text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        100
+                        </span>
+                     </div>
+                     <!-- Date to Borrow -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Date to Borrow</label>
+                        <input
+                           type="date"
+                           name="dateToBorrow"
+                           required
+                           class="text-sm text-gray-700 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 focus:ring-2 focus:ring-blue-400 focus:outline-none text-center"
+                           />
+                     </div>
+                     <!-- Date to Return -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Date to Return</label>
+                        <input
+                           type="date"
+                           name="dateToReturn"
+                           required
+                           class="text-sm text-gray-700 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 focus:ring-2 focus:ring-blue-400 focus:outline-none text-center"
+                           />
+                     </div>
+                     <!-- Quantity -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Number to Borrow</label>
+                        <input
+                           type="number"
+                           name="qty"
+                           required
+                           min="1"
+                           class="text-sm text-gray-700 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 focus:ring-2 focus:ring-blue-400 focus:outline-none text-center"
+                           />
+                     </div>
+                  </div>
+               </form>
+               <p class="text-gray-500 text-xs text-center mt-6">
+                  Once confirmed, your request will be submitted for approval.
+               </p>
             </div>
-          </div>
-
-          <!-- Content Card -->
-          <div class="bg-white rounded-md shadow-md p-6">
-            <!-- Search & Filters -->
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-              <!-- Search -->
-              <div class="flex items-center w-full sm:w-auto max-sm:order-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5 text-gray-500 mr-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 6.65a7.5 7.5 0 010 10.6z"
-                  />
-                </svg>
-                <input
-                  type="search"
-                  id="filter-search"
-                  placeholder="Search Inventory"
-                  class="w-full sm:w-64 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                />
-              </div>
-
-              <!-- Filters -->
-              <div class="flex items-center gap-3 flex-wrap">
-                <select
-                  id="categoryFilter"
-                  class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
-                >
-                  <option value="">All Categories</option>
-                  <option>Books</option>
-                  <option>Tools</option>
-                  <option>Equipment</option>
-                  <option>Gadgets</option>
-                </select>
-                <select
-                  id="availabilityFilter"
-                  class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
-                >
-                  <option value="">All Status</option>
-                  <option value="available">Available</option>
-                  <option value="borrowed">Borrowed</option>
-                </select>
-              </div>
+            <!-- Footer -->
+            <div class="bg-blue-50 flex justify-end gap-3 px-8 py-4 border-t border-blue-200">
+               <button
+               	  name="cancel"
+                  class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                  >
+               CANCEL
+               </button>
+               <button
+                  form="saveForm"
+                  class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 transition"
+                  >
+               CONFIRM
+               </button>
             </div>
-
-            <!-- Item Grid -->
-            <div id="itemList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
-			</div>
-          <!-- Footer -->
-          <footer th:replace="~{footer :: footer}"></footer>
-        </div>
-      </main>
-    </div>
-   	<script th:src="@{/script/loading.js}"></script>
-	<script th:src="@{/script/submit.js}"></script>
-	<script th:src="@{/script/modal.js}"></script>
-	<script th:src="@{/script/pagination.js}"></script>
-	<script th:src="@{/script/loading.js}"></script>
-	<script th:src="@{/script/inventory/inventory.js}"></script>
-  </body>
+         </div>
+      </div>
+      <script th:src="@{/script/loading.js}"></script>
+      <script th:src="@{/script/submit.js}"></script>
+      <script th:src="@{/script/modal.js}"></script>
+      <script th:src="@{/script/pagination.js}"></script>
+      <script th:src="@{/script/loading.js}"></script>
+      <script th:src="@{/script/inventory/inventory.js}"></script>
+   </body>
 </html>
