@@ -11,42 +11,15 @@
       <!-- Favicon -->
       <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
       <!-- Fonts -->
-      <link
-         href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         rel="stylesheet"
-         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-         />
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rrel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"zzzzzzzz/>
+      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&display=swap" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap" rel="stylesheet"/>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
       <!-- Tailwind & Custom -->
       <link rel="stylesheet" th:href="@{/css/style.css}" />
       <link rel="stylesheet" th:href="@{/css/output.css}" />
@@ -56,39 +29,31 @@
          <div th:replace="~{alert :: success}"></div>
       </th:block>
       <th:block th:if="${isError}">
-      	<div th:replace="~{alert :: error}"></div>
+         <div th:replace="~{alert :: error}"></div>
       </th:block>
       <div class="bg-base-200 flex min-h-screen flex-col">
          <!-- ---------- HEADER ---------- -->
          <div th:replace="~{header :: header-borrower}"></div>
          <main class="flex-1 relative">
             <!-- Blue background section -->
-            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0">			
+            </div>
             <!-- Main content -->
             <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
-               <!-- Breadcrumb -->
-               <div class="flex flex-wrap items-center justify-between py-3">
+               <div class="flex flex-wrap items-center justify-between">
                   <div class="max-w-auto overflow-x-auto">
-                     <ul class="py-3 flex items-center text-white text-sm">
+                     <ul class="py-3 flex items-center text-white">
                         <li>
-                           <a th:href="@{/dashboard}" class="px-2 flex items-center gap-2">
+                           <a th:href="@{/lender/dashboard}" class="px-2 text-xs flex items-center gap-2">
                            <i class="fa-solid fa-house inline-flex items-center"></i>
                            </a>
                         </li>
                         <li>
-                           <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1"></i>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
                         </li>
                         <li>
-                           <a th:href="@{/dashboard}" class="px-2 flex items-center gap-2">
+                           <a th:href="@{/lender/dashboard}" class="px-2 text-xs flex items-center gap-2">
                            <span>Borrowhen</span>
-                           </a>
-                        </li>
-                        <li>
-                           <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1"></i>
-                        </li>
-                        <li>
-                           <a class="px-2 flex items-center gap-2 font-bold">
-                           <span>Inventory</span>
                            </a>
                         </li>
                      </ul>
@@ -96,17 +61,15 @@
                </div>
                <hr class="border-t border-white opacity-80" />
                <!-- Page Header -->
-               <div class="flex items-center py-6 gap-3">
-                  <div
-                     class="text-base rounded-sm bg-white w-12.5 h-12.5 flex items-center justify-center"
-                     >
-                     <i class="fa-solid fa-chart-pie text-3xl text-blue-500"></i>
-                  </div>
-                  <div class="flex flex-col gap-0.5 text-white">
-                     <span class="text-xl font-bold">Inventory</span>
-                     <span class="italic text-base-content/70"
-                        >“Keep track of what you borrow, and return with care.”</span
-                        >
+               <div class="flex">
+                  <div class="flex items-center py-4 gap-3">
+                     <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
+                     </div>
+                     <div class="flex flex-col gap-0 text-white">
+                        <span class="text-lg font-bold">Inventory</span>
+                        <span class="text-xs text-gray-300 italic">“Keep track of what you borrow, and return with care.”</span>
+                     </div>
                   </div>
                </div>
                <!-- Content Card -->
@@ -115,32 +78,19 @@
                   <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
                      <!-- Search -->
                      <div class="flex items-center w-full sm:w-auto max-sm:order-2">
-                        <svg
-                           xmlns="http://www.w3.org/2000/svg"
-                           class="w-5 h-5 text-gray-500 mr-2"
-                           fill="none"
-                           viewBox="0 0 24 24"
-                           stroke="currentColor"
-                           >
-                           <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 6.65a7.5 7.5 0 010 10.6z"
-                              />
-                        </svg>
+                        <i class="fa-solid fa-magnifying-glass text-gray-500 mr-2 text-sm"></i>
                         <input
                            type="search"
                            id="filter-search"
                            placeholder="Search Inventory"
-                           class="w-full sm:w-64 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                           class="w-full sm:w-64 border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-600 placeholder-gray-400"
                            />
                      </div>
                      <!-- Filters -->
                      <div class="flex items-center gap-3 flex-wrap">
                         <select
                            id="categoryFilter"
-                           class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
+                           class="border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
                            >
                            <option value="">All Categories</option>
                            <option>Books</option>
@@ -150,7 +100,7 @@
                         </select>
                         <select
                            id="availabilityFilter"
-                           class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
+                           class="border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
                            >
                            <option value="">All Status</option>
                            <option value="available">Available</option>
@@ -256,14 +206,14 @@
             <!-- Footer -->
             <div class="bg-blue-50 flex justify-end gap-3 px-8 py-4 border-t border-blue-200">
                <button
-               	  name="cancel"
-                  class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                  name="cancel"
+                  class="h-8 px-2 py-1 text-xs text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition"
                   >
                CANCEL
                </button>
                <button
                   form="saveForm"
-                  class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 transition"
+                  class="h-8 px-2 py-1 text-xs text-white bg-blue-500 rounded-md hover:bg-blue-600 transition"
                   >
                CONFIRM
                </button>
