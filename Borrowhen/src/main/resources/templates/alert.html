@@ -15,7 +15,7 @@
         <i class="fas fa-check check"></i>
         <div class="message">
           <span class="text text-1">Success</span>
-          <span class="text text-2">Your changes have been saved</span>
+          <span class="text text-2" th:text="${sucessMsg}"></span>
         </div>
       </div>
       <i class="fa-solid fa-xmark close"></i>
@@ -57,7 +57,7 @@
         <i class="fas fa-times check"></i>
         <div class="message">
           <span class="text text-1">Error</span>
-          <span class="text text-2">Something went wrong</span>
+          <span class="text text-2" th:text="${errorMsg}">Something went wrong</span>
         </div>
       </div>
       <i class="fa-solid fa-xmark close"></i>

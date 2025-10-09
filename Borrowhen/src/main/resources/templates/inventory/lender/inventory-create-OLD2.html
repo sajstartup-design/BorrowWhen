@@ -79,12 +79,12 @@
           <!-- ---------- FORM ---------- -->
           <div class="bg-white rounded-md">
             <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
-              <form th:action="@{/lender/inventory/create}" method="POST">
+              <form th:action="@{/admin/lenders/create}" method="POST">
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                   <!-- LEFT SIDE — BASIC INFORMATION -->
                   <div class="xl:col-span-2 space-y-6">
                     <div class="border border-gray-200 rounded-lg p-5">
-                      <h2 class="text-lg font-semibold text-gray-800 mb-4">Item Information</h2>
+                      <h2 class="text-lg font-semibold text-gray-800 mb-4">Basic Information</h2>
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label class="block text-sm font-medium text-gray-600 mb-1" for="itemName">Item Name</label>
@@ -93,12 +93,12 @@
                         </div>
                         <div>
                           <label class="block text-sm font-medium text-gray-600 mb-1" for="itemPrice">Price</label>
-                          <input id="itemPrice" type="text" name="price" placeholder="100.00" required
+                          <input id="itemPrice" type="text" name="itemPrice" placeholder="100.00" required
                             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
                         </div>
                         <div>
                           <label class="block text-sm font-medium text-gray-600 mb-1" for="itemQty">Total Qty</label>
-                          <input id="itemQty" type="text" name="totalQty" placeholder="10" required
+                          <input id="itemQty" type="text" name="itemQty" placeholder="10" required
                             class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
                         </div>
                       </div>
