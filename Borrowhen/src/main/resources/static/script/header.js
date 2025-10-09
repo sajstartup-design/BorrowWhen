@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
         menu?.classList.toggle('hidden');
 		
 		if (btn?.name === 'notification') {
-		      console.log("🔔 Opening notifications dropdown");
+	      console.log("🔔 Opening notifications dropdown");
 
-		      // get the notification icon wrapper (the real DOM element)
-		      const notificationIcon = document.querySelector('.notification-icon');
-		      if (notificationIcon) {
-		        updateNotificationModal(notificationIcon);
-		      }
-		    }
+	      // get the notification icon wrapper (the real DOM element)
+	      const notificationIcon = document.querySelector('.notification-icon');
+	      if (notificationIcon) {
+	        notificationIcon.classList.remove('pulsating-bell', 'bell-ringing');
+	      }
+	    }
       });
     });
 

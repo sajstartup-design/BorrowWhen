@@ -16,10 +16,7 @@ stompClient.onConnect = (frame) => {
 		updateNotificationCount();
 		
 		if(notifIcon){
-			let bellContainer = notifIcon.querySelector('.bell-container');
-			bellContainer.classList.add('pulsating-circle');
-			let bellIcon = notifIcon.querySelector('.bell-icon');
-			bellIcon.classList.add('bell');
+			notifIcon.classList.add('pulsating-bell', 'bell-ringing');
 			
 			 
 		}
@@ -33,10 +30,7 @@ stompClient.onConnect = (frame) => {
 		updateNotificationCount();
 		
 		if(notifIcon){
-			let bellContainer = notifIcon.querySelector('.bell-container');
-			bellContainer.classList.add('pulsating-circle');
-			let bellIcon = notifIcon.querySelector('.bell-icon');
-			bellIcon.classList.add('bell');
+			notifIcon.classList.add('pulsating-bell', 'bell-ringing');
 			
 			 
 		}
@@ -51,11 +45,7 @@ stompClient.onConnect = (frame) => {
 		updateNotificationCount();
 		
 		if(notifIcon){
-			let bellContainer = notifIcon.querySelector('.bell-container');
-			bellContainer.classList.add('pulsating-circle');
-			let bellIcon = notifIcon.querySelector('.bell-icon');
-			bellIcon.classList.add('bell');
-			
+			notifIcon.classList.add('pulsating-bell', 'bell-ringing');
 			 
 		}
 

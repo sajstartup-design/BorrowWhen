@@ -3,6 +3,12 @@
 let openedModals = new WeakSet();
 
 document.addEventListener("DOMContentLoaded", async () => {
+	
+	const notificationIcon = document.querySelector('.notification-icon');
+  if (notificationIcon) {
+    updateNotificationModal(notificationIcon);
+  }
+
   await updateNotificationCount();
 });
 

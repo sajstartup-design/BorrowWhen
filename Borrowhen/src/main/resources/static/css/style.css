@@ -168,4 +168,45 @@ button{
   }
 }
 
+.notification-bell {
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+/* Combined pulse + ring */
+@keyframes bell-ring-pulse {
+  0% {
+    transform: scale(1) rotate(0);
+    filter: drop-shadow(0 0 0 rgba(37, 99, 235, 0.6));
+  }
+  10% {
+    transform: scale(1.05) rotate(25deg);
+    filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.8));
+  }
+  20% {
+    transform: scale(1.1) rotate(-20deg);
+    filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.9));
+  }
+  30% {
+    transform: scale(1.15) rotate(15deg);
+    filter: drop-shadow(0 0 12px rgba(37, 99, 235, 1));
+  }
+  40% {
+    transform: scale(1.1) rotate(-10deg);
+    filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.9));
+  }
+  50% {
+    transform: scale(1.05) rotate(5deg);
+    filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.8));
+  }
+  60%, 100% {
+    transform: scale(1) rotate(0);
+    filter: drop-shadow(0 0 0 rgba(37, 99, 235, 0.6));
+  }
+}
+
+.pulsating-bell {
+  animation: bell-ring-pulse 1.5s ease-in-out infinite;
+  transform-origin: top center;
+}
+
 
