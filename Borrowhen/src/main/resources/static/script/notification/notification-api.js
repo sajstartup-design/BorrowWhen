@@ -1,92 +1,110 @@
+// --- notification-api.js ---
+
 let openedModals = new WeakSet();
 
-// 🔹 Run this once on page load
 document.addEventListener("DOMContentLoaded", async () => {
-    updateNotificationCount()
+  await updateNotificationCount();
 });
 
-async function updateNotificationCount(){
-	try {
-        const countUrl = `/api/notifications/count`;
-        const res = await fetch(countUrl);
-        const data = await res.json();
-		
-        const notificationIcon = document.querySelector('.notification-icon');
-        if (notificationIcon) {
-            notificationIcon.dataset.count = data.notificationCount;
-        }
-		
-		openedModals = new WeakSet();
-		updateNotificationModal(notificationIcon);
-    } catch (error) {
-        console.error("Error fetching inventory count:", error);
+async function updateNotificationCount() {
+  try {
+    const res = await fetch(`/api/notifications/count`);
+    const data = await res.json();
+
+    const notifBtn = document.querySelector('#notifBtn');
+    const notifBadge = notifBtn?.querySelector('span');
+    const notificationIcon = notifBtn?.querySelector('.notification-icon');
+
+    if (!notifBtn || !notifBadge || !notificationIcon) return;
+
+    const count = data.notificationCount ?? 0;
+
+    // Store count in the icon's dataset for other scripts
+    notificationIcon.dataset.count = count;
+
+    // Show badge only if there are notifications
+    if (count > 0) {
+      notifBadge.textContent = count;
+      notifBadge.classList.remove('hidden');
+    } else {
+      notifBadge.textContent = "";
+      notifBadge.classList.add('hidden');
     }
+
+    // Reset tracked modals
+    openedModals = new WeakSet();
+  } catch (error) {
+    console.error("Error fetching notification count:", error);
+  }
 }
 
-async function updateNotificationModal(e) {
-    try {
-        if (!openedModals.has(e)) {
-			
-			
-            const notificationIcon = document.querySelector('.notification-icon');
-            const notificationsList = document.querySelector(".notifications-list");
 
-            // only load notifications if count > 0
-            if (notificationIcon && parseInt(notificationIcon.dataset.count, 10) > 0) {
-                const url = `/api/notifications`;
-                const response = await fetch(url);
-                const data = await response.json();
-				console.log(data);
-                if (data.notifications && notificationsList) {
-                    notificationsList.innerHTML = ""; // clear old list
-                    const frag = document.createDocumentFragment();
+// 🔹 Populate notification modal dynamically
+async function updateNotificationModal(triggerElement) {
+  try {
+    // Prevent reloading if already opened
+    if (openedModals.has(triggerElement)) return;
 
-                    data.notifications.forEach(notification => {
-                        const container = document.createElement("div");
-                        container.classList.add("notification");
+    const notificationsList = document.querySelector(".notifications-list");
+    if (!notificationsList) return;
 
-                        // pick image based on type
-                        let imgSrc = "/images/logo.png";
-                        switch (notification.type) {
-                            case "REQUEST_PENDING":
-                                imgSrc = "/images/pending.png";
-                                break;
-                            case "REQUEST_APPROVED":
-                                imgSrc = "/images/approved.png";
-                                break;
-                            case "REQUEST_REJECTED":
-                                imgSrc = "/images/rejected.png";
-                                break;
-							case "NEW_ITEM":
-								imgSrc = "/images/new.png";
-                                break;
-							case "ITEM_RECEIVED":
-								imgSrc = "/images/received.png";
-							case "REQUEST_PICKUP_READY":
-								imgSrc = "/images/location.png";
-								break;
-							case "REQUEST_PAYMENT_PENDING":
-								imgSrc = "/images/pending-payment.png";
-                        }
+    // Fetch data
+    const response = await fetch(`/api/notifications`);
+    const data = await response.json();
 
-                        container.innerHTML = `
-                            <img src="${imgSrc}" alt="${notification.type}">
-                            <div class="details">
-                                <span>${notification.message}</span>
-                                <span>${notification.dateAndTime || ""}</span>
-                            </div>
-                        `;
+    notificationsList.innerHTML = ""; // Clear old list
+    const frag = document.createDocumentFragment();
 
-                        frag.appendChild(container);
-                    });
-
-                    notificationsList.appendChild(frag);
-                }
-            }
-
-            openedModals.add(e);
-        }
-    } catch (error) {
-        console.error("Error fetching notifications:", error);
+    // If no notifications
+    if (!data.notifications || data.notifications.length === 0) {
+      notificationsList.innerHTML = `
+        <li class="px-4 py-3 text-gray-500 text-center text-sm">No new notifications</li>
+      `;
+      return;
     }
+
+    // Build <li> elements
+    data.notifications.forEach(notification => {
+      const li = document.createElement("li");
+      li.className = "px-4 py-2 hover:bg-gray-100 flex items-start gap-2";
+
+      // Choose icon + color based on type
+      let iconClass = "fa-info-circle";
+      let colorClass = "text-gray-500";
+
+      switch (notification.type) {
+        case "REQUEST_PENDING": 
+          iconClass = "fa-hourglass-half"; colorClass = "text-yellow-500"; break;
+        case "REQUEST_APPROVED": 
+          iconClass = "fa-check-circle"; colorClass = "text-green-500"; break;
+        case "REQUEST_REJECTED": 
+          iconClass = "fa-times-circle"; colorClass = "text-red-500"; break;
+        case "NEW_ITEM": 
+          iconClass = "fa-box"; colorClass = "text-blue-500"; break;
+        case "ITEM_RECEIVED": 
+          iconClass = "fa-box-open"; colorClass = "text-indigo-500"; break;
+        case "REQUEST_PICKUP_READY": 
+          iconClass = "fa-location-dot"; colorClass = "text-purple-500"; break;
+        case "REQUEST_PAYMENT_PENDING": 
+          iconClass = "fa-credit-card"; colorClass = "text-pink-500"; break;
+      }
+
+      // Create notification row
+      li.innerHTML = `
+        <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
+        <span>${notification.message}</span>
+      `;
+
+      frag.appendChild(li);
+    });
+
+    // Append all notifications
+    notificationsList.appendChild(frag);
+
+    // Mark modal as opened
+    openedModals.add(triggerElement);
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+  }
 }
+
