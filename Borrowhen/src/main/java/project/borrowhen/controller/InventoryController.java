@@ -34,12 +34,14 @@ public class InventoryController {
 			
 			borrowRequestService.saveBorrowRequest(itemRequestWebDto);
 			
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_CREATED_MSG);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		

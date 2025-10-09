@@ -102,7 +102,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		notification.setUserId(inventory.getUserId());
 		
 		String message = String.format(
-		    "%s %s has requested to borrow '%s' from %s to %s.",
+		    "%s has requested to borrow '%s' from %s to %s.",
 		    user.getFullName(),
 		    inventory.getItemName(),
 		    inDto.getDateToBorrow(),

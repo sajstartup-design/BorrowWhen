@@ -15,9 +15,10 @@ stompClient.onConnect = (frame) => {
 	    const notifIcon = document.querySelector('.notification-icon');
 		updateNotificationCount();
 		
+		
 		if(notifIcon){
 			notifIcon.classList.add('pulsating-bell', 'bell-ringing');
-			
+			updateNotificationModal(notifIcon);
 			 
 		}
 
@@ -31,7 +32,7 @@ stompClient.onConnect = (frame) => {
 		
 		if(notifIcon){
 			notifIcon.classList.add('pulsating-bell', 'bell-ringing');
-			
+			updateNotificationModal(notifIcon);
 			 
 		}
 
@@ -46,7 +47,7 @@ stompClient.onConnect = (frame) => {
 		
 		if(notifIcon){
 			notifIcon.classList.add('pulsating-bell', 'bell-ringing');
-			 
+			updateNotificationModal(notifIcon);
 		}
 
     });
