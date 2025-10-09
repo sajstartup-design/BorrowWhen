@@ -23,6 +23,12 @@
       <link rel="stylesheet" th:href="@{/css/output.css}" />
    </head>
    <body>
+      <th:block th:if="${isSuccess}">
+         <div th:replace="~{alert :: success}"></div>
+      </th:block>
+      <th:block th:if="${isError}">
+      	<div th:replace="~{alert :: alert}"></div>
+      </th:block>
       <div class="bg-base-200 flex min-h-screen flex-col">
       <!-- ---------- HEADER ---------- -->
       <div th:replace="~{header :: admin-header}"></div>
@@ -219,6 +225,7 @@
                </div>
             </div>
             <footer th:replace="~{footer :: footer}"></footer>
+            </div>
       </main>
       </div>
       <script th:src="@{/script/pagination.js}"></script>

@@ -13,3 +13,159 @@ a,
 button{
 	cursor: pointer;
 }
+
+.toast {
+  position: fixed;
+  top: 25px;
+  left: 30px;
+  border-radius: 12px;
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transform: translateX(calc(100% + 30px));
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  border-left: 6px solid transparent;
+}
+
+/* Show animation */
+.toast.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Success Toast */
+.toast.success {
+  background: #e8f9ee;
+  border-left-color: #22c55e;
+}
+.toast.success .check {
+  background-color: #22c55e;
+}
+.toast.success .progress::before {
+  background-color: #22c55e;
+}
+
+/* Error Toast */
+.toast.error {
+  background: #fdeaea;
+  border-left-color: #ef4444;
+}
+.toast.error .check {
+  background-color: #ef4444;
+}
+.toast.error .progress::before {
+  background-color: #ef4444;
+}
+
+/* Warning Toast */
+.toast.warning {
+  background: #fff8e5;
+  border-left-color: #facc15;
+}
+.toast.warning .check {
+  background-color: #facc15;
+}
+.toast.warning .progress::before {
+  background-color: #facc15;
+}
+
+/* Info Toast */
+.toast.info {
+  background: #e8f0fe;
+  border-left-color: #3b82f6;
+}
+.toast.info .check {
+  background-color: #3b82f6;
+}
+.toast.info .progress::before {
+  background-color: #3b82f6;
+}
+
+/* Shared inner styles */
+.toast .toast-content {
+  display: flex;
+  align-items: center;
+}
+
+.toast-content .check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  min-width: 35px;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 50%;
+}
+
+.toast-content .message {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+}
+
+.message .text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #444;
+}
+
+.message .text.text-1 {
+  font-weight: 600;
+  color: #111;
+}
+
+.toast .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  padding: 5px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.toast .close:hover {
+  opacity: 1;
+}
+
+.toast .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+
+.toast .progress::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.toast .progress.active::before {
+  animation: progressBar 5s linear forwards;
+}
+
+@keyframes progressBar {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+

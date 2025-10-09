@@ -1,57 +1,96 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="UTF-8">
-      <title>Insert title here</title>
-   </head>
-   <body>
-      <!-- Success fragment -->
-      <div th:fragment="success" class="jb-notif-container" id="jbNotifContainerSuccess">
-         <div class="jb-notif-box">
-            <span class="jb-notif-badge">Success</span>
-            <span class="jb-notif-message" th:text="${successMsg}">Success message here</span>
-            <svg class="jb-notif-close" id="jbNotifCloseSuccess" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-               <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/>
-            </svg>
-         </div>
-         <script>
-            var notif = document.getElementById('jbNotifContainerSuccess');
-            var closeBtn = document.getElementById('jbNotifCloseSuccess');
-            
-            // Close on click
-            closeBtn.addEventListener('click', function() {
-              notif.style.display = 'none';
-            });
-            
-            // Automatically remove after 3 seconds
-            setTimeout(() => {
-              notif.style.display = 'none';
-            }, 3000); // 3000ms = 3 seconds
-         </script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toast Fragments</title>
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- ✅ SUCCESS TOAST -->
+    <div th:fragment="success" class="toast success active" id="toast-success">
+      <div class="toast-content">
+        <i class="fas fa-check check"></i>
+        <div class="message">
+          <span class="text text-1">Success</span>
+          <span class="text text-2">Your changes have been saved</span>
+        </div>
       </div>
-      <!-- Error fragment -->
-      <div th:fragment="error" class="jb-notif-container" id="jbNotifContainerError">
-         <div class="jb-notif-box error">
-            <span class="jb-notif-badge">Error</span>
-            <span class="jb-notif-message" th:text="${errorMsg}">Error message here</span>
-            <svg class="jb-notif-close" id="jbNotifCloseError" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-               <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/>
-            </svg>
-         </div>
-         <script>
-            var notif = document.getElementById('jbNotifContainerSuccess');
-            var closeBtn = document.getElementById('jbNotifCloseSuccess');
-            
-            // Close on click
-            closeBtn.addEventListener('click', function() {
-              notif.style.display = 'none';
-            });
-            
-            // Automatically remove after 3 seconds
+      <i class="fa-solid fa-xmark close"></i>
+      <div class="progress active"></div>
+
+      <script>
+        (() => {
+          const toast = document.querySelector("#toast-success");
+          const closeIcon = toast.querySelector(".close");
+          const progress = toast.querySelector(".progress");
+          let timer1, timer2;
+
+          // Automatically hide after 5s
+          timer1 = setTimeout(() => {
+            toast.classList.remove("active");
+          }, 5000);
+
+          // End progress bar slightly after
+          timer2 = setTimeout(() => {
+            progress.classList.remove("active");
+          }, 5300);
+
+          // Close icon behavior
+          closeIcon.addEventListener("click", () => {
+            toast.classList.remove("active");
             setTimeout(() => {
-              notif.style.display = 'none';
-            }, 3000); // 3000ms = 3 seconds
-         </script>
+              progress.classList.remove("active");
+            }, 300);
+            clearTimeout(timer1);
+            clearTimeout(timer2);
+          });
+        })();
+      </script>
+    </div>
+
+    <!-- ❌ ERROR TOAST -->
+    <div th:fragment="error" class="toast error active" id="toast-error">
+      <div class="toast-content">
+        <i class="fas fa-times check"></i>
+        <div class="message">
+          <span class="text text-1">Error</span>
+          <span class="text text-2">Something went wrong</span>
+        </div>
       </div>
-   </body>
+      <i class="fa-solid fa-xmark close"></i>
+      <div class="progress active"></div>
+
+      <script>
+        (() => {
+          const toast = document.querySelector("#toast-error");
+          const closeIcon = toast.querySelector(".close");
+          const progress = toast.querySelector(".progress");
+          let timer1, timer2;
+
+          // Automatically hide after 5s
+          timer1 = setTimeout(() => {
+            toast.classList.remove("active");
+          }, 5000);
+
+          // End progress bar slightly after
+          timer2 = setTimeout(() => {
+            progress.classList.remove("active");
+          }, 5300);
+
+          // Close icon behavior
+          closeIcon.addEventListener("click", () => {
+            toast.classList.remove("active");
+            setTimeout(() => {
+              progress.classList.remove("active");
+            }, 300);
+            clearTimeout(timer1);
+            clearTimeout(timer2);
+          });
+        })();
+      </script>
+    </div>
+  </body>
 </html>
