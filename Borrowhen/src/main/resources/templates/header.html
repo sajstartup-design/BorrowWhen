@@ -41,9 +41,9 @@
               <span>Inventory</span>
               <i class="fa-solid fa-chevron-down inline-flex items-center text-xs"></i>
             </button>
-            <ul class="dropdown-menu hidden absolute left-0 mt-2 md:mt-6 w-48 bg-white border border-gray-200 rounded-xl shadow-lg text-gray-600 z-50 p-2 space-y-1">
-              <li><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Inventory List</a></li>
-              <li><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Add Item</a></li>
+            <ul class="dropdown-menu hidden absolute left-0 mt-2 md:mt-6 w-48 bg-white border border-gray-200 rounded-sm shadow-lg text-gray-600 z-50 p-2 space-y-1">
+              <li class="rounded-sm"><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Inventory List</a></li>
+              <li class="rounded-sm"><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Add Item</a></li>
             </ul>
           </li>
 
@@ -54,9 +54,9 @@
               <span>Request</span>
               <i class="fa-solid fa-chevron-down inline-flex items-center text-xs"></i>
             </button>
-            <ul class="dropdown-menu hidden absolute left-0 mt-2 md:mt-6 w-48 bg-white border border-gray-200 rounded-xl shadow-lg text-gray-600 z-50 p-2 space-y-1">
-              <li><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Request List</a></li>
-              <li><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">New Request</a></li>
+            <ul class="dropdown-menu hidden absolute left-0 mt-2 md:mt-6 w-48 bg-white border border-gray-200 rounded-sm shadow-lg text-gray-600 z-50 p-2 space-y-1">
+              <li class="rounded-sm"><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Request List</a></li>
+              <li class="rounded-sm"><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">New Request</a></li>
             </ul>
           </li>
 
@@ -67,9 +67,9 @@
               <span>Borrower</span>
               <i class="fa-solid fa-chevron-down inline-flex items-center text-xs"></i>
             </button>
-            <ul class="dropdown-menu hidden absolute left-0 mt-2 md:mt-6 w-48 bg-white border border-gray-200 rounded-xl shadow-lg text-gray-600 z-50 p-2 space-y-1">
-              <li><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Borrower List</a></li>
-              <li><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Add Borrower</a></li>
+            <ul class="dropdown-menu hidden absolute left-0 mt-2 md:mt-6 w-48 bg-white border border-gray-200 rounded-sm shadow-lg text-gray-600 z-50 p-2 space-y-1">
+              <li class="rounded-sm"><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Borrower List</a></li>
+              <li class="rounded-sm"><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Add Borrower</a></li>
             </ul>
           </li>
 
@@ -80,9 +80,9 @@
               <span>Lender</span>
               <i class="fa-solid fa-chevron-down inline-flex items-center text-xs"></i>
             </button>
-            <ul class="dropdown-menu hidden absolute left-0 mt-2 md:mt-6 w-48 bg-white border border-gray-200 rounded-xl shadow-lg text-gray-600 z-50 p-2 space-y-1">
-              <li><a th:href="@{/admin/lenders}" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Lender List</a></li>
-              <li><a th:href="@{/admin/lenders/create}" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Add Lender</a></li>
+            <ul class="dropdown-menu hidden absolute left-0 mt-2 md:mt-6 w-48 bg-white border border-gray-200 rounded-sm shadow-lg text-gray-600 z-50 p-2 space-y-1">
+              <li class="rounded-sm"><a th:href="@{/admin/lenders}" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Lender List</a></li>
+              <li class="rounded-sm"><a th:href="@{/admin/lenders/create}" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Add Lender</a></li>
             </ul>
           </li>
 
@@ -93,8 +93,8 @@
               <span>Settings</span>
               <i class="fa-solid fa-chevron-down inline-flex items-center text-xs"></i>
             </button>
-            <ul class="dropdown-menu hidden absolute left-0 mt-2 md:mt-6 w-48 bg-white border border-gray-200 rounded-xl shadow-lg text-gray-600 z-50 p-2 space-y-1">
-              <li><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Pagination</a></li>
+            <ul class="dropdown-menu hidden absolute left-0 mt-2 md:mt-6 w-48 bg-white border border-gray-200 rounded-sm shadow-lg text-gray-600 z-50 p-2 space-y-1">
+              <li class="rounded-sm"><a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Pagination</a></li>
             </ul>
           </li>
         </ul>
@@ -111,7 +111,7 @@
         </button>
 
         <!-- profile dropdown: positioned relative to the parent above -->
-        <div id="profileDropdown" class="hidden absolute right-0 top-full mt-2 w-64 bg-white border border-gray-200 rounded-xl shadow-lg text-gray-700 z-50">
+        <div id="profileDropdown" class="hidden absolute right-0 top-full mt-2 w-64 bg-white border border-gray-200 rounded-sm shadow-lg text-gray-700 z-50">
           <div class="flex items-center gap-3 px-4 py-3 border-b border-gray-200">
             <div>
               <p class="font-semibold text-gray-800">Phil Ohme</p>
@@ -119,24 +119,24 @@
             </div>
           </div>
           <ul class="py-2 space-y-1">
-            <li class="px-4 hover:bg-gray-100 hover:px-5 rounded-lg transition-all">
+            <li class="mx-3 px-4 hover:bg-gray-100 hover:px-5 rounded-lg transition-all">
               <a href="#" class="flex items-center gap-3 py-2"><i class="fa-regular fa-user w-5"></i> My account</a>
             </li>
-            <li class="px-4 hover:bg-gray-100 hover:px-5 rounded-lg transition-all">
+            <li class="mx-3 px-4 hover:bg-gray-100 hover:px-5 rounded-lg transition-all">
               <a href="#" class="flex items-center gap-3 py-2"><i class="fa-solid fa-gear w-5"></i> Setting</a>
             </li>
             <hr class="my-1 border-gray-200">
-            <li class="px-4 hover:bg-gray-100 hover:px-5 rounded-lg transition-all">
+            <li class="mx-3 px-4 hover:bg-gray-100 hover:px-5 rounded-lg transition-all">
               <a href="#" class="flex items-center gap-3 py-2"><i class="fa-regular fa-star w-5"></i> Reviews</a>
             </li>
-            <li class="px-4 hover:bg-gray-100 hover:px-5 rounded-lg transition-all">
+            <li class="mx-3 px-4 hover:bg-gray-100 hover:px-5 rounded-lg transition-all">
               <a href="#" class="flex items-center gap-3 py-2"><i class="fa-solid fa-store w-5"></i> Vendors</a>
             </li>
-            <li class="px-4 hover:bg-gray-100 hover:px-5 rounded-lg transition-all">
+            <li class="mx-3 px-4 hover:bg-gray-100 hover:px-5 rounded-lg transition-all">
               <a href="#" class="flex items-center gap-3 py-2"><i class="fa-solid fa-box w-5"></i> Orders</a>
             </li>
             <hr class="my-1 border-gray-200">
-            <li class="px-4 hover:bg-red-50 hover:px-5 rounded-lg transition-all">
+            <li class="mx-3 px-4 hover:bg-red-50 hover:px-5 rounded-lg transition-all">
               <form th:action="@{/logout}" method="post">
                 <button type="submit" class="w-full flex items-center gap-3 py-2 text-red-600 text-left">
                   <i class="fa-solid fa-right-from-bracket w-5"></i> Logout
@@ -199,7 +199,7 @@
       profileMenu && profileMenu.classList.add('hidden');
       // mobile menu left open intentionally when tapping inside, close only when clicking outside
       // If you want mobile menu to close on outside click, uncomment the next line:
-      // mobileMenu.classList.add('hidden');
+      mobileMenu.classList.add('hidden');
     });
   </script>
   </div>
