@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const inputPage = document.querySelector('.input-page');
+	const search = document.querySelector('.search');
 
     // Load first page
     loadInventories(0);
@@ -34,13 +35,37 @@ document.addEventListener("DOMContentLoaded", () => {
             loadInventories(newPage - 1);
         });
     }
+	
+	if (search) {
+	    let typingTimer; 
+	    const delay = 500; 
+
+	    search.addEventListener('input', function () {
+	        clearTimeout(typingTimer); 
+
+	        const currentPage = 0;
+	        const searchValue = this.value;
+
+	        typingTimer = setTimeout(() => {
+				createLoadingScreenBody();
+	            loadInventories(currentPage, searchValue);
+	        }, delay);
+	    });
+	}
 
 });
 
 
-async function loadInventories(page = 0) {
+async function loadInventories(page = 0, 
+	search = ""
+) {
     try {
-        const response = await fetch(`/api/lender/inventory?page=${page}`);
+		
+		const params = new URLSearchParams({ page, search });
+		
+		const url = `/api/lender/inventory?${params.toString()}`;
+		const response = await fetch(url);
+		
         const data = await response.json();
 		
         updatePagination(data.pagination);
@@ -54,32 +79,47 @@ async function loadInventories(page = 0) {
 
         data.inventories.forEach(inventory => {
 			const row = document.createElement("tr");
-			row.classList.add("border-gray-200")
-	        row.classList.add("border-b");
-			row.setAttribute('data-id', inventory.encryptedId);
-			
-			row.innerHTML = `
-				<td><input type="checkbox" class="checkbox checkbox-sm checkbox-primary row-select-checkbox" ></td>   
-				<td>${inventory.itemName}</td>           
-				<td>${inventory.price}</td>
-				<td>${inventory.totalQty}</td>
-              	<td>${inventory.availableQty}</td>
-              	<td>
-					<div class="flex items-center gap-2">
-					  <button type="button" class="btn btn-circle btn-text btn-sm view-btn" data-id="${inventory.encryptedId}" title="View Details">
-					    <span class="icon-[tabler--eye] size-5 text-base-content"></span>
-					  </button>
-	
-					  <button type="button" class="btn btn-circle btn-text btn-sm edit-btn" data-id="${inventory.encryptedId}" title="Edit">
-					    <span class="icon-[tabler--edit] size-5 text-base-content"></span>
-					  </button>
-	
-					  <button type="button" class="btn btn-circle btn-text btn-sm delete-record" data-id="${inventory.encryptedId}" title="Delete">
-					    <span class="icon-[tabler--trash] size-5 text-base-content"></span>
-					  </button>
-					</div>
-              	</td>
-            `;
+			  row.className = "text-gray-500 border-b border-gray-300";
+			  row.setAttribute("data-id", inventory.encryptedId);
+
+			  row.innerHTML = `
+			    <!-- Checkbox -->
+			    <td class="py-3 px-4 align-middle">
+			      <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded row-select-checkbox">
+			    </td>
+
+			    <!-- Email -->
+			    <td class="px-4 align-middle">${inventory.itemName}</td>
+
+			    <!-- Created -->
+			    <td class="px-4 align-middle">₱${inventory.price}</td>
+
+			    <!-- Updated -->
+			    <td class="px-4 align-middle">${inventory.totalQty} pcs</td>
+				
+				<!-- Updated -->
+			    <td class="px-4 align-middle">${inventory.availableQty} pcs</td>
+
+			    <!-- Actions -->
+			    <td class="px-4 align-middle">
+			      <div class="flex items-center gap-3 text-gray-500">
+			        <!-- View -->
+			        <button class="p-1 hover:text-gray-200 view-btn" data-id="${inventory.encryptedId}" aria-label="View">
+			          <i class="fa-regular fa-eye text-[18px]"></i>
+			        </button>
+
+			        <!-- Edit -->
+			        <button class="p-1 hover:text-gray-200 edit-btn" data-id="${inventory.encryptedId}" aria-label="Edit">
+			          <i class="fa-regular fa-pen-to-square text-[18px]"></i>
+			        </button>
+
+			        <!-- Delete -->
+			        <button class="p-1 hover:text-red-400 delete-record" data-id="${inventory.encryptedId}" aria-label="Delete">
+			          <i class="fa-regular fa-trash-can text-[18px]"></i>
+			        </button>
+			      </div>
+			    </td>
+			  `;
 			
 			row.querySelector('.edit-btn').addEventListener('click', function(){
 				const form = document.querySelector('#editForm');

@@ -18,7 +18,8 @@ public class A_InventoryRestController {
     private InventoryService inventoryService;
 
     @GetMapping("/api/admin/inventory")
-    public InventoryDto getUsers(@RequestParam(defaultValue = "0") int page) {
+    public InventoryDto getUsers(@RequestParam(defaultValue = "0") int page,
+    		@RequestParam(required = false) String search) {
         try {
             InventoryDto inDto = new InventoryDto();
 
@@ -26,7 +27,7 @@ public class A_InventoryRestController {
             pagination.setPage(page);
             
             FilterAndSearchObj filter = new FilterAndSearchObj();
-            filter.setSearch(CommonConstant.BLANK);
+            filter.setSearch(search);
 
             inDto.setPagination(pagination);
             inDto.setFilter(filter);

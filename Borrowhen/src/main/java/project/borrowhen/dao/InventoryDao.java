@@ -66,10 +66,21 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    ") " +
 		    "FROM InventoryEntity e " +
 		    "WHERE e.userId = :userId " +
-		    "AND e.isDeleted = false ";
+		    "AND e.isDeleted = false " +
+		    "AND ( " +
+		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
+		    "       LOWER(e.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       CAST(e.price AS string) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       CAST(e.totalQty AS string) LIKE CONCAT('%', :search, '%') OR " +
+		    "       CAST(e.availableQty AS string) LIKE CONCAT('%', :search, '%')" +
+		    "   )) " +
+		    "   OR (:search IS NULL OR :search = '') " +
+		    ")";
 
 	@Query(value = GET_ALL_OWNER_INVENTORY)
-	public Page<InventoryData> getAllOwnedInventory(Pageable pageable, @Param("userId") int userId) throws DataAccessException;
+	public Page<InventoryData> getAllOwnedInventory(Pageable pageable, 
+			@Param("search") String search,
+			@Param("userId") int userId) throws DataAccessException;
 	
 	public final String GET_INVENTORY = "SELECT e "
 			+ "FROM InventoryEntity e "

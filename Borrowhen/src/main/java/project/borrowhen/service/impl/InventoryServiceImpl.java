@@ -154,7 +154,9 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(getMaxInventoryDisplay()));
 		
-		Page<InventoryData> allInventories = inventoryDao.getAllOwnedInventory(pageable, user.getId()); 
+		FilterAndSearchObj filter = inDto.getFilter();
+		
+		Page<InventoryData> allInventories = inventoryDao.getAllOwnedInventory(pageable, filter.getSearch(), user.getId()); 
 		
 		List<InventoryObj> inventories = new ArrayList<>();
 		
