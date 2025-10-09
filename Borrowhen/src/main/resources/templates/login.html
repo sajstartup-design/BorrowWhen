@@ -1,164 +1,153 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en" data-theme="corporate" class="bg-gray-50">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Borrowhen | Login</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <link rel="stylesheet" th:href="@{/css/output.css}" />
-    <style>
-      body {
-        font-family: "Inter", sans-serif;
-      }
-    </style>
-  </head>
-<body class="relative flex items-center justify-center min-h-screen overflow-hidden">
-   <th:block th:if="${isSuccess}">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Borrowhen | Login</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+         rel="stylesheet"
+         />
+      <link
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+         rel="stylesheet"
+         />
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+      <style>
+         body {
+         font-family: "Inter", sans-serif;
+         }
+      </style>
+   </head>
+   <body class="relative flex items-center justify-center min-h-screen overflow-hidden">
+      <th:block th:if="${isSuccess}">
          <div th:replace="~{alert :: success}"></div>
       </th:block>
       <th:block th:if="${isError}">
-      	<div th:replace="~{alert :: alert}"></div>
+         <div th:replace="~{alert :: alert}"></div>
       </th:block>
-  <!-- Blurred Background -->
-  <div class="absolute inset-0 bg-[url('/images/login-bg.png')] bg-cover bg-center blur-sm"></div>
-
-  <!-- Optional translucent overlay -->
-  <div class="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
-
-  <!-- Login Card (now visible on top) -->
-  <div
-    class="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-md p-10 border border-gray-100"
-  >
-    <!-- Icon -->
-    <div class="flex justify-center mb-6">
+      <!-- Blurred Background -->
+      <div class="absolute inset-0 bg-[url('/images/login-bg.png')] bg-cover bg-center blur-sm"></div>
+      <!-- Optional translucent overlay -->
+      <div class="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
+      <!-- Login Card (now visible on top) -->
       <div
-        class="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-b from-blue-400 to-blue-500"
-      >
-        <img th:src="@{/images/logo.png}" alt="Logo">
+         class="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-md p-10 border border-gray-100"
+         >
+         <!-- Icon -->
+         <div class="flex justify-center mb-6">
+            <div
+               class="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-b from-blue-400 to-blue-500"
+               >
+               <img th:src="@{/images/logo.png}" alt="Logo">
+            </div>
+         </div>
+         <!-- Welcome Text -->
+         <h2 class="text-center text-2xl font-semibold text-gray-800 mb-2">
+            Welcome Back
+         </h2>
+         <p class="text-center text-gray-500 text-sm mb-8">
+            Please enter your details to sign in
+         </p>
+         <!-- Social Buttons -->
+         <div class="flex justify-center gap-3 mb-6">
+            <button
+               class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
+               >
+            <img
+               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+               class="w-5 h-5"
+               alt="Google"
+               />
+            </button>
+            <button
+               class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
+               >
+            <img
+               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg"
+               class="w-5 h-5"
+               alt="Facebook"
+               />
+            </button>
+            <button
+               class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
+               >
+            <img
+               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+               class="w-5 h-5"
+               alt="GitHub"
+               />
+            </button>
+         </div>
+         <!-- Divider -->
+         <div class="flex items-center mb-6">
+            <hr class="flex-grow border-gray-200" />
+            <span class="px-3 text-gray-400 text-sm">or</span>
+            <hr class="flex-grow border-gray-200" />
+         </div>
+         <!-- Form -->
+         <form th:action="@{/login}" method="POST">
+            <div class="mb-5">
+               <label for="email" class="block text-sm text-gray-700 mb-1"
+                  >User Id*</label
+                  >
+               <input
+                  type="text"
+                  name="userId"
+                  id="email"
+                  placeholder="Enter your email address"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                  />
+            </div>
+            <div class="mb-5">
+               <label for="password" class="block text-sm text-gray-700 mb-1"
+                  >Password*</label
+                  >
+               <div class="relative">
+                  <input
+                     type="password"
+                     name="password"
+                     id="password"
+                     placeholder="••••••••"
+                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none pr-10"
+                     />
+                  <button
+                     type="button"
+                     class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                     >
+                  <i class="fa-regular fa-eye"></i>
+                  </button>
+               </div>
+            </div>
+            <!-- Remember & Forgot -->
+            <div class="flex items-center justify-between mb-6 text-sm">
+               <label class="flex items-center gap-2 text-gray-600">
+               <input
+                  type="checkbox"
+                  class="w-4 h-4 text-blue-500 rounded border-gray-300"
+                  />
+               Remember Me
+               </label>
+               <a href="#" class="text-blue-500 hover:underline">Forgot Password?</a>
+            </div>
+            <!-- Sign In Button -->
+            <button
+               type="submit"
+               class="w-full bg-blue-500 text-white py-2.5 rounded-md font-medium hover:bg-blue-600 transition"
+               >
+            Sign in
+            </button>
+         </form>
+         <!-- Register -->
+         <p class="text-center text-gray-500 text-sm mt-6">
+            New on our platform?
+            <a th:href="@{/register}" class="text-blue-500 font-medium hover:underline"
+               >Create an account</a
+               >
+         </p>
       </div>
-    </div>
-
-    <!-- Welcome Text -->
-    <h2 class="text-center text-2xl font-semibold text-gray-800 mb-2">
-      Welcome Back
-    </h2>
-    <p class="text-center text-gray-500 text-sm mb-8">
-      Please enter your details to sign in
-    </p>
-
-    <!-- Social Buttons -->
-    <div class="flex justify-center gap-3 mb-6">
-      <button
-        class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
-      >
-        <img
-          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-          class="w-5 h-5"
-          alt="Google"
-        />
-      </button>
-      <button
-        class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
-      >
-        <img
-          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg"
-          class="w-5 h-5"
-          alt="Facebook"
-        />
-      </button>
-      <button
-        class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
-      >
-        <img
-          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
-          class="w-5 h-5"
-          alt="GitHub"
-        />
-      </button>
-    </div>
-
-    <!-- Divider -->
-    <div class="flex items-center mb-6">
-      <hr class="flex-grow border-gray-200" />
-      <span class="px-3 text-gray-400 text-sm">or</span>
-      <hr class="flex-grow border-gray-200" />
-    </div>
-
-    <!-- Form -->
-    <form th:action="@{/login}" method="POST">
-      <div class="mb-5">
-        <label for="email" class="block text-sm text-gray-700 mb-1"
-          >User Id*</label
-        >
-        <input
-          type="text"
-          name="userId"
-          id="email"
-          placeholder="Enter your email address"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-        />
-      </div>
-
-      <div class="mb-5">
-        <label for="password" class="block text-sm text-gray-700 mb-1"
-          >Password*</label
-        >
-        <div class="relative">
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="••••••••"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none pr-10"
-          />
-          <button
-            type="button"
-            class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
-          >
-            <i class="fa-regular fa-eye"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Remember & Forgot -->
-      <div class="flex items-center justify-between mb-6 text-sm">
-        <label class="flex items-center gap-2 text-gray-600">
-          <input
-            type="checkbox"
-            class="w-4 h-4 text-blue-500 rounded border-gray-300"
-          />
-          Remember Me
-        </label>
-        <a href="#" class="text-blue-500 hover:underline">Forgot Password?</a>
-      </div>
-
-      <!-- Sign In Button -->
-      <button
-        type="submit"
-        class="w-full bg-blue-500 text-white py-2.5 rounded-md font-medium hover:bg-blue-600 transition"
-      >
-        Sign in
-      </button>
-    </form>
-
-    <!-- Register -->
-    <p class="text-center text-gray-500 text-sm mt-6">
-      New on our platform?
-      <a th:href="@{/register}" class="text-blue-500 font-medium hover:underline"
-        >Create an account</a
-      >
-    </p>
-  </div>
-</body>
-
+   </body>
 </html>
