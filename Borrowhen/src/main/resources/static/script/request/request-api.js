@@ -59,8 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 const buttons = {
   cancel: (request) => `
-    <div class="relative inline-flex items-center group">
-      <button
+    <div class="tooltip-wrapper">
+      <a
+        href="#"
         class="delete-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition shadow-sm"
         data-toggle="modal"
         data-target="#cancelModal"
@@ -71,18 +72,15 @@ const buttons = {
         data-date-to-return="${request.dateToReturn}"
         data-number-to-borrow="${request.qty}">
         <img src="/images/cancelled.png" alt="Cancel" class="h-4 w-4" />
-      </button>
-
-      <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 text-xs text-white bg-gray-800 rounded whitespace-nowrap
-                   opacity-0 transform translate-y-1 group-hover:translate-y-0 group-hover:opacity-100 transition duration-150 z-50 pointer-events-none">
-        Cancel Request
-      </span>
+      </a>
+      <span class="tooltip-text">Cancel Request</span>
     </div>
   `,
 
   received: (request) => `
-    <div class="relative inline-flex items-center group">
-      <button
+    <div class="tooltip-wrapper">
+      <a
+        href="#"
         class="received-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-green-100 hover:bg-green-200 transition shadow-sm"
         data-toggle="modal"
         data-target="#confirmModal"
@@ -93,32 +91,23 @@ const buttons = {
         data-date-to-return="${request.dateToReturn}"
         data-number-to-borrow="${request.qty}">
         <img src="/images/received-icon.png" alt="Received" class="h-4 w-4" />
-      </button>
-
-      <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 text-xs text-white bg-gray-800 rounded whitespace-nowrap
-                   opacity-0 transform translate-y-1 group-hover:translate-y-0 group-hover:opacity-100 transition duration-150 z-50 pointer-events-none">
-        Mark as Received
-      </span>
+      </a>
+      <span class="tooltip-text">Mark as Received</span>
     </div>
   `,
 
   fake: (icon) => `
-    <div class="relative inline-flex items-center group">
-      <button
-        class="fake-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-gray-100 opacity-60 cursor-not-allowed shadow-sm"
-        disabled
-        title="Unavailable">
+    <div class="tooltip-wrapper">
+      <a
+        href="#"
+        class="fake-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-gray-100 opacity-60 cursor-not-allowed shadow-sm pointer-events-none">
         <img src="/images/${icon}.png" alt="${icon}" class="h-4 w-4" />
-      </button>
-
-      <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 text-xs text-white bg-gray-700 rounded whitespace-nowrap
-                   opacity-0 transform translate-y-1 group-hover:translate-y-0 group-hover:opacity-100 transition duration-150 z-50 pointer-events-none">
-        Unavailable
-      </span>
+      </a>
+      <span class="tooltip-text">Unavailable</span>
     </div>
-  `,
-
+  `
 };
+
 
 
 
