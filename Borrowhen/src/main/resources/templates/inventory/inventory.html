@@ -1,285 +1,226 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en" data-theme="corporate" data-assets-path="../../assets/" data-layout-path="dashboard-ecommerce/" dir="ltr" class="rwfrf">
-   <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-      <meta name="robots" content="noindex, nofollow" />
-      <title>Borrowhen | Dashboard</title>
-      <meta name="keywords" content="FlyonUI dashboard, FlyonUI dashboard, flyonui, html dashboard, web dashboard, frontend dashboard, responsive FlyonUI theme" />
-      <link rel="canonical" href="https://flyonui.com/templates" />
-      <!-- Favicon -->
-      <link rel="icon" type="image/x-icon" href="https://demos.flyonui.com/templates/assets/img/common/favicon/favicon.ico" />
-      <!-- Fonts -->
-      <link rel="preconnect" href="https://fonts.googleapis.com/" />
-      <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css?family=Fira+Code:wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/libs/apexcharts/dist/apexcharts.css" />
-      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/src/vendor/apexcharts.css" />
-      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/src/vendor/datatables.css" />
-      <link rel="stylesheet" href="https://demos.flyonui.com/templates/assets/dist/css/output.css" />
-      <link rel="stylesheet" th:href="@{/css/output.css}" />
-      <!-- Theme JS -->
-      <script type="text/javascript" th:src="@{/script/theme.js}"></script>
-   </head>
-   <body>
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
-      <!-- Layout wrapper -->
-      <!-- Layout wrapper -->
-      <div class="bg-base-200 flex min-h-screen flex-col">
-         <!-- Layout Navbar -->
-         <!-- ---------- HEADER ---------- -->
-         <div th:replace="~{header :: header-borrower}"></div>
-         <!-- ---------- END HEADER ---------- -->
-         <!-- Layout Container -->
-         <main class="hmc58">
-            <div class="bg-primary wedi4"></div>
-            <!-- Content -->
-            <div class="max-w-[1536px] hmos0 yt5gg djsg9 pvq5y">
-               <div class="flex wcs4q items-center justify-between p-2">
-                  <div class="ymtjh">
-                     <ul class="yknjh">
-                        <li>
-                           <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="t0ywj hover:text-white">
-                           <span class="icon-[tabler--smart-home] size-5"></span>
-                           </a>
-                        </li>
-                        <li class="y8z3g rtl:rotate-180">
-                           <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
-                        </li>
-                        <li >
-                           <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/index.html" class="t0ywj hover:text-white text-sm">Dashboard</a>
-                        </li>
-                        <li class="y8z3g rtl:rotate-180">
-                           <span class="icon-[tabler--chevron-right] t0ywj hover:text-white yu19i"></span>
-                        </li>
-                        <li aria-current="page">
-                           <span class="t0ywj text-sm i9hfu">Borrowhen</span>
-                        </li>
-                     </ul>
-                  </div>
-                  <div class="dropdown relative inline-flex [--placement:bottom-end]">
-                     <div class="dropdown-menu dropdown-open:opacity-100 gfsnm hidden w-full" role="menu" aria-orientation="vertical" aria-labelledby="app-dropdown">
-                        <div class="uygfv justify-between uafca d2kpi sn3hb">
-                           <span class="text-base-content text-sm font-medium">user@example.com</span>
-                           <span class="text-sm">Sign out</span>
-                        </div>
-                        <ul id="drag-dropdown" class="trkhp">
-                           <li class="dropdown-item dropdown-active group px-3">
-                              <div class="avatar">
-                                 <div class="tivun">
-                                    <img src="https://demos.flyonui.com/templates/assets/img/dashboard-ecommerce/brands/store-logo-1.png" alt="Amazon Fresh logo" />
-                                 </div>
-                              </div>
-                              <h6 class="text-base-content hmc58">Amazon Fresh</h6>
-                              <span class="icon-[tabler--check] hidden size-6 group-[.dropdown-active]:block"></span>
-                           </li>
-                           <li class="dropdown-item group px-3">
-                              <div class="avatar">
-                                 <div class="tivun">
-                                    <img src="https://demos.flyonui.com/templates/assets/img/dashboard-ecommerce/brands/store-logo-2.png" alt="Instacart logo" />
-                                 </div>
-                              </div>
-                              <h6 class="text-base-content hmc58">Instacart</h6>
-                              <span class="icon-[tabler--check] hidden size-6 group-[.dropdown-active]:block"></span>
-                           </li>
-                        </ul>
-                        <div class="jnyiq p-2 rtqzx">
-                           <a href="https://demos.flyonui.com/templates/html/dashboard-ecommerce/ecommerce-settings-detail.html" class="btn btn-text ccu1y d7ium text-sm">
-                           <span class="icon-[tabler--circle-plus] size-4"></span>
-                           Add another store
-                           </a>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <hr class="cql0n" />
-               <div class="flex wcs4q justify-between gap-4 s2upt">
-                  <div class="flex items-center gap-4">
-                     <div class="avatar avatar-placeholder">
-                        <div class="text-primary rounded-box ijx64 nzh2g">
-                           <span class="icon-[tabler--chart-pie] jgmt6"></span>
-                        </div>
-                     </div>
-                     <div class="flex flex-col gap-0.5">
-                        <span class="t0ywj runqr i9hfu">Inventory</span>
-                        <span class="t0ywj italic text-base-content/70">
-                        “Keep track of what you borrow, and return with care.”
-                        </span>
-                     </div>
-                  </div>
-               </div>
-               <div class="bg-base-100 wanr8 e2zhm djsg9 shadow-md p-6 rounded-2xl">
-                  <!-- Filters + Search Row -->
-                  <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
-                     <!-- Search (following your style) -->
-                     <div class="eamhj md:w-50 max-sm:w-full flex items-center">
-                        <span class="icon-[tabler--search] text-base-content/80 eqbwg v0qmd size-4 shrink-0 mr-2"></span>
-                        <input
-                           type="search"
-                           class="ij0d7 search"
-                           placeholder="Search Inventory"
-                           id="filter-search"
-                           />
-                     </div>
-                     <!-- Filters -->
-                     <div class="flex items-center gap-3 flex-wrap">
-                        <select id="categoryFilter" class="select select-bordered w-40">
-                           <option value="">All Categories</option>
-                           <option>Books</option>
-                           <option>Tools</option>
-                           <option>Equipment</option>
-                           <option>Gadgets</option>
-                        </select>
-                        <select id="availabilityFilter" class="select select-bordered w-40">
-                           <option value="">All Status</option>
-                           <option value="available">Available</option>
-                           <option value="borrowed">Borrowed</option>
-                        </select>
-                     </div>
-                  </div>
-                  <!-- Items List -->
-                  <div id="itemList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                     <!-- Example Item -->
-                     <div class="card bg-base-200 shadow-sm hover:shadow-md transition rounded-xl border border-base-300">
-                        <div class="card-body p-4">
-                           <h2 class="card-title text-base-content/90 text-lg font-semibold">
-                              Wireless Drill
-                           </h2>
-                           <p class="text-sm text-base-content/70">Qty Left: Tools</p>
-                           <p class="text-sm text-base-content/70">Lender: Tools</p>
-                           <div class="mt-2 flex justify-between items-center">
-                              <span class="badge badge-success badge-sm">Available</span>
-                              <button class="btn btn-primary btn-sm">Borrow</button>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="card bg-base-200 shadow-sm hover:shadow-md transition rounded-xl border border-base-300">
-                        <div class="card-body p-4">
-                           <h2 class="card-title text-base-content/90 text-lg font-semibold">
-                              Wireless Drill
-                           </h2>
-                           <p class="text-sm text-base-content/70">Qty Left: Tools</p>
-                           <p class="text-sm text-base-content/70">Lender: Tools</p>
-                           <div class="mt-2 flex justify-between items-center">
-                              <span class="badge badge-success badge-sm">Available</span>
-                              <button class="btn btn-primary btn-sm">Borrow</button>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="card bg-base-200 shadow-sm hover:shadow-md transition rounded-xl border border-base-300">
-                        <div class="card-body p-4">
-                           <h2 class="card-title text-base-content/90 text-lg font-semibold">
-                              Wireless Drill
-                           </h2>
-                           <p class="text-sm text-base-content/70">Qty Left: Tools</p>
-                           <p class="text-sm text-base-content/70">Lender: Tools</p>
-                           <div class="mt-2 flex justify-between items-center">
-                              <span class="badge badge-success badge-sm">Available</span>
-                              <button class="btn btn-primary btn-sm">Borrow</button>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="card bg-base-200 shadow-sm hover:shadow-md transition rounded-xl border border-base-300">
-                        <div class="card-body p-4">
-                           <h2 class="card-title text-base-content/90 text-lg font-semibold">
-                              Wireless Drill
-                           </h2>
-                           <p class="text-sm text-base-content/70">Qty Left: Tools</p>
-                           <p class="text-sm text-base-content/70">Lender: Tools</p>
-                           <div class="mt-2 flex justify-between items-center">
-                              <span class="badge badge-success badge-sm">Available</span>
-                              <button class="btn btn-primary btn-sm">Borrow</button>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="card bg-base-200 shadow-sm hover:shadow-md transition rounded-xl border border-base-300">
-                        <div class="card-body p-4">
-                           <h2 class="card-title text-base-content/90 text-lg font-semibold">
-                              Wireless Drill
-                           </h2>
-                           <p class="text-sm text-base-content/70">Qty Left: Tools</p>
-                           <p class="text-sm text-base-content/70">Lender: Tools</p>
-                           <div class="mt-2 flex justify-between items-center">
-                              <span class="badge badge-success badge-sm">Available</span>
-                              <button class="btn btn-primary btn-sm">Borrow</button>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="card bg-base-200 shadow-sm hover:shadow-md transition rounded-xl border border-base-300">
-                        <div class="card-body p-4">
-                           <h2 class="card-title text-base-content/90 text-lg font-semibold">
-                              Wireless Drill
-                           </h2>
-                           <p class="text-sm text-base-content/70">Qty Left: Tools</p>
-                           <p class="text-sm text-base-content/70">Lender: Tools</p>
-                           <div class="mt-2 flex justify-between items-center">
-                              <span class="badge badge-success badge-sm">Available</span>
-                              <button class="btn btn-primary btn-sm">Borrow</button>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="card bg-base-200 shadow-sm hover:shadow-md transition rounded-xl border border-base-300">
-                        <div class="card-body p-4">
-                           <h2 class="card-title text-base-content/90 text-lg font-semibold">
-                              Wireless Drill
-                           </h2>
-                           <p class="text-sm text-base-content/70">Qty Left: Tools</p>
-                           <p class="text-sm text-base-content/70">Lender: Tools</p>
-                           <div class="mt-2 flex justify-between items-center">
-                              <span class="badge badge-success badge-sm">Available</span>
-                              <button class="btn btn-primary btn-sm">Borrow</button>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="card bg-base-200 shadow-sm hover:shadow-md transition rounded-xl border border-base-300">
-                        <div class="card-body p-4">
-                           <h2 class="card-title text-base-content/90 text-lg font-semibold">
-                              Wireless Drill
-                           </h2>
-                           <p class="text-sm text-base-content/70">Qty Left: Tools</p>
-                           <p class="text-sm text-base-content/70">Lender: Tools</p>
-                           <div class="mt-2 flex justify-between items-center">
-                              <span class="badge badge-success badge-sm">Available</span>
-                              <button class="btn btn-primary btn-sm">Borrow</button>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- Repeat dynamically -->
-                  </div>
-               </div>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Borrowhen | Inventory</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- Tailwind & Custom -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/output.css}" />
+  </head>
+
+  <body>
+    <div class="bg-base-200 flex min-h-screen flex-col">
+      <!-- ---------- HEADER ---------- -->
+      <div th:replace="~{header :: header-borrower}"></div>
+
+      <main class="flex-1 relative">
+        <!-- Blue background section -->
+        <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
+
+        <!-- Main content -->
+        <div class="relative z-10 pe-6 max-w-[1280px] mx-auto w-full gap-y-3">
+          <!-- Breadcrumb -->
+          <div class="flex flex-wrap items-center justify-between py-3">
+            <div class="max-w-auto overflow-x-auto">
+              <ul class="py-3 flex items-center text-white text-sm">
+                <li>
+                  <a th:href="@{/dashboard}" class="px-2 flex items-center gap-2">
+                    <i class="fa-solid fa-house inline-flex items-center"></i>
+                  </a>
+                </li>
+                <li>
+                  <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1"></i>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard}" class="px-2 flex items-center gap-2">
+                    <span>Borrowhen</span>
+                  </a>
+                </li>
+                <li>
+                  <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1"></i>
+                </li>
+                <li>
+                  <a class="px-2 flex items-center gap-2 font-bold">
+                    <span>Inventory</span>
+                  </a>
+                </li>
+              </ul>
             </div>
-            <!-- / Content -->
-            <!-- Footer: Start -->
-            <footer th:replace="~{footer :: footer}"></footer>
-            <!-- Footer: End -->
-         </main>
-         <!-- / Layout Container -->
-      </div>
-      <!-- / Layout Wrapper -->
-      <!-- Theme Customizer -->
-      <div th:replace="~{theme-customizer :: theme-customizer}"></div>
-      <!-- Vendors JS -->
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/jquery/dist/jquery.min.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/jszip/dist/jszip.min.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/lodash/lodash.min.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/dist/helper-apexcharts.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/libs/flyonui/flyonui.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/theme-utils.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/main.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/common/theme-customizer.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/common/search.js"></script>
-      <script src="https://demos.flyonui.com/templates/assets/dist/js/dashboard-ecommerce/ecommerce-dashboard.js"></script>
-      <button id="scrollToTopBtn" class="btn btn-circle btn-soft btn-secondary/20 vzdkh m5eeu lf7e7 s0ezv pv2yq fixed absolute z-[3] hidden" aria-label="Circle Soft Icon Button"><span class="icon-[tabler--chevron-up] size-5 shrink-0"></span></button>
-   </body>
+          </div>
+
+          <hr class="border-t border-white opacity-80" />
+
+          <!-- Page Header -->
+          <div class="flex items-center py-6 gap-3">
+            <div
+              class="text-base rounded-sm bg-white w-12.5 h-12.5 flex items-center justify-center"
+            >
+              <i class="fa-solid fa-chart-pie text-3xl text-blue-500"></i>
+            </div>
+            <div class="flex flex-col gap-0.5 text-white">
+              <span class="text-xl font-bold">Inventory</span>
+              <span class="italic text-base-content/70"
+                >“Keep track of what you borrow, and return with care.”</span
+              >
+            </div>
+          </div>
+
+          <!-- Content Card -->
+          <div class="bg-white rounded-md shadow-md p-6">
+            <!-- Search & Filters -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+              <!-- Search -->
+              <div class="flex items-center w-full sm:w-auto max-sm:order-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-gray-500 mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 6.65a7.5 7.5 0 010 10.6z"
+                  />
+                </svg>
+                <input
+                  type="search"
+                  id="filter-search"
+                  placeholder="Search Inventory"
+                  class="w-full sm:w-64 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                />
+              </div>
+
+              <!-- Filters -->
+              <div class="flex items-center gap-3 flex-wrap">
+                <select
+                  id="categoryFilter"
+                  class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
+                >
+                  <option value="">All Categories</option>
+                  <option>Books</option>
+                  <option>Tools</option>
+                  <option>Equipment</option>
+                  <option>Gadgets</option>
+                </select>
+                <select
+                  id="availabilityFilter"
+                  class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
+                >
+                  <option value="">All Status</option>
+                  <option value="available">Available</option>
+                  <option value="borrowed">Borrowed</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Item Grid -->
+            <div
+              id="itemList"
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+            >
+              <!-- Example Card -->
+              <div
+                class="bg-gray-50 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition p-4"
+              >
+                <h2 class="text-gray-800 text-lg font-semibold mb-1">
+                  Wireless Drill
+                </h2>
+                <p class="text-sm text-gray-600">Qty Left: 5</p>
+                <p class="text-sm text-gray-600 mb-2">Lender: John Doe</p>
+                <div class="flex justify-between items-center mt-3">
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold text-green-700 bg-green-100 rounded-full"
+                  >
+                    Available
+                  </span>
+                  <button
+                    class="px-3 py-1.5 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600 transition"
+                  >
+                    Borrow
+                  </button>
+                </div>
+              </div>
+
+              <!-- Example Card -->
+              <div
+                class="bg-gray-50 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition p-4"
+              >
+                <h2 class="text-gray-800 text-lg font-semibold mb-1">
+                  Laptop Charger
+                </h2>
+                <p class="text-sm text-gray-600">Qty Left: 2</p>
+                <p class="text-sm text-gray-600 mb-2">Lender: Jane Smith</p>
+                <div class="flex justify-between items-center mt-3">
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold text-yellow-700 bg-yellow-100 rounded-full"
+                  >
+                    Borrowed
+                  </span>
+                  <button
+                    class="px-3 py-1.5 bg-gray-300 text-gray-700 text-sm rounded-md cursor-not-allowed"
+                    disabled
+                  >
+                    Borrowed
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <footer th:replace="~{footer :: footer}"></footer>
+        </div>
+      </main>
+    </div>
+  </body>
 </html>
