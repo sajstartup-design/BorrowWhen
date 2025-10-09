@@ -27,161 +27,219 @@
          <div th:replace="~{alert :: success}"></div>
       </th:block>
       <th:block th:if="${isError}">
-      	<div th:replace="~{alert :: alert}"></div>
+         <div th:replace="~{alert :: error}"></div>
       </th:block>
       <div class="bg-base-200 flex min-h-screen flex-col">
-      <!-- ---------- HEADER ---------- -->
-      <div th:replace="~{header :: admin-lender}"></div>
-      <main class="flex-1 relative">
-         <!-- Blue background section (stays fixed within main) -->
-         <div class="absolute top-0 left-0 w-full h-64 bg-blue-500 z-0"></div>
-         <!-- Content that appears over the blue section -->
-         <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
-            <div class="flex flex-wrap items-center justify-between py-3">
-               <div class="max-w-auto overflow-x-auto">
-                  <ul class="py-3 flex items-center text-white text-sm">
-                     <li>
-                        <a th:href="@{/lender/dashboard}" class="px-2 flex items-center gap-2">
-                        <i class="fa-solid fa-house inline-flex items-center"></i>
-                        </a>
-                     </li>
-                     <li>
-                        <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 "></i>
-                     </li>
-                     <li>
-                        <a th:href="@{/lender/dashboard}" class="px-2 flex items-center gap-2">
-                        <span>Borrowhen</span>
-                        </a>
-                     </li>
-                     <li>
-                        <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 "></i>
-                     </li>
-                     <li>
-                        <a href="#" class="px-2 flex items-center gap-2 font-bold">
-                        <span>Inventory List</span>
-                        </a>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-            <hr class="border-t border-white opacity-80" />
-            <div class="flex">
-               <div class="flex items-center py-6 gap-3">
-                  <div class="text-base rounded-sm bg-white w-12.5 h-12.5 flex items-center justify-center">
-                     <i class="fa-solid fa-chart-pie text-3xl text-blue-500" ></i>
-                  </div>
-                  <div class="flex flex-col gap-0.5 text-white">
-                     <span class="text-xl font-bold">Inventory</span>
-                  </div>
-               </div>
-            </div>
-            <div class="bg-white rounded-md">
-               <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
-                  <div class="text-gray-200 rounded-lg shadow-md flex flex-col border border-gray-300 text-gray-500">
-                     <!-- Filter Header -->
-                     <div class="border-b border-gray-300 p-5">
-                        <h2 class="text-lg font-semibold mb-4">Filter</h2>
-                        <div class="flex flex-wrap gap-4">
-                           <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                              <option>Status</option>
-                              <option>Scheduled</option>
-                              <option>Publish</option>
-                              <option>Inactive</option>
-                           </select>
-                           <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                              <option>Category</option>
-                              <option>Household</option>
-                              <option>Office</option>
-                              <option>Electronics</option>
-                              <option>Shoes</option>
-                              <option>Accessories</option>
-                              <option>Game</option>
-                           </select>
-                           <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                              <option>Stock</option>
-                              <option>Out of Stock</option>
-                              <option>In Stock</option>
-                           </select>
-                        </div>
-                     </div>
-                     <!-- Search & Actions -->
-                     <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-300 p-5">
-                        <!-- Search Bar -->
-                        <div class="flex items-center border border-gray-300 rounded-md px-3 py-2 w-full sm:w-64">
-                           <i class="fa-solid fa-magnifying-glass text-gray-500 mr-2 text-sm"></i>
-                           <input
-                              type="search"
-                              placeholder="Search Item"
-                              class="bg-transparent focus:outline-none w-full text-sm text-gray-500 placeholder-gray-500 search"
-                              />
-                        </div>
-                        <!-- Actions -->
-                        <div class="flex items-center gap-3">
-                           <select
-                              class="h-[40px] px-3 bg-transparent border border-gray-300 rounded-md text-sm text-gray-500 focus:outline-none input-page"
-                              >
-                              <option>1</option>
-                           </select>
-                           <button
-                              class="h-[40px] flex items-center gap-2 bg-blue-200 rounded-md px-4 text-sm text-gray-700 hover:bg-blue-300 transition"
-                              >
-                           <i class="fa-solid fa-upload text-gray-600 text-sm"></i>
-                           Export
-                           </button>
-                           <a th:href="@{/lender/inventory/create}"
-                              class="h-[40px] flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 rounded-md px-4 text-sm text-white transition"
-                              >
-                           <i class="fa-solid fa-plus text-white text-sm"></i>
-                           Add Item
+         <!-- ---------- HEADER ---------- -->
+         <div th:replace="~{header :: header-lender}"></div>
+         <main class="flex-1 relative">
+            <!-- Blue background section (stays fixed within main) -->
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
+            <!-- Content that appears over the blue section -->
+            <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <div class="flex flex-wrap items-center justify-between">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white">
+                        <li>
+                           <a th:href="@{/lender/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
                            </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/lender/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Borrowhen</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
+                           <span>Inventory List</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <hr class="border-t border-white opacity-80" />
+               <div class="flex">
+                  <div class="flex items-center py-4 gap-3">
+                     <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
+                     </div>
+                     <div class="flex flex-col gap-0 text-white">
+                        <span class="text-lg font-bold">Inventory</span>
+                        <span class="text-xs text-gray-300 italic">“Everything you’ve shared, all in one place.”</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="bg-white rounded-t-2xl">
+                  <div class="bg-base-100 rounded-4xl p-6 shadow-md flex flex-col gap-6">
+                     <div class="flex flex-wrap xl:flex-nowrap gap-4">
+                        <!-- In-store Sales -->
+                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
+                           <div class="space-y-1">
+                              <p class="text-gray-500 text-sm">In-store Sales</p>
+                              <div class="text-gray-800 text-lg font-semibold">$5,345.43</div>
+                              <div class="flex items-center gap-2 text-xs">
+                                 <p class="text-gray-500">5k orders</p>
+                                 <p class="bg-green-50 text-green-600 px-2 py-0.5 rounded font-semibold">+5.7%</p>
+                              </div>
+                           </div>
+                           <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
+                              <i class="fa-solid fa-store text-gray-600 text-lg"></i>
+                           </div>
+                        </div>
+                        <!-- Website Sales -->
+                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
+                           <div class="space-y-1">
+                              <p class="text-gray-500 text-sm">Website Sales</p>
+                              <div class="text-gray-800 text-lg font-semibold">$674,347.12</div>
+                              <div class="flex items-center gap-2 text-xs">
+                                 <p class="text-gray-500">21k orders</p>
+                                 <p class="bg-green-50 text-green-600 px-2 py-0.5 rounded font-semibold">+12.4%</p>
+                              </div>
+                           </div>
+                           <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
+                              <i class="fa-solid fa-laptop text-gray-600 text-lg"></i>
+                           </div>
+                        </div>
+                        <!-- Discount -->
+                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
+                           <div class="space-y-1">
+                              <p class="text-gray-500 text-sm">Discount</p>
+                              <div class="text-gray-800 text-lg font-semibold">$14,235.12</div>
+                              <p class="text-xs text-gray-500">6k orders</p>
+                           </div>
+                           <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
+                              <i class="fa-solid fa-gift text-gray-600 text-lg"></i>
+                           </div>
+                        </div>
+                        <!-- Affiliate -->
+                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
+                           <div class="space-y-1">
+                              <p class="text-gray-500 text-sm">Affiliate</p>
+                              <div class="text-gray-800 text-lg font-semibold">$8,345.23</div>
+                              <div class="flex items-center gap-2 text-xs">
+                                 <p class="text-gray-500">150 orders</p>
+                                 <p class="bg-red-50 text-red-600 px-2 py-0.5 rounded font-semibold">-3.5%</p>
+                              </div>
+                           </div>
+                           <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
+                              <i class="fa-solid fa-wallet text-gray-600 text-lg"></i>
+                           </div>
                         </div>
                      </div>
-                     <!-- Table -->
-                     <div class="overflow-x-auto">
-                        <table class="min-w-full text-sm text-gray-300">
-                           <!-- HEADER -->
-                           <thead class="border-b border-gray-300">
-                              <tr>
-                                 <th class="py-2 px-4 text-left font-medium">
-                                    <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded" />
-                                 </th>
-                                 <th class="py-2 px-4 text-left text-gray-500">ITEM</th>
-                                 <th class="py-2 px-4 text-left text-gray-500">PRICE</th>
-                                 <th class="py-2 px-4 text-left text-gray-500">TOTAL QTY</th>
-                                 <th class="py-2 px-4 text-left text-gray-500">AVAILABLE QTY</th>
-                                 <th class="py-2 px-4 text-left text-gray-500">ACTIONS</th>
-                              </tr>
-                           </thead>
-                           <!-- BODY -->
-                           <tbody class="divide-y divide-gray-500" id="table-body">
-                           </tbody>
-                        </table>
-                     </div>
-                     <!-- Pagination -->
-                     <div class="flex flex-wrap items-center justify-between border-t border-gray-300 p-5 text-sm text-gray-400">
-                        <p id="table-info">Showing 1 to 10 of 100 entries</p>
-                        <div class="flex items-center gap-1">
-                           <!-- Previous -->
-                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff] text-lg leading-none prev-btn">&laquo;</button>
-                           <!-- Page Numbers -->
-                           <button class="px-3 py-1 rounded bg-[#eef2ff] text-blue-800 font-medium">1</button>
-                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">2</button>
-                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">3</button>
-                           <span class="px-2">...</span>
-                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">10</button>
-                           <!-- Next -->
-                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff] text-lg leading-none next-btn">&raquo;</button>
+                     <div class="text-gray-200 rounded-lg shadow-md flex flex-col border border-gray-300 text-gray-500">
+                        <!-- Filter Header -->
+                        <div class="border-b border-gray-300 p-5">
+                           <h2 class="text-lg font-semibold mb-4">Filter</h2>
+                           <div class="flex flex-wrap gap-4">
+                              <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                 <option>Status</option>
+                                 <option>Scheduled</option>
+                                 <option>Publish</option>
+                                 <option>Inactive</option>
+                              </select>
+                              <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                 <option>Category</option>
+                                 <option>Household</option>
+                                 <option>Office</option>
+                                 <option>Electronics</option>
+                                 <option>Shoes</option>
+                                 <option>Accessories</option>
+                                 <option>Game</option>
+                              </select>
+                              <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                 <option>Stock</option>
+                                 <option>Out of Stock</option>
+                                 <option>In Stock</option>
+                              </select>
+                           </div>
+                        </div>
+                        <!-- Search & Actions -->
+                        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-300 p-5">
+                           <!-- Search Bar -->
+                           <div class="flex items-center border border-gray-300 rounded-md h-8 px-2 py-1 w-full sm:w-64">
+                              <i class="fa-solid fa-magnifying-glass text-gray-500 mr-2 text-sm"></i>
+                              <input
+                                 type="search"
+                                 placeholder="Search Item"
+                                 class="bg-transparent focus:outline-none w-full text-sm text-gray-500 placeholder-gray-500 search"
+                                 />
+                           </div>
+                           <!-- Actions -->
+                           <div class="flex items-center gap-3">
+                              <select
+                                 class="h-8 px-2 py-1 bg-transparent border border-gray-300 rounded-md text-sm text-gray-500 focus:outline-none input-page"
+                                 >
+                                 <option>1</option>
+                              </select>
+                              <button
+                                 class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition"
+                                 >
+                              <i class="fa-solid fa-upload text-gray-600 text-sm"></i>
+                              Export
+                              </button>
+                              <a th:href="@{/lender/inventory/create}"
+                                 class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-500 hover:bg-blue-300 rounded-md text-sm text-white transition shadow-md"
+                                 >
+                              <i class="fa-solid fa-plus text-white text-sm"></i>
+                              Add Item
+                              </a>
+                           </div>
+                        </div>
+                        <!-- Table -->
+                        <div class="overflow-x-auto">
+                           <table class="min-w-full text-sm text-gray-300">
+                              <!-- HEADER -->
+                              <thead class="border-b border-gray-300">
+                                 <tr class="text-gray-600">
+                                    <th class="py-2 px-2 text-left align-middle">
+                                       <div class="flex items-center justify-center">
+                                          <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded header-checkbox" />
+                                       </div>
+                                    </th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">ITEM</th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">PRICE</th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">TOTAL QTY</th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">AVAILABLE QTY</th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">ACTIONS</th>
+                                 </tr>
+                              </thead>
+                              <!-- BODY -->
+                              <tbody class="divide-y divide-gray-500" id="table-body">
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- Pagination -->
+                        <div class="flex flex-wrap items-center justify-between border-t border-gray-300 p-5 text-gray-400">
+                           <p id="table-info" class="text-xs">Showing 1 to 10 of 100 entries</p>
+                           <div class="flex items-center gap-1">
+                              <!-- Previous -->
+                              <button class="px-3 py-1 text-sm rounded hover:bg-[#eef2ff] text-lg leading-none prev-btn">&laquo;</button>
+                              <!-- Page Numbers -->
+                              <button class="px-3 py-1 text-sm rounded bg-[#eef2ff] text-blue-800 font-medium">1</button>
+                              <button class="px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">2</button>
+                              <button class="px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">3</button>
+                              <span class="px-2">...</span>
+                              <button class="px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">10</button>
+                              <!-- Next -->
+                              <button class="px-3 py-1 text-sm rounded hover:bg-[#eef2ff] text-lg leading-none next-btn">&raquo;</button>
+                           </div>
                         </div>
                      </div>
                   </div>
                </div>
+               <footer th:replace="~{footer :: footer}"></footer>
             </div>
-            <footer th:replace="~{footer :: footer}"></footer>
-            </div>
-      </main>
+         </main>
       </div>
       <script th:src="@{/script/pagination.js}"></script>
       <script th:src="@{/script/loading.js}"></script>
-	  <script th:src="@{/script/inventory/l-inventory-api.js}"></script>
+      <script th:src="@{/script/inventory/l-inventory-api.js}"></script>
    </body>
 </html>
