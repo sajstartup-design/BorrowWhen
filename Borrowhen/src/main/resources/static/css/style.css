@@ -19,9 +19,9 @@ button{
   position: fixed;
   top: 25px;
   left: 30px;
-  border-radius: 12px;
+  border-radius: 10px;
   background: #fff;
-  padding: 10px;
+  padding: 10px 14px;
   box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transform: translateX(calc(100% + 30px));
@@ -30,7 +30,9 @@ button{
   z-index: 9999;
   display: flex;
   align-items: center;
-  border-left: 6px solid transparent;
+  border-left: 5px solid transparent;
+  min-width: 260px;
+  max-width: 320px;
 }
 
 /* Show animation */
@@ -39,7 +41,7 @@ button{
   opacity: 1;
 }
 
-/* Success Toast */
+/* Variants */
 .toast.success {
   background: #e8f9ee;
   border-left-color: #22c55e;
@@ -51,7 +53,6 @@ button{
   background-color: #22c55e;
 }
 
-/* Error Toast */
 .toast.error {
   background: #fdeaea;
   border-left-color: #ef4444;
@@ -63,7 +64,6 @@ button{
   background-color: #ef4444;
 }
 
-/* Warning Toast */
 .toast.warning {
   background: #fff8e5;
   border-left-color: #facc15;
@@ -75,7 +75,6 @@ button{
   background-color: #facc15;
 }
 
-/* Info Toast */
 .toast.info {
   background: #e8f0fe;
   border-left-color: #3b82f6;
@@ -87,7 +86,7 @@ button{
   background-color: #3b82f6;
 }
 
-/* Shared inner styles */
+/* Inner layout */
 .toast .toast-content {
   display: flex;
   align-items: center;
@@ -97,44 +96,48 @@ button{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 35px;
-  min-width: 35px;
+  height: 28px;
+  min-width: 28px;
   color: #fff;
-  font-size: 18px;
+  font-size: 14px;
   border-radius: 50%;
 }
 
 .toast-content .message {
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
+  margin-left: 12px;
 }
 
 .message .text {
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 400;
-  color: #444;
+  color: #555;
+  line-height: 1.2;
 }
 
 .message .text.text-1 {
+  font-size: 14px;
   font-weight: 600;
   color: #111;
 }
 
+/* Close button */
 .toast .close {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  padding: 5px;
+  top: 8px;
+  right: 10px;
+  padding: 4px;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.6;
   transition: opacity 0.2s;
+  font-size: 13px;
 }
-
 .toast .close:hover {
   opacity: 1;
 }
 
+/* Progress bar */
 .toast .progress {
   position: absolute;
   bottom: 0;
@@ -144,7 +147,6 @@ button{
   background: transparent;
   overflow: hidden;
 }
-
 .toast .progress::before {
   content: "";
   position: absolute;
@@ -155,11 +157,9 @@ button{
   transform: scaleX(0);
   transform-origin: left;
 }
-
 .toast .progress.active::before {
   animation: progressBar 5s linear forwards;
 }
-
 @keyframes progressBar {
   from {
     transform: scaleX(1);
@@ -168,6 +168,7 @@ button{
     transform: scaleX(0);
   }
 }
+
 
 .notification-bell {
   transition: transform 0.2s ease, color 0.3s ease;
