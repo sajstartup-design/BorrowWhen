@@ -24,208 +24,209 @@
    </head>
    <body>
       <div class="bg-base-200 flex min-h-screen flex-col">
-      <!-- ---------- HEADER ---------- -->
-      <div th:replace="~{header :: admin-header}"></div>
-      <main class="flex-1 relative">
-         <!-- Blue background section (stays fixed within main) -->
-         <div class="absolute top-0 left-0 w-full h-64 bg-blue-500 z-0"></div>
-         <!-- Content that appears over the blue section -->
-         <div class="relative z-10 pe-6 max-w-[1280px] mx-auto w-full gap-y-3">
-            <div class="flex flex-wrap items-center justify-between py-3">
-               <div class="max-w-auto overflow-x-auto">
-                  <ul class="py-3 flex items-center text-white text-sm">
-                     <li>
-                        <a th:href="@{/admin/other}" class="px-2 flex items-center gap-2">
-                        <i class="fa-solid fa-house inline-flex items-center"></i>
-                        </a>
-                     </li>
-                     <li>
-                        <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 "></i>
-                     </li>
-                     <li>
-                        <a th:href="@{/admin/dashboard}" class="px-2 flex items-center gap-2">
-                        <span>Borrowhen</span>
-                        </a>
-                     </li>
-                     <li>
-                        <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 "></i>
-                     </li>
-                     <li>
-                        <a th:href="@{/admin/lenders}" class="px-2 flex items-center gap-2">
-                        <span>Lender List</span>
-                        </a>
-                     </li>
-                     <li>
-                        <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 font-bold"></i>
-                     </li>
-                     <li>
-                        <a class="px-2 flex items-center gap-2 font-bold">
-                        <span>Add Lender</span>
-                        </a>
-                     </li>
-                  </ul>
-               </div>
+         <!-- ---------- HEADER ---------- -->
+         <div th:replace="~{header :: admin-header}"></div>
+         <main class="flex-1 relative">
+            <!-- Blue background section (stays fixed within main) -->
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0">	
             </div>
-            <hr class="border-t border-white opacity-80" />
-            <div class="flex">
-               <div class="flex items-center py-6 gap-3">
-                  <div class="text-base rounded-sm bg-white w-12.5 h-12.5 flex items-center justify-center">
-                     <i class="fa-solid fa-chart-pie text-3xl text-blue-500" ></i>
-                  </div>
-                  <div class="flex flex-col gap-0.5 text-white">
-                     <span class="text-xl font-bold">Add Lender</span>
+            <!-- Content that appears over the blue section -->
+            <div class="relative z-10 pe-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <div class="flex flex-wrap items-center justify-between">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white">
+                        <li>
+                           <a th:href="@{/admin/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/admin/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Borrowhen</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/admin/lenders}" class="px-2 text-xs flex items-center gap-2 "	>
+                           <span>Lender List</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
+                           <span>Add Lender</span>
+                           </a>
+                        </li>
+                     </ul>
                   </div>
                </div>
-            </div>
-            <div class="bg-white rounded-md">
-               <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
-                  <form th:action="@{/admin/lenders/create}" method="POST"
-                     >
-                     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-                        <!-- LEFT SIDE — BASIC & ACCOUNT INFORMATION -->
-                        <div class="xl:col-span-2 space-y-6">
-                           <!-- Basic Information -->
-                           <div class="border border-gray-200 rounded-lg p-5">
-                              <h2 class="text-lg font-semibold text-gray-800 mb-4">Basic Information</h2>
-                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                 <!-- Name -->
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">Name</label>
-                                    <input type="text" name="fullName" placeholder="Esther Howard" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-                                 </div>
-                                 <!-- Gender -->
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">Gender</label>
-                                    <select name="gender" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                                       <option value="">Select gender</option>
-                                       <option>Male</option>
-                                       <option>Female</option>
-                                       <option>Other</option>
-                                    </select>
-                                 </div>
-                                 <!-- Birth Date -->
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">Birth Date</label>
-                                    <input type="date" name="birthDate" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-                                 </div>
-                                 <!-- Phone Number -->
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">Phone Number</label>
-                                    <input type="tel" name="phoneNumber" placeholder="(63) 8745 8745" maxlength="10" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-                                 </div>
-                                 <!-- Email -->
-                                 <div class="relative">
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">Email Address</label>
-                                    <input type="email" name="emailAddress" placeholder="Email Address" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 pr-8 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-                                    <i class="fa-solid fa-envelope text-gray-400 absolute right-3 top-9 text-sm"></i>
-                                 </div>
-                                 <!-- Barangay -->
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">Barangay</label>
-                                    <input type="text" name="barangay" placeholder="Barangay" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-                                 </div>
-                                 <!-- Street -->
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">Street</label>
-                                    <input type="text" name="street" placeholder="Street" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-                                 </div>
-                                 <!-- City -->
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">City</label>
-                                    <input type="text" name="city" placeholder="City" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-                                 </div>
-                                 <!-- Province -->
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">Province</label>
-                                    <select name="province" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                                       <option value="">Select province</option>
-                                       <option>Batangas</option>
-                                       <option>Laguna</option>
-                                       <option>Quezon</option>
-                                       <option>Rizal</option>
-                                       <option>Cebu</option>
-                                    </select>
-                                 </div>
-                                 <!-- Postal Code -->
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">Postal Code</label>
-                                    <input type="text" name="postalCode" placeholder="00000" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-                                 </div>
-                                 <!-- About -->
-                                 <div class="md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">About</label>
-                                    <textarea name="about" rows="5" placeholder="Add description of the vendor"
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
-                                 </div>
-                              </div>
-                           </div>
-                           <!-- Account Information -->
-                           <div class="border border-gray-200 rounded-lg p-5">
-                              <h2 class="text-lg font-semibold text-gray-800 mb-4">Account Information</h2>
-                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">User ID</label>
-                                    <input type="text" name="userId" placeholder="User ID" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-                                 </div>
-                                 <div>
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">Password</label>
-                                    <input type="password" name="password" placeholder="••••••••" required
-                                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <!-- RIGHT SIDE — PREVIEW -->
-                        <div class="space-y-6">
-                           <!-- Lender Information Preview -->
-                           <div class="border border-gray-200 rounded-lg p-5">
-                              <h2 class="text-lg font-semibold text-gray-800 mb-4">Lender Information Preview</h2>
-                              <div class="space-y-3 text-sm text-gray-600">
-                                 <p><span class="font-medium">Name:</span> <span id="previewName">—</span></p>
-                                 <p><span class="font-medium">Gender:</span> <span id="previewGender">—</span></p>
-                                 <p><span class="font-medium">Birth Date:</span> <span id="previewBirthDate">—</span></p>
-                                 <p><span class="font-medium">Phone:</span> <span id="previewPhone">—</span></p>
-                                 <p><span class="font-medium">Email:</span> <span id="previewEmail">—</span></p>
-                                 <p><span class="font-medium">Address:</span> <span id="previewAddress">—</span></p>
-                                 <p><span class="font-medium">About:</span> <span id="previewAbout" class="break-words">—</span></p>
-                              </div>
-                           </div>
-                           <!-- Account Preview -->
-                           <div class="border border-gray-200 rounded-lg p-5">
-                              <h2 class="text-lg font-semibold text-gray-800 mb-4">Account Information Preview</h2>
-                              <div class="space-y-3 text-sm text-gray-600">
-                                 <p><span class="font-medium">User ID:</span> <span id="previewUserId">—</span></p>
-                                 <p><span class="font-medium">Password:</span> <span id="previewPassword">—</span></p>
-                              </div>
-                           </div>
-                           <!-- Buttons -->
-                           <div class="flex items-center justify-end gap-3">
-                              <a th:href="@{/admin/lenders}" class="px-4 py-2 rounded-md border border-gray-300 text-sm text-gray-600 hover:bg-gray-50">
-                              Cancel
-                              </a>
-                              <button type="submit" class="px-4 py-2 rounded-md bg-indigo-600 text-white text-sm hover:bg-indigo-700 transition">
-                              <i class="fa-solid fa-check mr-2"></i>Add Lender
-                              </button>
-                           </div>
-                        </div>
+               <hr class="border-t border-white opacity-80" />
+               <div class="flex">
+                  <div class="flex items-center py-4 gap-3">
+                     <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
                      </div>
-                  </form>
+                     <div class="flex flex-col gap-0 text-white">
+                        <span class="text-lg font-bold">Add Item</span>
+                     </div>
+                  </div>
                </div>
+               <div class="bg-white rounded-md">
+                  <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
+                     <form th:action="@{/admin/lenders/create}" method="POST"
+                        >
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                           <!-- LEFT SIDE — BASIC & ACCOUNT INFORMATION -->
+                           <div class="xl:col-span-2 space-y-6">
+                              <!-- Basic Information -->
+                              <div class="border border-gray-200 rounded-lg p-5">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Basic Information</h2>
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Name -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Name</label>
+                                       <input type="text" name="fullName" placeholder="Esther Howard" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- Gender -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Gender</label>
+                                       <select name="gender" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                          <option value="">Select gender</option>
+                                          <option>Male</option>
+                                          <option>Female</option>
+                                          <option>Other</option>
+                                       </select>
+                                    </div>
+                                    <!-- Birth Date -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Birth Date</label>
+                                       <input type="date" name="birthDate" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- Phone Number -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Phone Number</label>
+                                       <input type="tel" name="phoneNumber" placeholder="(63) 8745 8745" maxlength="10" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- Email -->
+                                    <div class="relative">
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Email Address</label>
+                                       <input type="email" name="emailAddress" placeholder="Email Address" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 pr-8 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                       <i class="fa-solid fa-envelope text-gray-400 absolute right-3 top-9 text-sm"></i>
+                                    </div>
+                                    <!-- Barangay -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Barangay</label>
+                                       <input type="text" name="barangay" placeholder="Barangay" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- Street -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Street</label>
+                                       <input type="text" name="street" placeholder="Street" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- City -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">City</label>
+                                       <input type="text" name="city" placeholder="City" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- Province -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Province</label>
+                                       <select name="province" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                          <option value="">Select province</option>
+                                          <option>Batangas</option>
+                                          <option>Laguna</option>
+                                          <option>Quezon</option>
+                                          <option>Rizal</option>
+                                          <option>Cebu</option>
+                                       </select>
+                                    </div>
+                                    <!-- Postal Code -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Postal Code</label>
+                                       <input type="text" name="postalCode" placeholder="00000" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- About -->
+                                    <div class="md:col-span-2">
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">About</label>
+                                       <textarea name="about" rows="5" placeholder="Add description of the vendor"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- Account Information -->
+                              <div class="border border-gray-200 rounded-lg p-5">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Account Information</h2>
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">User ID</label>
+                                       <input type="text" name="userId" placeholder="User ID" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Password</label>
+                                       <input type="password" name="password" placeholder="••••••••" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- RIGHT SIDE — PREVIEW -->
+                           <div class="space-y-6">
+                              <!-- Lender Information Preview -->
+                              <div class="border border-gray-200 rounded-lg p-5">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Lender Information Preview</h2>
+                                 <div class="space-y-3 text-sm text-gray-600">
+                                    <p><span class="font-medium">Name:</span> <span id="previewName">—</span></p>
+                                    <p><span class="font-medium">Gender:</span> <span id="previewGender">—</span></p>
+                                    <p><span class="font-medium">Birth Date:</span> <span id="previewBirthDate">—</span></p>
+                                    <p><span class="font-medium">Phone:</span> <span id="previewPhone">—</span></p>
+                                    <p><span class="font-medium">Email:</span> <span id="previewEmail">—</span></p>
+                                    <p><span class="font-medium">Address:</span> <span id="previewAddress">—</span></p>
+                                    <p><span class="font-medium">About:</span> <span id="previewAbout" class="break-words">—</span></p>
+                                 </div>
+                              </div>
+                              <!-- Account Preview -->
+                              <div class="border border-gray-200 rounded-lg p-5">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Account Information Preview</h2>
+                                 <div class="space-y-3 text-sm text-gray-600">
+                                    <p><span class="font-medium">User ID:</span> <span id="previewUserId">—</span></p>
+                                    <p><span class="font-medium">Password:</span> <span id="previewPassword">—</span></p>
+                                 </div>
+                              </div>
+                              <!-- Buttons -->
+                              <div class="flex items-center justify-end gap-3">
+                                 <a th:href="@{/admin/lenders}" class="h-8 px-2 py-1 rounded-md border border-gray-300 text-sm text-gray-600 hover:bg-gray-50">
+                                 Cancel
+                                 </a>
+                                 <button type="submit" class="h-8 px-2 py-1 rounded-md bg-blue-500 text-white text-sm hover:bg-indigo-700 transition">
+                                 <i class="fa-solid fa-check mr-2"></i>Add Lender
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+               <footer th:replace="~{footer :: footer}"></footer>
             </div>
-            <footer th:replace="~{footer :: footer}"></footer>
-            </div>
-      </main>
+         </main>
       </div>
       <script>
          document.addEventListener("DOMContentLoaded", function () {
