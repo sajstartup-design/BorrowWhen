@@ -24,111 +24,46 @@
    </head>
    <body>
       <div class="bg-base-200 flex min-h-screen flex-col">
-         <!-- ---------- HEADER ---------- -->
-         <div class="bg-base-200 z-11 sticky top-0 w-full">
-            <nav class="flex items-center justify-between bg-white py-3 pe-6 max-w-[1280px] mx-auto w-full gap-y-3">
-               <div class="flex items-center gap-6">
-                  <div class="flex shrink-0 gap-2">
-                     <a th:href="@{/admin/dashboard}" class="flex items-center gap-x-3">
-                        <img th:src="@{/images/logo.png}" class="w-8 h-8">
-                        <h3 class="text-base-content text-xl font-bold leading-none text-base !text-gray-500">Borrowhen</h3>
-                     </a>
+      <!-- ---------- HEADER ---------- -->
+      <div th:replace="~{header :: admin-header}"></div>
+      <main class="flex-1 relative">
+         <!-- Blue background section (stays fixed within main) -->
+         <div class="absolute top-0 left-0 w-full h-64 bg-blue-500 z-0"></div>
+         <!-- Content that appears over the blue section -->
+         <div class="relative z-10 pe-6 max-w-[1280px] mx-auto w-full gap-y-3">
+            <div class="flex flex-wrap items-center justify-between py-3">
+               <div class="max-w-auto overflow-x-auto">
+                  <ul class="py-3 flex items-center text-white text-sm">
+                     <li>
+                        <a th:href="@{/admin/other}" class="px-2 flex items-center gap-2">
+                        <i class="fa-solid fa-house inline-flex items-center"></i>
+                        </a>
+                     </li>
+                     <li>
+                        <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 "></i>
+                     </li>
+                     <li>
+                        <a th:href="@{/admin/other}" class="px-2 flex items-center gap-2 font-bold">
+                        <span>Dashboard</span>
+                        </a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <hr class="border-t border-white opacity-80" />
+            <div class="flex">
+               <div class="flex items-center py-6 gap-3">
+                  <div class="text-base rounded-sm bg-white w-12.5 h-12.5 flex items-center justify-center">
+                     <i class="fa-solid fa-chart-pie text-3xl text-blue-500" ></i>
                   </div>
-                  <!-- Center Menu -->
-                  <div>
-                     <ul class="flex flex-wrap text-base gap-1.5 text-sm">
-                        <li class="rounded-lg active">
-                           <a th:href="@{/admin/dashboard}" class="rounded-sm px-2 py-1.5 flex items-center gap-2 text-gray-500">
-                           <i class="fa-solid fa-chart-line inline-flex items-center"></i>
-                           <span>Dashboard</span>
-                           </a>
-                        </li>
-                        <li class="rounded-lg inactive">
-                           <a th:href="@{/admin/dashboard}" class="rounded-sm px-2 py-1.5 flex items-center gap-2 text-gray-500">
-                           <i class="fa-solid fa-chart-line inline-flex items-center"></i>
-                           <span>Dashboard</span>
-                           </a>
-                        </li>
-                        <li class="rounded-lg px-1 py-2">
-                           <a th:href="@{/admin/other}" class="px-2 flex items-center gap-2 text-gray-500">
-                           <i class="fa-solid fa-gear inline-flex items-center"></i>
-                           <span>Request</span>
-                           <i class="fa-solid fa-chevron-down inline-flex items-center text-xs"></i>
-                           </a>
-                        </li>
-                        <li class="rounded-lg px-1 py-2">
-                           <a th:href="@{/admin/other}" class="px-2 flex items-center gap-2 text-gray-500">
-                           <i class="fa-solid fa-gear inline-flex items-center"></i>
-                           <span>Borrower</span>
-                           <i class="fa-solid fa-chevron-down inline-flex items-center text-xs"></i>
-                           </a>
-                        </li>
-                        <li class="rounded-lg px-1 py-2">
-                           <a th:href="@{/admin/other}" class="px-2 flex items-center gap-2 text-gray-500">
-                           <i class="fa-solid fa-gear inline-flex items-center"></i>
-                           <span>Lender</span>
-                           <i class="fa-solid fa-chevron-down inline-flex items-center text-xs"></i>
-                           </a>
-                        </li>
-                        <li class="rounded-lg px-1 py-2">
-                           <a th:href="@{/admin/other}" class="px-2 flex items-center gap-2 text-gray-500">
-                           <i class="fa-solid fa-gear inline-flex items-center"></i>
-                           <span>Settings</span>
-                           <i class="fa-solid fa-chevron-down inline-flex items-center text-xs"></i>
-                           </a>
-                        </li>
-                     </ul>
+                  <div class="flex flex-col gap-0.5 text-white">
+                     <span class="text-xl font-bold">Dashboard</span>
+                     <span class="text-base">Hello, Admins</span>
                   </div>
                </div>
-               <!-- Left Logo -->
-               <!-- Right Icons -->
-               <div class="flex items-center gap-2 text-base text-gray-600 dark:text-gray-300">
-                  <i class="fa-solid fa-moon cursor-pointer p-1.5 rounded-sm hover:bg-gray-100 transition text-sm text-gray-500"></i>
-                  <i class="fa-solid fa-bell cursor-pointer p-1.5 rounded-sm hover:bg-gray-100 transition text-sm text-gray-500"></i>
-                  <i class="fa-solid fa-chevron-down cursor-pointer border border-blue-100 rounded-lg p-1.5 hover:bg-gray-100 transition text-xs text-gray-500"></i>
-               </div>
-            </nav>
-         </div>
-			<main class="flex-1 relative">
-			  <!-- Blue background section (stays fixed within main) -->
-			  <div class="absolute top-0 left-0 w-full h-64 bg-blue-500 z-0"></div>
-			
-			  <!-- Content that appears over the blue section -->
-			  <div class="relative z-10 pe-6 max-w-[1280px] mx-auto w-full gap-y-3">
-			    
-			    <div class="flex flex-wrap items-center justify-between py-3">
-			    	<div class="max-w-auto overflow-x-auto">
-			    		<ul class="py-3 flex items-center text-white text-sm">
-			    			<li>
-			    				<a th:href="@{/admin/other}" class="px-2 flex items-center gap-2">
-	                           <i class="fa-solid fa-house inline-flex items-center"></i>
-	                           </a>
-			    			</li>
-			    			<li>
-			    				<i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 "></i>
-			    			</li>
-			    			<li>
-			    				<a th:href="@{/admin/other}" class="px-2 flex items-center gap-2 font-bold">
-			    					<span>Dashboard</span>
-			    				</a>
-			    			</li>		    		
-			    		</ul>
-			    	</div>
-			    </div>		    
-			    <hr class="border-t border-white opacity-80" />
-			    <div class="flex">
-			    	<div class="flex items-center py-6 gap-3">
-			    		<div class="text-base rounded-sm bg-white w-12.5 h-12.5 flex items-center justify-center">
-			    			<i class="fa-solid fa-chart-pie text-3xl text-blue-500" ></i>
-			    		</div>
-			    		<div class="flex flex-col gap-0.5 text-white">
-			    			<span class="text-xl font-bold">Dashboard</span>
-			    			<span class="text-base">Hello, Admins</span>
-			    		</div>
-			    	</div>
-			    </div>
-   			    <div class="bg-white rounded-md">
-			  		<div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
+            </div>
+            <div class="bg-white rounded-md">
+               <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
                   <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
                      <!-- Card 1 -->
                      <div class="rounded-lg border border-gray-500 shadow-md p-4 bg-transparent"></div>
@@ -175,23 +110,22 @@
                      <!-- Search & Actions -->
                      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-800 p-5">
                         <div class="flex items-center border border-gray-500 rounded-md px-3 py-2 w-full sm:w-64">
-  <i class="fa-solid fa-magnifying-glass text-gray-500 mr-2 text-sm"></i>
-  <input
-    type="search"
-    placeholder="Search Product"
-    class="bg-transparent focus:outline-none w-full text-sm text-gray-200 placeholder-gray-500 "
-  />
-</div>
-
+                           <i class="fa-solid fa-magnifying-glass text-gray-500 mr-2 text-sm"></i>
+                           <input
+                              type="search"
+                              placeholder="Search Product"
+                              class="bg-transparent focus:outline-none w-full text-sm text-gray-500 placeholder-gray-500 "
+                              />
+                        </div>
                         <div class="flex items-center gap-3">
                            <button class="flex items-center gap-2 bg-blue-200 rounded-md px-4 py-2 text-sm transition">
-  <i class="fa-solid fa-upload text-gray-600 text-sm"></i>
-  Export
-</button>
-<button class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 rounded-md px-4 py-2 text-sm text-white transition">
-  <i class="fa-solid fa-plus text-white text-sm"></i>
-  Add Product
-</button>
+                           <i class="fa-solid fa-upload text-gray-600 text-sm"></i>
+                           Export
+                           </button>
+                           <button class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 rounded-md px-4 py-2 text-sm text-white transition">
+                           <i class="fa-solid fa-plus text-white text-sm"></i>
+                           Add Product
+                           </button>
                         </div>
                      </div>
                      <!-- Table -->
@@ -203,100 +137,87 @@
                                  <th class="py-2 px-4 text-left font-medium">
                                     <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded" />
                                  </th>
-                                 <th class="py-2 px-4 text-left font-medium">PRODUCT</th>
-                                 <th class="py-2 px-4 text-left font-medium">CATEGORY</th>
-                                 <th class="py-2 px-4 text-left font-medium">STOCK</th>
-                                 <th class="py-2 px-4 text-left font-medium">PRICE</th>
-                                 <th class="py-2 px-4 text-left font-medium">QTY</th>
-                                 <th class="py-2 px-4 text-left font-medium">STATUS</th>
-                                 <th class="py-2 px-4 text-left font-medium">ACTIONS</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">PRODUCT</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">CATEGORY</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">STOCK</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">PRICE</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">QTY</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">STATUS</th>
+                                 <th class="py-2 px-4 text-left text-gray-500">ACTIONS</th>
                               </tr>
                            </thead>
                            <!-- BODY -->
                            <tbody class="divide-y divide-gray-500">
                               <tr class="text-gray-500">
-  <!-- Checkbox -->
-  <td class="py-5 px-4 align-middle">
-    <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded" />
-  </td>
-
-  <!-- Product -->
-  <td class="py-3 px-4 align-middle">
-    <div class="flex items-center gap-3">
-      <div class="min-w-0">
-        <p class="text-sm font-semibold text-gray-500 truncate">TechMart Electronics</p>
-        <p class="text-xs text-gray-500 truncate">Electronics</p>
-      </div>
-    </div>
-  </td>
-
-  <!-- Category -->
-  <td class="py-3 px-4 align-middle">Gadgets</td>
-
-  <!-- Stock -->
-  <td class="py-3 px-4 align-middle">245</td>
-
-  <!-- Price -->
-  <td class="py-3 px-4 align-middle">$199.99</td>
-
-  <!-- Quantity -->
-  <td class="py-3 px-4 align-middle">12</td>
-
-  <!-- Status -->
-  <td class="py-3 px-4 align-middle">
-    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-800 text-green-200">
-      Active
-    </span>
-  </td>
-
-  <!-- Actions -->
-  <td class="py-5 px-4 align-middle">
-    <div class="flex items-center gap-3 text-gray-500">
-      <!-- View -->
-      <button class="p-1 hover:text-gray-200" aria-label="View">
-        <i class="fa-regular fa-eye text-[18px]"></i>
-      </button>
-
-      <!-- Edit -->
-      <button class="p-1 hover:text-gray-200" aria-label="Edit">
-        <i class="fa-regular fa-pen-to-square text-[18px]"></i>
-      </button>
-
-      <!-- Delete -->
-      <button class="p-1 hover:text-red-400" aria-label="Delete">
-        <i class="fa-regular fa-trash-can text-[18px]"></i>
-      </button>
-    </div>
-  </td>
-</tr>
-
+                                 <!-- Checkbox -->
+                                 <td class="py-3 px-4 align-middle">
+                                    <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded" />
+                                 </td>
+                                 <!-- Product -->
+                                 <td class="px-4 align-middle">
+                                    <div class="flex items-center gap-3">
+                                       <div class="min-w-0">
+                                          <p class="text-sm font-semibold text-gray-500 truncate">TechMart Electronics</p>
+                                          <p class="text-xs text-gray-500 truncate">Electronics</p>
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <!-- Category -->
+                                 <td class="px-4 align-middle">Gadgets</td>
+                                 <!-- Stock -->
+                                 <td class="px-4 align-middle">245</td>
+                                 <!-- Price -->
+                                 <td class="px-4 align-middle">$199.99</td>
+                                 <!-- Quantity -->
+                                 <td class="px-4 align-middle">12</td>
+                                 <!-- Status -->
+                                 <td class="px-4 align-middle">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-800 text-green-200">
+                                    Active
+                                    </span>
+                                 </td>
+                                 <!-- Actions -->
+                                 <td class="px-4 align-middle">
+                                    <div class="flex items-center gap-3 text-gray-500">
+                                       <!-- View -->
+                                       <button class="p-1 hover:text-gray-200" aria-label="View">
+                                       <i class="fa-regular fa-eye text-[18px]"></i>
+                                       </button>
+                                       <!-- Edit -->
+                                       <button class="p-1 hover:text-gray-200" aria-label="Edit">
+                                       <i class="fa-regular fa-pen-to-square text-[18px]"></i>
+                                       </button>
+                                       <!-- Delete -->
+                                       <button class="p-1 hover:text-red-400" aria-label="Delete">
+                                       <i class="fa-regular fa-trash-can text-[18px]"></i>
+                                       </button>
+                                    </div>
+                                 </td>
+                              </tr>
                            </tbody>
                         </table>
                      </div>
                      <!-- Pagination -->
                      <div class="flex flex-wrap items-center justify-between border-t border-gray-500 p-5 text-sm text-gray-400">
-  <p>Showing 1 to 10 of 100 entries</p>
-
-  <div class="flex items-center gap-1">
-    <!-- Previous -->
-    <button class="px-3 py-1 rounded hover:bg-[#eef2ff] text-lg leading-none">&laquo;</button>
-
-    <!-- Page Numbers -->
-    <button class="px-3 py-1 rounded bg-[#eef2ff] text-blue-800 font-medium">1</button>
-    <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">2</button>
-    <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">3</button>
-    <span class="px-2">...</span>
-    <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">10</button>
-
-    <!-- Next -->
-    <button class="px-3 py-1 rounded hover:bg-[#eef2ff] text-lg leading-none">&raquo;</button>
-  </div>
-</div>
-
+                        <p>Showing 1 to 10 of 100 entries</p>
+                        <div class="flex items-center gap-1">
+                           <!-- Previous -->
+                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff] text-lg leading-none">&laquo;</button>
+                           <!-- Page Numbers -->
+                           <button class="px-3 py-1 rounded bg-[#eef2ff] text-blue-800 font-medium">1</button>
+                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">2</button>
+                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">3</button>
+                           <span class="px-2">...</span>
+                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">10</button>
+                           <!-- Next -->
+                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff] text-lg leading-none">&raquo;</button>
+                        </div>
+                     </div>
                   </div>
-			  	</div>
-			  </div>		  
-			</main>
+               </div>
+            </div>
+            <footer th:replace="~{footer :: footer}"></footer>
+      </main>
       </div>
-   </body>   
+   </body>
 </html>
