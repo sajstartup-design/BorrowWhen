@@ -56,95 +56,86 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-async function loadInventories(page = 0, 
-	search = ""
-) {
-    try {
-		
-		const params = new URLSearchParams({ page, search });
-		
-		const url = `/api/inventory?${params.toString()}`;
-		const response = await fetch(url);
-        const data = await response.json();
+async function loadInventories(page = 0, search = "") {
+  try {
+    const params = new URLSearchParams({ page, search });
+    const url = `/api/inventory?${params.toString()}`;
+    const response = await fetch(url);
+    const data = await response.json();
 
-        updatePagination(data.pagination);
+    const itemList = document.getElementById("itemList");
+    itemList.innerHTML = "";
 
-        const tableBody = document.getElementById("items-body");
-		tableBody.innerHTML = '';
+    const fragment = document.createDocumentFragment();
 
-        const fragment = document.createDocumentFragment();
+    if (data.inventories) {
+      data.inventories.forEach((inventory) => {
+        const isAvailable = inventory.availableQty > 0;
+        const statusColor = isAvailable
+          ? "text-green-700 bg-green-100"
+          : "text-yellow-700 bg-yellow-100";
+        const statusText = isAvailable ? "Available" : "Borrowed";
 
-		if(data.inventories){
-			
-	        data.inventories.forEach(inventory => {
-				
-				const item = document.createElement('div');
-				item.classList.add("item-container");
-				
-				const isAvailable = inventory.availableQty > 0;
-        		const ribbonColor = isAvailable ? "green" : "red";
-        		const ribbonText = isAvailable ? "IN STOCK" : "NO STOCK";
-        		
-        		let borrowBtn = "";
-		        if (isAvailable) {
-		            borrowBtn = `
-		                <button 
-		                  class="borrow-btn darker" 
-		                  data-toggle="modal" 
-		                  data-target="#borrowModal"
-		                  data-id="${inventory.encryptedId}"
-		                  data-name="${inventory.itemName}"
-		                  data-price="${inventory.price}"
-		                  data-qty="${inventory.availableQty}">
-		                  BORROW
-		                </button>`;
-		        } else {
-		            borrowBtn = `
-		                <button class="borrow-btn" disabled>
-		                  BORROW
-		                </button>`;
-		        }
-				
-				item.innerHTML = `<div class="item-details">
-									<div class="ribbon ${ribbonColor}"><span>${ribbonText}</span></div>
-									<span class="item-name">
-									    ${inventory.itemName}
-									</span>
-									<span class="item-price">
-										₱${inventory.price}
-									</span>
-									<span class="item-quantity">
-										Quantity Left: ${inventory.availableQty}
-									</span>
-									<hr class="soft-gradient">
-									<span class="lender-name">Lender: ${inventory.owner}</span>
-								</div>
-								<div class="item-btns">
-									${borrowBtn}
-								</div>
-								<div class="item-ratings">
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star"></span>
-									<span class="fa fa-star"></span>
-								</div>`;
-				
-	            fragment.appendChild(item);
-	        });
-	
-	        tableBody.appendChild(fragment);
-			
-			updateBtnsModal();
-	
-	        document.querySelector(".input-page").value = data.pagination.page + 1;
-		}
-		
-		removeLoadingScreenBody();
+        // Borrow button
+        const borrowBtn = isAvailable
+          ? `
+            <button
+              class="px-3 py-1.5 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600 transition"
+              data-toggle="modal"
+              data-target="#borrowModal"
+              data-id="${inventory.encryptedId}"
+              data-name="${inventory.itemName}"
+              data-price="${inventory.price}"
+              data-qty="${inventory.availableQty}">
+              Borrow
+            </button>`
+          : `
+            <button
+              class="px-3 py-1.5 bg-gray-300 text-gray-700 text-sm rounded-md cursor-not-allowed"
+              disabled>
+              Borrowed
+            </button>`;
 
-    } catch (error) {
-        console.error("Error fetching inventories:", error);
+        // Card
+        const card = document.createElement("div");
+        card.className =
+          "bg-gray-50 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition p-4";
+
+        card.innerHTML = `
+          <h2 class="text-gray-800 text-lg font-semibold mb-1">${inventory.itemName}</h2>
+
+          <!-- Ratings (4 out of 5) -->
+          <div class="flex mb-2 text-yellow-400">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-regular fa-star text-gray-300"></i>
+          </div>
+
+          <p class="text-sm text-gray-600">Qty Left: ${inventory.availableQty}</p>
+          <p class="text-sm text-gray-600 mb-2">Lender: ${inventory.owner}</p>
+
+          <div class="flex justify-between items-center mt-3">
+            <span class="px-2 py-0.5 text-xs font-semibold ${statusColor} rounded-full">
+              ${statusText}
+            </span>
+            ${borrowBtn}
+          </div>
+        `;
+
+        fragment.appendChild(card);
+      });
+
+      itemList.appendChild(fragment);
+
     }
+
+    removeLoadingScreenBody();
+  } catch (error) {
+    console.error("Error fetching inventories:", error);
+  }
 }
+
 
 
