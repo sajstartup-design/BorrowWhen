@@ -34,47 +34,47 @@
       <div th:replace="~{header :: admin-header}"></div>
       <main class="flex-1 relative">
          <!-- Blue background section (stays fixed within main) -->
-         <div class="absolute top-0 left-0 w-full h-64 bg-blue-500 z-0"></div>
+         <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
          <!-- Content that appears over the blue section -->
          <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
-            <div class="flex flex-wrap items-center justify-between py-3">
-               <div class="max-w-auto overflow-x-auto">
-                  <ul class="py-3 flex items-center text-white text-sm">
-                     <li>
-                        <a th:href="@{/admin/other}" class="px-2 flex items-center gap-2">
-                        <i class="fa-solid fa-house inline-flex items-center"></i>
-                        </a>
-                     </li>
-                     <li>
-                        <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 "></i>
-                     </li>
-                     <li>
-                        <a th:href="@{/admin/dashboard}" class="px-2 flex items-center gap-2">
-                        <span>Borrwhen</span>
-                        </a>
-                     </li>
-                     <li>
-                        <i class="fa-solid fa-chevron-right inline-flex items-center text-xs px-1 "></i>
-                     </li>
-                     <li>
-                        <a href="#" class="px-2 flex items-center gap-2 font-bold">
-                        <span>Lender List</span>
-                        </a>
-                     </li>
-                  </ul>
+               <div class="flex flex-wrap items-center justify-between">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white">
+                        <li>
+                           <a th:href="@{/lender/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/lender/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Borrowhen</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
+                           <span>Lender List</span>
+                           </a>
+                        </li>
+                     </ul>
                </div>
             </div>
             <hr class="border-t border-white opacity-80" />
             <div class="flex">
-               <div class="flex items-center py-6 gap-3">
-                  <div class="text-base rounded-sm bg-white w-12.5 h-12.5 flex items-center justify-center">
-                     <i class="fa-solid fa-chart-pie text-3xl text-blue-500" ></i>
-                  </div>
-                  <div class="flex flex-col gap-0.5 text-white">
-                     <span class="text-xl font-bold">Lenders</span>
+                  <div class="flex items-center py-4 gap-3">
+                     <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
+                     </div>
+                     <div class="flex flex-col gap-0 text-white">
+                        <span class="text-lg font-bold">Lender List</span>
+                     </div>
                   </div>
                </div>
-            </div>
             <div class="bg-white rounded-md">
                <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
                   <div class="text-gray-200 rounded-lg shadow-md flex flex-col border border-gray-300 text-gray-500">
@@ -82,13 +82,13 @@
                      <div class="border-b border-gray-300 p-5">
                         <h2 class="text-lg font-semibold mb-4">Filter</h2>
                         <div class="flex flex-wrap gap-4">
-                           <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                           <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                               <option>Status</option>
                               <option>Scheduled</option>
                               <option>Publish</option>
                               <option>Inactive</option>
                            </select>
-                           <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                           <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                               <option>Category</option>
                               <option>Household</option>
                               <option>Office</option>
@@ -97,7 +97,7 @@
                               <option>Accessories</option>
                               <option>Game</option>
                            </select>
-                           <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                           <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                               <option>Stock</option>
                               <option>Out of Stock</option>
                               <option>In Stock</option>
@@ -107,7 +107,7 @@
                      <!-- Search & Actions -->
                      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-300 p-5">
                         <!-- Search Bar -->
-                        <div class="flex items-center border border-gray-300 rounded-md px-3 py-2 w-full sm:w-64">
+                        <div class="flex items-center border border-gray-300 rounded-md h-8 px-2 py-1 w-full sm:w-64">
                            <i class="fa-solid fa-magnifying-glass text-gray-500 mr-2 text-sm"></i>
                            <input
                               type="search"
@@ -118,18 +118,18 @@
                         <!-- Actions -->
                         <div class="flex items-center gap-3">
                            <select
-                              class="h-[40px] px-3 bg-transparent border border-gray-300 rounded-md text-sm text-gray-500 focus:outline-none input-page"
+                              class="h-8 px-2 py-1 bg-transparent border border-gray-300 rounded-md text-sm text-gray-500 focus:outline-none input-page"
                               >
                               <option>1</option>
                            </select>
                            <button
-                              class="h-[40px] flex items-center gap-2 bg-blue-200 rounded-md px-4 text-sm text-gray-700 hover:bg-blue-300 transition"
+                              class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition"
                               >
                            <i class="fa-solid fa-upload text-gray-600 text-sm"></i>
                            Export
                            </button>
                            <a th:href="@{/admin/lenders/create}"
-                              class="h-[40px] flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 rounded-md px-4 text-sm text-white transition"
+                              class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-500 hover:bg-indigo-700 rounded-md text-sm text-white transition"
                               >
                            <i class="fa-solid fa-plus text-white text-sm"></i>
                            Add Lender
@@ -141,19 +141,21 @@
                         <table class="min-w-full text-sm text-gray-300">
                            <!-- HEADER -->
                            <thead class="border-b border-gray-300">
-                              <tr>
-                                 <th class="py-2 px-4 text-left font-medium">
-                                    <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded" />
-                                 </th>
-                                 <th class="py-2 px-4 text-left text-gray-500">LENDER</th>
-                                 <th class="py-2 px-4 text-left text-gray-500">EMAIL</th>
-                                 <th class="py-2 px-4 text-left text-gray-500">PHONE NUBER</th>
-                                 <th class="py-2 px-4 text-left text-gray-500">BIRTH DATE</th>
-                                 <th class="py-2 px-4 text-left text-gray-500">CREATED DATE</th>
-                                 <th class="py-2 px-4 text-left text-gray-500">UPDATED DATE</th>
-                                 <th class="py-2 px-4 text-left text-gray-500">ACTIONS</th>
-                              </tr>
-                           </thead>
+                                 <tr class="text-gray-600">
+                                    <th class="py-2 px-2 text-left align-middle">
+                                       <div class="flex items-center justify-center">
+                                          <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded header-checkbox" />
+                                       </div>
+                                    </th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">LENDER</th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">EMAIL</th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">PHONE NUMBER</th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">BIRTH DATE</th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">CREATED DATE</th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">UPDATED DATE</th>
+                                    <th class="py-2 px-2 text-left text-xs text-gray-500 font-bold">ACTIONS</th>
+                                 </tr>
+                              </thead>
                            <!-- BODY -->
                            <tbody class="divide-y divide-gray-500" id="table-body">
                               <tr class="text-gray-500">

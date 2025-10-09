@@ -1,140 +1,141 @@
 createLoadingScreenBody();
 
 document.addEventListener("DOMContentLoaded", () => {
-    
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    const inputPage = document.querySelector('.input-page');
-	const search = document.querySelector('.search');
 
-    // Load first page
-    loadInventories(0);
+   const prevBtn = document.querySelector('.prev-btn');
+   const nextBtn = document.querySelector('.next-btn');
+   const inputPage = document.querySelector('.input-page');
+   const search = document.querySelector('.search');
 
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-			createLoadingScreenBody();
-            let currentPage = Number(inputPage.value);
-            loadInventories(currentPage); 
-        });
-    }
+   // Load first page
+   loadInventories(0);
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-			createLoadingScreenBody();
-            let currentPage = Number(inputPage.value);
-            loadInventories(currentPage - 2); 
-        });
-    }
+   if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+         createLoadingScreenBody();
+         let currentPage = Number(inputPage.value);
+         loadInventories(currentPage);
+      });
+   }
 
-    if (inputPage) {
-        inputPage.addEventListener('change', () => {
-			createLoadingScreenBody();
-            let newPage = Number(inputPage.value);
-            if (newPage < 1) newPage = 1;
-            inputPage.value = newPage;
-            loadInventories(newPage - 1);
-        });
-    }
-	
-	if (search) {
-	    let typingTimer; 
-	    const delay = 500; 
+   if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+         createLoadingScreenBody();
+         let currentPage = Number(inputPage.value);
+         loadInventories(currentPage - 2);
+      });
+   }
 
-	    search.addEventListener('input', function () {
-	        clearTimeout(typingTimer); 
+   if (inputPage) {
+      inputPage.addEventListener('change', () => {
+         createLoadingScreenBody();
+         let newPage = Number(inputPage.value);
+         if (newPage < 1) newPage = 1;
+         inputPage.value = newPage;
+         loadInventories(newPage - 1);
+      });
+   }
 
-	        const currentPage = 0;
-	        const searchValue = this.value;
+   if (search) {
+      let typingTimer;
+      const delay = 500;
 
-	        typingTimer = setTimeout(() => {
-				createLoadingScreenBody();
-	            loadInventories(currentPage, searchValue);
-	        }, delay);
-	    });
-	}
+      search.addEventListener('input', function () {
+         clearTimeout(typingTimer);
+
+         const currentPage = 0;
+         const searchValue = this.value;
+
+         typingTimer = setTimeout(() => {
+            createLoadingScreenBody();
+            loadInventories(currentPage, searchValue);
+         }, delay);
+      });
+   }
 
 });
 
 
-async function loadInventories(page = 0, 
-	search = ""
+async function loadInventories(page = 0,
+   search = ""
 ) {
-    try {
-		
-		const params = new URLSearchParams({ page, search });
-		
-		const url = `/api/lender/inventory?${params.toString()}`;
-		const response = await fetch(url);
-		
-        const data = await response.json();
-		
-        updatePagination(data.pagination);
+   try {
 
-        const tableBody = document.getElementById("table-body");
-		tableBody.innerHTML = '';
+      const params = new URLSearchParams({
+         page,
+         search
+      });
 
-        const fragment = document.createDocumentFragment();
-        
-        console.log(data);
+      const url = `/api/lender/inventory?${params.toString()}`;
+      const response = await fetch(url);
 
-        data.inventories.forEach(inventory => {
-			const row = document.createElement("tr");
-row.className = "text-gray-500 border-b border-gray-300";
-row.setAttribute("data-id", inventory.encryptedId);
+      const data = await response.json();
 
-row.innerHTML = `
-  <td class="py-2 px-2 text-xs align-middle">
-    <div class="flex items-center justify-center">
-      <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
-    </div>
-  </td>
-  <td class="px-2 text-xs align-middle">${inventory.itemName}</td>
-  <td class="px-2 text-xs align-middle">₱${inventory.price}</td>
-  <td class="px-2 text-xs align-middle">${inventory.totalQty} pcs</td>
-  <td class="px-2 text-xs align-middle">${inventory.availableQty} pcs</td>
-  <td class="px-2 text-sm align-middle">
-    <div class="flex items-center gap-3 text-gray-500">
-      <button class="p-1 hover:text-gray-200 view-btn" data-id="${inventory.encryptedId}" aria-label="View">
-        <i class="fa-regular fa-eye text-sm"></i>
-      </button>
-      <button class="p-1 hover:text-gray-200 edit-btn" data-id="${inventory.encryptedId}" aria-label="Edit">
-        <i class="fa-regular fa-pen-to-square text-sm"></i>
-      </button>
-      <button class="p-1 hover:text-red-400 delete-record" data-id="${inventory.encryptedId}" aria-label="Delete">
-        <i class="fa-regular fa-trash-can text-sm"></i>
-      </button>
-    </div>
-  </td>
-`;
-			
-			row.querySelector('.edit-btn').addEventListener('click', function(){
-				const form = document.querySelector('#editForm');
-				
-				form.querySelector('#hiddenEncryptedId').value = this.getAttribute('data-id');
-				
-				form.submit();
-			});
-			
-			row.querySelector('.view-btn').addEventListener('click', function(e) {
-			   
-				const encryptedId = this.getAttribute('data-id');
+      updatePagination(data.pagination);
 
-			    window.location.href="/lender/inventory/details?encryptedId=" + encryptedId;
-			});
+      const tableBody = document.getElementById("table-body");
+      tableBody.innerHTML = '';
+
+      const fragment = document.createDocumentFragment();
+
+      console.log(data);
+
+      data.inventories.forEach(inventory => {
+         const row = document.createElement("tr");
+         row.className = "text-gray-500 border-b border-gray-300";
+         row.setAttribute("data-id", inventory.encryptedId);
+
+         row.innerHTML = `
+			  <td class="py-4 px-2 text-xs align-middle">
+			    <div class="flex items-center justify-center">
+			      <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
+			    </div>
+			  </td>
+			  <td class="px-2 text-xs align-middle">${inventory.itemName}</td>
+			  <td class="px-2 text-xs align-middle">₱${inventory.price}</td>
+			  <td class="px-2 text-xs align-middle">${inventory.totalQty} pcs</td>
+			  <td class="px-2 text-xs align-middle">${inventory.availableQty} pcs</td>
+			  <td class="px-2 text-sm align-middle">
+			    <div class="flex items-center gap-3 text-gray-500">
+			      <button class="p-1 hover:text-gray-200 view-btn" data-id="${inventory.encryptedId}" aria-label="View">
+			        <i class="fa-regular fa-eye text-sm"></i>
+			      </button>
+			      <button class="p-1 hover:text-gray-200 edit-btn" data-id="${inventory.encryptedId}" aria-label="Edit">
+			        <i class="fa-regular fa-pen-to-square text-sm"></i>
+			      </button>
+			      <button class="p-1 hover:text-red-400 delete-record" data-id="${inventory.encryptedId}" aria-label="Delete">
+			        <i class="fa-regular fa-trash-can text-sm"></i>
+			      </button>
+			    </div>
+			  </td>
+			`;
+
+         row.querySelector('.edit-btn').addEventListener('click', function () {
+            const form = document.querySelector('#editForm');
+
+            form.querySelector('#hiddenEncryptedId').value = this.getAttribute('data-id');
+
+            form.submit();
+         });
+
+         row.querySelector('.view-btn').addEventListener('click', function (e) {
+
+            const encryptedId = this.getAttribute('data-id');
+
+            window.location.href = "/lender/inventory/details?encryptedId=" + encryptedId;
+         });
 
 
-            fragment.appendChild(row);
-        });
+         fragment.appendChild(row);
+      });
 
-        tableBody.appendChild(fragment);
+      tableBody.appendChild(fragment);
 
-        document.querySelector(".input-page").value = data.pagination.page + 1;
-		
-		removeLoadingScreenBody();
+      document.querySelector(".input-page").value = data.pagination.page + 1;
 
-    } catch (error) {
-        console.error("Error fetching inventories:", error);
-    }
+      removeLoadingScreenBody();
+
+   } catch (error) {
+      console.error("Error fetching inventories:", error);
+   }
 }
-
-

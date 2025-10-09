@@ -4,7 +4,8 @@ nav i:hover{
 	background-color: #eef2ff;
 }
 
-li.active a{
+li.active a,
+li.active button{
   background-color: #bfdbfe;
   color: #6366f1 !important;
 }
