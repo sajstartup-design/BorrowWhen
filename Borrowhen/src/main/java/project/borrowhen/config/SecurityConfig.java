@@ -80,7 +80,8 @@ public class SecurityConfig {
 						.requestMatchers("/payment/receipt").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
 						
 						.requestMatchers("/admin/dashboard/**").hasAuthority(CommonConstant.ROLE_ADMIN)
-						.requestMatchers("/admin/borrower/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+						.requestMatchers("/admin/lenders/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+						.requestMatchers("/admin/borrowers/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/request/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						
