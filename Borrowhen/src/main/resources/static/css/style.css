@@ -1,0 +1,15 @@
+
+nav li:hover,
+nav i:hover{
+	background-color: #eef2ff;
+}
+
+li.active a{
+  background-color: #bfdbfe;
+  color: #6366f1 !important;
+}
+
+a,
+button{
+	cursor: pointer;
+}
