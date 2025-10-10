@@ -139,7 +139,7 @@ public class InventoryServiceImpl implements InventoryService{
 		pagination.setTotalElements(allInventories.getTotalElements());
 		pagination.setHasNext(allInventories.hasNext());
 		pagination.setHasPrevious(allInventories.hasPrevious());
-		
+		pagination.setPageSize(getMaxInventoryDisplay());	
 		outDto.setInventories(inventories);
 		outDto.setPagination(pagination);
 		

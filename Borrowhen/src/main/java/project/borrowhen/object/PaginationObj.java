@@ -14,4 +14,6 @@ public class PaginationObj {
     private boolean hasNext;
     
     private boolean hasPrevious;
+    
+    private int pageSize;
 }

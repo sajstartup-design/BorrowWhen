@@ -5,9 +5,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const inputPage = document.querySelector('.input-page');
+	const pageBtns = document.querySelectorAll('.page-btn');
+	const endBtn = document.querySelector('.end-btn');
+	const search = document.querySelector('.search');
 
     // Load first page
     loadInventories(0);
+	
+	if(pageBtns){
+		pageBtns.forEach(btn => btn.addEventListener('click', function(){
+			createLoadingScreenBody();
+			const searchValue = search.value;
+            loadInventories(Number(this.textContent.trim()) - 1, searchValue); 
+		}));
+	}
+	
+	if (endBtn) {
+	  endBtn.addEventListener('click', function() {  // <-- regular function
+	    createLoadingScreenBody();
+	    const searchValue = search ? search.value : '';
+	    console.log(this.textContent.trim());
+	    loadInventories(Number(this.textContent.trim()) - 1, searchValue); 
+	  });
+	}
 
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
@@ -34,6 +54,23 @@ document.addEventListener("DOMContentLoaded", () => {
             loadInventories(newPage - 1);
         });
     }
+	
+	if (search) {
+	      let typingTimer;
+	      const delay = 500;
+
+	      search.addEventListener('input', function () {
+	         clearTimeout(typingTimer);
+
+	         const currentPage = 0;
+	         const searchValue = this.value;
+
+	         typingTimer = setTimeout(() => {
+	            createLoadingScreenBody();
+	            loadInventories(currentPage, searchValue);
+	         }, delay);
+	      });
+	   }
 
 });
 
