@@ -1,184 +1,187 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Stripe Payment Demo</title>
-  <meta name="_csrf" th:content="${_csrf.token}"/>
-  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-  <link rel="stylesheet" th:href="@{/css/common.css}" />
-  <link rel="stylesheet" th:href="@{/css/payment/payment.css}" />
-  <script src="https://js.stripe.com/v3/"></script>
-</head>
-<body>
-  <div class="content">
-    <!-- Item Information -->
-    <div class="item-information" th:object="${borrowRequestDto}">
-      <div class="field bold">
-        <label>ITEM INFORMATION</label>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Borrowhen | Payment</title>
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <!-- Fonts -->
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300..900&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+      <!-- Icons -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <!-- CSS -->
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+      <script src="https://js.stripe.com/v3/"></script>
+   </head>
+   <body class="bg-base-200" th:object="${borrowRequestDto}">
+      <div class="min-h-screen flex flex-col">
+         <!-- HEADER -->
+         <div th:replace="~{header :: header-borrower}"></div>
+         <main class="flex-1 flex flex-col md:flex-row relative font-['Inter']">
+            <!-- LEFT SECTION: Original Payment Summary -->
+            <div class="bg-blue-600 text-white md:w-1/2 w-full p-10 flex flex-col justify-center">
+               <div class="max-w-md mx-auto bg-blue-700/40 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-blue-400/30">
+                  <!-- Header -->
+                  <div class="flex items-center justify-between mb-6">
+                     <h2 class="text-2xl font-semibold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-receipt text-blue-200"></i> Payment Summary
+                     </h2>
+                     <span class="text-xs bg-blue-500/60 px-3 py-1 rounded-full text-white font-medium tracking-wide">
+                     #Order-{{orderId}}
+                     </span>
+                  </div>
+                  <p class="text-blue-100 mb-6 text-sm leading-relaxed">
+                     Review your borrowing details before confirming your payment below.
+                  </p>
+                  <!-- Summary Card -->
+                  <div class="bg-blue-800/40 rounded-xl border border-blue-400/20 p-4 shadow-inner space-y-3 text-sm">
+                     <div class="flex justify-between items-center">
+                        <span class="text-blue-100">Item Name</span>
+                        <span class="font-semibold text-white" th:text="*{request.itemName}">Laptop</span>
+                     </div>
+                     <div class="flex justify-between items-center">
+                        <span class="text-blue-100">Quantity</span>
+                        <span class="font-semibold text-white" th:text="*{request.qty}">1</span>
+                     </div>
+                     <div class="flex justify-between items-center">
+                        <span class="text-blue-100">Date to Borrow</span>
+                        <span class="font-semibold text-white" th:text="*{request.dateToBorrow}">2025-10-12</span>
+                     </div>
+                     <div class="flex justify-between items-center">
+                        <span class="text-blue-100">Date to Return</span>
+                        <span class="font-semibold text-white" th:text="*{request.dateToReturn}">2025-10-15</span>
+                     </div>
+                     <div class="flex justify-between items-center border-t border-blue-400/30 pt-3 mt-2">
+                        <span class="text-blue-100">Price</span>
+                        <span class="font-semibold text-white" th:text="*{request.price}">₱500</span>
+                     </div>
+                     <div class="flex justify-between items-center border-t border-blue-300/40 pt-4 mt-3">
+                        <span class="font-semibold text-white text-lg">Total</span>
+                        <span class="font-bold text-white text-lg" th:text="*{@calculationUtil.getTotalPrice(request.qty, request.price)}">₱500</span>
+                     </div>
+                  </div>
+                  <!-- Footer Note -->
+                  <div class="mt-6 flex items-center gap-2 text-xs text-blue-200/90">
+                     <i class="fa-solid fa-info-circle"></i>
+                     <p>Ensure all details are correct before confirming your payment.</p>
+                  </div>
+               </div>
+            </div>
+            <!-- RIGHT SECTION: Modern Confirm Payment -->
+            <div class="bg-gray-50 md:w-1/2 w-full flex items-center justify-center p-10">
+               <div class="bg-white shadow-xl border border-gray-100 rounded-2xl p-8 max-w-md w-full">
+                  <h3 class="text-2xl font-semibold text-gray-800 mb-2 flex items-center gap-2">
+                     <i class="fa-solid fa-wallet text-blue-600"></i>
+                     Confirm Your Payment
+                  </h3>
+                  <p class="text-gray-500 mb-6 text-sm">Securely pay using your preferred method below.</p>
+                  <!-- Payment Method -->
+                  <div class="flex gap-6 mb-6">
+                     <label class="flex items-center gap-2 cursor-pointer">
+                     <input type="radio" name="method" value="card" checked class="accent-blue-600">
+                     <span class="text-gray-700">Card</span>
+                     </label>
+                     <label class="flex items-center gap-2 cursor-pointer">
+                     <input type="radio" name="method" value="link" class="accent-blue-600">
+                     <span class="text-gray-700">Link</span>
+                     </label>
+                  </div>
+                  <!-- Card Input -->
+                  <div class="mb-6">
+                     <label class="block text-sm font-medium text-gray-700 mb-2">Card Details</label>
+                     <div id="card-element" class="border border-gray-300 rounded-lg p-3 bg-gray-50 shadow-inner"></div>
+                     <span id="card-errors" class="error text-red-500 text-sm mt-2 block"></span>
+                  </div>
+                  <!-- Buttons -->
+                  <div class="flex justify-end gap-4">
+                     <a th:href="@{/dashboard}" class="px-5 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition duration-200">
+                     Cancel
+                     </a>
+                     <button id="pay-btn" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 active:scale-95 shadow-md transition-all duration-200">
+                     Confirm Payment
+                     </button>
+                  </div>
+                  <!-- Small note -->
+                  <p class="text-xs text-gray-400 text-center mt-6">
+                     <i class="fa-solid fa-lock mr-1"></i> Your payment information is encrypted and secure.
+                  </p>
+               </div>
+            </div>
+         </main>
       </div>
-      <hr class="soft-gradient">
-
-      <div class="field">
-        <label>ITEM NAME</label>
-        <div th:text="*{request.itemName}"></div>
-      </div>
-      <hr class="soft-gradient">
-
-      <div class="field">
-        <label>QUANTITY</label>
-        <div th:text="*{request.qty}"></div>
-      </div>
-      <hr class="soft-gradient">
-
-      <div class="field">
-        <label>DATE TO BORROW</label>
-        <div th:text="*{request.dateToBorrow}"></div>
-      </div>
-      <hr class="soft-gradient">
-
-      <div class="field">
-        <label>DATE TO RETURN</label>
-        <div th:text="*{request.dateToReturn}"></div>
-      </div>
-      <hr class="soft-gradient">
-
-      <div class="field">
-        <label>PRICE</label>
-        <div th:text="*{request.price}"></div>
-      </div>
-      <hr class="soft-gradient">
-
-      <div class="field">
-        <label>TOTAL AMOUNT</label>
-        <div th:text="*{@calculationUtil.getTotalPrice(request.qty, request.price)}"></div>
-      </div>
-    </div>
-
-    <!-- Payment Information -->
-    <div class="payment-information">
-      <div class="item-information">
-        <div class="field bold">
-          <label>PAYMENT</label>
-        </div>
-        <hr class="soft-gradient">
-
-        <!-- Choose Payment Method -->
-        <div class="payment-field">
-          <label>Choose Payment Method</label>
-          <div id="methods">
-            <label>
-              <input type="radio" name="method" value="card" checked> Card
-            </label>
-            <label>
-              <input type="radio" name="method" value="link"> Link
-            </label>
-          </div>
-        </div>
-        <hr class="soft-gradient">
-
-        <!-- Card Input -->
-        <div class="payment-field">
-          <label>Card Details</label>
-          <div id="card-element"></div>
-          <span class="error" id="card-errors"></span>
-        </div>
-      </div>
-
-      <!-- Buttons -->
-      <div class="btns">
-        <a class="button" th:href="@{/dashboard}">CANCEL</a>
-        <button id="pay-btn">CONFIRM PAYMENT</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Stripe Script -->
-  <script th:inline="javascript">
-    const publicKey = /*[[${publicKey}]]*/ '';
-    const clientSecret = /*[[${paymentDto.clientSecret}]]*/ ''; // ✅ injected from backend
-
-    const stripe = Stripe(publicKey);
-    const elements = stripe.elements();
-    const cardElement = elements.create("card");
-    cardElement.mount("#card-element");
-
-    const payBtn = document.getElementById("pay-btn");
-    const errorDiv = document.getElementById("card-errors");
-
-    // Payment button click
-    payBtn.addEventListener("click", async () => {
-
-    	
-    	
-    	
-      payBtn.disabled = true;
-      payBtn.textContent = "Processing...";
-
-      const method = document.querySelector("input[name='method']:checked").value;
-      let result;
-
-      if (method === "card") {
-        // Card Payment
-        result = await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: cardElement,
-            billing_details: { email: /*[[${paymentDto.emailAddress}]]*/ '' }
-          },
-          receipt_email: /*[[${paymentDto.emailAddress}]]*/ ''
-        });
-      } else if (method === "link") {
-        // Link Payment
-        result = await stripe.confirmPayment({
-          elements,
-          clientSecret,
-          confirmParams: {
-            return_url: "http://localhost:8080/payment/success",
-          },
-        });
-      }
-
-      // Handle result
-      if (result.error) {
-        errorDiv.textContent = result.error.message;
-        payBtn.disabled = false;
-        payBtn.textContent = "CONFIRM PAYMENT";
-      } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
-    	  alert("Payment successful!");
-    	  payBtn.textContent = "Paid ✅";
-
-    	  // Get CSRF token from meta tags
-    	  const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
-    	  const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
-
-    	  // Send POST request with CSRF token
-    	  fetch("/payment/confirmed", {
-    	    method: "POST",
-    	    headers: {
-    	      "Content-Type": "application/x-www-form-urlencoded",
-    	      [csrfHeader]: csrfToken
-    	    },
-    	    body: new URLSearchParams({
-    	      encryptedId: /*[[${borrowRequestDto.encryptedId}]]*/ ''
-    	    })
-    	  })
-    	  .then(response => {
-    	    if (response.redirected) {
-    	      window.location.href = response.url;
-    	    }
-    	  })
-    	  .catch(err => {
-    	    console.error("Error confirming payment:", err);
-    	    alert("Payment succeeded but failed to notify server!");
-    	  });
-
-    	  // Optional: open Stripe receipt
-    	  if (result.paymentIntent.charges?.data?.[0]?.receipt_url) {
-    	    window.open(result.paymentIntent.charges.data[0].receipt_url, "_blank");
-    	  }
-    	}
-
-
-    });
-  </script>
-</body>
+      <!-- Stripe Payment Script -->
+      <script th:inline="javascript">
+         const publicKey = /*[[${publicKey}]]*/ '';
+         const clientSecret = /*[[${paymentDto.clientSecret}]]*/ '';
+         const stripe = Stripe(publicKey);
+         const elements = stripe.elements();
+         const cardElement = elements.create("card");
+         cardElement.mount("#card-element");
+         
+         const payBtn = document.getElementById("pay-btn");
+         const errorDiv = document.getElementById("card-errors");
+         
+         payBtn.addEventListener("click", async () => {
+           payBtn.disabled = true;
+           payBtn.textContent = "Processing...";
+         
+           const method = document.querySelector("input[name='method']:checked").value;
+           let result;
+         
+           if (method === "card") {
+             result = await stripe.confirmCardPayment(clientSecret, {
+               payment_method: {
+                 card: cardElement,
+                 billing_details: { email: /*[[${paymentDto.emailAddress}]]*/ '' }
+               },
+               receipt_email: /*[[${paymentDto.emailAddress}]]*/ ''
+             });
+           } else if (method === "link") {
+             result = await stripe.confirmPayment({
+               elements,
+               clientSecret,
+               confirmParams: { return_url: "http://localhost:8080/payment/success" },
+             });
+           }
+         
+           if (result.error) {
+             errorDiv.textContent = result.error.message;
+             payBtn.disabled = false;
+             payBtn.textContent = "Confirm Payment";
+           } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
+             alert("Payment successful!");
+             payBtn.textContent = "Paid ✅";
+         
+             const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+             const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+         
+             fetch("/payment/confirmed", {
+               method: "POST",
+               headers: { "Content-Type": "application/x-www-form-urlencoded", [csrfHeader]: csrfToken },
+               body: new URLSearchParams({
+                 encryptedId: /*[[${borrowRequestDto.encryptedId}]]*/ ''
+               })
+             })
+             .then(response => {
+               if (response.redirected) window.location.href = response.url;
+             })
+             .catch(err => {
+               console.error("Error confirming payment:", err);
+               alert("Payment succeeded but failed to notify server!");
+             });
+         
+             if (result.paymentIntent.charges?.data?.[0]?.receipt_url) {
+               window.open(result.paymentIntent.charges.data[0].receipt_url, "_blank");
+             }
+           }
+         });
+      </script>
+   </body>
 </html>
