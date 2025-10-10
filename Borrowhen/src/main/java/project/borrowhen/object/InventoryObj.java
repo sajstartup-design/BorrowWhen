@@ -8,6 +8,8 @@ public class InventoryObj {
 	
 	private String owner;
 	
+	private String userId;
+	
 	private String encryptedId;
 	
 	private String itemName;

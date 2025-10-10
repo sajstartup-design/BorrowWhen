@@ -26,6 +26,8 @@ public class InventoryData {
 	
 	private String fullName;
 	
+	private String userId;
+	
 	private String itemName;
 	
 	private Double price;

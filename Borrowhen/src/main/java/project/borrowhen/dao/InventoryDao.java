@@ -20,6 +20,7 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    "SELECT new project.borrowhen.dao.entity.InventoryData(" +
 		    "   e.id, " +
 		    "   u.fullName, " +
+		    "   u.userId, " +
 		    "   e.itemName, " +
 		    "   e.price, " +
 		    "   e.totalQty, " +

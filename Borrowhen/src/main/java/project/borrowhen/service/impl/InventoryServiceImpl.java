@@ -121,6 +121,7 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setPrice(inventory.getPrice());
 			obj.setTotalQty(inventory.getTotalQty());
 			obj.setOwner(inventory.getFullName());
+			obj.setUserId(inventory.getUserId());
 			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(inventory.getCreatedDate()));
 			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(inventory.getUpdatedDate()));		
 			obj.setAvailableQty(inventory.getAvailableQty());
