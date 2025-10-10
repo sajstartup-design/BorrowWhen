@@ -54,14 +54,14 @@ async function updateNotificationModal(triggerElement) {
     const notificationsList = document.querySelector(".notifications-list");
     if (!notificationsList) return;
 
-    // Fetch data
+    // Fetch notifications
     const response = await fetch(`/api/notifications`);
     const data = await response.json();
 
     notificationsList.innerHTML = ""; // Clear old list
     const frag = document.createDocumentFragment();
 
-    // If no notifications
+    // No notifications
     if (!data.notifications || data.notifications.length === 0) {
       notificationsList.innerHTML = `
         <li class="px-4 py-3 text-gray-500 text-center text-sm">No new notifications</li>
@@ -69,42 +69,44 @@ async function updateNotificationModal(triggerElement) {
       return;
     }
 
-    // Build <li> elements
-    data.notifications.forEach(notification => {
+    data.notifications.forEach((notification) => {
       const li = document.createElement("li");
-      li.className = "px-4 py-2 hover:bg-gray-100 flex items-start gap-2";
+      li.className =
+        "px-4 py-2 hover:bg-gray-100 flex items-start gap-3 border-b border-gray-100";
 
-      // Choose icon + color based on type
+      // Icon logic
       let iconClass = "fa-info-circle";
       let colorClass = "text-gray-500";
 
       switch (notification.type) {
-        case "REQUEST_PENDING": 
+        case "REQUEST_PENDING":
           iconClass = "fa-hourglass-half"; colorClass = "text-yellow-500"; break;
-        case "REQUEST_APPROVED": 
+        case "REQUEST_APPROVED":
           iconClass = "fa-check-circle"; colorClass = "text-green-500"; break;
-        case "REQUEST_REJECTED": 
+        case "REQUEST_REJECTED":
           iconClass = "fa-times-circle"; colorClass = "text-red-500"; break;
-        case "NEW_ITEM": 
+        case "NEW_ITEM":
           iconClass = "fa-box"; colorClass = "text-blue-500"; break;
-        case "ITEM_RECEIVED": 
+        case "ITEM_RECEIVED":
           iconClass = "fa-box-open"; colorClass = "text-indigo-500"; break;
-        case "REQUEST_PICKUP_READY": 
+        case "REQUEST_PICKUP_READY":
           iconClass = "fa-location-dot"; colorClass = "text-purple-500"; break;
-        case "REQUEST_PAYMENT_PENDING": 
+        case "REQUEST_PAYMENT_PENDING":
           iconClass = "fa-credit-card"; colorClass = "text-pink-500"; break;
       }
 
-      // Create notification row
+      // Layout
       li.innerHTML = `
         <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
-        <span>${notification.message}</span>
+        <div class="flex flex-col text-sm text-gray-700 leading-tight">
+          <span>${notification.message}</span>
+          <span class="text-[11px] text-gray-400 mt-0.5">${notification.dateAndTime}</span>
+        </div>
       `;
 
       frag.appendChild(li);
     });
 
-    // Append all notifications
     notificationsList.appendChild(frag);
 
     // Mark modal as opened
