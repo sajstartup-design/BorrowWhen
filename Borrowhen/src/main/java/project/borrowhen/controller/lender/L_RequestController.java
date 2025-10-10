@@ -35,12 +35,14 @@ public class L_RequestController {
 			
 			borrowRequestService.approveBorrowRequest(borrowRequestWebDto);
 			
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_APPROVED_MSG);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
@@ -53,6 +55,7 @@ public class L_RequestController {
 		
 		try {
 			
+			ra.addFlashAttribute("isSuccess", true);
 			borrowRequestService.rejectBorrowRequest(borrowRequestWebDto);
 			
 			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_REJECTED_MSG);
@@ -61,6 +64,7 @@ public class L_RequestController {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
@@ -86,7 +90,8 @@ public class L_RequestController {
 			
 			e.printStackTrace();
 			
-			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 			
 			return "redirect:/lender/request";
 		}
@@ -102,12 +107,14 @@ public class L_RequestController {
 			
 			borrowRequestService.itemPickUpBorrowRequest(borrowRequestWebDto);
 	
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_ITEM_PICKUP_READY);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
@@ -122,12 +129,14 @@ public class L_RequestController {
 			
 			borrowRequestService.itemReturnedBorrowRequest(borrowRequestWebDto);
 	
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_ITEM_RECEIVED_MSG);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
@@ -142,12 +151,14 @@ public class L_RequestController {
 			
 			borrowRequestService.issuePaymentBorrowRequest(borrowRequestWebDto);
 	
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_PAYMENT_PENDING);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
