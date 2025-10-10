@@ -56,79 +56,117 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-async function loadPayments(page = 0, search="") {
-    try {
-		
-		const params = new URLSearchParams({ page, search });
-						
-		const url = `/api/lender/payment?${params.toString()}`;
-		
-        const response = await fetch(url);
-        const data = await response.json();
-		
-		console.log(data);
-		
-        updatePagination(data.pagination);
+async function loadPayments(page = 0, search = "") {
+  try {
+    const params = new URLSearchParams({ page, search });
+    const url = `/api/lender/payment?${params.toString()}`;
 
-        const tableBody = document.getElementById("table-body");
-		tableBody.innerHTML = '';
+    const response = await fetch(url);
+    const data = await response.json();
 
-        const fragment = document.createDocumentFragment();
+    updatePagination(data.pagination);
+    console.log(data);
 
-        data.payments.forEach(payment => {
-            const row = document.createElement("div");
-            row.classList.add("table-row");
-			row.setAttribute('data-id', payment.encryptedId);
-			
-			const status = payment.status?.toLowerCase().replace(' ', '').trim();
-						
-			// Default action cell
-		    let actionCell = "";
+    const tableBody = document.getElementById("table-body");
+    tableBody.innerHTML = "";
 
-		    if (payment.status?.toUpperCase() === "PAYMENT PENDING") {
-		        actionCell = `<span>Awaiting Payment</span>`;
-		    } else if (payment.status?.toUpperCase() === "PAID") {
-		        actionCell = `<a class="button darker view-receipt" href="/payment/receipt?encryptedId=${payment.encryptedId}">VIEW RECEIPT</a>`;
-		    }
-			
-            row.innerHTML = `
-			<div class="table-cell">${payment.firstName} ${payment.familyName}</div>
-				<div class="table-cell">${payment.emailAddress}</div>
-                <div class="table-cell">${payment.itemName}</div>
-                <div class="table-cell">₱${payment.price}</div>
-                <div class="table-cell">${payment.qty} pcs</div>
-				<div class="table-cell">₱${payment.totalAmount}</div>
-				<div class="table-cell">${formatCheckoutDate(payment.dateCheckout)}</div>
-				<div class="table-cell">${payment.paymentMethod}</div>
-				<div class="table-cell">
-		            <span class="status ${status}">
-		                <span>${payment.status}</span>
-		            </span>
-		        </div>
-                <div class="table-cell">
-					${actionCell}
-                </div>
-            `;
-			
-            fragment.appendChild(row);
-        });
+    const fragment = document.createDocumentFragment();
 
-        tableBody.appendChild(fragment);
+    if (data.payments && data.payments.length > 0) {
+      data.payments.forEach((payment) => {
+        const status = payment.status?.toLowerCase().replace(" ", "").trim();
 
-        document.querySelector(".input-page").value = data.pagination.page + 1;
-		
-		document.querySelectorAll(".view-receipt").forEach(link => {
-		    link.addEventListener("click", () => {
-		        createLoadingScreenBody();
-		    });
-		});
-		
-		removeLoadingScreenBody();
+        // Status color styling
+        let statusColor = "";
+        let statusTextColor = "";
 
-    } catch (error) {
-        console.error("Error fetching inventories:", error);
+        if (status === "paymentpending") {
+          statusColor = "bg-yellow-100";
+          statusTextColor = "text-yellow-700";
+        } else if (status === "paid") {
+          statusColor = "bg-green-100";
+          statusTextColor = "text-green-700";
+        } else {
+          statusColor = "bg-gray-100";
+          statusTextColor = "text-gray-700";
+        }
+
+        // Action cell
+        let actionCell = "";
+        if (payment.status?.toUpperCase() === "PAYMENT PENDING") {
+          actionCell = `
+            <span class="px-3 py-1.5 text-xs font-medium text-gray-400 italic">
+              Awaiting Payment
+            </span>`;
+        } else if (payment.status?.toUpperCase() === "PAID") {
+          actionCell = `
+            <a href="/payment/receipt?encryptedId=${payment.encryptedId}"
+              class="px-3 py-1.5 text-xs font-medium rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition view-receipt">
+              View Receipt
+            </a>`;
+        } else {
+          actionCell = `
+            <span class="px-3 py-1.5 text-xs font-medium text-gray-400">N/A</span>`;
+        }
+
+        // Create row
+        const row = document.createElement("div");
+        row.className =
+          "table-row hover:bg-gray-50 transition border-b border-gray-100 text-gray-500 text-xs";
+        row.setAttribute("data-id", payment.encryptedId);
+
+        row.innerHTML = `
+		<td class="py-2 px-2 text-xs align-middle text-gray-500">
+						    <div class="flex items-center justify-center">
+						      <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
+						    </div>
+						  </td>
+          <div class="table-cell py-3 px-2">${payment.fullName}</div>
+          <div class="table-cell py-3 px-2">${payment.emailAddress}</div>
+          <div class="table-cell py-3 px-2">${payment.itemName}</div>
+          <div class="table-cell py-3 px-2">₱${payment.price}</div>
+          <div class="table-cell py-3 px-2">${payment.qty} pcs</div>
+          <div class="table-cell py-3 px-2">₱${payment.totalAmount}</div>
+          <div class="table-cell py-3 px-2">${formatCheckoutDate(payment.dateCheckout)}</div>
+          <div class="table-cell py-3 px-2">${payment.paymentMethod}</div>
+          <div class="table-cell py-3 px-2">
+            <span class="px-3 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor}">
+              ${payment.status}
+            </span>
+          </div>
+          <div class="table-cell py-3 px-2 flex items-center gap-2">
+            ${actionCell}
+          </div>
+        `;
+
+        fragment.appendChild(row);
+      });
+
+      tableBody.appendChild(fragment);
+    } else {
+      tableBody.innerHTML = `
+        <div class="table-row text-center py-6 text-gray-500 text-sm">
+          <div class="table-cell" colspan="10">No payments found.</div>
+        </div>
+      `;
     }
+
+    // Set current page input
+    document.querySelector(".input-page").value = data.pagination.page + 1;
+
+    // Loading indicator when viewing receipt
+    document.querySelectorAll(".view-receipt").forEach((link) => {
+      link.addEventListener("click", () => {
+        createLoadingScreenBody();
+      });
+    });
+
+    removeLoadingScreenBody();
+  } catch (error) {
+    console.error("Error fetching payments:", error);
+  }
 }
+
 
 function formatCheckoutDate(rawDate) {
   const date = new Date(rawDate);
