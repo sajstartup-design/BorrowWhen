@@ -74,14 +74,14 @@ public class PaymentController {
 			RedirectAttributes ra) {
 		
 		try {
-			
+
 			BorrowRequestDto inDto = new BorrowRequestDto();
 			
 			inDto.setEncryptedId(webDto.getEncryptedId());
 			
 			borrowRequestService.paidBorrowRequest(inDto);
 			
-			return "redirect:/dashboard";
+			return "redirect:/payment";
 			
 		}catch(Exception e) {
 			
@@ -89,7 +89,7 @@ public class PaymentController {
 			
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 			
-			return "redirect:/dashboard";
+			return "redirect:/payment";
 		}
 	}
 	

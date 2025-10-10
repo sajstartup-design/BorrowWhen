@@ -4,6 +4,8 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
       <meta name="robots" content="noindex, nofollow" />
+      <meta name="_csrf" th:content="${_csrf.token}"/>
+  	  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
       <title>Borrowhen | Payment</title>
       <!-- Favicon -->
       <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
@@ -116,6 +118,7 @@
             </div>
          </main>
       </div>
+      <script th:script="${/script/loading.js}"></script>
       <!-- Stripe Payment Script -->
       <script th:inline="javascript">
          const publicKey = /*[[${publicKey}]]*/ '';
@@ -158,6 +161,8 @@
            } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
              alert("Payment successful!");
              payBtn.textContent = "Paid ✅";
+             
+             createLoadingScreenBody();
          
              const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
              const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");

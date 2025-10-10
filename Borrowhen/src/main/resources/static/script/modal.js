@@ -12,16 +12,11 @@ function updateBtnsModal(){
 		        const modal = document.querySelector(modalTarget);
 
 		        if (modal) {
-					
-					console.log("YAWA");
-
 		            const modalBackground = document.createElement("div");
 		            modalBackground.classList.add("modal-background");
 					
-					console.log(modal.getAttribute('name'))
-					
 					if(!modal.getAttribute('name')){
-						console.log("AW");
+
 						if(modal.id === 'borrowModal'){
 							
 							// Fill hidden input
@@ -59,8 +54,6 @@ function updateBtnsModal(){
 		            modalBackground.style.display = "flex";
 		            modal.style.display = "flex";
 					
-					console.log(modal)
-
 					modal.addEventListener("click", (e) => {
 						console.log(e.target)
 					  if (e.target === modal || e.target.name?.includes('cancel')) {
