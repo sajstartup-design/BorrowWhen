@@ -386,7 +386,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setUserId(lender.getId());
 
 	    String message = String.format(
-	        "%s %s has marked the borrow request for '%s' from %s to %s as RECEIVED.",
+	        "%s has marked the borrow request for '%s' from %s to %s as RECEIVED.",
 	        borrower.getFullName(),
 	        request.getItemName(),
 	        request.getDateToBorrow(),
@@ -632,7 +632,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setUserId(lender.getId());
 
 	    String message = String.format(
-    	    "%s %s has paid for the borrow request of '%s' from %s to %s.",
+    	    "%s has paid for the borrow request of '%s' from %s to %s.",
     	    borrower.getFullName(),
     	    request.getItemName(),
     	    request.getDateToBorrow(),
@@ -679,7 +679,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setUserId(lender.getId());
 	    
 	    String message = String.format(
-	            "The borrower '%s %s' has cancelled their request for your item '%s' scheduled from %s to %s.",
+	            "The borrower '%s' has cancelled their request for your item '%s' scheduled from %s to %s.",
 	    	    borrower.getFullName(),
 	            request.getItemName(),
 	            request.getDateToBorrow(),

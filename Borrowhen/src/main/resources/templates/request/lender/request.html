@@ -498,6 +498,198 @@
     </div>
   </div>
 </div>
+
+<div id="confirmModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+  <!-- Modal -->
+  <div class="bg-gradient-to-br from-white via-blue-50 to-blue-100 border border-blue-200 shadow-2xl rounded-2xl w-full max-w-2xl overflow-hidden animate-fade-in-up">
+    
+    <!-- Header -->
+    <div class="bg-blue-500 py-3 text-center text-white font-semibold text-lg tracking-wide shadow-sm">
+      ITEM RETURNED
+    </div>
+
+    <!-- Body -->
+    <div class="px-8 py-6">
+      <!-- Preview Image -->
+      <div class="flex justify-center mb-6">
+        <div class="w-32 h-32 bg-white border border-blue-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+          <img
+            th:src="@{/images/logo.png}"
+            alt="Item Preview"
+            class="object-contain w-full h-full"
+          />
+        </div>
+      </div>
+
+      <p class="text-gray-600 text-sm mb-5 text-center">
+        Have you received the item back from the borrower? Confirm below to update the request status.
+      </p>
+
+      <!-- Form -->
+      <form id="confirmForm" th:action="@{/lender/request/item-returned}" method="POST" class="space-y-3">
+        <input type="hidden" name="encryptedId" id="encryptedId" />
+
+        <!-- Two-column grid -->
+        <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+          <!-- Item Name -->
+          <div class="flex justify-between items-center">
+            <label class="text-gray-700 text-sm font-medium">Item Name</label>
+            <span class="item-name text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+              Hammer
+            </span>
+          </div>
+
+          <!-- Price -->
+          <div class="flex justify-between items-center">
+            <label class="text-gray-700 text-sm font-medium">Price</label>
+            <span class="item-price text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+              ₱100
+            </span>
+          </div>
+
+          <!-- Date to Borrow -->
+          <div class="flex justify-between items-center">
+            <label class="text-gray-700 text-sm font-medium">Date to Borrow</label>
+            <span class="date-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+              2025-10-01
+            </span>
+          </div>
+
+          <!-- Date to Return -->
+          <div class="flex justify-between items-center">
+            <label class="text-gray-700 text-sm font-medium">Date to Return</label>
+            <span class="date-to-return text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+              2025-10-05
+            </span>
+          </div>
+
+          <!-- Number to Borrow -->
+          <div class="flex justify-between items-center">
+            <label class="text-gray-700 text-sm font-medium">Number to Borrow</label>
+            <span class="number-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+              2
+            </span>
+          </div>
+        </div>
+      </form>
+
+      <p class="text-gray-500 text-xs text-center mt-6">
+        Once confirmed, this action cannot be undone.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-blue-50 flex justify-end gap-3 px-8 py-4 border-t border-blue-200">
+      <button
+        name="cancel"
+        class="h-8 px-2 py-1 text-xs text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition">
+        CANCEL
+      </button>
+      <button
+        form="confirmForm"
+        class="h-8 px-2 py-1 text-xs text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
+        CONFIRM
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="issuePaymentModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+  <!-- Modal -->
+  <div class="bg-gradient-to-br from-white via-blue-50 to-blue-100 border border-blue-200 shadow-2xl rounded-2xl w-full max-w-2xl overflow-hidden animate-fade-in-up">
+    
+    <!-- Header -->
+    <div class="bg-blue-500 py-3 text-center text-white font-semibold text-lg tracking-wide shadow-sm">
+      ISSUE PAYMENT
+    </div>
+
+    <!-- Body -->
+    <div class="px-8 py-6">
+      <!-- Image preview -->
+      <div class="flex justify-center mb-6">
+        <div class="w-32 h-32 bg-white border border-blue-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+          <img
+            th:src="@{/images/credit-cards.png}"
+            alt="Item Preview"
+            class="object-contain w-12 h-12"
+          />
+        </div>
+      </div>
+
+      <p class="text-gray-600 text-sm mb-5 text-center">
+        You are about to issue payment to the borrower.
+      </p>
+
+      <!-- Form -->
+      <form id="issuePaymentForm" th:action="@{/lender/request/issue-payment}" method="POST" class="space-y-3">
+        <input type="hidden" name="encryptedId" id="encryptedId" />
+
+        <!-- Two-column grid -->
+        <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+          <!-- Item Name -->
+          <div class="flex justify-between items-center">
+            <label class="text-gray-700 text-sm font-medium">Item Name</label>
+            <span class="item-name text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+              Hammer
+            </span>
+          </div>
+
+          <!-- Amount -->
+          <div class="flex justify-between items-center">
+            <label class="text-gray-700 text-sm font-medium">Amount</label>
+            <span class="item-price text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+              ₱100
+            </span>
+          </div>
+
+          <!-- Borrow Date -->
+          <div class="flex justify-between items-center">
+            <label class="text-gray-700 text-sm font-medium">Borrow Date</label>
+            <span class="date-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+              2025-09-16
+            </span>
+          </div>
+
+          <!-- Return Date -->
+          <div class="flex justify-between items-center">
+            <label class="text-gray-700 text-sm font-medium">Return Date</label>
+            <span class="date-to-return text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+              2025-09-20
+            </span>
+          </div>
+
+          <!-- Quantity -->
+          <div class="flex justify-between items-center">
+            <label class="text-gray-700 text-sm font-medium">Quantity</label>
+            <span class="number-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+              1
+            </span>
+          </div>
+        </div>
+      </form>
+
+      <p class="text-gray-500 text-xs text-center mt-6">
+        Once confirmed, this action cannot be undone.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-blue-50 flex justify-end gap-3 px-8 py-4 border-t border-blue-200">
+      <button
+        name="cancel"
+        class="h-8 px-2 py-1 text-xs text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition">
+        CANCEL
+      </button>
+      <button
+        form="issuePaymentForm"
+        class="h-8 px-2 py-1 text-xs text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
+        CONFIRM
+      </button>
+    </div>
+  </div>
+</div>
+
+
       
       <script th:src="@{/script/modal.js}"></script>
       <script th:src="@{/script/pagination.js}"></script>

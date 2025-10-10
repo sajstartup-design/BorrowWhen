@@ -32,13 +32,15 @@ public class RequestController {
 		try {
 			
 			borrowRequestService.cancelBorrowRequest(borrowRequestWebDto);
-	
+			
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_CANCELLED_MSG);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
@@ -53,12 +55,14 @@ public class RequestController {
 			
 			borrowRequestService.itemReceivedBorrowRequest(borrowRequestWebDto);
 	
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_ITEM_RECEIVED_MSG);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
@@ -73,12 +77,14 @@ public class RequestController {
 			
 			borrowRequestService.paidBorrowRequest(borrowRequestWebDto);
 	
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.REQUEST_ITEM_RECEIVED_MSG);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
