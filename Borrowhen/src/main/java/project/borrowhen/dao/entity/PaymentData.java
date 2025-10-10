@@ -31,4 +31,6 @@ public class PaymentData {
 	private String paymentMethod;
 	
 	private String status;
+	
+	private int borrowRequestId;
 }

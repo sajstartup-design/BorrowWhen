@@ -65,6 +65,8 @@ async function loadPayments(page = 0, search = "") {
     const data = await response.json();
 
     updatePagination(data.pagination);
+	
+	console.log(data);
 
     const tableBody = document.getElementById("table-body");
     tableBody.innerHTML = "";
@@ -93,10 +95,10 @@ async function loadPayments(page = 0, search = "") {
         let actionCell = "";
         if (payment.status?.toUpperCase() === "PAYMENT PENDING") {
           actionCell = `
-            <button
+            <a href="/payment?encryptedId=${payment.encryptedBorrowRequestId}"
               class="px-3 py-1.5 text-xs font-medium rounded-md bg-blue-500 text-white hover:bg-indigo-600 transition">
               Pay Now
-            </button>`;
+            </a>`;
         } else if (payment.status?.toUpperCase() === "PAID") {
           actionCell = `
             <a href="/payment/receipt?encryptedId=${payment.encryptedId}"

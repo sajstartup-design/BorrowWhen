@@ -50,7 +50,8 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
     	    "(br.price * br.qty), " +
     	    "br.updatedDate, " +
     	    "p.paymentMethod, " +
-    	    "p.status ) " +
+    	    "p.status, " +
+    	    "br.id )" +
     	    "FROM BorrowRequestEntity br " +
     	    "INNER JOIN PaymentEntity p ON p.borrowRequestId = br.id " +
     	    "WHERE br.status IN ('PAYMENT PENDING', 'PAID') " +
@@ -82,7 +83,8 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 		    "(br.price * br.qty), " +
 		    "br.updatedDate, " +
 		    "COALESCE(p.paymentMethod, '-'), " +
-		    "p.status ) " +
+		    "p.status, " +
+		    "br.id ) " +
 		    "FROM BorrowRequestEntity br " +
 		    "INNER JOIN PaymentEntity p ON p.borrowRequestId = br.id " +
 		    "LEFT JOIN UserEntity u ON u.id = br.userId " +

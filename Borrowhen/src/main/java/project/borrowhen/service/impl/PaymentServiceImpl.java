@@ -250,6 +250,12 @@ public class PaymentServiceImpl implements PaymentService{
 			obj.setQty(payment.getQty());
 			obj.setTotalAmount(payment.getTotalAmount());
 			obj.setStatus(payment.getStatus());
+			obj.setEncryptedBorrowRequestId(cipherUtil.encrypt(String.valueOf(payment.getBorrowRequestId())));	
+//			if(CommonConstant.PAYMENT_PENDING.equals(payment.getStatus())) {
+//				obj.setStripePaymentId(payment.getStripePaymentId());
+//			}else {
+//				obj.setStripePaymentId(CommonConstant.BLANK);
+//			}
 			
 			payments.add(obj);
 	

@@ -26,4 +26,8 @@ public class PaymentObj {
 	private String paymentMethod;
 	
 	private String status;
+	
+	private String stripePaymentId;
+	
+	private String encryptedBorrowRequestId;
 }
