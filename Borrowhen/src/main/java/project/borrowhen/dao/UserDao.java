@@ -26,19 +26,21 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 		    ") " +
 		    "FROM UserEntity u " +
 		    "WHERE u.isDeleted = false " +
+		    "AND u.role = :role " +
 		    "AND ( " +
 		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
 		    "       LOWER(u.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
 		    "       LOWER(u.emailAddress) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
 		    "       LOWER(u.phoneNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "       LOWER(u.userId) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "       LOWER(u.role) LIKE LOWER(CONCAT('%', :search, '%'))" +
+		    "       LOWER(u.userId) LIKE LOWER(CONCAT('%', :search, '%')) " +
 		    "   )) " +
 		    "   OR (:search IS NULL OR :search = '') " +
 		    ")";
 
 	@Query(GET_ALL_USERS_NO_GROUP)
-	Page<UserData> getAllUsers(Pageable pageable, @Param("search") String search) throws DataAccessException;
+	Page<UserData> getAllUsers(Pageable pageable, 
+			@Param("search") String search,
+			@Param("role") String role) throws DataAccessException;
 
 	
 	public final String GET_USER_BY_ID = "SELECT e "

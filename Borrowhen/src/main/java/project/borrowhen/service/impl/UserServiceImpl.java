@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
 		
 		FilterAndSearchObj filter = inDto.getFilter();
 		
-		Page<UserData> allUsers = userDao.getAllUsers(pageable, filter.getSearch());
+		Page<UserData> allUsers = userDao.getAllUsers(pageable, filter.getSearch(), filter.getRole());
 		
 		List<UserObj> users = new ArrayList<>();
 		
@@ -157,6 +157,7 @@ public class UserServiceImpl implements UserService {
 		pagination.setTotalElements(allUsers.getTotalElements());
 		pagination.setHasNext(allUsers.hasNext());
 		pagination.setHasPrevious(allUsers.hasPrevious());
+		pagination.setPageSize(getMaxUserDisplay());
 		
 		outDto.setUsers(users);
 		outDto.setPagination(pagination);

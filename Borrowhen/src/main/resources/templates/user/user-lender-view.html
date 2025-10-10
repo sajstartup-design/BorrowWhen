@@ -157,72 +157,26 @@
                                  </tr>
                               </thead>
                            <!-- BODY -->
-                           <tbody class="divide-y divide-gray-500" id="table-body">
-                              <tr class="text-gray-500">
-                                 <!-- Checkbox -->
-                                 <td class="py-3 px-4 align-middle">
-                                    <input type="checkbox" class="w-5 h-5 accent-indigo-500 rounded" />
-                                 </td>
-                                 <!-- Product -->
-                                 <td class="px-4 align-middle">
-                                    <div class="flex items-center gap-3">
-                                       <div class="min-w-0">
-                                          <p class="text-sm font-semibold text-gray-500 truncate">TechMart Electronics</p>
-                                          <p class="text-xs text-gray-500 truncate">Electronics</p>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <!-- Category -->
-                                 <td class="px-4 align-middle">Gadgets</td>
-                                 <!-- Stock -->
-                                 <td class="px-4 align-middle">245</td>
-                                 <!-- Price -->
-                                 <td class="px-4 align-middle">$199.99</td>
-                                 <!-- Quantity -->
-                                 <td class="px-4 align-middle">12</td>
-                                 <!-- Status -->
-                                 <td class="px-4 align-middle">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-800 text-green-200">
-                                    Active
-                                    </span>
-                                 </td>
-                                 <!-- Actions -->
-                                 <td class="px-4 align-middle">
-                                    <div class="flex items-center gap-3 text-gray-500">
-                                       <!-- View -->
-                                       <button class="p-1 hover:text-gray-200" aria-label="View">
-                                       <i class="fa-regular fa-eye text-[18px]"></i>
-                                       </button>
-                                       <!-- Edit -->
-                                       <button class="p-1 hover:text-gray-200" aria-label="Edit">
-                                       <i class="fa-regular fa-pen-to-square text-[18px]"></i>
-                                       </button>
-                                       <!-- Delete -->
-                                       <button class="p-1 hover:text-red-400" aria-label="Delete">
-                                       <i class="fa-regular fa-trash-can text-[18px]"></i>
-                                       </button>
-                                    </div>
-                                 </td>
-                              </tr>
+                           <tbody class="divide-y divide-gray-500" id="table-body">                             
                            </tbody>
                         </table>
                      </div>
                      <!-- Pagination -->
-                     <div class="flex flex-wrap items-center justify-between border-t border-gray-300 p-5 text-sm text-gray-400">
-                        <p id="table-info">Showing 1 to 10 of 100 entries</p>
-                        <div class="flex items-center gap-1">
-                           <!-- Previous -->
-                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff] text-lg leading-none prev-btn">&laquo;</button>
-                           <!-- Page Numbers -->
-                           <button class="px-3 py-1 rounded bg-[#eef2ff] text-blue-800 font-medium">1</button>
-                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">2</button>
-                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">3</button>
-                           <span class="px-2">...</span>
-                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff]">10</button>
-                           <!-- Next -->
-                           <button class="px-3 py-1 rounded hover:bg-[#eef2ff] text-lg leading-none next-btn">&raquo;</button>
+                     <div class="flex flex-wrap items-center justify-between border-t border-gray-300 p-5 text-gray-400">
+                           <p id="table-info" class="text-xs">Showing 1 to 10 of 100 entries</p>
+                           <div class="flex items-center gap-1 pagination">
+                              <!-- Previous -->
+                              <button class="px-3 py-1 text-sm rounded hover:bg-[#eef2ff] text-lg leading-none prev-btn">&laquo;</button>
+                              <!-- Page Numbers -->
+                              <button class="page-btn px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">1</button>
+                              <button class="page-btn px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">2</button>
+                              <button class="page-btn px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">3</button>
+                              <span class="px-2">...</span>
+                              <button class="end-btn px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">10</button>
+                              <!-- Next -->
+                              <button class="px-3 py-1 text-sm rounded hover:bg-[#eef2ff] text-lg leading-none next-btn">&raquo;</button>
+                           </div>
                         </div>
-                     </div>
                   </div>
                </div>
             </div>
@@ -232,6 +186,6 @@
       </div>
       <script th:src="@{/script/pagination.js}"></script>
       <script th:src="@{/script/loading.js}"></script>
-      <script th:src="@{/script/user/user-api.js}"></script>
+      <script th:src="@{/script/user/lender-api.js}"></script>
    </body>
 </html>

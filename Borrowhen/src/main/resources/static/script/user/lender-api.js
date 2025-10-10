@@ -69,7 +69,7 @@ async function loadUsers(page = 0,
          search
       });
 
-      const url = `/api/admin/users?${params.toString()}`;
+      const url = `/api/admin/lenders?${params.toString()}`;
 
       const response = await fetch(url);
       const data = await response.json();
