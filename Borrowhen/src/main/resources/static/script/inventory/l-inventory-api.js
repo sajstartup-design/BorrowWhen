@@ -96,18 +96,50 @@ async function loadInventories(page = 0,
 			  <td class="px-2 text-xs align-middle">${inventory.totalQty} pcs</td>
 			  <td class="px-2 text-xs align-middle">${inventory.availableQty} pcs</td>
 			  <td class="px-2 text-sm align-middle">
-			    <div class="flex items-center gap-3 text-gray-500">
-			      <button class="p-1 hover:text-gray-200 view-btn" data-id="${inventory.encryptedId}" aria-label="View">
-			        <i class="fa-regular fa-eye text-sm"></i>
-			      </button>
-			      <button class="p-1 hover:text-gray-200 edit-btn" data-id="${inventory.encryptedId}" aria-label="Edit">
-			        <i class="fa-regular fa-pen-to-square text-sm"></i>
-			      </button>
-			      <button class="p-1 hover:text-red-400 delete-record" data-id="${inventory.encryptedId}" aria-label="Delete">
-			        <i class="fa-regular fa-trash-can text-sm"></i>
-			      </button>
+			    <div class="flex items-center gap-2 text-gray-500">
+
+			      <!-- View Button -->
+			      <div class="tooltip-wrapper">
+			        <a
+			          href="#"
+			          class="view-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
+			          data-id="${inventory.encryptedId}"
+			          aria-label="View"
+			        >
+			          <img src="/images/view.png" alt="View" class="h-3 w-3" />
+			        </a>
+			        <span class="tooltip-text">View Item</span>
+			      </div>
+
+			      <!-- Edit Button -->
+			      <div class="tooltip-wrapper">
+			        <a
+			          href="#"
+			          class="edit-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-yellow-100 hover:bg-yellow-200 transition shadow-sm"
+			          data-id="${inventory.encryptedId}"
+			          aria-label="Edit"
+			        >
+			          <img src="/images/edit.png" alt="Edit" class="h-3 w-3" />
+			        </a>
+			        <span class="tooltip-text">Edit Item</span>
+			      </div>
+
+			      <!-- Delete Button -->
+			      <div class="tooltip-wrapper">
+			        <a
+			          href="#"
+			          class="delete-record border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition shadow-sm"
+			          data-id="${inventory.encryptedId}"
+			          aria-label="Delete"
+			        >
+			          <img src="/images/delete.png" alt="Delete" class="h-3 w-3" />
+			        </a>
+			        <span class="tooltip-text">Delete Item</span>
+			      </div>
+
 			    </div>
 			  </td>
+
 			`;
 
          row.querySelector('.edit-btn').addEventListener('click', function () {
