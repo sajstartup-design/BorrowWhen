@@ -81,16 +81,16 @@ async function loadPayments(page = 0, search = "") {
         let statusColor = "";
         let statusTextColor = "";
         if (status === "paymentpending") {
-          statusColor = "bg-yellow-100";
-          statusTextColor = "text-yellow-700";
+          statusColor = "bg-pink-100";
+	      statusTextColor = "text-pink-700";
         } else if (status === "paid") {
-          statusColor = "bg-green-100";
-          statusTextColor = "text-green-700";
+          statusColor = "bg-emerald-100";
+	      statusTextColor = "text-emerald-700";
         } else {
           statusColor = "bg-gray-100";
           statusTextColor = "text-gray-700";
         }
-		console.log(payment.status);
+		
         // Action button
         let actionCell = "";
         if (payment.status?.toUpperCase() === "PAYMENT PENDING") {
