@@ -101,7 +101,7 @@ async function loadPayments(page = 0, search = "") {
         } else if (payment.status?.toUpperCase() === "PAID") {
           actionCell = `
             <a href="/payment/receipt?encryptedId=${payment.encryptedId}"
-              class="px-3 py-1.5 text-xs font-medium rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition view-receipt whitespace-nowrap">
+              class="px-3 py-1.5 text-xs font-medium rounded-md bg-blue-500 text-white hover:bg-gray-300 transition view-receipt whitespace-nowrap">
               View Receipt
             </a>`;
         } else {
@@ -121,20 +121,28 @@ async function loadPayments(page = 0, search = "") {
               <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
             </div>
           </td>
-          <td class="py-3 px-2 whitespace-nowrap">${payment.fullName}</td>
-          <td class="py-3 px-2 whitespace-nowrap">${payment.emailAddress}</td>
-          <td class="py-3 px-2 whitespace-nowrap">${payment.itemName}</td>
-          <td class="py-3 px-2 whitespace-nowrap">₱${payment.price}</td>
-          <td class="py-3 px-2 whitespace-nowrap">${payment.qty} pcs</td>
-          <td class="py-3 px-2 whitespace-nowrap">₱${payment.totalAmount}</td>
-          <td class="py-3 px-2 whitespace-nowrap">${formatCheckoutDate(payment.dateCheckout)}</td>
-          <td class="py-3 px-2 whitespace-nowrap">${payment.paymentMethod}</td>
-          <td class="py-3 px-2 whitespace-nowrap">
-            <span class="px-3 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor} whitespace-nowrap">
+          <td class="py-2 px-2 whitespace-nowrap">
+	          <div class="flex items-center gap-3">
+			    <div class="min-w-0">
+			      <p class="text-sm font-semibold text-gray-500 truncate">${payment.fullName}</p>
+			      <p class="text-xs text-gray-500 truncate">@${payment.userId}</p>
+			    </div>
+			  </div>
+          </td>
+          
+          <td class="py-2 px-2 whitespace-nowrap">${payment.emailAddress}</td>
+          <td class="py-2 px-2 whitespace-nowrap">${payment.itemName}</td>
+          <td class="py-2 px-2 whitespace-nowrap">₱${payment.price}</td>
+          <td class="py-2 px-2 whitespace-nowrap">${payment.qty} pcs</td>
+          <td class="py-2 px-2 whitespace-nowrap">₱${payment.totalAmount}</td>
+          <td class="py-2 px-2 whitespace-nowrap">${formatCheckoutDate(payment.dateCheckout)}</td>
+          <td class="py-2 px-2 whitespace-nowrap">${payment.paymentMethod}</td>
+          <td class="py-2 px-2 whitespace-nowrap">
+            <span class="px-2 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor} whitespace-nowrap">
               ${payment.status}
             </span>
           </td>
-          <td class="py-3 px-2 flex items-center gap-2 whitespace-nowrap">
+          <td class="py-2 px-2 flex items-center gap-2 whitespace-nowrap">
             ${actionCell}
           </td>
         `;

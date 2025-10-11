@@ -43,6 +43,7 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
     	    "SELECT new project.borrowhen.dao.entity.PaymentData(" +
     	    "p.id, " +
     	    "'' AS fullName, " +
+    	    "'' AS userId, " +
     	    "p.emailAddress, " +
     	    "br.itemName, " +
     	    "br.price, " +
@@ -76,6 +77,7 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 		    "SELECT new project.borrowhen.dao.entity.PaymentData(" +
 		    "p.id, " +
 		    "u.fullName, " +
+		    "u.userId, " +
 		    "COALESCE(p.emailAddress, '-'), " +
 		    "br.itemName, " +
 		    "br.price, " +

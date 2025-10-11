@@ -119,7 +119,7 @@ async function loadPayments(page = 0, search = "") {
         } else if (payment.status?.toUpperCase() === "PAID") {
           actionCell = `
             <a href="/payment/receipt?encryptedId=${payment.encryptedId}"
-              class="px-3 py-1.5 text-xs font-medium rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition">
+              class="px-3 py-1.5 text-xs font-medium rounded-md bg-blue-500 text-white hover:bg-gray-300 transition">
               View Receipt
             </a>`;
         } else {

@@ -16,6 +16,8 @@ public class PaymentData {
 	
 	private String fullName;
 	
+	private String userId;
+	
 	private String emailAddress;
 	
 	private String itemName;
