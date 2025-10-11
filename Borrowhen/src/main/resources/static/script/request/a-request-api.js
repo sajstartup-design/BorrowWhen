@@ -212,20 +212,64 @@ async function loadRequests(page = 0, search = "") {
 
                 // ✅ Tailwind Status colors
                 let statusColor = "";
-                let statusTextColor = "";
-                if (status === "pending") {
-                    statusColor = "bg-yellow-100";
-                    statusTextColor = "text-yellow-700";
-                } else if (status === "approved" || status === "ongoing" || status === "completed") {
-                    statusColor = "bg-green-100";
-                    statusTextColor = "text-green-700";
-                } else if (status === "rejected") {
-                    statusColor = "bg-red-100";
-                    statusTextColor = "text-red-700";
-                } else {
-                    statusColor = "bg-gray-100";
-                    statusTextColor = "text-gray-700";
-                }
+				let statusTextColor = "";
+				
+				switch (status.toUpperCase()) {
+				  case "PENDING":
+				    statusColor = "bg-yellow-100";
+				    statusTextColor = "text-yellow-700";
+				    break;
+				
+				  case "APPROVED":
+				    statusColor = "bg-green-100";
+				    statusTextColor = "text-green-700";
+				    break;
+				
+				  case "REJECTED":
+				    statusColor = "bg-red-100";
+				    statusTextColor = "text-red-700";
+				    break;
+				
+				  case "CANCELLED":
+				    statusColor = "bg-gray-200";
+				    statusTextColor = "text-gray-700";
+				    break;
+				
+				  case "VOID":
+				    statusColor = "bg-neutral-200";
+				    statusTextColor = "text-neutral-600";
+				    break;
+				
+				  case "OVERDUE":
+				    statusColor = "bg-orange-100";
+				    statusTextColor = "text-orange-700";
+				    break;
+				
+				  case "PICK-UPREADY":
+				    statusColor = "bg-indigo-100";
+				    statusTextColor = "text-indigo-700";
+				    break;
+				
+				  case "ONGOING":
+				    statusColor = "bg-blue-100";
+				    statusTextColor = "text-blue-700";
+				    break;
+				
+				  case "PAYMENTPENDING":
+				    statusColor = "bg-pink-100";
+				    statusTextColor = "text-pink-700";
+				    break;
+				
+				  case "PAID":
+				    statusColor = "bg-emerald-100";
+				    statusTextColor = "text-emerald-700";
+				    break;
+				
+				  default:
+				    statusColor = "bg-gray-100";
+				    statusTextColor = "text-gray-700";
+				    break;
+				}
 
                 // ✅ Action Buttons
                 let actionButtons = "";
