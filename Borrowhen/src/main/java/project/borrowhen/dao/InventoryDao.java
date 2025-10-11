@@ -1,6 +1,7 @@
 package project.borrowhen.dao;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -124,7 +125,22 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	    @Param("updatedDate") Date updatedDate
 	) throws DataAccessException;
 
-
+	public String GET_RECENT_INVENTORY_BY_USER_ID = """
+				SELECT new project.borrowhen.dao.entity.InventoryData(
+			        e.id,
+			        e.itemName,
+			        e.price,
+			        e.totalQty,
+			        e.availableQty
+			    )
+			    FROM InventoryEntity e
+			    WHERE e.userId = :userId
+			    ORDER BY e.createdDate DESC
+			""";
+	
+	@Query(GET_RECENT_INVENTORY_BY_USER_ID)
+	public List<InventoryData> getRecentInventory(@Param("userId") int userId, 
+			Pageable pageable) throws DataAccessException;
 
 
 }

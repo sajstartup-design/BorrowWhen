@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import project.borrowhen.common.constant.MessageConstant;
 import project.borrowhen.object.FilterAndSearchObj;
+import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.object.UserObj;
 
@@ -60,6 +61,8 @@ public class UserDto {
 	private String updatedDate;
 	
 	private List<UserObj> users;
+	
+	private List<InventoryObj> recentInventory;
 	
 	private UserObj user;
 	

@@ -68,7 +68,7 @@
                   </div>
                </div>
                <hr class="border-t border-white opacity-80" />
-               <div class="flex">
+               <div class="flex justify-between items-center">
                   <div class="flex items-center py-4 gap-3">
                      <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
                         <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
@@ -78,6 +78,12 @@
                         <span>Information Details</span>
                      </div>
                   </div>
+                  <a th:href="@{/admin/lenders}"
+					   class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-500 hover:bg-indigo-700 
+					          border border-white rounded-md text-sm text-white transition">
+					   <i class="fa-solid fa-arrow-left text-white text-sm"></i>
+					   Back
+					</a>
                </div>
                <div class="bg-white rounded-md">
                   <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
@@ -118,7 +124,7 @@
                         </div>
                      </div>
                      <div class="flex flex-row gap-5">
-                        <div class="flex flex-col gap-5">
+                        <div class="flex flex-col gap-5 flex-grow ">
                            <div class="border border-gray-300 rounded-md shadow-sm p-5 bg-white">
                               <h3 class="text-base font-semibold text-gray-800 mb-2">About</h3>
                               <p class="text-gray-600 text-sm leading-relaxed" th:text="*{user.about}">
@@ -131,56 +137,17 @@
                                  <a th:href="@{/admin/inventory}" class="text-sm text-blue-600 font-medium hover:underline">View All</a>
                               </div>
                               <!-- Products Grid -->
-                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4" >
                                  <!-- Product 1 -->
-                                 <div class="flex items-center gap-3 border border-gray-200 rounded-md p-3 hover:shadow-sm transition">
-                                    <img src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-1inch-deeppurple?wid=512&hei=512" 
+                                 <div th:each="inventory : *{recentInventory}" class="flex items-center gap-3 border border-gray-200 rounded-md p-3 hover:shadow-sm transition">
+                                    <img th:src="@{/images/logo.png}" 
                                        alt="iPhone 14 Pro" class="w-14 h-14 rounded-md object-cover">
                                     <div class="flex flex-col">
-                                       <h4 class="text-sm font-medium text-gray-800">iPhone 14 Pro</h4>
-                                       <span class="text-xs text-gray-500 mb-1">Super Retina XDR display footnote Pro Motion technology</span>
+                                       <h4 class="text-sm font-medium text-gray-800" th:text="${inventory.itemName}"></h4>
+                                       <span class="text-xs text-gray-500 mb-1" th:text="|Total Qty: ${inventory.totalQty}|"></span>
+                                       <span class="text-xs text-gray-500 mb-1" th:text="|Qty Left: ${inventory.availableQty}|"></span>
                                        <div class="flex items-center gap-2">
-                                          <span class="text-blue-600 font-semibold">$699</span>
-                                          <span class="text-gray-400 line-through text-sm">$999</span>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!-- Product 2 -->
-                                 <div class="flex items-center gap-3 border border-gray-200 rounded-md p-3 hover:shadow-sm transition">
-                                    <img src="https://m.media-amazon.com/images/I/61MbLLagiVL._AC_SL1500_.jpg" 
-                                       alt="Echo Dot (4th Gen)" class="w-14 h-14 rounded-md object-cover">
-                                    <div class="flex flex-col">
-                                       <h4 class="text-sm font-medium text-gray-800">Echo Dot (4th Gen)</h4>
-                                       <span class="text-xs text-gray-500 mb-1">Echo Dot Smart speaker with Alexa</span>
-                                       <div class="flex items-center gap-2">
-                                          <span class="text-blue-600 font-semibold">$25</span>
-                                          <span class="text-gray-400 line-through text-sm">$30</span>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!-- Product 3 -->
-                                 <div class="flex items-center gap-3 border border-gray-200 rounded-md p-3 hover:shadow-sm transition">
-                                    <img src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MKU63_VW_PF+watch-41-alum-starlight-nc-8s_VW_PF_WF_CO?wid=512&hei=512" 
-                                       alt="Apple Watch Series 7" class="w-14 h-14 rounded-md object-cover">
-                                    <div class="flex flex-col">
-                                       <h4 class="text-sm font-medium text-gray-800">Apple Watch Series 7</h4>
-                                       <span class="text-xs text-gray-500 mb-1">Starlight Aluminum Case with Starlight Sport Band.</span>
-                                       <div class="flex items-center gap-2">
-                                          <span class="text-blue-600 font-semibold">$120</span>
-                                          <span class="text-gray-400 line-through text-sm">$190</span>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!-- Product 4 -->
-                                 <div class="flex items-center gap-3 border border-gray-200 rounded-md p-3 hover:shadow-sm transition">
-                                    <img src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/ipad-10-2-select-202108?wid=512&hei=512" 
-                                       alt="Apple iPad" class="w-14 h-14 rounded-md object-cover">
-                                    <div class="flex flex-col">
-                                       <h4 class="text-sm font-medium text-gray-800">Apple iPad</h4>
-                                       <span class="text-xs text-gray-500 mb-1">10.2-inch Retina Display, 64GB.</span>
-                                       <div class="flex items-center gap-2">
-                                          <span class="text-blue-600 font-semibold">$299</span>
-                                          <span class="text-gray-400 line-through text-sm">$350</span>
+                                          <span class="text-blue-600 font-semibold" th:text="|₱ ${inventory.price} |"></span>
                                        </div>
                                     </div>
                                  </div>

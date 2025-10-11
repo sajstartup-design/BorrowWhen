@@ -1,7 +1,10 @@
 package project.borrowhen.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dto.InventoryDto;
 
@@ -25,4 +28,6 @@ public interface InventoryService {
 	public InventoryEntity getInventory(int id);
 	
 	public void updateInventoryAvailableQty(int id, int qty, String status);
+	
+	public List<InventoryData> getRecentInventory(int userId);
 }

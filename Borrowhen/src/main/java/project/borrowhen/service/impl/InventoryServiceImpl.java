@@ -257,4 +257,14 @@ public class InventoryServiceImpl implements InventoryService{
 			inventoryDao.updateInventoryQty(id, 0, dateNow);
 		}
 	}
+
+	@Override
+	public List<InventoryData> getRecentInventory(int userId) {
+		
+		Pageable pageable = PageRequest.of(0, 4);
+		
+		List<InventoryData> inventories = inventoryDao.getRecentInventory(userId, pageable);
+		
+		return inventories;
+	}
 }

@@ -19,15 +19,19 @@ import jakarta.servlet.http.HttpSession;
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
+import project.borrowhen.dao.InventoryDao;
 import project.borrowhen.dao.UserDao;
+import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.UserData;
 import project.borrowhen.dao.entity.UserDetailsData;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.UserDto;
 import project.borrowhen.object.FilterAndSearchObj;
+import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.object.UserObj;
 import project.borrowhen.service.AdminSettingsService;
+import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.UserService;
 
 @Service
@@ -47,6 +51,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private AdminSettingsService adminSettingsService;
+	
+	@Autowired
+	private InventoryDao inventoryDao;
     
     private int getMaxUserDisplay() {
         return adminSettingsService.getSettings().getUserPerPage();
@@ -225,6 +232,29 @@ public class UserServiceImpl implements UserService {
 
 	    // 📦 Attach the user object to the output DTO
 	    outDto.setUser(obj);
+	    
+	    Pageable pageable = PageRequest.of(0, 4);
+	    List<InventoryData> recentInventories = inventoryDao.getRecentInventory(id, pageable);
+	    		
+	    List<InventoryObj> inventories = new ArrayList<>();
+	    
+	    for(InventoryData inventory : recentInventories) {
+			
+			InventoryObj objTwo = new InventoryObj();
+			
+			objTwo.setEncryptedId(cipherUtil.encrypt(String.valueOf(inventory.getInventoryId())));
+			objTwo.setItemName(inventory.getItemName());
+			objTwo.setPrice(inventory.getPrice());
+			objTwo.setTotalQty(inventory.getTotalQty());
+			objTwo.setAvailableQty(inventory.getAvailableQty());
+			objTwo.setIsEditable(inventory.getIsEditable());
+			objTwo.setIsDeletable(inventory.getIsDeletable());
+	
+			inventories.add(objTwo);
+			
+		}
+	    
+	    outDto.setRecentInventory(inventories);
 
 	    return outDto;
 	}
