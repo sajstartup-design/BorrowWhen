@@ -14,9 +14,9 @@ public class ReschedulerTask {
     @Autowired
     private ReschedulerService reschedulerService;
 
-    // Run every day at 8 AM
-//    @Scheduled(cron = "0 0 8 * * ?")
-    @Scheduled(cron = "0 */3 * * * ?")
+    // Run every day at 1 AM
+    @Scheduled(cron = "0 0 1 * * ?")
+//    @Scheduled(cron = "0 */3 * * * ?")
     public void runRescheduler() {
     	System.out.println("YAWA");
         reschedulerService.checkOverdueRequests();
