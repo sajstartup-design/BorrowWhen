@@ -17,7 +17,7 @@ public class A_UserRestController {
 	@Autowired
     private UserService userService;
 
-    @GetMapping("/api/admin/users")
+    @GetMapping("/api/admin/borrowers")
     public UserDto getUsers(@RequestParam(defaultValue = "0") int page,
     		@RequestParam(required = false) String search) {
         try {
@@ -28,6 +28,7 @@ public class A_UserRestController {
 
             FilterAndSearchObj filter = new FilterAndSearchObj();
             filter.setSearch(search);
+            filter.setRole(CommonConstant.ROLE_BORROWER);
 
             inDto.setPagination(pagination);
             inDto.setFilter(filter);

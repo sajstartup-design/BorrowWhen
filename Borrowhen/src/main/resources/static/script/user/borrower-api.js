@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
    // Load first page
    loadUsers(0);
    
-      if(pageBtns){
+   if(pageBtns){
 		pageBtns.forEach(btn => btn.addEventListener('click', function(){
 			createLoadingScreenBody();
 			const searchValue = search.value;
@@ -88,7 +88,7 @@ async function loadUsers(page = 0,
          search
       });
 
-      const url = `/api/admin/lenders?${params.toString()}`;
+      const url = `/api/admin/borrowers?${params.toString()}`;
 
       const response = await fetch(url);
       const data = await response.json();
