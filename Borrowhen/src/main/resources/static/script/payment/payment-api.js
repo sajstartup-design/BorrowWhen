@@ -82,7 +82,7 @@ async function loadPayments(page = 0, search = "") {
 
     const response = await fetch(url);
     const data = await response.json();
-	
+
     updatePagination(data.pagination);
 
     const tableBody = document.getElementById("table-body");
@@ -99,58 +99,58 @@ async function loadPayments(page = 0, search = "") {
         let statusTextColor = "";
         if (status === "paymentpending") {
           statusColor = "bg-pink-100";
-	      statusTextColor = "text-pink-700";
+          statusTextColor = "text-pink-700";
         } else if (status === "paid") {
           statusColor = "bg-emerald-100";
-	      statusTextColor = "text-emerald-700";
+          statusTextColor = "text-emerald-700";
         } else {
           statusColor = "bg-gray-100";
           statusTextColor = "text-gray-700";
         }
-		
+
         // Action button
         let actionCell = "";
         if (payment.status?.toUpperCase() === "PAYMENT PENDING") {
           actionCell = `
             <a href="/payment?encryptedId=${payment.encryptedBorrowRequestId}"
-              class="px-3 py-1.5 text-xs font-medium rounded-md bg-blue-500 text-white hover:bg-indigo-600 transition">
+              class="px-3 py-1.5 text-xs font-medium rounded-md bg-blue-500 text-white hover:bg-indigo-600 transition whitespace-nowrap">
               Pay Now
             </a>`;
         } else if (payment.status?.toUpperCase() === "PAID") {
           actionCell = `
             <a href="/payment/receipt?encryptedId=${payment.encryptedId}"
-              class="px-3 py-1.5 text-xs font-medium rounded-md bg-blue-500 text-white hover:bg-gray-300 transition">
+              class="px-3 py-1.5 text-xs font-medium rounded-md bg-blue-500 text-white hover:bg-gray-300 transition whitespace-nowrap">
               View Receipt
             </a>`;
         } else {
           actionCell = `
-            <span class="px-3 py-1.5 text-xs font-medium text-gray-400">N/A</span>`;
+            <span class="px-3 py-1.5 text-xs font-medium text-gray-400 whitespace-nowrap">N/A</span>`;
         }
 
         // Row
-        const row = document.createElement("div");
+        const row = document.createElement("tr");
         row.className =
-          "table-row hover:bg-gray-50 transition border-b border-gray-100 text-gray-500 text-xs";
+          "hover:bg-gray-50 transition border-b border-gray-100 text-gray-500 text-xs";
         row.setAttribute("data-id", payment.encryptedId);
 
         row.innerHTML = `
-		<td class="py-2 px-2 text-xs align-middle text-gray-500">
-						    <div class="flex items-center justify-center">
-						      <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
-						    </div>
-						  </td>
-          <div class="table-cell py-3 px-2">${payment.itemName}</div>
-          <div class="table-cell py-3 px-2">₱${payment.price}</div>
-          <div class="table-cell py-3 px-2">${payment.qty} pcs</div>
-          <div class="table-cell py-3 px-2">₱${payment.totalAmount}</div>
-          <div class="table-cell py-3 px-2">
-            <span class="px-3 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor}">
+          <td class="py-2 px-2 text-xs align-middle text-gray-500 whitespace-nowrap">
+            <div class="flex items-center justify-center">
+              <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
+            </div>
+          </td>
+          <td class="py-3 px-2 whitespace-nowrap">${payment.itemName}</td>
+          <td class="py-3 px-2 whitespace-nowrap">₱${payment.price}</td>
+          <td class="py-3 px-2 whitespace-nowrap">${payment.qty} pcs</td>
+          <td class="py-3 px-2 whitespace-nowrap">₱${payment.totalAmount}</td>
+          <td class="py-3 px-2 whitespace-nowrap">
+            <span class="px-3 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor} whitespace-nowrap">
               ${payment.status}
             </span>
-          </div>
-          <div class="table-cell py-3 px-2 flex items-center gap-2">
+          </td>
+          <td class="py-3 px-2 flex items-center gap-2 whitespace-nowrap">
             ${actionCell}
-          </div>
+          </td>
         `;
 
         fragment.appendChild(row);
@@ -159,9 +159,9 @@ async function loadPayments(page = 0, search = "") {
       tableBody.appendChild(fragment);
     } else {
       tableBody.innerHTML = `
-        <div class="table-row text-center py-6 text-gray-500 text-sm">
-          <div class="table-cell" colspan="6">No payments found.</div>
-        </div>
+        <tr class="text-center text-gray-500 text-sm">
+          <td colspan="7" class="py-6 whitespace-nowrap">No payments found.</td>
+        </tr>
       `;
     }
 
