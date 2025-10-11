@@ -316,6 +316,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		pagination.setTotalElements(allRequests.getTotalElements());
 		pagination.setHasNext(allRequests.hasNext());
 		pagination.setHasPrevious(allRequests.hasPrevious());
+		pagination.setPageSize(getMaxRequestDisplay());
 		
 		outDto.setRequests(requests);
 		outDto.setPagination(pagination);
@@ -363,6 +364,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		pagination.setTotalElements(allRequests.getTotalElements());
 		pagination.setHasNext(allRequests.hasNext());
 		pagination.setHasPrevious(allRequests.hasPrevious());
+		pagination.setPageSize(getMaxRequestDisplay());
 		
 		outDto.setRequests(requests);
 		outDto.setPagination(pagination);

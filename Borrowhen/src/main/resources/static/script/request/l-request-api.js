@@ -193,8 +193,6 @@ async function loadRequests(page = 0, search = "") {
         const response = await fetch(url);
         const data = await response.json();
 
-        console.log(data);
-
         updatePagination(data.pagination);
 
         const tableBody = document.getElementById("table-body");
