@@ -23,7 +23,13 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 		    "   u.id, u.fullName, u.gender, u.birthDate, u.phoneNumber, u.emailAddress, " +
 		    "   u.barangay, u.street, u.city, u.province, u.postalCode, u.about, u.userId, u.password, u.role, " +
 		    "   u.createdDate, u.updatedDate, " +
-		    "   (CASE WHEN (SELECT COUNT(br2) FROM BorrowRequestEntity br2 WHERE br2.userId = u.id AND br2.status <> 'COMPLETED') > 0 THEN false ELSE true END) " +
+		    "   (CASE WHEN (" +
+		    "       SELECT COUNT(br2) " +
+		    "       FROM BorrowRequestEntity br2 " +
+		    "       WHERE br2.userId = u.id " +
+		    "       AND br2.status NOT IN ('PAID', 'CANCELLED', 'REJECTED', 'VOID')" +
+		    "   ) = 0 " +
+		    "   THEN false ELSE true END) AS isDeletable " +
 		    ") " +
 		    "FROM UserEntity u " +
 		    "WHERE u.isDeleted = false " +

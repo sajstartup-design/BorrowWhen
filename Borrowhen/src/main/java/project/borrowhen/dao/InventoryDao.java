@@ -40,6 +40,7 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    "FROM InventoryEntity e " +
 		    "LEFT JOIN UserEntity u ON u.id = e.userId " +
 		    "WHERE e.isDeleted = false " +
+		    "AND u.isDeleted = false " +
 		    "AND ( " +
 		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
 		    "       LOWER(e.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +

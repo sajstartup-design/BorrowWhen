@@ -155,17 +155,30 @@ async function loadUsers(page = 0,
 
 			      <!-- Delete Button -->
 			      <div class="tooltip-wrapper">
-			        <a
-			          href="#"
-			          class="delete-record border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition shadow-sm"
-			          data-id="${user.encryptedId}"
-			          aria-label="Delete"
-			        >
-			          <img src="/images/delete.png" alt="Delete" class="h-3 w-3" />
-			        </a>
-			        <span class="tooltip-text">Delete User</span>
-			      </div>
-
+					  ${
+					    user.isDeletable
+					      ? `
+					        <a
+					          href="#"
+					          class="delete-record border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition shadow-sm"
+					          data-id="${user.encryptedId}"
+					          aria-label="Delete"
+					        >
+					          <img src="/images/delete.png" alt="Delete" class="h-3 w-3" />
+					        </a>
+					        <span class="tooltip-text">Delete User</span>
+					      `
+					      : `
+					        <div
+					          class="cursor-not-allowed opacity-50 border border-gray-200 flex items-center justify-center h-8 w-8 rounded-md bg-gray-100 shadow-sm"
+					          title="Cannot delete this user"
+					        >
+					          <img src="/images/delete.png" alt="Delete Disabled" class="h-3 w-3" />
+					        </div>
+					        <span class="tooltip-text">Unavailable</span>
+					      `
+					  }
+					</div>
 			    </div>
 			  </td>
 
