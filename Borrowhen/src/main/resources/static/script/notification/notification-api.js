@@ -14,29 +14,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function updateNotificationCount() {
   try {
     const res = await fetch(`/api/notifications/count`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
 
-    const notifBtn = document.querySelector('#notifBtn');
-    const notifBadge = notifBtn?.querySelector('span');
-    const notificationIcon = notifBtn?.querySelector('.notification-icon');
-
-    if (!notifBtn || !notifBadge || !notificationIcon) return;
+    const notificationIcon = document.querySelector('.notification-icon');
+    if (!notificationIcon)
+      return console.warn("⚠️ notifBadge or notificationIcon missing");
 
     const count = data.notificationCount ?? 0;
+
+    // Store count for debugging
     notificationIcon.dataset.count = count;
 
-    if (count > 0) {
-      notifBadge.textContent = count;
-      notifBadge.classList.remove('hidden');
-    } else {
-      notifBadge.textContent = "";
-      notifBadge.classList.add('hidden');
-    }
-
-    // Reset modal cache
     openedModals = new WeakSet();
   } catch (error) {
-    console.error("Error fetching notification count:", error);
+    console.error("❌ Error fetching notification count:", error);
   }
 }
 
