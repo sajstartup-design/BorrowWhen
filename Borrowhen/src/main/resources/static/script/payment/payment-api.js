@@ -5,10 +5,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const inputPage = document.querySelector('.input-page');
+	const pageBtns = document.querySelectorAll('.page-btn');
+	const endBtn = document.querySelector('.end-btn');
 	const search = document.querySelector('.search');
 
     // Load first page
     loadPayments(0);
+    
+    if(pageBtns){
+		pageBtns.forEach(btn => btn.addEventListener('click', function(){
+			createLoadingScreenBody();
+			const searchValue = search.value;
+            loadPayments(Number(this.textContent.trim()) - 1, searchValue); 
+		}));
+	}
+	
+	if (endBtn) {
+	  endBtn.addEventListener('click', function() {  // <-- regular function
+	    createLoadingScreenBody();
+	    const searchValue = search ? search.value : '';
+	    console.log(this.textContent.trim());
+	    loadPayments(Number(this.textContent.trim()) - 1, searchValue); 
+	  });
+	}
 
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
@@ -63,10 +82,8 @@ async function loadPayments(page = 0, search = "") {
 
     const response = await fetch(url);
     const data = await response.json();
-
-    updatePagination(data.pagination);
 	
-	console.log(data);
+    updatePagination(data.pagination);
 
     const tableBody = document.getElementById("table-body");
     tableBody.innerHTML = "";

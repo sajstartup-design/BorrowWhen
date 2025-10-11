@@ -192,6 +192,7 @@ public class PaymentServiceImpl implements PaymentService{
 		pagination.setTotalElements(allPayments.getTotalElements());
 		pagination.setHasNext(allPayments.hasNext());
 		pagination.setHasPrevious(allPayments.hasPrevious());
+		pagination.setPageSize(getMaxPaymentDisplay());
 		
 		outDto.setPayments(payments);
 		outDto.setPagination(pagination);
@@ -268,6 +269,7 @@ public class PaymentServiceImpl implements PaymentService{
 		pagination.setTotalElements(allPayments.getTotalElements());
 		pagination.setHasNext(allPayments.hasNext());
 		pagination.setHasPrevious(allPayments.hasPrevious());
+		pagination.setPageSize(getMaxPaymentDisplay());
 		
 		outDto.setPayments(payments);
 		outDto.setPagination(pagination);
