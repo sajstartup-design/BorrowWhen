@@ -40,6 +40,8 @@ public class CommonConstant {
 	
 	public static final String RETURNED_LATE = "RETURNED LATE";
 	
+	public static final String REQUEST_OVERDUE = "OVERDUE";
+	
 	
 	/*
 	 * For Notification Type

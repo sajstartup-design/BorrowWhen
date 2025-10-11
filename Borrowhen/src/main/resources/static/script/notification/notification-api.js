@@ -93,6 +93,8 @@ async function updateNotificationModal(triggerElement) {
           iconClass = "fa-location-dot"; colorClass = "text-purple-500"; break;
         case "REQUEST_PAYMENT_PENDING":
           iconClass = "fa-credit-card"; colorClass = "text-pink-500"; break;
+        case "OVERDUE":
+    	  iconClass = "fa-exclamation-triangle"; colorClass = "text-orange-500"; break;
       }
 
       // Layout

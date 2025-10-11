@@ -123,19 +123,64 @@ async function loadInventories(page = 0, search = "") {
           <td class="py-3 px-2">${inventory.availableQty} pcs</td>
           <td class="py-3 px-2 text-gray-500">${created}</td>
           <td class="py-3 px-2 text-gray-500">${updated}</td>
-          <td class="py-3 px-2">
-            <div class="flex items-center gap-2">
-              <button class="view-btn flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition" title="View" data-id="${inventory.encryptedId}">
-                <i class="fa-solid fa-eye text-blue-600 text-sm"></i>
-              </button>
-              <button class="edit-btn flex items-center justify-center h-8 w-8 rounded-md bg-yellow-100 hover:bg-yellow-200 transition" title="Edit" data-id="${inventory.encryptedId}">
-                <i class="fa-solid fa-pen text-yellow-600 text-sm"></i>
-              </button>
-              <button class="delete-record flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition" title="Delete" data-id="${inventory.encryptedId}">
-                <i class="fa-solid fa-trash text-red-600 text-sm"></i>
-              </button>
-            </div>
-          </td>
+         <td class="py-3 px-2 text-sm align-middle">
+  <div class="flex items-center gap-2 text-gray-500">
+
+    <!-- View Button -->
+    <div class="tooltip-wrapper relative group">
+      <a
+        href="#"
+        class="view-btn border border-gray-300 hover:bg-gray-200 flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
+        data-id="${inventory.encryptedId}"
+        aria-label="View"
+      >
+        <img src="/images/view.png" alt="View" class="h-3 w-3" />
+      </a>
+      <span
+        class="tooltip-text absolute left-1/2 -translate-x-1/2 mt-1 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition"
+      >
+        View Item
+      </span>
+    </div>
+
+    <!-- Edit Button -->
+    <div class="tooltip-wrapper relative group">
+      <a
+        href="#"
+        class="edit-btn border border-gray-300 hover:bg-gray-200 flex items-center justify-center h-8 w-8 rounded-md bg-yellow-100 hover:bg-yellow-200 transition shadow-sm"
+        data-id="${inventory.encryptedId}"
+        aria-label="Edit"
+      >
+        <img src="/images/edit.png" alt="Edit" class="h-3 w-3" />
+      </a>
+      <span
+        class="tooltip-text absolute left-1/2 -translate-x-1/2 mt-1 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition"
+      >
+        Edit Item
+      </span>
+    </div>
+
+    <!-- Delete Button -->
+    <div class="tooltip-wrapper relative group">
+      <a
+        href="#"
+        class="delete-record border border-gray-300 hover:bg-gray-200 flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition shadow-sm"
+        data-id="${inventory.encryptedId}"
+        aria-label="Delete"
+      >
+        <img src="/images/delete.png" alt="Delete" class="h-3 w-3" />
+      </a>
+      <span
+        class="tooltip-text absolute left-1/2 -translate-x-1/2 mt-1 px-2 py-1 text-xs text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition"
+      >
+        Delete Item
+      </span>
+    </div>
+
+  </div>
+</td>
+
+
         `;
 
         // Attach event listeners

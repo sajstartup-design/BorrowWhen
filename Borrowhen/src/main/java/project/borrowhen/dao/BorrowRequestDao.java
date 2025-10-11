@@ -1,5 +1,8 @@
 package project.borrowhen.dao;
 
+import java.sql.Date;
+import java.util.List;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -165,4 +168,14 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	@Query(value=GET_BORROW_REQUEST_DETAILS_FOR_LENDER)
 	public BorrowRequestData getBorrowRequestDetailsForLender(@Param("borrowRequestId") int borrowRequestId) throws DataAccessException; 
     
+	public final String FIND_ONGOING_AND_OVERDUE = """
+	    SELECT b 
+	    FROM BorrowRequestEntity b
+	    WHERE b.status = 'ON GOING'
+	    AND b.dateToReturn <= :today
+	""";
+
+	@Query(value = FIND_ONGOING_AND_OVERDUE)
+	List<BorrowRequestEntity> findOngoingAndOverdue(@Param("today") Date today) throws DataAccessException;
+
 }
