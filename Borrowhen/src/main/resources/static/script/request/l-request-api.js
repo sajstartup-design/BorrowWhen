@@ -315,24 +315,34 @@ async function loadRequests(page = 0, search = "") {
                 // ✅ Row content with Tailwind styling
                 row.innerHTML = `
 					<td class="py-2 px-2 text-xs align-middle text-gray-500">
-									    <div class="flex items-center justify-center">
-									      <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
-									    </div>
-									  </td>	
-			          <td class="px-2 text-xs align-middle text-gray-500">${request.borrower}</td>
-			          <td class="px-2 text-xs align-middle text-gray-500">${request.itemName}</td>
-			          <td class="px-2 text-xs align-middle text-gray-500">₱${request.price}</td>
-			          <td class="px-2 text-xs align-middle text-gray-500">${request.qty}</td>
-			          <td class="px-2 text-xs align-middle text-gray-500">${request.dateToBorrow}</td>
-			          <td class="px-2 text-xs align-middle text-gray-500">${request.dateToReturn}</td>
-			          <td class="py-2 px-2 text-gray-500">
-			            <span class="px-3 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor}">
-			              ${request.status}
-			            </span>
-			          </td>
-			          <td class="py-2 px-2 text-sm flex items-center gap-2 text-gray-500">
-			            ${actionButtons}
-			          </td>
+					  <div class="flex items-center justify-center">
+					    <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
+					  </div>
+					</td>
+					<td class="px-2 text-xs align-middle text-gray-500">
+					  <div class="flex items-center gap-3">
+					    <div class="min-w-0">
+					      <p class="text-sm font-semibold text-gray-500 truncate">${request.borrower}</p>
+					      <p class="text-xs text-gray-500 truncate">@${request.borrowerUserId}</p>
+					    </div>
+					  </div>
+					</td>
+					<td class="px-2 text-xs align-middle text-gray-500">${request.itemName}</td>
+					<td class="px-2 text-xs align-middle text-gray-500">₱${request.price}</td>
+					<td class="px-2 text-xs align-middle text-gray-500">${request.qty}</td>
+					<td class="px-2 text-xs align-middle text-gray-500">${request.dateToBorrow}</td>
+					<td class="px-2 text-xs align-middle text-gray-500">${request.dateToReturn}</td>
+					<td class="py-2 px-2 text-gray-500 whitespace-nowrap">
+					  <span class="px-3 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor}">
+					    ${request.status}
+					  </span>
+					</td>
+					<td class="py-2 px-2 text-sm text-gray-500">
+					  <div class="inline-flex items-center gap-2">
+					    ${actionButtons}
+					  </div>
+					</td>
+
 			        `;
 
                 // ✅ Click listener (ignore buttons)

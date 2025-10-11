@@ -17,7 +17,6 @@ import project.borrowhen.common.util.CalculationUtil;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.BorrowRequestDao;
-import project.borrowhen.dao.PaymentDao;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.InventoryEntity;
@@ -298,7 +297,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        
 	        String borrowerFullName = request.getBorrowerFullName();
 	        obj.setBorrower(borrowerFullName.trim());
-	        	        
+	        obj.setBorrowerUserId(request.getBorrowerUserId());
+	        
 	        obj.setItemName(request.getItemName());
 	        obj.setPrice(request.getPrice());
 	        obj.setQty(request.getQty());
