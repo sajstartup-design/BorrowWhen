@@ -159,7 +159,7 @@ async function loadRequests(page = 0, search = "") {
 
                 // Row
                 const row = document.createElement("tr");
-                row.className = "hover:bg-gray-50 transition";
+                row.className = "hover:bg-gray-50 transition border border-gray-300";
                 row.setAttribute("data-id", request.encryptedId);
 
 
