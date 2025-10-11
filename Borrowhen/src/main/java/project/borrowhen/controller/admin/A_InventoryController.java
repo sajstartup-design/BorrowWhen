@@ -101,12 +101,14 @@ public class A_InventoryController {
 			
 			inventoryService.saveInventory(inventoryWebDto);
 			
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.INVENTORY_CREATE_MSG);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isSuccess", false);
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 		}
 		

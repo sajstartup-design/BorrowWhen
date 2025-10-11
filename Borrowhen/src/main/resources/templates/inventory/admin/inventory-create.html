@@ -1,73 +1,189 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>BW | Inventory Add</title>
-<link rel="stylesheet" th:href="@{/css/common.css}" />
-<link rel="stylesheet" th:href="@{/css/user/user-create.css}" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
-<body>
-	<div class="container">
-		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
-		<main>
-			<div class="content-header">INVENTORY > ADD ITEM</div>
-			<div class="content-body">
-				<div class="content">
-					<form th:action="@{/admin/inventory/create}" th:object="${inventoryDto}" method="POST" id="saveForm">
-					    <div class="field bold">
-					        <label>ITEM INFORMATION</label>
-					    </div>
-					    <hr class="soft-gradient">
-					    <div class="field">
-					        <label>OWNER</label>
-					       <select name="userId">
-							    <option value="" selected></option>
-							    <option th:each="userId : ${allUserId}" th:value="${userId}" th:text="${userId}"></option>
-							</select>
-					        <span class="error"
-					              th:if="${fieldErrors != null and fieldErrors.containsKey('userId')}"
-					              th:text="${fieldErrors['userId']}"></span>
-					    </div>
-						<hr class="soft-gradient">
-					    <div class="field">
-					        <label>ITEM NAME</label>
-					        <input type="text" name="itemName"  th:value="*{itemName}" />
-					        <span class="error"
-					              th:if="${fieldErrors != null and fieldErrors.containsKey('itemName')}"
-					              th:text="${fieldErrors['itemName']}"></span>
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>PRICE</label>
-					        <input type="text" name="price" class="price-input"  th:value="*{price}" />
-					        <span class="error"
-					              th:if="${fieldErrors != null and fieldErrors.containsKey('price')}"
-					              th:text="${fieldErrors['price']}"></span>
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>TOTAL QTY</label>
-					        <input type="number" name="totalQty" th:value="*{totalQty}"/>
-					        <span class="error"
-					              th:if="${fieldErrors != null and fieldErrors.containsKey('totalQty')}"
-					              th:text="${fieldErrors['totalQty']}"></span>
-					    </div>
-					    
-					</form>
-					<div class="form-btn">
-						<a class="button" th:href="@{/admin/inventory}"><img th:src="@{/images/left-arrow.png}"> BACK</a>
-						<button type="submit" form="saveForm" class="save-btn">SAVE</button>
-					</div>
-				</div>			
-			</div>
-		</main>
-		<aside th:replace="~{aside/aside :: content}"></aside>
-	</div>
-	<script th:src="@{/script/loading.js}"></script>
-	<script th:src="@{/script/submit.js}"></script>
-	<!-- <script th:src="@{/script/inputUtil.js}"></script> -->
-</body>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport"
+         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Borrowhen | Dashboard</title>
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <!-- Fonts -->
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <!-- Icons + CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+   </head>
+   <body>
+      <div class="bg-base-200 flex min-h-screen flex-col">
+         <div th:replace="~{header :: admin-header}"></div>
+         <main class="flex-1 relative">
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0">			
+            </div>
+            <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <div class="flex flex-wrap items-center justify-between">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white">
+                        <li>
+                           <a th:href="@{/admin/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/admin/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Borrowhen</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/admin/inventory}" class="px-2 text-xs flex items-center gap-2 "	>
+                           <span>Inventory List</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
+                           <span>Add Item</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <hr class="border-t border-white opacity-80" />
+               <div class="flex">
+                  <div class="flex items-center py-4 gap-3">
+                     <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
+                     </div>
+                     <div class="flex flex-col gap-0 text-white">
+                        <span class="text-lg font-bold">Add Item</span>
+                     </div>
+                  </div>
+               </div>
+               <!-- ---------- FORM ---------- -->
+               <div class="bg-white rounded-md ">
+                  <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
+                     <form th:action="@{/admin/inventory/create}" method="POST">
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                           <!-- LEFT SIDE — BASIC INFORMATION -->
+                           <div class="xl:col-span-2 space-y-6">
+                              <div class="border border-gray-200 rounded-lg p-5 shadow-md">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Item Information</h2>
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1" for="itemName">Item Name</label>
+                                       <input id="itemName" type="text" name="itemName" placeholder="Enter item name" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <div class="input-wrapper mb-3">
+                                       <label class="block text-sm font-medium text-gray-600 mb-1" for="itemPrice">Lender</label>
+                                       <select class="dropdown w-full border border-gray-300 rounded-md h-8 text-sm" name="userId">
+                                          <option value="">Select Lender</option>
+                                          <option th:each="userId : ${allUserId}" th:value="${userId}" th:text="${userId}"></option>
+                                       </select>
+                                    </div>
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1" for="itemPrice">Price</label>
+                                       <input id="itemPrice" type="text" name="price" placeholder="100.00" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1" for="itemQty">Total Qty</label>
+                                       <input id="itemQty" type="text" name="totalQty" placeholder="10" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- RIGHT SIDE — PREVIEW -->
+                           <div class="space-y-6">
+                              <div class="border border-gray-200 rounded-lg p-5 shadow-md">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Item Information Preview</h2>
+                                 <div class="space-y-3 text-sm text-gray-600">
+                                    <p><span class="font-medium">Item:</span> <span id="previewName">—</span></p>
+                                    <p><span class="font-medium">Lender:</span> <span id="previewLender">—</span></p>
+                                    <p><span class="font-medium">Price:</span> <span id="previewGender">—</span></p>
+                                    <p><span class="font-medium">Total Qty:</span> <span id="previewBirthDate">—</span></p>
+                                 </div>
+                              </div>
+                              <!-- Buttons -->
+                              <div class="flex items-center justify-end gap-3">
+                                 <a th:href="@{/lender/inventory}"
+                                    class="h-8 px-2 py-1 rounded-md border border-gray-300 text-sm text-gray-600 hover:bg-gray-50">
+                                 Cancel
+                                 </a>
+                                 <button type="submit"
+                                    class="h-8 px-2 py-1 rounded-md bg-blue-500 text-white text-sm hover:bg-indigo-700 transition shadow-md">
+                                 <i class="fa-solid fa-check mr-2"></i>Add Item
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+               <footer th:replace="~{footer :: footer}"></footer>
+            </div>
+         </main>
+      </div>
+      <script th:src="@{/script/dropdown.js}"></script>
+      <!-- ✅ FIXED SCRIPT -->
+      <script>
+         document.addEventListener("DOMContentLoaded", () => {
+           const inputs = {
+             name: document.getElementById("itemName"),
+             price: document.getElementById("itemPrice"),
+             qty: document.getElementById("itemQty"),
+           };
+         
+           const preview = {
+             name: document.getElementById("previewName"),
+             lender: document.getElementById("previewLender"),
+             price: document.getElementById("previewGender"),
+             qty: document.getElementById("previewBirthDate"),
+           };
+         
+           const lenderSelect = document.querySelector(".input-wrapper select.dropdown");
+         
+           function updatePreview() {
+             // Item Name
+             preview.name.textContent = inputs.name.value.trim() || "—";
+         
+             // Lender
+             const selectedOption = lenderSelect.options[lenderSelect.selectedIndex];
+             const lenderText = selectedOption && selectedOption.textContent.trim() !== "Select Lender"
+               ? selectedOption.textContent
+               : "—";
+             preview.lender.textContent = lenderText;
+         
+             // Price
+             let priceVal = inputs.price.value.replace(/[^\d.]/g, "");
+             inputs.price.value = priceVal;
+             preview.price.textContent = priceVal ? `₱ ${priceVal}` : "—";
+         
+             // Quantity
+             let qtyVal = inputs.qty.value.replace(/\D/g, "");
+             inputs.qty.value = qtyVal;
+             preview.qty.textContent = qtyVal ? `${qtyVal} pcs` : "—";
+           }
+         
+           Object.values(inputs).forEach((input) =>
+             input.addEventListener("input", updatePreview)
+           );
+           lenderSelect.addEventListener("change", updatePreview);
+         
+           updatePreview();
+         });
+      </script>
+   </body>
 </html>
