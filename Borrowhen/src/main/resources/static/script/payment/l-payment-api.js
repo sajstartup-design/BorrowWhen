@@ -82,10 +82,10 @@ async function loadPayments(page = 0, search = "") {
 
         if (status === "paymentpending") {
           statusColor = "bg-pink-100";
-	      statusTextColor = "text-pink-700";
+          statusTextColor = "text-pink-700";
         } else if (status === "paid") {
           statusColor = "bg-emerald-100";
-	      statusTextColor = "text-emerald-700";
+          statusTextColor = "text-emerald-700";
         } else {
           statusColor = "bg-gray-100";
           statusTextColor = "text-gray-700";
@@ -95,48 +95,48 @@ async function loadPayments(page = 0, search = "") {
         let actionCell = "";
         if (payment.status?.toUpperCase() === "PAYMENT PENDING") {
           actionCell = `
-            <span class="px-3 py-1.5 text-xs font-medium text-gray-400 italic">
+            <span class="px-3 py-1.5 text-xs font-medium text-gray-400 italic whitespace-nowrap">
               Awaiting Payment
             </span>`;
         } else if (payment.status?.toUpperCase() === "PAID") {
           actionCell = `
             <a href="/payment/receipt?encryptedId=${payment.encryptedId}"
-              class="px-3 py-1.5 text-xs font-medium rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition view-receipt">
+              class="px-3 py-1.5 text-xs font-medium rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition view-receipt whitespace-nowrap">
               View Receipt
             </a>`;
         } else {
           actionCell = `
-            <span class="px-3 py-1.5 text-xs font-medium text-gray-400">N/A</span>`;
+            <span class="px-3 py-1.5 text-xs font-medium text-gray-400 whitespace-nowrap">N/A</span>`;
         }
 
         // Create row
-        const row = document.createElement("div");
+        const row = document.createElement("tr");
         row.className =
-          "table-row hover:bg-gray-50 transition border-b border-gray-100 text-gray-500 text-xs";
+          "hover:bg-gray-50 transition border-b border-gray-300 text-gray-500 text-xs";
         row.setAttribute("data-id", payment.encryptedId);
 
         row.innerHTML = `
-		<td class="py-2 px-2 text-xs align-middle text-gray-500">
-						    <div class="flex items-center justify-center">
-						      <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
-						    </div>
-						  </td>
-          <div class="table-cell py-3 px-2">${payment.fullName}</div>
-          <div class="table-cell py-3 px-2">${payment.emailAddress}</div>
-          <div class="table-cell py-3 px-2">${payment.itemName}</div>
-          <div class="table-cell py-3 px-2">₱${payment.price}</div>
-          <div class="table-cell py-3 px-2">${payment.qty} pcs</div>
-          <div class="table-cell py-3 px-2">₱${payment.totalAmount}</div>
-          <div class="table-cell py-3 px-2">${formatCheckoutDate(payment.dateCheckout)}</div>
-          <div class="table-cell py-3 px-2">${payment.paymentMethod}</div>
-          <div class="table-cell py-3 px-2">
-            <span class="px-3 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor}">
+          <td class="py-2 px-2 text-xs align-middle text-gray-500 whitespace-nowrap">
+            <div class="flex items-center justify-center">
+              <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
+            </div>
+          </td>
+          <td class="py-3 px-2 whitespace-nowrap">${payment.fullName}</td>
+          <td class="py-3 px-2 whitespace-nowrap">${payment.emailAddress}</td>
+          <td class="py-3 px-2 whitespace-nowrap">${payment.itemName}</td>
+          <td class="py-3 px-2 whitespace-nowrap">₱${payment.price}</td>
+          <td class="py-3 px-2 whitespace-nowrap">${payment.qty} pcs</td>
+          <td class="py-3 px-2 whitespace-nowrap">₱${payment.totalAmount}</td>
+          <td class="py-3 px-2 whitespace-nowrap">${formatCheckoutDate(payment.dateCheckout)}</td>
+          <td class="py-3 px-2 whitespace-nowrap">${payment.paymentMethod}</td>
+          <td class="py-3 px-2 whitespace-nowrap">
+            <span class="px-3 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor} whitespace-nowrap">
               ${payment.status}
             </span>
-          </div>
-          <div class="table-cell py-3 px-2 flex items-center gap-2">
+          </td>
+          <td class="py-3 px-2 flex items-center gap-2 whitespace-nowrap">
             ${actionCell}
-          </div>
+          </td>
         `;
 
         fragment.appendChild(row);
@@ -145,9 +145,9 @@ async function loadPayments(page = 0, search = "") {
       tableBody.appendChild(fragment);
     } else {
       tableBody.innerHTML = `
-        <div class="table-row text-center py-6 text-gray-500 text-sm">
-          <div class="table-cell" colspan="10">No payments found.</div>
-        </div>
+        <tr class="text-center text-gray-500 text-sm">
+          <td colspan="11" class="py-6 whitespace-nowrap">No payments found.</td>
+        </tr>
       `;
     }
 
@@ -166,6 +166,7 @@ async function loadPayments(page = 0, search = "") {
     console.error("Error fetching payments:", error);
   }
 }
+
 
 
 function formatCheckoutDate(rawDate) {
