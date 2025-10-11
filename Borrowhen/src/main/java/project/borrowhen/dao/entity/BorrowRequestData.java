@@ -18,7 +18,11 @@ public class BorrowRequestData {
 	
 	private String borrowerFullName;
 	
+	private String borrowerUserId;
+	
 	private String lenderFullName;
+	
+	private String lenderUserId;
 
 	private String itemName;
 	

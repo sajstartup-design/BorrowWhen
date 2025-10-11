@@ -135,7 +135,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        Integer.valueOf(getMaxRequestDisplay())
 	    );
 	    
-	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllBorrowRequests(pageable);
+	    FilterAndSearchObj filter = inDto.getFilter();
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllBorrowRequests(pageable, filter.getSearch());
 	    
 	    List<BorrowRequestObj> requests = new ArrayList<>();
 	    
@@ -146,9 +148,11 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        
 	        String borrowerFullName = request.getBorrowerFullName();
 	        obj.setBorrower(borrowerFullName.trim());
+	        obj.setBorrowerUserId(request.getBorrowerUserId());
 	        
 	        String lenderFullName = request.getLenderFullName();
 	        obj.setLender(lenderFullName.trim());
+	        obj.setLenderUserId(request.getLenderUserId());
 	        
 	        obj.setItemName(request.getItemName());
 	        obj.setPrice(request.getPrice());
@@ -169,6 +173,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		pagination.setTotalElements(allRequests.getTotalElements());
 		pagination.setHasNext(allRequests.hasNext());
 		pagination.setHasPrevious(allRequests.hasPrevious());
+		pagination.setPageSize(getMaxRequestDisplay());
 		
 		outDto.setRequests(requests);
 		outDto.setPagination(pagination);

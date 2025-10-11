@@ -11,7 +11,11 @@ public class BorrowRequestObj {
 	
 	private String borrower;
 	
+	private String borrowerUserId;
+	
 	private String lender;
+	
+	private String lenderUserId;
 	
 	private String itemName;
 	

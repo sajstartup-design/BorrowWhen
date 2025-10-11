@@ -1,153 +1,339 @@
 createLoadingScreenBody();
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const inputPage = document.querySelector('.input-page');
+	const pageBtns = document.querySelectorAll('.page-btn');
+	const endBtn = document.querySelector('.end-btn');
+    const search = document.querySelector('.search');
 
     // Load first page
-    loadInventories(0);
+    loadRequests(0);
+    
+    if(pageBtns){
+		pageBtns.forEach(btn => btn.addEventListener('click', function(){
+			createLoadingScreenBody();
+			const searchValue = search.value;
+            loadRequests(Number(this.textContent.trim()) - 1, searchValue); 
+		}));
+	}
+	
+	if (endBtn) {
+	  endBtn.addEventListener('click', function() {  // <-- regular function
+	    createLoadingScreenBody();
+	    const searchValue = search ? search.value : '';
+	    console.log(this.textContent.trim());
+	    loadRequests(Number(this.textContent.trim()) - 1, searchValue); 
+	  });
+	}
 
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
-			createLoadingScreenBody();
+            createLoadingScreenBody();
+            const searchValue = search.value;
             let currentPage = Number(inputPage.value);
-            loadInventories(currentPage); 
+            loadRequests(currentPage, searchValue);
         });
     }
 
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
-			createLoadingScreenBody();
+            createLoadingScreenBody();
+            const searchValue = search.value;
             let currentPage = Number(inputPage.value);
-            loadInventories(currentPage - 2); 
+            loadRequests(currentPage - 2, searchValue);
         });
     }
 
     if (inputPage) {
         inputPage.addEventListener('change', () => {
-			createLoadingScreenBody();
+            createLoadingScreenBody();
+            const searchValue = search.value;
             let newPage = Number(inputPage.value);
             if (newPage < 1) newPage = 1;
             inputPage.value = newPage;
-            loadInventories(newPage - 1);
+            loadRequests(newPage - 1, searchValue);
+        });
+    }
+
+    if (search) {
+        let typingTimer;
+        const delay = 500;
+
+        search.addEventListener('input', function() {
+            clearTimeout(typingTimer);
+
+            const currentPage = 0;
+            const searchValue = this.value;
+
+            typingTimer = setTimeout(() => {
+                createLoadingScreenBody();
+                loadRequests(currentPage, searchValue);
+            }, delay);
         });
     }
 
 });
 
+// Helper functions to generate buttons
+const buttons = {
+    approve: (request) => `
+	    <div class="tooltip-wrapper">
+	      <button 
+	        class="approve-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-green-100 hover:bg-green-200 transition shadow-sm"
+	        data-toggle="modal" 
+	        data-target="#approveModal"
+	        data-id="${request.encryptedId}"
+	        data-item-name="${request.itemName}"
+	        data-price="${request.price}"
+	        data-date-to-borrow="${request.dateToBorrow}"
+	        data-date-to-return="${request.dateToReturn}"
+	        data-number-to-borrow="${request.qty}">
+	        <img src="/images/approved.png" alt="Approve" class="h-4 w-4" />
+	      </button>
+	      <span class="tooltip-text">Approve Request</span>
+	    </div>
+	  `,
 
-async function loadInventories(page = 0) {
+    reject: (request) => `
+	    <div class="tooltip-wrapper">
+	      <button 
+	        class="reject-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition shadow-sm"
+	        data-toggle="modal" 
+	        data-target="#rejectModal"
+	        data-id="${request.encryptedId}"
+	        data-item-name="${request.itemName}"
+	        data-price="${request.price}"
+	        data-date-to-borrow="${request.dateToBorrow}"
+	        data-date-to-return="${request.dateToReturn}"
+	        data-number-to-borrow="${request.qty}">
+	        <img src="/images/rejected.png" alt="Reject" class="h-4 w-4" />
+	      </button>
+	      <span class="tooltip-text">Reject Request</span>
+	    </div>
+	  `,
+
+    returnBtn: (request) => `
+	    <div class="tooltip-wrapper">
+	      <button 
+	        class="return-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-yellow-100 hover:bg-yellow-200 transition shadow-sm"
+	        data-toggle="modal" 
+	        data-target="#confirmModal"
+	        data-id="${request.encryptedId}"
+	        data-item-name="${request.itemName}"
+	        data-price="${request.price}"
+	        data-date-to-borrow="${request.dateToBorrow}"
+	        data-date-to-return="${request.dateToReturn}"
+	        data-number-to-borrow="${request.qty}">
+	        <img src="/images/return-box.png" alt="Return" class="h-4 w-4" />
+	      </button>
+	      <span class="tooltip-text">Confirm Return</span>
+	    </div>
+	  `,
+
+    payBtn: (request) => `
+	    <div class="tooltip-wrapper">
+	      <button 
+	        class="pay-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
+	        data-toggle="modal" 
+	        data-target="#issuePaymentModal"
+	        data-id="${request.encryptedId}"
+	        data-item-name="${request.itemName}"
+	        data-price="${request.price}"
+	        data-date-to-borrow="${request.dateToBorrow}"
+	        data-date-to-return="${request.dateToReturn}"
+	        data-number-to-borrow="${request.qty}">
+	        <img src="/images/credit-cards.png" alt="Payment" class="h-4 w-4" />
+	      </button>
+	      <span class="tooltip-text">Issue Payment</span>
+	    </div>
+	  `,
+
+    pickUpBtn: (request) => `
+	    <div class="tooltip-wrapper">
+	      <button 
+	        class="pick-up-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-indigo-100 hover:bg-indigo-200 transition shadow-sm"
+	        data-toggle="modal" 
+	        data-target="#pickUpModal"
+	        data-id="${request.encryptedId}"
+	        data-item-name="${request.itemName}"
+	        data-price="${request.price}"
+	        data-date-to-borrow="${request.dateToBorrow}"
+	        data-date-to-return="${request.dateToReturn}"
+	        data-number-to-borrow="${request.qty}">
+	        <img src="/images/location.png" alt="Pick Up" class="h-4 w-4" />
+	      </button>
+	      <span class="tooltip-text">Mark as Ready for Pick-Up</span>
+	    </div>
+	  `,
+
+    fake: (icon) => `
+	    <div class="tooltip-wrapper">
+	      <button 
+	        class="fake-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-gray-100 opacity-60 cursor-not-allowed shadow-sm pointer-events-none">
+	        <img src="/images/${icon}.png" alt="${icon}" class="h-4 w-4" />
+	      </button>
+	      <span class="tooltip-text">Unavailable</span>
+	    </div>
+	  `
+};
+
+
+
+async function loadRequests(page = 0, search = "") {
     try {
-		
-		const params = new URLSearchParams({ page });
-				
-		const url = `/api/admin/request?${params.toString()}`;
-		
+        const params = new URLSearchParams({
+            page,
+            search
+        });
+        const url = `/api/admin/request?${params.toString()}`;
+
         const response = await fetch(url);
         const data = await response.json();
-		
-		console.log(data);
-		
+
+        console.log(data);
+
         updatePagination(data.pagination);
 
         const tableBody = document.getElementById("table-body");
-		tableBody.innerHTML = '';
+        tableBody.innerHTML = "";
 
-		const fragment = document.createDocumentFragment();
+        const fragment = document.createDocumentFragment();
 
-		data.requests.forEach(request => {
-		    const row = document.createElement("div");
-		    row.classList.add("table-row");
-		    row.setAttribute('data-id', request.encryptedId);
+        if (data.requests && data.requests.length > 0) {
+            data.requests.forEach((request) => {
+                const row = document.createElement("tr");
+                row.className = "hover:bg-gray-50 transition";
+                row.setAttribute("data-id", request.encryptedId);
 
-		    // decide if buttons should be fake (disabled look)
-		    const isFinalStatus = request.status?.toLowerCase() === "approved" || request.status?.toLowerCase() === "rejected";
+                const status = request.status?.toLowerCase().replace(" ", "").trim();
 
-		    row.innerHTML = `
-		        <div class="table-cell">${request.borrower}</div>
-		        <div class="table-cell">${request.lender}</div>
-		        <div class="table-cell">${request.itemName}</div>
-		        <div class="table-cell">₱${request.price}</div>
-		        <div class="table-cell">${request.qty}</div>
-		        <div class="table-cell">${request.dateToBorrow}</div>
-		        <div class="table-cell">${request.dateToReturn}</div>
-		        <div class="table-cell">
-		          <span class="status ${request.status?.toLowerCase()}">
-		            <span>${request.status}</span>
-		          </span>
-		        </div>
-		        <div class="table-cell">${request.createdDate}</div>
-		        <div class="table-cell">${request.updatedDate}</div>
-		        <div class="table-cell">     
-		          ${
-		            isFinalStatus
-		            ? `
-		                <button class="fake-btn darker" disabled><img src="/images/approved.png"></button>
-		                <button class="fake-btn darker" disabled><img src="/images/rejected.png"></button>
-		              `
-		            : `
-		                <button 
-		                  class="approve-btn darker" 
-		                  data-toggle="modal" 
-		                  data-target="#approveModal"
-		                  data-id="${request.encryptedId}"
-		                  data-item-name="${request.itemName}"
-		                  data-price="${request.price}"
-		                  data-borrower="${request.borrower}"
-		                  data-date-to-borrow="${request.dateToBorrow}"
-		                  data-date-to-return="${request.dateToReturn}"
-		                  data-number-to-borrow="${request.qty}">
-		                  <img src="/images/approved.png">
-		                </button>
-						<button 
-		                  class="reject-btn darker" 
-		                  data-toggle="modal" 
-		                  data-target="#rejectModal"
-		                  data-id="${request.encryptedId}"
-		                  data-item-name="${request.itemName}"
-		                  data-price="${request.price}"
-		                  data-borrower="${request.borrower}"
-		                  data-date-to-borrow="${request.dateToBorrow}"
-		                  data-date-to-return="${request.dateToReturn}"
-		                  data-number-to-borrow="${request.qty}">
-		                  <img src="/images/rejected.png">
-		                </button>
-		              `
-		          }
-		          <button class="delete-btn darker" data-id="${request.encryptedId}">
-		            <img src="/images/delete.png">
-		          </button>
-		        </div>
-		    `;
+                // ✅ Tailwind Status colors
+                let statusColor = "";
+                let statusTextColor = "";
+                if (status === "pending") {
+                    statusColor = "bg-yellow-100";
+                    statusTextColor = "text-yellow-700";
+                } else if (status === "approved" || status === "ongoing" || status === "completed") {
+                    statusColor = "bg-green-100";
+                    statusTextColor = "text-green-700";
+                } else if (status === "rejected") {
+                    statusColor = "bg-red-100";
+                    statusTextColor = "text-red-700";
+                } else {
+                    statusColor = "bg-gray-100";
+                    statusTextColor = "text-gray-700";
+                }
+
+                // ✅ Action Buttons
+                let actionButtons = "";
+                if (status === "pending") {
+                    actionButtons =
+                        buttons.approve(request) +
+                        buttons.reject(request) +
+                        buttons.fake("location") +
+                        buttons.fake("return-box") +
+                        buttons.fake("credit-cards");
+                } else if (status === "approved") {
+                    actionButtons =
+                        buttons.fake("approved") +
+                        buttons.fake("rejected") +
+                        buttons.pickUpBtn(request) +
+                        buttons.fake("return-box") +
+                        buttons.fake("credit-cards");
+                } else if (status === "ongoing") {
+                    actionButtons =
+                        buttons.fake("approved") +
+                        buttons.fake("rejected") +
+                        buttons.fake("location") +
+                        buttons.returnBtn(request) +
+                        buttons.fake("credit-cards");
+                } else if (status === "completed") {
+                    actionButtons =
+                        buttons.fake("approved") +
+                        buttons.fake("rejected") +
+                        buttons.fake("location") +
+                        buttons.fake("return-box") +
+                        buttons.payBtn(request);
+                } else {
+                    actionButtons =
+                        buttons.fake("approved") +
+                        buttons.fake("rejected") +
+                        buttons.fake("location") +
+                        buttons.fake("return-box") +
+                        buttons.fake("credit-cards");
+                }
+
+                // ✅ Row content with Tailwind styling
+                row.innerHTML = `
+					<td class="py-2 px-2 text-xs align-middle text-gray-500 whitespace-nowrap">
+					  <div class="flex items-center justify-center">
+					    <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
+					  </div>
+					</td>
 					
-			row.addEventListener('click', function(e) {
-			   
-			    if (e.target.closest('button') || e.target.closest('a')) {
-			        return; 
-			    }
-				
-				const encryptedId = this.getAttribute('data-id');
+					<!-- Borrower -->
+					<td class="px-2 text-xs align-middle text-gray-500 max-w-[140px] whitespace-nowrap truncate" title="${request.borrower}">
+					  <div class="flex items-center gap-3">
+					    <div class="min-w-0">
+					      <p class="text-sm font-semibold text-gray-500 truncate">${request.borrower}</p>
+					      <p class="text-xs text-gray-500 truncate">@${request.borrowerUserId}</p>
+					    </div>
+					  </div>
+					</td>
+					
+					<!-- Lender -->
+					<td class="px-2 text-xs align-middle text-gray-500 max-w-[140px] whitespace-nowrap truncate" title="${request.lender}">
+					  <div class="flex items-center gap-3">
+					    <div class="min-w-0">
+					      <p class="text-sm font-semibold text-gray-500 truncate">${request.lender}</p>
+					      <p class="text-xs text-gray-500 truncate">@${request.lenderUserId}</p>
+					    </div>
+					  </div>
+					</td>
+					
+					<td class="px-2 text-xs align-middle text-gray-500 whitespace-nowrap">${request.itemName}</td>
+					<td class="px-2 text-xs align-middle text-gray-500 whitespace-nowrap">₱${request.price}</td>
+					<td class="px-2 text-xs align-middle text-gray-500 whitespace-nowrap">${request.qty}</td>
+					<td class="px-2 text-xs align-middle text-gray-500 whitespace-nowrap">${request.dateToBorrow}</td>
+					<td class="px-2 text-xs align-middle text-gray-500 whitespace-nowrap">${request.dateToReturn}</td>
+					<td class="px-2 text-xs align-middle text-gray-500 whitespace-nowrap">${request.createdDate}</td>
+					<td class="px-2 text-xs align-middle text-gray-500 whitespace-nowrap">${request.updatedDate}</td>
+					<td class="py-2 px-2 text-gray-500 whitespace-nowrap">
+					  <span class="px-3 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor}">
+					    ${request.status}
+					  </span>
+					</td>
+					<td class="py-2 px-2 text-sm flex items-center gap-2 text-gray-500 whitespace-nowrap">
+					  ${actionButtons}
+					</td>`;
 
-			    window.location.href="/admin/inventory/details?encryptedId=" + encryptedId;
-			});
+                // ✅ Click listener (ignore buttons)
+                row.addEventListener("click", function(e) {
+                    if (e.target.closest("button") || e.target.closest("a")) return;
+                    const encryptedId = this.getAttribute("data-id");
+                    window.location.href = "/lender/request/details?encryptedId=" + encryptedId;
+                });
 
+                fragment.appendChild(row);
+            });
 
-            fragment.appendChild(row);
-        });
-
-        tableBody.appendChild(fragment);
-		
-		updateBtnsModal();
+            tableBody.appendChild(fragment);
+            updateBtnsModal();
+        } else {
+            tableBody.innerHTML = `
+	        <tr>
+	          <td colspan="8" class="text-center py-6 text-gray-500 text-sm">No requests found.</td>
+	        </tr>
+	      `;
+        }
 
         document.querySelector(".input-page").value = data.pagination.page + 1;
-		
-		removeLoadingScreenBody();
 
+        removeLoadingScreenBody();
     } catch (error) {
         console.error("Error fetching inventories:", error);
     }
 }
-
-
