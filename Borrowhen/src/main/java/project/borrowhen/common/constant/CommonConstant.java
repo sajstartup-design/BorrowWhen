@@ -42,6 +42,8 @@ public class CommonConstant {
 	
 	public static final String REQUEST_OVERDUE = "OVERDUE";
 	
+	public static final String REQUEST_VOID = "VOID";
+	
 	
 	/*
 	 * For Notification Type

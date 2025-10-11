@@ -20,5 +20,6 @@ public class ReschedulerTask {
     public void runRescheduler() {
     	System.out.println("YAWA");
         reschedulerService.checkOverdueRequests();
+        reschedulerService.voidUnpickedRequests();
     }
 }

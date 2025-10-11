@@ -168,14 +168,24 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	@Query(value=GET_BORROW_REQUEST_DETAILS_FOR_LENDER)
 	public BorrowRequestData getBorrowRequestDetailsForLender(@Param("borrowRequestId") int borrowRequestId) throws DataAccessException; 
     
-	public final String FIND_ONGOING_AND_OVERDUE = """
+	public final String FIND_ONGOING_AND_OVERDUE_REQUESTS = """
 	    SELECT b 
 	    FROM BorrowRequestEntity b
 	    WHERE b.status IN ('ON GOING', 'OVERDUE')
 	    AND b.dateToReturn <= :today
 	""";
 
-	@Query(value = FIND_ONGOING_AND_OVERDUE)
+	@Query(value = FIND_ONGOING_AND_OVERDUE_REQUESTS)
 	List<BorrowRequestEntity> findOngoingAndOverdue(@Param("today") Date today) throws DataAccessException;
+	
+	public final String FIND_VOIDABLE_REQUESTS = """
+	    SELECT b 
+	    FROM BorrowRequestEntity b
+	    WHERE b.status IN ('PENDING', 'APPROVED', 'PICK-UP READY')
+	    AND b.dateToBorrow <= :today
+	""";
+
+	@Query(value = FIND_VOIDABLE_REQUESTS)
+	List<BorrowRequestEntity> findVoidableRequests(@Param("today") Date today) throws DataAccessException;
 
 }

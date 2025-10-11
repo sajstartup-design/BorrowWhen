@@ -78,6 +78,48 @@ public class ReschedulerServiceImpl implements ReschedulerService{
 	            );
 	        });
 	    }
+	    
+	    /**
+	     * Void requests that were never picked up (borrow date already passed).
+	     */
+	    @Override
+	    public void voidUnpickedRequests() {
+	        Date today = Date.valueOf(LocalDate.now());
+	        List<BorrowRequestEntity> voidableRequests = borrowRequestDao.findVoidableRequests(today);
+
+	        voidableRequests.forEach(request -> {
+	            System.out.println("🕒 Voiding unpicked request: ID " + request.getId() +
+	                    " | Item: " + request.getItemName() +
+	                    " | Borrow date: " + request.getDateToBorrow());
+
+	            UserEntity borrower = userService.getUser(request.getUserId());
+	            Timestamp now = DateFormatUtil.getCurrentTimestamp();
+
+	            // Update status to VOID
+	            borrowRequestDao.updateBorrowRequestStatusById(request.getId(), CommonConstant.REQUEST_VOID);
+
+	            // Build notification
+	            NotificationEntity notification = new NotificationEntity();
+	            notification.setUserId(request.getUserId());
+	            notification.setMessage(String.format(
+	                "Your borrow request for '%s' has been voided since the borrow date (%s) has already passed.",
+	                request.getItemName(), request.getDateToBorrow()
+	            ));
+	            notification.setType(CommonConstant.REQUEST_VOID);
+	            notification.setIsRead(false);
+	            notification.setIsDeleted(false);
+	            notification.setCreatedDate(now);
+	            notification.setUpdatedDate(now);
+
+	            // Save and send
+	            notificationService.saveNotification(notification);
+	            messagingTemplate.convertAndSendToUser(
+	                borrower.getUserId().toString(),
+	                "/queue/borrower/notifications",
+	                notification.getMessage()
+	            );
+	        });
+	    }
 
 
 }
