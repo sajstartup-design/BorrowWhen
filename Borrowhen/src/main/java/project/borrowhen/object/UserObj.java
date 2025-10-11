@@ -39,5 +39,13 @@ public class UserObj {
 	
 	private Boolean isDeletable;
 	
+	private int totalItem;
+	
+	private int totalRequest;
+	
+	private double totalRevenue;
+	
+	private int rating;
+	
 	private int page;
 }

@@ -13,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 
 import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.UserData;
+import project.borrowhen.dao.entity.UserDetailsData;
 import project.borrowhen.dao.entity.UserEntity;
 
 public interface UserDao extends JpaRepository<UserEntity, Integer> {
@@ -124,5 +125,55 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 	        @Param("role") String role,
 	        @Param("search") String search
 	) throws DataAccessException;
+	
+	public final String GET_LENDER_DETAILS_BY_ID = """
+				SELECT new project.borrowhen.dao.entity.UserDetailsData(
+				    u.id,
+				    u.fullName,
+				    u.userId,
+				    u.emailAddress,
+				    u.phoneNumber,
+				    u.about,
+				    u.barangay,
+				    u.street,
+				    u.city,
+				    u.province,
+				    u.postalCode,
+				    CAST((
+				        SELECT COUNT(i.id)
+				        FROM InventoryEntity i
+				        WHERE i.userId = u.id AND i.isDeleted = false
+				    ) AS INTEGER),
+								        CAST((
+				        SELECT count(br.id)
+				        FROM BorrowRequestEntity br
+				        JOIN InventoryEntity i ON i.id = br.inventoryId
+				        WHERE i.userId = u.id
+				          AND br.status IN ('PAID')
+				    ) AS INTEGER),
+								     CAST((
+				        SELECT COALESCE(SUM(br.price * br.qty), 0)
+				        FROM BorrowRequestEntity br
+				        JOIN InventoryEntity i ON i.id = br.inventoryId
+				        WHERE i.userId = u.id
+				          AND br.status IN ('PAID')
+				    ) AS DOUBLE),
+								        CAST(ROUND((
+				        SELECT COALESCE(AVG(br.rating), 0)
+				        FROM BorrowRequestEntity br
+				        JOIN InventoryEntity i ON i.id = br.inventoryId
+				        WHERE i.userId = u.id
+				          AND br.status IN ('PAID')
+				          AND br.rating IS NOT NULL
+				    ), 0) AS INTEGER)
+				)
+				FROM UserEntity u
+				WHERE u.isDeleted = false	
+				AND u.id = :id	
+			""";
+	
+	@Query(GET_LENDER_DETAILS_BY_ID)
+	public UserDetailsData getLenderDetails(@Param("id") int id) throws DataAccessException;
+	
 
 }

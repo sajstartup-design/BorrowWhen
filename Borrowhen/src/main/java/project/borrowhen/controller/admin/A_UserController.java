@@ -12,12 +12,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
-import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.constant.MessageConstant;
 import project.borrowhen.dto.UserDto;
 import project.borrowhen.service.UserService;
@@ -165,7 +163,7 @@ public class A_UserController {
 		return "redirect:/admin/user";
 	}
 	
-	@GetMapping("/details")
+	@GetMapping("/admin/lenders/details")
 	public String showUserDetailsScreen(Model model,
 			@RequestParam("encryptedId") String encryptedId,
 			RedirectAttributes ra) {
@@ -176,7 +174,7 @@ public class A_UserController {
 			
 			inDto.setEncryptedId(encryptedId);
 			
-			UserDto outDto = userService.getUser(inDto);
+			UserDto outDto = userService.getLenderDetails(inDto);
 			
 			outDto.setEncryptedId(encryptedId);
 			
@@ -186,12 +184,13 @@ public class A_UserController {
 			
 			e.printStackTrace();
 			
-			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 			
-			return "redirect:/admin/user";
+			return "redirect:/admin/lenders";
 		}
 		
-		return "user/user-details";
+		return "user/user-lender-details";
 	}
 	
 }

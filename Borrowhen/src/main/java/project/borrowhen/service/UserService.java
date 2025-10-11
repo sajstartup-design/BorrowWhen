@@ -18,6 +18,8 @@ public interface UserService {
 	
 	public UserDto getUser(UserDto inDto) throws Exception;
 	
+	public UserDto getLenderDetails(UserDto inDto) throws Exception;
+	
 	public void editUser(UserDto inDto) throws Exception;
 	
 	

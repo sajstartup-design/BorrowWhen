@@ -183,7 +183,7 @@ async function loadUsers(page = 0,
 
             const encryptedId = this.getAttribute('data-id');
 
-            window.location.href = "/admin/user/details?encryptedId=" + encryptedId;
+            window.location.href = "/admin/lenders/details?encryptedId=" + encryptedId;
          });
 
 

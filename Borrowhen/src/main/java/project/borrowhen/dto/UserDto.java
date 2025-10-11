@@ -61,6 +61,8 @@ public class UserDto {
 	
 	private List<UserObj> users;
 	
+	private UserObj user;
+	
 	private PaginationObj pagination;
 	
 	private FilterAndSearchObj filter;

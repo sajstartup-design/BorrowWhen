@@ -1,0 +1,272 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Borrowhen | Dashboard</title>
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Fira+Code:wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+   </head>
+   <body>
+      <div class="bg-base-200 flex min-h-screen flex-col">
+         <!-- ---------- HEADER ---------- -->
+         <div th:replace="~{header :: admin-header}"></div>
+         <main class="flex-1 relative" th:object="${userDto}">
+            <!-- Blue background section (stays fixed within main) -->
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0">	
+            </div>
+            <!-- Content that appears over the blue section -->
+            <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <div class="flex flex-wrap items-center justify-between">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white">
+                        <li>
+                           <a th:href="@{/admin/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/admin/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Borrowhen</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/admin/lenders}" class="px-2 text-xs flex items-center gap-2 "	>
+                           <span>Lender List</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
+                           <span>Lender Details</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <hr class="border-t border-white opacity-80" />
+               <div class="flex">
+                  <div class="flex items-center py-4 gap-3">
+                     <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
+                     </div>
+                     <div class="flex flex-col gap-0 text-white">
+                        <span class="text-lg font-bold" th:text="|*{user.fullName}'s Details|">Lender Details</span>
+                        <span>Information Details</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="bg-white rounded-md">
+                  <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
+                     <div class="flex items-center border border-gray-300 rounded-md shadow-sm p-6 bg-white">
+                        <!-- Left Section -->
+                        <div class="flex items-start gap-4">
+                           <img th:src="@{/images/logo.png}" alt="Shop Logo" class="w-12 h-12">
+                           <div>
+                              <h3 class="text-lg font-semibold text-gray-800" th:text="*{user.fullName}"></h3>
+                              <span class="text-sm text-gray-500" th:text="*{user.emailAddress}"></span>
+                              <div class="flex items-center gap-2 mt-1 whitespace-nowrap">
+                                 <div id="star-container" class="flex text-yellow-400 shrink-0"></div>
+								  <span id="rating-text" class="text-gray-500 text-sm whitespace-nowrap"
+								        th:text="*{user.rating + ' out of 5'}">
+								    0 out of 5
+								  </span>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Right Section -->
+                        <div class="flex justify-evenly items-center w-full">
+                           <div class="flex flex-col items-center">
+                              <span class="text-xl font-semibold text-gray-800" th:text="*{user.totalItem}">0</span>
+                              <span class="text-sm text-gray-500">Products</span>
+                           </div>
+                           <div class="flex flex-col items-center">
+                              <span class="text-xl font-semibold text-gray-800" th:text="*{user.totalRequest}"></span>
+                              <span class="text-sm text-gray-500">Request <span class="text-xs text-gray-500">(Paid)</span></span>
+                           </div>
+                           <div class="flex flex-col items-center">
+                              <span class="text-xl font-semibold text-gray-800" th:text="'₱' + *{user.totalRevenue}">₱0</span>
+                              <span class="text-sm text-gray-500">Revenue</span>
+                           </div>
+                           <div class="flex flex-col items-center">
+                              <span class="text-xl font-semibold text-gray-800" th:text="*{user.rating}"></span>
+                              <span class="text-sm text-gray-500">Rating</span>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="flex flex-row gap-5">
+                        <div class="flex flex-col gap-5">
+                           <div class="border border-gray-300 rounded-md shadow-sm p-5 bg-white">
+                              <h3 class="text-base font-semibold text-gray-800 mb-2">About</h3>
+                              <p class="text-gray-600 text-sm leading-relaxed" th:text="*{user.about}">
+                              </p>
+                           </div>
+                           <div class="border border-gray-300 rounded-md shadow-sm p-5 bg-white w-full">
+                              <!-- Header -->
+                              <div class="flex items-center justify-between mb-4">
+                                 <h3 class="text-base font-semibold text-gray-800">Recent Products</h3>
+                                 <a th:href="@{/admin/inventory}" class="text-sm text-blue-600 font-medium hover:underline">View All</a>
+                              </div>
+                              <!-- Products Grid -->
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                 <!-- Product 1 -->
+                                 <div class="flex items-center gap-3 border border-gray-200 rounded-md p-3 hover:shadow-sm transition">
+                                    <img src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-1inch-deeppurple?wid=512&hei=512" 
+                                       alt="iPhone 14 Pro" class="w-14 h-14 rounded-md object-cover">
+                                    <div class="flex flex-col">
+                                       <h4 class="text-sm font-medium text-gray-800">iPhone 14 Pro</h4>
+                                       <span class="text-xs text-gray-500 mb-1">Super Retina XDR display footnote Pro Motion technology</span>
+                                       <div class="flex items-center gap-2">
+                                          <span class="text-blue-600 font-semibold">$699</span>
+                                          <span class="text-gray-400 line-through text-sm">$999</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- Product 2 -->
+                                 <div class="flex items-center gap-3 border border-gray-200 rounded-md p-3 hover:shadow-sm transition">
+                                    <img src="https://m.media-amazon.com/images/I/61MbLLagiVL._AC_SL1500_.jpg" 
+                                       alt="Echo Dot (4th Gen)" class="w-14 h-14 rounded-md object-cover">
+                                    <div class="flex flex-col">
+                                       <h4 class="text-sm font-medium text-gray-800">Echo Dot (4th Gen)</h4>
+                                       <span class="text-xs text-gray-500 mb-1">Echo Dot Smart speaker with Alexa</span>
+                                       <div class="flex items-center gap-2">
+                                          <span class="text-blue-600 font-semibold">$25</span>
+                                          <span class="text-gray-400 line-through text-sm">$30</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- Product 3 -->
+                                 <div class="flex items-center gap-3 border border-gray-200 rounded-md p-3 hover:shadow-sm transition">
+                                    <img src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MKU63_VW_PF+watch-41-alum-starlight-nc-8s_VW_PF_WF_CO?wid=512&hei=512" 
+                                       alt="Apple Watch Series 7" class="w-14 h-14 rounded-md object-cover">
+                                    <div class="flex flex-col">
+                                       <h4 class="text-sm font-medium text-gray-800">Apple Watch Series 7</h4>
+                                       <span class="text-xs text-gray-500 mb-1">Starlight Aluminum Case with Starlight Sport Band.</span>
+                                       <div class="flex items-center gap-2">
+                                          <span class="text-blue-600 font-semibold">$120</span>
+                                          <span class="text-gray-400 line-through text-sm">$190</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- Product 4 -->
+                                 <div class="flex items-center gap-3 border border-gray-200 rounded-md p-3 hover:shadow-sm transition">
+                                    <img src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/ipad-10-2-select-202108?wid=512&hei=512" 
+                                       alt="Apple iPad" class="w-14 h-14 rounded-md object-cover">
+                                    <div class="flex flex-col">
+                                       <h4 class="text-sm font-medium text-gray-800">Apple iPad</h4>
+                                       <span class="text-xs text-gray-500 mb-1">10.2-inch Retina Display, 64GB.</span>
+                                       <div class="flex items-center gap-2">
+                                          <span class="text-blue-600 font-semibold">$299</span>
+                                          <span class="text-gray-400 line-through text-sm">$350</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-5 bg-white w-full max-w-sm">
+                           <h3 class="text-base font-semibold text-gray-800 mb-4">Contact Information</h3>
+                           <div class="flex flex-col gap-4 text-sm text-gray-700">
+                              <!-- Contact Person -->
+                              <div class="flex items-start gap-3">
+                                 <i class="fa-regular fa-user text-gray-500 text-base mt-[2px]"></i>
+                                 <div class="flex flex-col">
+                                    <span class="font-medium text-gray-800" th:text="*{user.fullName}"></span>
+                                    <span class="text-gray-500 text-xs">Contact Person</span>
+                                 </div>
+                              </div>
+                              <!-- Phone -->
+                              <div class="flex items-start gap-3">
+                                 <i class="fa-solid fa-phone text-gray-500 text-base mt-[2px]"></i>
+                                 <div class="flex flex-col">
+                                    <span class="font-medium text-gray-800" th:text="*{user.phoneNumber}"></span>
+                                    <span class="text-gray-500 text-xs">Phone Number</span>
+                                 </div>
+                              </div>
+                              <!-- Email -->
+                              <div class="flex items-start gap-3">
+                                 <i class="fa-regular fa-envelope text-gray-500 text-base mt-[2px]"></i>
+                                 <div class="flex flex-col">
+                                    <span class="font-medium text-gray-800" th:text="*{user.emailAddress}"></span>
+                                    <span class="text-gray-500 text-xs">Email Address</span>
+                                 </div>
+                              </div>
+                              <!-- Company Name -->
+                              <div class="flex items-start gap-3">
+                                 <i class="fa-regular fa-building text-gray-500 text-base mt-[2px]"></i>
+                                 <div class="flex flex-col">
+                                    <span class="font-medium text-gray-800" th:text="*{user.barangay}"></span>
+                                    <span class="text-gray-500 text-xs">Barangay</span>
+                                 </div>
+                              </div>
+                              <!-- Address -->
+                              <div class="flex items-start gap-3">
+                                 <i class="fa-solid fa-location-dot text-gray-500 text-base mt-[2px]"></i>
+                                 <div class="flex flex-col">
+                                    <span class="font-medium text-gray-800" th:text="|*{user.barangay}, *{user.street}, *{user.city}, *{user.province}, *{user.postalCode}|"></span>
+                                    <span class="text-gray-500 text-xs">Address</span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <footer th:replace="~{footer :: footer}"></footer>
+            </div>
+         </main>
+         <script th:inline="javascript">
+            console.log(/*[[${userDto}]]*/'')
+         </script>
+         <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const rating = /*[[${userDto.user.rating}]]*/ 0; // Thymeleaf injects rating
+    const starContainer = document.getElementById("star-container");
+
+    const fullStars = Math.floor(rating);
+    const hasHalf = rating % 1 >= 0.5;
+
+    // 🟡 Full stars
+    for (let i = 0; i < fullStars; i++) {
+      starContainer.innerHTML += '<i class="fa-solid fa-star"></i>';
+    }
+
+    // 🌓 Half star
+    if (hasHalf) {
+      starContainer.innerHTML += '<i class="fa-solid fa-star-half-stroke"></i>';
+    }
+
+    // ⚪ Empty stars
+    const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
+    for (let i = 0; i < emptyStars; i++) {
+      starContainer.innerHTML += '<i class="fa-regular fa-star"></i>';
+    }
+  });
+</script>
+
+      </div>
+   </body>
+</html>

@@ -40,4 +40,6 @@ public class BorrowRequestEntity {
 	private Timestamp updatedDate;
 	
 	private Boolean isDeleted;
+	
+	private Double rating;
 }
