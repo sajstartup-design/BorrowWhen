@@ -191,7 +191,13 @@ public class UserServiceImpl implements UserService {
 	    	outDto.setBirthDate(user.getBirthDate().toString());
 	    }
 
-	    outDto.setGender(user.getGender());
+	    outDto.setGender(user.getGender());    
+	    outDto.setAbout(user.getAbout());
+	    outDto.setBarangay(user.getBarangay());    
+	    outDto.setStreet(user.getStreet());
+	    outDto.setCity(user.getCity());
+	    outDto.setProvince(user.getProvince());
+	    outDto.setPostalCode(user.getPostalCode());	    
 	    outDto.setUserId(user.getUserId());
 	    outDto.setRole(user.getRole());
 	    outDto.setCreatedDate(DateFormatUtil.formatTimestampToString(user.getCreatedDate()));

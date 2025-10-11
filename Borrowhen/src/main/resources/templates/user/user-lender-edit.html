@@ -1,0 +1,333 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Borrowhen | Dashboard</title>
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Fira+Code:wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+   </head>
+   <body>
+      <div class="bg-base-200 flex min-h-screen flex-col">
+         <!-- ---------- HEADER ---------- -->
+         <div th:replace="~{header :: admin-header}"></div>
+         <main class="flex-1 relative">
+            <!-- Blue background section (stays fixed within main) -->
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0">	
+            </div>
+            <!-- Content that appears over the blue section -->
+            <div class="relative z-10 pe-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <div class="flex flex-wrap items-center justify-between">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white">
+                        <li>
+                           <a th:href="@{/admin/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/admin/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Borrowhen</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/admin/lenders}" class="px-2 text-xs flex items-center gap-2 "	>
+                           <span>Lender List</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
+                           <span>Edit Lender</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <hr class="border-t border-white opacity-80" />
+               <div class="flex">
+                  <div class="flex items-center py-4 gap-3">
+                     <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
+                     </div>
+                     <div class="flex flex-col gap-0 text-white">
+                        <span class="text-lg font-bold">Edit Lender</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="bg-white rounded-md">
+                  <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
+                     <form th:action="@{/admin/lenders/edit}" method="POST" th:object="${userDto}">
+                        <input type="hidden" name="encryptedId" th:value="*{encryptedId}" />
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                           <!-- LEFT SIDE — BASIC & ACCOUNT INFORMATION -->
+                           <div class="xl:col-span-2 space-y-6">
+                              <!-- Basic Information -->
+                              <div class="border border-gray-200 rounded-lg p-5">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Basic Information</h2>
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Name -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Name</label>
+                                       <input type="text" name="fullName" placeholder="Esther Howard" required th:value="*{fullName}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- Gender -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Gender</label>
+                                       <select name="gender" required
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                          <option value="">Select gender</option>
+                                          <option th:selected="*{gender == 'Male'}">Male</option>
+                                          <option th:selected="*{gender == 'Female'}">Female</option>
+                                          <option th:selected="*{gender == 'Other'}">Other</option>
+                                       </select>
+                                    </div>
+                                    <!-- Birth Date -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Birth Date</label>
+                                       <input type="date" name="birthDate" required th:value="*{birthDate}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- Phone Number -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Phone Number</label>
+                                       <input type="tel" name="phoneNumber" placeholder="(63) 8745 8745" maxlength="17" required th:value="*{phoneNumber}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- Email -->
+                                    <div class="relative">
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Email Address</label>
+                                       <input type="email" name="emailAddress" placeholder="Email Address" required th:value="*{emailAddress}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 pr-8 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                       <i class="fa-solid fa-envelope text-gray-400 absolute right-3 top-9 text-sm"></i>
+                                    </div>
+                                    <!-- Barangay -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Barangay</label>
+                                       <input type="text" name="barangay" placeholder="Barangay" required th:value="*{barangay}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- Street -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Street</label>
+                                       <input type="text" name="street" placeholder="Street" required th:value="*{street}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- City -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">City</label>
+                                       <input type="text" name="city" placeholder="City" required th:value="*{city}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- Province -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Province</label>
+                                       <select name="province" required th:value="*{province}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                          <option value="">Select province</option>                  
+                                          <option th:selected="*{province == 'Cebu'}">Cebu</option>
+                                       </select>
+                                    </div>
+                                    <!-- Postal Code -->
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Postal Code</label>
+                                       <input type="text" name="postalCode" placeholder="00000" required th:value="*{postalCode}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <!-- About -->
+                                    <div class="md:col-span-2">
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">About</label>
+                                       <textarea name="about" rows="5" placeholder="Add description of the vendor" th:text="*{about}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- Account Information -->
+                              <div class="border border-gray-200 rounded-lg p-5">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Account Information</h2>
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">User ID</label>
+                                       <input type="text" name="userId" placeholder="User ID" required th:value="*{userId}"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <div>
+                                       <label class="block text-sm font-medium text-gray-600 mb-1">Password</label>
+                                       <input type="password" name="password" placeholder="••••••••" required value="**********"
+                                          class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- RIGHT SIDE — PREVIEW -->
+                           <div class="space-y-6">
+                              <!-- Lender Information Preview -->
+                              <div class="border border-gray-200 rounded-lg p-5">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Lender Information Preview</h2>
+                                 <div class="space-y-3 text-sm text-gray-600">
+                                    <p><span class="font-medium">Name:</span> <span id="previewName">—</span></p>
+                                    <p><span class="font-medium">Gender:</span> <span id="previewGender">—</span></p>
+                                    <p><span class="font-medium">Birth Date:</span> <span id="previewBirthDate">—</span></p>
+                                    <p><span class="font-medium">Phone:</span> <span id="previewPhone">—</span></p>
+                                    <p><span class="font-medium">Email:</span> <span id="previewEmail">—</span></p>
+                                    <p><span class="font-medium">Address:</span> <span id="previewAddress">—</span></p>
+                                    <p><span class="font-medium">About:</span> <span id="previewAbout" class="break-words">—</span></p>
+                                 </div>
+                              </div>
+                              <!-- Account Preview -->
+                              <div class="border border-gray-200 rounded-lg p-5">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Account Information Preview</h2>
+                                 <div class="space-y-3 text-sm text-gray-600">
+                                    <p><span class="font-medium">User ID:</span> <span id="previewUserId">—</span></p>
+                                    <p><span class="font-medium">Password:</span> <span id="previewPassword">—</span></p>
+                                 </div>
+                              </div>
+                              <!-- Buttons -->
+                              <div class="flex items-center justify-end gap-3">
+                                 <a th:href="@{/admin/lenders}" class="h-8 px-2 py-1 rounded-md border border-gray-300 text-sm text-gray-600 hover:bg-gray-50">
+                                 Cancel
+                                 </a>
+                                 <button type="submit" class="h-8 px-2 py-1 rounded-md bg-blue-500 text-white text-sm hover:bg-indigo-700 transition">
+                                 <i class="fa-solid fa-check mr-2"></i>Update Lender
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+               <footer th:replace="~{footer :: footer}"></footer>
+            </div>
+         </main>
+      </div>
+      <script>
+		  const phoneInput = document.querySelector('input[name="phoneNumber"]');
+
+			phoneInput.addEventListener('input', (e) => {
+			  let value = e.target.value.replace(/\D/g, ''); // remove non-digits
+			
+			  // Force country code prefix
+			  if (!value.startsWith('63')) {
+			    value = '63' + value;
+			  }
+			
+			  // Limit to +63 plus 10 digits
+			  value = value.slice(0, 12); // '63' + 10 digits
+			
+			  // Format display: (+63) 9XXXXXXXXX
+			  const formatted = value.replace(/^63(\d{0,3})(\d{0,3})(\d{0,4})$/, (_, p1, p2, p3) => {
+			    let output = '(+63)';
+			    if (p1) output += ' ' + p1;
+			    if (p2) output += p2;
+			    if (p3) output += p3;
+			    return output;
+			  });
+			
+			  e.target.value = formatted;
+			});
+
+		  
+         document.addEventListener("DOMContentLoaded", function () {
+           // Map all inputs correctly based on your actual HTML names
+           const inputs = {
+             name: document.querySelector('input[name="fullName"]'),
+             gender: document.querySelector('select[name="gender"]'),
+             birthDate: document.querySelector('input[name="birthDate"]'),
+             phone: document.querySelector('input[name="phoneNumber"]'),
+             email: document.querySelector('input[name="emailAddress"]'),
+             barangay: document.querySelector('input[name="barangay"]'),
+             street: document.querySelector('input[name="street"]'),
+             city: document.querySelector('input[name="city"]'),
+             province: document.querySelector('select[name="province"]'),
+             postal: document.querySelector('input[name="postalCode"]'),
+             about: document.querySelector('textarea[name="about"]'),
+             userId: document.querySelector('input[name="userId"]'),
+             password: document.querySelector('input[name="password"]'),
+           };
+         
+           // Map preview display elements
+           const preview = {
+             name: document.getElementById("previewName"),
+             gender: document.getElementById("previewGender"),
+             birthDate: document.getElementById("previewBirthDate"),
+             phone: document.getElementById("previewPhone"),
+             email: document.getElementById("previewEmail"),
+             address: document.getElementById("previewAddress"),
+             about: document.getElementById("previewAbout"),
+             userId: document.getElementById("previewUserId"),
+             password: document.getElementById("previewPassword"),
+           };
+         
+           // Helper to format birth date nicely
+           function formatDate(value) {
+             if (!value) return "—";
+             const date = new Date(value);
+             return isNaN(date)
+               ? "—"
+               : date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+           }
+         
+           // Helper to mask password
+           function maskPassword(pwd) {
+             if (!pwd) return "—";
+             return "•".repeat(pwd.length > 8 ? 8 : pwd.length);
+           }
+         
+           // Update preview dynamically
+           function updatePreview() {
+             const addressParts = [
+               inputs.street.value,
+               inputs.barangay.value,
+               inputs.city.value,
+               inputs.province.value,
+               inputs.postal.value,
+             ].filter(Boolean).join(", ");
+         
+             preview.name.textContent = inputs.name.value || "—";
+             preview.gender.textContent = inputs.gender.value || "—";
+             preview.birthDate.textContent = formatDate(inputs.birthDate.value);
+             preview.phone.textContent = inputs.phone.value || "—";
+             preview.email.textContent = inputs.email.value || "—";
+             preview.address.textContent = addressParts || "—";
+             preview.about.textContent = inputs.about.value || "—";
+             preview.userId.textContent = inputs.userId.value || "—";
+             preview.password.textContent = maskPassword(inputs.password.value);
+           }
+         
+           // Listen for changes in all input and select fields
+           Object.values(inputs).forEach((input) => {
+             if (!input) return;
+             input.addEventListener("input", updatePreview);
+             input.addEventListener("change", updatePreview);
+           });
+         
+           // Initialize preview on load
+           updatePreview();
+         });
+      </script>
+   </body>
+</html>

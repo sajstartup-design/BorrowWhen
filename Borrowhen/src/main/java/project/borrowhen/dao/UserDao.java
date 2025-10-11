@@ -71,7 +71,7 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 		    "street = :street, " +
 		    "city = :city, " +
 		    "province = :province, " +
-		    "postalCode = :postalCode, " +
+		    "postal_code = :postalCode, " +
 		    "about = :about, " +
 		    "user_id = :userId, " +
 		    "password = CASE WHEN :hasChanged = true THEN :password ELSE password END, " +

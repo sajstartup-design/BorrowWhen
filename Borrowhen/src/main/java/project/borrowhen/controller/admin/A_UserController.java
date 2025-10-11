@@ -94,8 +94,8 @@ public class A_UserController {
 		return "redirect:/admin/lenders";
 	}
 	
-	@GetMapping("/edit")
-	public String showUserEditScreen(Model model,
+	@GetMapping("/admin/lenders/edit")
+	public String showLenderEditScreen(Model model,
 			@RequestParam("encryptedId") String encryptedId,
 			RedirectAttributes ra) {
 		
@@ -115,16 +115,17 @@ public class A_UserController {
 			
 			e.printStackTrace();
 			
-			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 			
-			return "redirect:/admin/user";
+			return "redirect:/admin/lenders";
 		}
 		
-		return "user/user-edit";
+		return "user/user-lender-edit";
 	}
 	
-	@PostMapping("/edit")
-	public String postUserEditScreen(Model model,
+	@PostMapping("/admin/lenders/edit")
+	public String postLenderEditScreen(Model model,
 			@ModelAttribute @Valid UserDto userWebDto, 
 			BindingResult result,
 			RedirectAttributes ra) {
@@ -143,7 +144,7 @@ public class A_UserController {
 	        
 	        ra.addFlashAttribute("userDto", userWebDto);
 	        
-	        return "redirect:/admin/user/edit?encryptedId=" + userWebDto.getEncryptedId();
+	        return "redirect:/admin/lenders/edit?encryptedId=" + userWebDto.getEncryptedId();
 	        
 		}
 		
@@ -151,16 +152,18 @@ public class A_UserController {
 			
 			userService.editUser(userWebDto);
 			
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.USER_EDIT_MSG);
 			
 		} catch(Exception e) {
 			
 			e.printStackTrace();
 			
-			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 
-		return "redirect:/admin/user";
+		return "redirect:/admin/lenders";
 	}
 	
 	@GetMapping("/admin/lenders/details")
