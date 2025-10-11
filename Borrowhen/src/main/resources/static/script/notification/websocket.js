@@ -8,9 +8,8 @@ stompClient.onConnect = (frame) => {
         showGreeting(JSON.parse(greeting.body).content);
     });
 	
-	stompClient.subscribe('/user/queue/lender/notifications', (notification) => {
-        const data = notification.body;
-		
+	stompClient.subscribe('/user/queue/lender/notifications', () => {
+
 		// Add pulsating effect
 	    const notifIcon = document.querySelector('.notification-icon');
 		updateNotificationCount();
@@ -18,13 +17,13 @@ stompClient.onConnect = (frame) => {
 		
 		if(notifIcon){
 			notifIcon.classList.add('pulsating-bell', 'bell-ringing');
-			updateNotificationModal(notifIcon);
+			updateNotificationModal(null, true);
 			 
 		}
 
     });
 	
-	stompClient.subscribe('/user/queue/new-item/notifications', (notification) => {
+	stompClient.subscribe('/user/queue/new-item/notifications', () => {
 		
 		// Add pulsating effect
 	    const notifIcon = document.querySelector('.notification-icon');
@@ -32,22 +31,21 @@ stompClient.onConnect = (frame) => {
 		
 		if(notifIcon){
 			notifIcon.classList.add('pulsating-bell', 'bell-ringing');
-			updateNotificationModal(notifIcon);
+			updateNotificationModal(null, true);
 			 
 		}
 
     });
 	
-	stompClient.subscribe('/user/queue/borrower/notifications', (notification) => {
-        const data = notification.body;
-		
+	stompClient.subscribe('/user/queue/borrower/notifications', () => {
+
 		// Add pulsating effect
 	    const notifIcon = document.querySelector('.notification-icon');
 		updateNotificationCount();
 		
 		if(notifIcon){
 			notifIcon.classList.add('pulsating-bell', 'bell-ringing');
-			updateNotificationModal(notifIcon);
+			updateNotificationModal(null, true);
 		}
 
     });

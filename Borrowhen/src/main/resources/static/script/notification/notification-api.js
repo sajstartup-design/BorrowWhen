@@ -1,17 +1,16 @@
-// --- notification-api.js ---
-
 let openedModals = new WeakSet();
 
 document.addEventListener("DOMContentLoaded", async () => {
-	
-	const notificationIcon = document.querySelector('.notification-icon');
-  if (notificationIcon) {
-    updateNotificationModal(notificationIcon);
-  }
-
+  const notificationIcon = document.querySelector('.notification-icon');
+  
+  // Load notification modal initially (no need to click)
+  await updateNotificationModal(notificationIcon, true);
+  
+  // Also update count
   await updateNotificationCount();
 });
 
+// 🔹 Fetch and display notification count
 async function updateNotificationCount() {
   try {
     const res = await fetch(`/api/notifications/count`);
@@ -24,11 +23,8 @@ async function updateNotificationCount() {
     if (!notifBtn || !notifBadge || !notificationIcon) return;
 
     const count = data.notificationCount ?? 0;
-
-    // Store count in the icon's dataset for other scripts
     notificationIcon.dataset.count = count;
 
-    // Show badge only if there are notifications
     if (count > 0) {
       notifBadge.textContent = count;
       notifBadge.classList.remove('hidden');
@@ -37,31 +33,28 @@ async function updateNotificationCount() {
       notifBadge.classList.add('hidden');
     }
 
-    // Reset tracked modals
+    // Reset modal cache
     openedModals = new WeakSet();
   } catch (error) {
     console.error("Error fetching notification count:", error);
   }
 }
 
-
-// 🔹 Populate notification modal dynamically
-async function updateNotificationModal(triggerElement) {
+// 🔹 Build Notification Modal
+async function updateNotificationModal(triggerElement, forceRefresh = false) {
   try {
-    // Prevent reloading if already opened
-    if (openedModals.has(triggerElement)) return;
-
     const notificationsList = document.querySelector(".notifications-list");
     if (!notificationsList) return;
+
+    // Skip reload if already opened and not forced
+    if (triggerElement && openedModals.has(triggerElement) && !forceRefresh) return;
 
     // Fetch notifications
     const response = await fetch(`/api/notifications`);
     const data = await response.json();
 
-    notificationsList.innerHTML = ""; // Clear old list
-    const frag = document.createDocumentFragment();
+    notificationsList.innerHTML = ""; // Clear previous
 
-    // No notifications
     if (!data.notifications || data.notifications.length === 0) {
       notificationsList.innerHTML = `
         <li class="px-4 py-3 text-gray-500 text-center text-sm">No new notifications</li>
@@ -69,12 +62,12 @@ async function updateNotificationModal(triggerElement) {
       return;
     }
 
+    const frag = document.createDocumentFragment();
+
     data.notifications.forEach((notification) => {
       const li = document.createElement("li");
-      li.className =
-        "px-4 py-2 hover:bg-gray-100 flex items-start gap-3 border-b border-gray-100";
+      li.className = "px-4 py-2 hover:bg-gray-100 flex items-start gap-3 border-b border-gray-100";
 
-      // Icon logic
       let iconClass = "fa-info-circle";
       let colorClass = "text-gray-500";
 
@@ -94,10 +87,9 @@ async function updateNotificationModal(triggerElement) {
         case "REQUEST_PAYMENT_PENDING":
           iconClass = "fa-credit-card"; colorClass = "text-pink-500"; break;
         case "OVERDUE":
-    	  iconClass = "fa-exclamation-triangle"; colorClass = "text-orange-500"; break;
+          iconClass = "fa-exclamation-triangle"; colorClass = "text-orange-500"; break;
       }
 
-      // Layout
       li.innerHTML = `
         <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
         <div class="flex flex-col text-sm text-gray-700 leading-tight">
@@ -111,10 +103,8 @@ async function updateNotificationModal(triggerElement) {
 
     notificationsList.appendChild(frag);
 
-    // Mark modal as opened
-    openedModals.add(triggerElement);
+    if (triggerElement) openedModals.add(triggerElement);
   } catch (error) {
     console.error("Error fetching notifications:", error);
   }
 }
-

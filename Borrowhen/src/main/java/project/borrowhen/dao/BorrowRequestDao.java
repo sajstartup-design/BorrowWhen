@@ -171,7 +171,7 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	public final String FIND_ONGOING_AND_OVERDUE = """
 	    SELECT b 
 	    FROM BorrowRequestEntity b
-	    WHERE b.status = 'ON GOING'
+	    WHERE b.status IN ('ON GOING', 'OVERDUE')
 	    AND b.dateToReturn <= :today
 	""";
 
