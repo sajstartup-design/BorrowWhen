@@ -178,8 +178,14 @@ public class UserServiceImpl implements UserService {
 		
 		UserDto outDto = new UserDto();
 		
-		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+		int id = 0;
 		
+		if(CommonConstant.ROLE_BORROWER.equals(inDto.getEncryptedId())) {
+			id = getLoggedInUser().getId();
+		}else {
+			id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+		}
+
 		UserEntity user = userDao.getUser(id);
 		
 	    outDto.setEncryptedId(inDto.getEncryptedId());
