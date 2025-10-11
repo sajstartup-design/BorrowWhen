@@ -84,6 +84,7 @@ public class SecurityConfig {
 						.requestMatchers("/admin/borrowers/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/request/**").hasAuthority(CommonConstant.ROLE_ADMIN)
+						.requestMatchers("/admin/settings/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						
 						.requestMatchers("/api/admin/user/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/api/admin/inventory/**").hasAuthority(CommonConstant.ROLE_ADMIN)
