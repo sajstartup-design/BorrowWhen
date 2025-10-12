@@ -27,6 +27,9 @@ public class MessageConstant {
 	
     public static final String REGISTER_SUCCESS = "Thank you for registering with us. Enjoy!";
     
+	public static final String ACCOUNT_EDIT_MSG = "Information has been successfully updated.";
+
+    
     public static final String FIELDS_BLANK = "Please fill all the fields!";
 	
 	

@@ -277,7 +277,14 @@ public class UserServiceImpl implements UserService {
 		
 		Date dateNow = Date.valueOf(LocalDate.now());
 		
-		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+		int id = 0;
+		
+		if(CommonConstant.ROLE_BORROWER.equals(inDto.getEncryptedId())) {
+			id = getLoggedInUser().getId();
+		}else {
+			id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+		}
+		
 		
 		//Check if the password has been changed
 		boolean hasChanged = false; 
@@ -286,10 +293,14 @@ public class UserServiceImpl implements UserService {
 			hasChanged = true;
 		}
 		
+		Date birthDate = inDto.getBirthDate() != null && !inDto.getBirthDate().isEmpty()
+		        ? Date.valueOf(inDto.getBirthDate())
+		        : null;
+		
 		userDao.updateUser(id,
 				inDto.getFullName(),
 				inDto.getGender(),
-				Date.valueOf(inDto.getBirthDate()),
+				birthDate,
 				inDto.getPhoneNumber(),
 				inDto.getEmailAddress(),
 				inDto.getBarangay(),
