@@ -18,7 +18,7 @@
       	<div th:replace="~{alert :: error}"></div>
       </th:block>
       <div class="bg-base-200 flex min-h-screen flex-col">
-         <div th:replace="~{header :: header-borrower}"></div>
+         <div th:replace="~{header :: header-lender}"></div>
 
          <main class="flex-1 relative" th:object="${userDto}">
             <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
@@ -59,7 +59,7 @@
 
                   <!-- Form Section -->
                   <section class="flex-1 flex flex-col gap-8">
-                     <form th:action="@{/my-account}" method="post" class="flex flex-col gap-4">
+                     <form th:action="@{/lender/my-account}" method="post" class="flex flex-col gap-4">
                         <!-- Personal Information -->
                         <div>
                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Personal Information</h3>

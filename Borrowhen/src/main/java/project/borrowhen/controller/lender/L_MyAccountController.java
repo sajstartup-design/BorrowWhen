@@ -1,4 +1,4 @@
-package project.borrowhen.controller;
+package project.borrowhen.controller.lender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +14,12 @@ import project.borrowhen.dto.UserDto;
 import project.borrowhen.service.UserService;
 
 @Controller
-public class MyAccountController {
+public class L_MyAccountController {
 	
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/my-account")
+	@GetMapping("/lender/my-account")
 	public String showMyAccount(Model model,
 			RedirectAttributes ra) {
 		
@@ -40,13 +40,13 @@ public class MyAccountController {
 			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 			
-			return "redirect:/dashboard";
+			return "redirect:/lender/dashboard";
 		}
 
-		return "user/borrower-profile";
+		return "user/lender-profile";
 	}
 	
-	@PostMapping("/my-account")
+	@PostMapping("/lender/my-account")
 	public String postMyAccount(@ModelAttribute UserDto userWebDto,
 			RedirectAttributes ra) {
 		
@@ -66,6 +66,6 @@ public class MyAccountController {
 			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
-		return "redirect:/my-account";
+		return "redirect:/lender/my-account";
 	}
 }
