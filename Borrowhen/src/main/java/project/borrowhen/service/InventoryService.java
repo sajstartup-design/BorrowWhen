@@ -21,6 +21,8 @@ public interface InventoryService {
 	
 	public void editInventory(InventoryDto inDto) throws Exception;
 	
+	public InventoryDto getLenderInventoryOverview() throws Exception;
+	
 	
 	/*
 	 * To be used from another services

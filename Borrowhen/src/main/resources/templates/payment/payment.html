@@ -118,7 +118,7 @@
             </div>
          </main>
       </div>
-      <script th:script="${/script/loading.js}"></script>
+      <script th:script="@{/script/loading.js}"></script>
       <!-- Stripe Payment Script -->
       <script th:inline="javascript">
          const publicKey = /*[[${publicKey}]]*/ '';

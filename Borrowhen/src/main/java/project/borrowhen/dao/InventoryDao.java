@@ -14,6 +14,7 @@ import org.springframework.data.repository.query.Param;
 import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
+import project.borrowhen.dao.entity.LenderInventoryOverview;
 
 public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	
@@ -142,6 +143,28 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	@Query(GET_RECENT_INVENTORY_BY_USER_ID)
 	public List<InventoryData> getRecentInventory(@Param("userId") int userId, 
 			Pageable pageable) throws DataAccessException;
+	
+	public static final String GET_LENDER_INVENTORY_OVERVIEW = """
+		    SELECT DISTINCT
+		        CAST(COUNT(DISTINCT e.id) AS integer) AS totalItem,
+		        CAST(SUM(e.totalQty) AS integer) AS totalQty,
+		        CAST(SUM(e.availableQty) AS integer) AS totalAvailableQty,
+		        COALESCE(
+		            SUM(
+		                CASE WHEN br.status = 'PAID' THEN br.price * br.qty ELSE 0 END
+		            ),
+		            0
+		        ) AS totalRevenue
+		    FROM InventoryEntity e
+		    LEFT JOIN BorrowRequestEntity br 
+		        ON br.inventoryId = e.id AND br.status = 'PAID'
+		    WHERE e.userId = :userId
+		""";
+
+
+
+	@Query(GET_LENDER_INVENTORY_OVERVIEW)
+	public LenderInventoryOverview getLenderInventoryOverview(@Param("userId") int userId) throws DataAccessException;
 
 
 }

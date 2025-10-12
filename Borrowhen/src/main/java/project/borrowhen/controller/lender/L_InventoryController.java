@@ -29,7 +29,22 @@ public class L_InventoryController {
 	private InventoryService inventoryService;
 	
 	@GetMapping()
-	public String showInventoryScreen() {
+	public String showInventoryScreen(Model model,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			InventoryDto outDto = inventoryService.getLenderInventoryOverview();
+			
+			model.addAttribute("inventoryDto", outDto);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			ra.addFlashAttribute("isError", true);
+	        ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+	        
+	        return "redirect:/dashboard";
+		}
 		
 		return "inventory/lender/inventory-view";
 	}
