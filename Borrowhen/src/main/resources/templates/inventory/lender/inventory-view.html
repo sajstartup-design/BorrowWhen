@@ -82,54 +82,51 @@
                         <!-- In-store Sales -->
                         <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
                            <div class="space-y-1">
-                              <p class="text-gray-500 text-sm">In-store Sales</p>
-                              <div class="text-gray-800 text-lg font-semibold">$5,345.43</div>
+                              <p class="text-gray-500 text-sm">Total Items</p>
+                              <div class="text-gray-800 text-lg font-semibold">0</div>
                               <div class="flex items-center gap-2 text-xs">
-                                 <p class="text-gray-500">5k orders</p>
-                                 <p class="bg-green-50 text-green-600 px-2 py-0.5 rounded font-semibold">+5.7%</p>
+                                 <p class="text-gray-500">All registered items</p>
                               </div>
                            </div>
                            <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
-                              <i class="fa-solid fa-store text-gray-600 text-lg"></i>
+                              <i class="fa-solid fa-boxes-stacked text-gray-600 text-lg"></i>
                            </div>
                         </div>
                         <!-- Website Sales -->
                         <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
                            <div class="space-y-1">
-                              <p class="text-gray-500 text-sm">Website Sales</p>
-                              <div class="text-gray-800 text-lg font-semibold">$674,347.12</div>
+                              <p class="text-gray-500 text-sm">Total Quantity</p>
+                              <div class="text-gray-800 text-lg font-semibold">0</div>
                               <div class="flex items-center gap-2 text-xs">
-                                 <p class="text-gray-500">21k orders</p>
-                                 <p class="bg-green-50 text-green-600 px-2 py-0.5 rounded font-semibold">+12.4%</p>
+                                 <p class="text-gray-500 text-xs">Combined stock count</p>
                               </div>
                            </div>
                            <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
-                              <i class="fa-solid fa-laptop text-gray-600 text-lg"></i>
+                              <i class="fa-solid fa-cubes text-gray-600 text-lg"></i>
                            </div>
                         </div>
                         <!-- Discount -->
                         <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
                            <div class="space-y-1">
-                              <p class="text-gray-500 text-sm">Discount</p>
-                              <div class="text-gray-800 text-lg font-semibold">$14,235.12</div>
-                              <p class="text-xs text-gray-500">6k orders</p>
+                              <p class="text-gray-500 text-sm">Total Available Quantity</p>
+                              <div class="text-gray-800 text-lg font-semibold">0</div>
+                              <p class="text-gray-500 text-xs">Currently borrowable items</p>
                            </div>
                            <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
-                              <i class="fa-solid fa-gift text-gray-600 text-lg"></i>
+                             <i class="fa-solid fa-hand-holding text-gray-600 text-lg"></i>
                            </div>
                         </div>
                         <!-- Affiliate -->
                         <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
                            <div class="space-y-1">
-                              <p class="text-gray-500 text-sm">Affiliate</p>
-                              <div class="text-gray-800 text-lg font-semibold">$8,345.23</div>
+                              <p class="text-gray-500 text-sm">Total Revenue</p>
+                              <div class="text-gray-800 text-lg font-semibold">₱0</div>
                               <div class="flex items-center gap-2 text-xs">
-                                 <p class="text-gray-500">150 orders</p>
-                                 <p class="bg-red-50 text-red-600 px-2 py-0.5 rounded font-semibold">-3.5%</p>
+                                 <p class="text-gray-500 text-xs">From all paid request</p>
                               </div>
                            </div>
                            <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
-                              <i class="fa-solid fa-wallet text-gray-600 text-lg"></i>
+                              <i class="fa-solid fa-sack-dollar text-gray-600 text-lg"></i>
                            </div>
                         </div>
                      </div>
@@ -139,24 +136,9 @@
                            <h2 class="text-lg font-semibold mb-4">Filter</h2>
                            <div class="flex flex-wrap gap-4">
                               <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                 <option>Status</option>
-                                 <option>Scheduled</option>
-                                 <option>Publish</option>
-                                 <option>Inactive</option>
-                              </select>
-                              <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                 <option>Category</option>
-                                 <option>Household</option>
-                                 <option>Office</option>
-                                 <option>Electronics</option>
-                                 <option>Shoes</option>
-                                 <option>Accessories</option>
-                                 <option>Game</option>
-                              </select>
-                              <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                  <option>Stock</option>
-                                 <option>Out of Stock</option>
-                                 <option>In Stock</option>
+                                 <option value="0">Out of Stock</option>
+                                 <option value="1">In Stock</option>
                               </select>
                            </div>
                         </div>
