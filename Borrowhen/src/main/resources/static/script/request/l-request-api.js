@@ -203,7 +203,7 @@ async function loadRequests(page = 0, search = "") {
         if (data.requests && data.requests.length > 0) {
             data.requests.forEach((request) => {
                 const row = document.createElement("tr");
-                row.className = "hover:bg-gray-50 transition";
+                row.className = "hover:bg-gray-50 transition border-b border-gray-300";
                 row.setAttribute("data-id", request.encryptedId);
 
                 const status = request.status?.toLowerCase().replace(" ", "").trim();
