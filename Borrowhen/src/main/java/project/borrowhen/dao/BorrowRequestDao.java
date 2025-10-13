@@ -194,11 +194,12 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PENDING' THEN 1 ELSE 0 END) AS integer), 0) AS totalPending,
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'APPROVED' THEN 1 ELSE 0 END) AS integer), 0) AS totalApproved,
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'ON GOING' THEN 1 ELSE 0 END) AS integer), 0) AS totalOngoing,
-		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PENDING PAYMENT' THEN 1 ELSE 0 END) AS integer), 0) AS totalPendingPayment,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN 1 ELSE 0 END) AS integer), 0) AS totalPendingPayment,
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN 1 ELSE 0 END) AS integer), 0) AS totalPaid,
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'OVERDUE' THEN 1 ELSE 0 END) AS integer), 0) AS totalOverdue
 		    FROM InventoryEntity i
 		    LEFT JOIN BorrowRequestEntity br ON br.inventoryId = i.id
+		    WHERE i.userId = :userId
 		""";
 
 
