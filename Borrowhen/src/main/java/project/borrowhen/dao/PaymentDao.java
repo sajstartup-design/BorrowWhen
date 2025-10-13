@@ -116,13 +116,14 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 	
 	public static final String GET_LENDER_PAYMENT_OVERVIEW = """
 		    SELECT 
-		        CAST(SUM(CASE WHEN br.status = 'PAID' THEN 1 ELSE 0 END) AS INTEGER) AS totalPaid,
-		        CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN 1 ELSE 0 END) AS INTEGER) AS totalPending,
-		        CAST(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END) AS DOUBLE) AS totalRevenue,
-		        CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN (br.price * br.qty) ELSE 0 END) AS DOUBLE) AS expectedRevenue
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN 1 ELSE 0 END) AS INTEGER), 0) AS totalPaid,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN 1 ELSE 0 END) AS INTEGER), 0) AS totalPending,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END) AS DOUBLE), 0) AS totalRevenue,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN (br.price * br.qty) ELSE 0 END) AS DOUBLE), 0) AS expectedRevenue
 		    FROM BorrowRequestEntity br
 		    WHERE br.status IN ('PAID', 'PAYMENT PENDING')
 		""";
+
 
 	@Query(GET_LENDER_PAYMENT_OVERVIEW)
 	public PaymentOverview getLenderPaymentOverview() throws DataAccessException;
