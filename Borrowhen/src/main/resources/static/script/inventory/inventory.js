@@ -59,8 +59,6 @@ async function loadInventories(page = 0, search = "") {
     const url = `/api/inventory?${params.toString()}`;
     const response = await fetch(url);
     const data = await response.json();
-	
-	console.log(data);
 
     const itemList = document.getElementById("itemList");
     itemList.innerHTML = "";

@@ -73,7 +73,7 @@
                   </div>
                </div>
                <!-- Content Card -->
-               <div class="bg-white rounded-md shadow-md p-6">
+               <div class="bg-white rounded-md shadow-md p-6 text-gray-500">
                   <!-- Search & Filters -->
                   <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
                      <!-- Search -->
@@ -83,30 +83,62 @@
                            type="search"
                            id="filter-search"
                            placeholder="Search Inventory"
-                           class="w-full sm:w-64 border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-600 placeholder-gray-400"
+                           class="search w-full sm:w-64 border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-600 placeholder-gray-400"
                            />
                      </div>
                      <!-- Filters -->
                      <div class="flex items-center gap-3 flex-wrap">
-                        <select
-                           id="categoryFilter"
-                           class="border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
-                           >
-                           <option value="">All Categories</option>
-                           <option>Books</option>
-                           <option>Tools</option>
-                           <option>Equipment</option>
-                           <option>Gadgets</option>
-                        </select>
-                        <select
-                           id="availabilityFilter"
-                           class="border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
-                           >
-                           <option value="">All Status</option>
-                           <option value="available">Available</option>
-                           <option value="borrowed">Borrowed</option>
-                        </select>
-                     </div>
+  <!-- Category Filter -->
+  <select
+    id="categoryFilter"
+    class="border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
+  >
+    <option value="">All Categories</option>
+    <option>Books</option>
+    <option>Tools</option>
+    <option>Equipment</option>
+    <option>Gadgets</option>
+  </select>
+
+  <!-- Availability Filter -->
+  <select
+    id="availabilityFilter"
+    class="border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
+  >
+    <option value="">All Status</option>
+    <option value="available">Available</option>
+    <option value="borrowed">Borrowed</option>
+  </select>
+
+  <!-- ✅ Pagination Controls -->
+  <div class="flex items-center gap-2 ml-auto">
+    <button
+      class="prev-btn flex items-center gap-2 h-8 px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 transition disabled:opacity-50"
+      disabled
+    >
+      <i class="fa-solid fa-angle-left"></i>
+      <span>Prev</span>
+    </button>
+
+    <div class="flex items-center gap-1">
+      <input
+        type="number"
+        class="input-page w-16 h-8 px-2 py-1 text-sm border border-gray-300 rounded-md text-center focus:ring-2 focus:ring-blue-400 focus:outline-none"
+        value="1"
+        min="1"
+      />
+    </div>
+
+    <button
+      class="next-btn flex items-center gap-2 h-8 px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 transition disabled:opacity-50"
+    >
+      <span>Next</span>
+      <i class="fa-solid fa-angle-right"></i>
+    </button>
+  </div>
+</div>
+
+
                   </div>
                   <!-- Item Grid -->
                   <div id="itemList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
