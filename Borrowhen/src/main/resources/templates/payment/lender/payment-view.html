@@ -32,7 +32,7 @@
       <div class="bg-base-200 flex min-h-screen flex-col">
          <!-- ---------- HEADER ---------- -->
          <div th:replace="~{header :: header-lender}"></div>
-         <main class="flex-1 relative">
+         <main class="flex-1 relative" th:object="${paymentDto}">
             <!-- Blue background section (stays fixed within main) -->
             <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
             <!-- Content that appears over the blue section -->
@@ -83,7 +83,7 @@
 						<div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
 						  <div class="space-y-1">
 						    <p class="text-gray-500 text-sm font-medium">Total Paid</p>
-						    <div class="text-gray-800 text-lg font-semibold">0</div>
+						    <div class="text-gray-800 text-lg font-semibold" th:text="*{overview.totalPaid}">0</div>
 						    <p class="text-xs text-gray-500">Completed and cleared payments</p>
 						  </div>
 						  <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
@@ -95,7 +95,7 @@
 						<div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
 						  <div class="space-y-1">
 						    <p class="text-gray-500 text-sm font-medium">Pending Payments</p>
-						    <div class="text-gray-800 text-lg font-semibold">0</div>
+						    <div class="text-gray-800 text-lg font-semibold" th:text="*{overview.totalPending}">0</div>
 						    <p class="text-xs text-gray-500">Awaiting borrower settlements</p>
 						  </div>
 						  <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
@@ -107,7 +107,7 @@
 						<div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
 						  <div class="space-y-1">
 						    <p class="text-gray-500 text-sm font-medium">Total Revenue</p>
-						    <div class="text-gray-800 text-lg font-semibold">₱0</div>
+						    <div class="text-gray-800 text-lg font-semibold" th:text="|₱ *{overview.totalRevenue}|">₱0</div>
 						    <p class="text-xs text-gray-500">All paid earnings</p>
 						  </div>
 						  <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
@@ -119,7 +119,7 @@
 						<div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
 						  <div class="space-y-1">
 						    <p class="text-gray-500 text-sm font-medium">Expected Revenue</p>
-						    <div class="text-gray-800 text-lg font-semibold">₱0</div>
+						    <div class="text-gray-800 text-lg font-semibold" th:text="|₱ *{overview.expectedRevenue}|">₱0</div>
 						    <p class="text-xs text-gray-500">Pending earnings</p>
 						  </div>
 						  <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">

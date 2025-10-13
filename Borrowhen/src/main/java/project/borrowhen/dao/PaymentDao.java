@@ -121,11 +121,12 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END) AS DOUBLE), 0) AS totalRevenue,
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN (br.price * br.qty) ELSE 0 END) AS DOUBLE), 0) AS expectedRevenue
 		    FROM BorrowRequestEntity br
+		    INNER JOIN InventoryEntity i ON i.id = br.inventoryId AND i.userId = :userId
 		    WHERE br.status IN ('PAID', 'PAYMENT PENDING')
 		""";
 
 
 	@Query(GET_LENDER_PAYMENT_OVERVIEW)
-	public PaymentOverview getLenderPaymentOverview() throws DataAccessException;
+	public PaymentOverview getLenderPaymentOverview(@Param("userId") int userId) throws DataAccessException;
   
 }

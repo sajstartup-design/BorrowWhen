@@ -3,6 +3,7 @@ package project.borrowhen.dto;
 import java.util.List;
 
 import lombok.Data;
+import project.borrowhen.dao.entity.PaymentOverview;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.object.PaymentObj;
@@ -31,5 +32,7 @@ public class PaymentDto {
 	private FilterAndSearchObj filter;
 	
 	private boolean paid;
+	
+	private PaymentOverview overview;
 	
 }

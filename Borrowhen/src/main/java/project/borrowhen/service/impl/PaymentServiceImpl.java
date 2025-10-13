@@ -25,6 +25,7 @@ import project.borrowhen.common.util.StripeUtil;
 import project.borrowhen.dao.PaymentDao;
 import project.borrowhen.dao.entity.PaymentData;
 import project.borrowhen.dao.entity.PaymentEntity;
+import project.borrowhen.dao.entity.PaymentOverview;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.PaymentDto;
 import project.borrowhen.object.FilterAndSearchObj;
@@ -306,5 +307,19 @@ public class PaymentServiceImpl implements PaymentService{
         } 
         
         return outDto;
+	}
+
+	@Override
+	public PaymentDto getLenderPaymentOverview() throws Exception {
+		
+		PaymentDto outDto = new PaymentDto();
+		
+		UserEntity user = userService.getLoggedInUser();
+		
+		PaymentOverview overview = paymentDao.getLenderPaymentOverview(user.getId());
+		
+		outDto.setOverview(overview);
+		
+		return outDto;
 	}
 }
