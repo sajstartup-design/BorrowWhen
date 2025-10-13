@@ -19,8 +19,8 @@
          <div class="bb ze ki xn 2xl:ud-px-0 oo wf yf i">
             <div class="vd to/4 tc wf yf">
                <a href="index.html" class="flex items-center">
-               <img class="om wd" th:src="@{/images/logo.png}" alt="Logo Light" />
-               <img class="xc nm wd" th:src="@{/images/logo.png}" alt="Logo Dark" />
+	               <img class="om wd" th:src="@{/images/logo.png}" alt="Logo Light" />
+	               <img class="xc nm wd" th:src="@{/images/logo.png}" alt="Logo Dark" />
                </a>
                <!-- Hamburger Toggle BTN -->
                <button class="po rc" @click="navigationOpen = !navigationOpen">
@@ -41,7 +41,7 @@
             <div class="vd wo/4 sd qo f ho oo wf yf" :class="{ 'd hh rm sr td ud qg ug jc yh': navigationOpen }">
                <nav>
                   <ul class="tc _o sf yo cg ep">
-                     <li><a href="index.html" class="xl" :class="{ 'mk': page === 'home' }">Home</a></li>
+                     <li><a th:href="@{/}" class="xl" :class="{ 'mk': page === 'home' }">Home</a></li>
                      <li><a href="index.html#features" class="xl">Features</a></li>
                      <li><a href="index.html#support" class="xl">Support</a></li>
                   </ul>
@@ -61,9 +61,9 @@
                         <img class="xc nm" src="images/icon-moon.svg" alt="Moon" />
                      </label>
                   </div>
-                  <a href="signin.html" :class="{ 'nk yl' : page === 'home', 'ok' : page === 'home' && stickyMenu }"
+                  <a th:href="@{/login}" :class="{ 'nk yl' : page === 'home', 'ok' : page === 'home' && stickyMenu }"
                      class="ek pk xl">Sign In</a>
-                  <a href="signup.html" :class="{ 'hh/[0.15]' : page === 'home', 'sh' : page === 'home' && stickyMenu }"
+                  <a th:href="@{/register}" :class="{ 'hh/[0.15]' : page === 'home', 'sh' : page === 'home' && stickyMenu }"
                      class="lk gh dk rg tc wf xf _l gi hi">Sign Up</a>
                </div>
             </div>

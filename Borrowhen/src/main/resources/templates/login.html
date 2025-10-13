@@ -1,153 +1,202 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" data-theme="corporate" class="bg-gray-50">
+<html lang="en">
    <head>
       <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Borrowhen | Login</title>
-      <script src="https://cdn.tailwindcss.com"></script>
-      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-         rel="stylesheet"
-         />
-      <link rel="stylesheet" th:href="@{/css/style.css}" />
-      <link rel="stylesheet" th:href="@{/css/output.css}" />
-      <style>
-         body {
-         font-family: "Inter", sans-serif;
-         }
-      </style>
+      <title>Sign In | Base - Tailwind CSS Startup Template</title>
+      <link rel="icon" href="favicon.ico">
+      <link th:href="@{/css/style-2.css}" rel="stylesheet">
    </head>
-   <body class="relative flex items-center justify-center min-h-screen overflow-hidden">
-      <th:block th:if="${isSuccess}">
-         <div th:replace="~{alert :: success}"></div>
-      </th:block>
-      <th:block th:if="${isError}">
-         <div th:replace="~{alert :: alert}"></div>
-      </th:block>
-      <!-- Blurred Background -->
-      <div class="absolute inset-0 bg-[url('/images/login-bg.png')] bg-cover bg-center blur-sm"></div>
-      <!-- Optional translucent overlay -->
-      <div class="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
-      <!-- Login Card (now visible on top) -->
-      <div
-         class="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-md p-10 border border-gray-100"
-         >
-         <!-- Icon -->
-         <div class="flex justify-center mb-6">
-            <div
-               class="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-b from-blue-400 to-blue-500"
-               >
-               <img th:src="@{/images/logo.png}" alt="Logo">
+   <body x-data="{ page: 'signin', 'darkMode': true, 'stickyMenu': false, 'navigationOpen': false, 'scrollTop': false }"
+      x-init="
+      darkMode = JSON.parse(localStorage.getItem('darkMode'));
+      $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+      :class="{'b eh': darkMode === true}">
+      <!-- ===== Header Start ===== -->
+      <header class="g s r vd ya cj" :class="{ 'hh sm _k dj bl ll' : stickyMenu }"
+         @scroll.window="stickyMenu = (window.pageYOffset > 20) ? true : false">
+         <div class="bb ze ki xn 2xl:ud-px-0 oo wf yf i">
+            <div class="vd to/4 tc wf yf">
+               <a th:href="@{/}" class="tc wf xf fg">
+	               <img class="om wd" th:src="@{/images/logo.png}" alt="Logo Light" />
+	               <img class="xc nm wd" th:src="@{/images/logo.png}" alt="Logo Dark" />
+               </a>
+               <!-- Hamburger Toggle BTN -->
+               <button class="po rc" @click="navigationOpen = !navigationOpen">
+               <span class="rc i pf re pd">
+               <span class="du-block h q vd yc">
+               <span class="rc i r s eh um tg te rd eb ml jl dl" :class="{ 'ue el': !navigationOpen }"></span>
+               <span class="rc i r s eh um tg te rd eb ml jl fl" :class="{ 'ue qr': !navigationOpen }"></span>
+               <span class="rc i r s eh um tg te rd eb ml jl gl" :class="{ 'ue hl': !navigationOpen }"></span>
+               </span>
+               <span class="du-block h q vd yc lf">
+               <span class="rc eh um tg ml jl el h na r ve yc" :class="{ 'sd dl': !navigationOpen }"></span>
+               <span class="rc eh um tg ml jl qr h s pa vd rd" :class="{ 'sd rr': !navigationOpen }"></span>
+               </span>
+               </span>
+               </button>
+               <!-- Hamburger Toggle BTN -->
             </div>
-         </div>
-         <!-- Welcome Text -->
-         <h2 class="text-center text-2xl font-semibold text-gray-800 mb-2">
-            Welcome Back
-         </h2>
-         <p class="text-center text-gray-500 text-sm mb-8">
-            Please enter your details to sign in
-         </p>
-         <!-- Social Buttons -->
-         <div class="flex justify-center gap-3 mb-6">
-            <button
-               class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
-               >
-            <img
-               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-               class="w-5 h-5"
-               alt="Google"
-               />
-            </button>
-            <button
-               class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
-               >
-            <img
-               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg"
-               class="w-5 h-5"
-               alt="Facebook"
-               />
-            </button>
-            <button
-               class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
-               >
-            <img
-               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
-               class="w-5 h-5"
-               alt="GitHub"
-               />
-            </button>
-         </div>
-         <!-- Divider -->
-         <div class="flex items-center mb-6">
-            <hr class="flex-grow border-gray-200" />
-            <span class="px-3 text-gray-400 text-sm">or</span>
-            <hr class="flex-grow border-gray-200" />
-         </div>
-         <!-- Form -->
-         <form th:action="@{/login}" method="POST">
-            <div class="mb-5">
-               <label for="email" class="block text-sm text-gray-700 mb-1"
-                  >User Id*</label
-                  >
-               <input
-                  type="text"
-                  name="userId"
-                  id="email"
-                  placeholder="Enter your email address"
-                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                  />
-            </div>
-            <div class="mb-5">
-               <label for="password" class="block text-sm text-gray-700 mb-1"
-                  >Password*</label
-                  >
-               <div class="relative">
-                  <input
-                     type="password"
-                     name="password"
-                     id="password"
-                     placeholder="••••••••"
-                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none pr-10"
-                     />
-                  <button
-                     type="button"
-                     class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
-                     >
-                  <i class="fa-regular fa-eye"></i>
-                  </button>
+            <div class="vd wo/4 sd qo f ho oo wf yf" :class="{ 'd hh rm sr td ud qg ug jc yh': navigationOpen }">
+               <nav>
+                  <ul class="tc _o sf yo cg ep">
+                     <li><a th:href="@{/}" class="xl" :class="{ 'mk': page === 'home' }">Home</a></li>
+                     <li><a href="index.html#features" class="xl">Features</a></li>
+                     <li><a href="index.html#support" class="xl">Support</a></li>
+                  </ul>
+               </nav>
+               <div class="tc wf ig pb no">
+                  <div class="pc h io pa ra" :class="navigationOpen ? '!-ud-visible' : 'd'">
+                     <label class="rc ab i">
+                        <input type="checkbox" :value="darkMode" @change="darkMode = !darkMode" class="pf vd yc uk h r za ab" />
+                        <!-- Icon Sun -->
+                        <svg :class="{ 'wn' : page === 'home', 'xh' : page === 'home' && stickyMenu }" class="th om" width="25"
+                           height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path
+                              d="M12.0908 18.6363C10.3549 18.6363 8.69 17.9467 7.46249 16.7192C6.23497 15.4916 5.54537 13.8268 5.54537 12.0908C5.54537 10.3549 6.23497 8.69 7.46249 7.46249C8.69 6.23497 10.3549 5.54537 12.0908 5.54537C13.8268 5.54537 15.4916 6.23497 16.7192 7.46249C17.9467 8.69 18.6363 10.3549 18.6363 12.0908C18.6363 13.8268 17.9467 15.4916 16.7192 16.7192C15.4916 17.9467 13.8268 18.6363 12.0908 18.6363ZM12.0908 16.4545C13.2481 16.4545 14.358 15.9947 15.1764 15.1764C15.9947 14.358 16.4545 13.2481 16.4545 12.0908C16.4545 10.9335 15.9947 9.8236 15.1764 9.00526C14.358 8.18692 13.2481 7.72718 12.0908 7.72718C10.9335 7.72718 9.8236 8.18692 9.00526 9.00526C8.18692 9.8236 7.72718 10.9335 7.72718 12.0908C7.72718 13.2481 8.18692 14.358 9.00526 15.1764C9.8236 15.9947 10.9335 16.4545 12.0908 16.4545ZM10.9999 0.0908203H13.1817V3.36355H10.9999V0.0908203ZM10.9999 20.8181H13.1817V24.0908H10.9999V20.8181ZM2.83446 4.377L4.377 2.83446L6.69082 5.14828L5.14828 6.69082L2.83446 4.37809V4.377ZM17.4908 19.0334L19.0334 17.4908L21.3472 19.8046L19.8046 21.3472L17.4908 19.0334ZM19.8046 2.83337L21.3472 4.377L19.0334 6.69082L17.4908 5.14828L19.8046 2.83446V2.83337ZM5.14828 17.4908L6.69082 19.0334L4.377 21.3472L2.83446 19.8046L5.14828 17.4908ZM24.0908 10.9999V13.1817H20.8181V10.9999H24.0908ZM3.36355 10.9999V13.1817H0.0908203V10.9999H3.36355Z"
+                              fill="" />
+                        </svg>
+                        <!-- Icon Sun -->
+                        <img class="xc nm" src="images/icon-moon.svg" alt="Moon" />
+                     </label>
+                  </div>
+                  <a th:href="@{/login}" :class="{ 'nk yl' : page === 'home', 'ok' : page === 'home' && stickyMenu }"
+                     class="ek pk xl">Sign In</a>
+                  <a th:href="@{/register}" :class="{ 'hh/[0.15]' : page === 'home', 'sh' : page === 'home' && stickyMenu }"
+                     class="lk gh dk rg tc wf xf _l gi hi">Sign Up</a>
                </div>
             </div>
-            <!-- Remember & Forgot -->
-            <div class="flex items-center justify-between mb-6 text-sm">
-               <label class="flex items-center gap-2 text-gray-600">
-               <input
-                  type="checkbox"
-                  class="w-4 h-4 text-blue-500 rounded border-gray-300"
-                  />
-               Remember Me
-               </label>
-               <a href="#" class="text-blue-500 hover:underline">Forgot Password?</a>
+         </div>
+      </header>
+      <!-- ===== Header End ===== -->
+      <main>
+         <!-- ===== SignIn Form Start ===== -->
+         <section class="i pg fh rm ki xn vq gj qp gr hj rp hr">
+            <!-- Bg Shapes -->
+            <img src="images/shape-06.svg" alt="Shape" class="h j k" />
+            <img src="images/shape-03.svg" alt="Shape" class="h l m" />
+            <img src="images/shape-17.svg" alt="Shape" class="h n o" />
+            <img src="images/shape-18.svg" alt="Shape" class="h p q" />
+            <div class="animate_top bb af i va sg hh sm vk xm yi _n jp hi ao kp">
+               <!-- Bg Border -->
+               <span class="rc h r s zd/2 od zg gh"></span>
+               <span class="rc h r q zd/2 od xg mh"></span>
+               <div class="rj">
+				  <h2 class="ek ck kk wm xb">Welcome Back to Borrowhen</h2>
+				  <p>Sign in to continue borrowing or lending items safely and easily.</p>
+
+                  <h3 class="hk yj kk wm ob mc">Sign in with Social Media</h3>
+                  <ul class="tc wf xf mg ec">
+                     <li>
+                        <a class="tc wf xf be dd di sg _g ch qm ml il bm rl/40 ym/40" href="#!">
+                           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g clip-path="url(#clip0_50_914)">
+                                 <path
+                                    d="M22.0001 11.2439C22.0134 10.4877 21.9338 9.73268 21.7629 8.99512H11.2246V13.0773H17.4105C17.2933 13.793 17.0296 14.4782 16.6352 15.0915C16.2409 15.7048 15.724 16.2336 15.1158 16.6461L15.0942 16.7828L18.4264 19.3125L18.6571 19.3351C20.7772 17.4162 21.9997 14.5928 21.9997 11.2439"
+                                    fill="#4285F4" />
+                                 <path
+                                    d="M11.2245 22C14.255 22 16.7992 21.0222 18.6577 19.3355L15.1156 16.6465C14.1679 17.2945 12.8958 17.7467 11.2245 17.7467C9.80508 17.7386 8.42433 17.2926 7.27814 16.4721C6.13195 15.6516 5.27851 14.4982 4.83892 13.1755L4.70737 13.1865L1.24255 15.8143L1.19727 15.9377C2.13043 17.7603 3.56252 19.2925 5.33341 20.3631C7.10429 21.4338 9.14416 22.0005 11.2249 22"
+                                    fill="#34A853" />
+                                 <path
+                                    d="M4.83889 13.1756C4.59338 12.4754 4.46669 11.7405 4.46388 11.0001C4.4684 10.2609 4.59041 9.52697 4.82552 8.82462L4.81927 8.6788L1.31196 6.00879L1.19724 6.06226C0.410039 7.59392 0 9.28503 0 11C0 12.715 0.410039 14.4061 1.19724 15.9377L4.83889 13.1756"
+                                    fill="#FBBC05" />
+                                 <path
+                                    d="M11.2249 4.25337C12.8333 4.22889 14.3888 4.8159 15.565 5.89121L18.7329 2.86003C16.7011 0.992106 14.0106 -0.0328008 11.2249 3.27798e-05C9.14418 -0.000452376 7.10433 0.566279 5.33345 1.63686C3.56256 2.70743 2.13046 4.23965 1.19727 6.06218L4.82684 8.82455C5.27077 7.50213 6.12703 6.34962 7.27491 5.5295C8.4228 4.70938 9.80439 4.26302 11.2249 4.25337"
+                                    fill="#EB4335" />
+                              </g>
+                              <defs>
+                                 <clipPath id="clip0_50_914">
+                                    <rect width="22" height="22" fill="white" />
+                                 </clipPath>
+                              </defs>
+                           </svg>
+                        </a>
+                     </li>
+                     <li>
+                        <a class="tc wf xf be dd di sg _g ch qm ml il bm rl/40 ym/40" href="#!">
+                           <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                 d="M22.1506 2.11765C21.3353 2.48824 20.4565 2.73176 19.5459 2.84824C20.4776 2.28706 21.1976 1.39765 21.5365 0.328235C20.6576 0.857647 19.6835 1.22824 18.6565 1.44C17.82 0.529412 16.6447 0 15.3106 0C12.8224 0 10.7894 2.03294 10.7894 4.54235C10.7894 4.90235 10.8318 5.25177 10.9059 5.58C7.13647 5.38941 3.78 3.57882 1.54588 0.836471C1.15412 1.50353 0.931765 2.28706 0.931765 3.11294C0.931765 4.69059 1.72588 6.08824 2.95412 6.88235C2.20235 6.88235 1.50353 6.67059 0.889412 6.35294C0.889412 6.35294 0.889412 6.35294 0.889412 6.38471C0.889412 8.58706 2.45647 10.4294 4.53176 10.8424C4.15059 10.9482 3.74823 11.0012 3.33529 11.0012C3.04941 11.0012 2.76353 10.9694 2.48823 10.9165C3.06 12.7059 4.72235 14.04 6.72353 14.0718C5.17765 15.3 3.21882 16.02 1.08 16.02C0.72 16.02 0.36 15.9988 0 15.9565C2.01176 17.2482 4.4047 18 6.96706 18C15.3106 18 19.8953 11.0753 19.8953 5.07176C19.8953 4.87059 19.8953 4.68 19.8847 4.47882C20.7741 3.84353 21.5365 3.03882 22.1506 2.11765Z"
+                                 fill="#00AFED" />
+                           </svg>
+                        </a>
+                     </li>
+                     <li>
+                        <a class="tc wf xf be dd di sg _g ch qm ml il bm rl/40 ym/40" href="#!">
+                           <svg width="12" height="22" viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                 d="M7.7 12.65H10.45L11.55 8.25H7.7V6.05C7.7 4.917 7.7 3.85 9.9 3.85H11.55V0.154C11.1914 0.1067 9.8373 0 8.4073 0C5.4208 0 3.3 1.8227 3.3 5.17V8.25H0V12.65H3.3V22H7.7V12.65Z"
+                                 fill="#1877F2" />
+                           </svg>
+                        </a>
+                     </li>
+                     <li>
+                        <a class="tc wf xf be dd di sg _g ch qm ml il bm rl/40 ym/40" href="#!">
+                           <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                 d="M11.2731 0C9.7927 0 8.32679 0.291587 6.95907 0.858113C5.59136 1.42464 4.34862 2.25501 3.30182 3.30181C1.1877 5.41593 0 8.28329 0 11.2731C0 16.2558 3.23538 20.4832 7.7108 21.9825C8.27446 22.0727 8.45483 21.7233 8.45483 21.4189C8.45483 21.1596 8.45483 20.4494 8.45483 19.5137C5.33218 20.1901 4.66706 18.0031 4.66706 18.0031C4.1485 16.6955 3.41575 16.346 3.41575 16.346C2.3899 15.6471 3.49466 15.6696 3.49466 15.6696C4.62197 15.7485 5.21945 16.8307 5.21945 16.8307C6.20021 18.5442 7.85735 18.037 8.49992 17.7664C8.60138 17.0336 8.89448 16.5376 9.21013 16.2558C6.7075 15.974 4.08086 15.0045 4.08086 10.7094C4.08086 9.45813 4.50924 8.45482 5.24199 7.65443C5.12926 7.37261 4.7347 6.2002 5.35472 4.67834C5.35472 4.67834 6.30167 4.37396 8.45483 5.82819C9.3454 5.58018 10.3149 5.45618 11.2731 5.45618C12.2313 5.45618 13.2008 5.58018 14.0914 5.82819C16.2445 4.37396 17.1915 4.67834 17.1915 4.67834C17.8115 6.2002 17.4169 7.37261 17.3042 7.65443C18.037 8.45482 18.4653 9.45813 18.4653 10.7094C18.4653 15.0158 15.8274 15.9627 13.3135 16.2445C13.7194 16.594 14.0914 17.2817 14.0914 18.3301C14.0914 19.8407 14.0914 21.0581 14.0914 21.4189C14.0914 21.7233 14.2717 22.084 14.8467 21.9825C19.3221 20.4719 22.5462 16.2558 22.5462 11.2731C22.5462 9.79269 22.2546 8.32678 21.6881 6.95907C21.1216 5.59135 20.2912 4.34862 19.2444 3.30181C18.1976 2.25501 16.9549 1.42464 15.5871 0.858113C14.2194 0.291587 12.7535 0 11.2731 0Z"
+                                 fill="#79808A" />
+                           </svg>
+                        </a>
+                     </li>
+                  </ul>
+                  <span class="i rc sj hk xj">
+                  <span class="rc h s z/2 nd oe rh tm"></span>
+                  <span class="rc h q z/2 nd oe rh tm"></span>
+                  Or, sign in with your user id
+                  </span>
+               </div>
+               <form th:action="@{/login}" class="sb" action="#!" method="POST">
+                  <div class="wb">
+                     <label class="rc kk wm vb" for="username">User Id</label>
+                     <input type="text" name="userId" id="username" placeholder="user id"
+                        class="vd hh rg zk _g ch hm dm fm pl/50 xi mi sm xm pm dn/40" />
+                  </div>
+                  <div class="wb">
+                     <label class="rc kk wm vb" for="password">Password</label>
+                     <input type="password" name="password" id="password" placeholder="**************"
+                        class="vd hh rg zk _g ch hm dm fm pl/50 xi mi sm xm pm dn/40" />
+                  </div>
+                  <button class="vd rj ek rc rg gh lk ml il _l gi hi">
+                  Sign In
+                  </button>
+                  <p class="sj hk xj rj ob">
+                     Don't have an account?
+                     <a class="mk" th:href="@{/register}"> Sign Up </a>
+                  </p>
+               </form>
             </div>
-            <!-- Sign In Button -->
-            <button
-               type="submit"
-               class="w-full bg-blue-500 text-white py-2.5 rounded-md font-medium hover:bg-blue-600 transition"
-               >
-            Sign in
-            </button>
-         </form>
-         <!-- Register -->
-         <p class="text-center text-gray-500 text-sm mt-6">
-            New on our platform?
-            <a th:href="@{/register}" class="text-blue-500 font-medium hover:underline"
-               >Create an account</a
-               >
-         </p>
-      </div>
+         </section>
+         <!-- ===== SignIn Form End ===== -->
+      </main>
+      <!-- ===== Footer Start ===== -->
+      <footer>
+         <div class="bb ze ki xn 2xl:ud-px-0">
+            <div class="bh ch pm tc uf sf yo wf xf ap cg fp bj">
+               <div class="animate_top">
+                  <ul class="tc wf gg">
+                     <li><a href="#!" class="xl">English</a></li>
+                     <li><a href="#!" class="xl">Privacy Policy</a></li>
+                     <li><a href="#!" class="xl">Support</a></li>
+                  </ul>
+               </div>
+               <div class="animate_top">
+                  <p>&copy; 2025 Borrowhen. All rights reserved.</p>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!-- ===== Footer End ===== -->
+      <!-- ====== Back To Top Start ===== -->
+      <button class="xc wf xf ie ld vg sr gh tr g sa ta _a" @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+         @scroll.window="scrollTop = (window.pageYOffset > 50) ? true : false" :class="{ 'uc' : scrollTop }">
+         <svg class="uh se qd" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path
+               d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" />
+         </svg>
+      </button>
+      <!-- ====== Back To Top End ===== -->
+      <script defer th:src="@{/script/bundle.js}"></script>
    </body>
 </html>

@@ -1,230 +1,200 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" data-theme="corporate" class="bg-gray-50">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Borrowhen | Sign Up</title>
-      <script src="https://cdn.tailwindcss.com"></script>
-      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-         rel="stylesheet"
-         />
-      <link
-         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-         rel="stylesheet"
-         />
-      <link rel="stylesheet" th:href="@{/css/style.css}" />
-      <link rel="stylesheet" th:href="@{/css/output.css}" />
-      <style>
-         body {
-         font-family: "Inter", sans-serif;
-         }
-      </style>
-   </head>
-   <body
-      class="relative flex items-center justify-center min-h-screen overflow-hidden"
-      >
-      <!-- Blurred Background -->
-      <div
-         class="absolute inset-0 bg-[url('/images/login-bg.png')] bg-cover bg-center blur-sm"
-         ></div>
-      <!-- Optional translucent overlay -->
-      <div class="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
-      <!-- Sign Up Card -->
-      <div
-         class="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-md p-10 border border-gray-100"
-         >
-         <!-- Icon -->
-         <div class="flex justify-center mb-6">
-            <div
-               class="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-b from-blue-400 to-blue-500"
-               >
-               <img th:src="@{/images/logo.png}" alt="Logo" />
-            </div>
-         </div>
-         <!-- Welcome Text -->
-         <h2 class="text-center text-2xl font-semibold text-gray-800 mb-2">
-            Sign Up
-         </h2>
-         <p class="text-center text-gray-500 text-sm mb-8">
-            Please enter your details to create an account
-         </p>
-         <!-- Social Buttons -->
-         <div class="flex justify-center gap-3 mb-6">
-            <button
-               class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
-               >
-            <img
-               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-               class="w-5 h-5"
-               alt="Google"
-               />
-            </button>
-            <button
-               class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
-               >
-            <img
-               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg"
-               class="w-5 h-5"
-               alt="Facebook"
-               />
-            </button>
-            <button
-               class="flex items-center justify-center w-full h-10 border rounded-md hover:bg-gray-50 transition"
-               >
-            <img
-               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
-               class="w-5 h-5"
-               alt="GitHub"
-               />
-            </button>
-         </div>
-         <!-- Divider -->
-         <div class="flex items-center mb-6">
-            <hr class="flex-grow border-gray-200" />
-            <span class="px-3 text-gray-400 text-sm">or</span>
-            <hr class="flex-grow border-gray-200" />
-         </div>
-         <!-- Form -->
-         <form th:action="@{/register}" method="POST">
-            <div class="mb-5">
-               <label for="userId" class="block text-sm text-gray-700 mb-1"
-                  >User ID*</label
-                  >
-               <input
-                  type="text"
-                  name="userId"
-                  placeholder="Enter your user ID"
-                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                  required
-                  />
-            </div>
-            <div class="mb-5">
-               <label for="emailAddress" class="block text-sm text-gray-700 mb-1"
-                  >Email Address*</label
-                  >
-               <input
-                  type="email"
-                  name="emailAddress"
-                  placeholder="Enter your email address"
-                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                  required
-                  />
-            </div>
-            <div class="mb-5">
-               <label for="fullName" class="block text-sm text-gray-700 mb-1"
-                  >Full Name*</label
-                  >
-               <input
-                  type="text"
-                  name="fullName"
-                  placeholder="Enter your full name"
-                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                  required
-                  />
-            </div>
-            <div class="mb-5">
-               <label for="userPassword" class="block text-sm text-gray-700 mb-1"
-                  >Password*</label
-                  >
-               <div class="relative">
-                  <input
-                     type="password"
-                     id="userPassword"
-                     name="password"
-                     placeholder="••••••••"
-                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none pr-10"
-                     required
-                     />
-                  <button
-                     type="button"
-                     class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
-                     >
-                  <i class="fa-regular fa-eye"></i>
-                  </button>
-               </div>
-            </div>
-            <div class="mb-5">
-               <label for="userConfirmPassword" class="block text-sm text-gray-700 mb-1"
-                  >Confirm Password*</label
-                  >
-               <div class="relative">
-                  <input
-                     type="password"
-                     id="userConfirmPassword"
-                     placeholder="••••••••"
-                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none pr-10"
-                     required
-                     />
-                  <button
-                     type="button"
-                     class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
-                     >
-                  <i class="fa-regular fa-eye"></i>
-                  </button>
-               </div>
-            </div>
-            <!-- Terms -->
-            <div class="flex items-center justify-between mb-6 text-sm">
-               <label class="flex items-center gap-2 text-gray-600">
-               <input
-                  type="checkbox"
-                  class="w-4 h-4 text-blue-500 rounded border-gray-300"
-                  required
-                  />
-               I agree to the Privacy Policy and Fees
-               </label>
-            </div>
-            <!-- Sign Up Button -->
-            <button
-               type="submit"
-               class="w-full bg-blue-500 text-white py-2.5 rounded-md font-medium hover:bg-blue-600 transition"
-               >
-            Sign up
-            </button>
-         </form>
-         <!-- Register -->
-         <p class="text-center text-gray-500 text-sm mt-6">
-            Already have an account?
-            <a
-               th:href="@{/login}"
-               class="text-blue-500 font-medium hover:underline"
-               >Login</a
-               >
-         </p>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up | Borrowhen</title>
+    <link rel="icon" href="favicon.ico">
+    <link th:href="@{/css/style-2.css}" rel="stylesheet">
+    <link th:href="@{/css/output.css}" rel="stylesheet">
+  </head>
+
+  <body
+    x-data="{ page: 'signup', darkMode: true, stickyMenu: false, navigationOpen: false, scrollTop: false }"
+    x-init="
+      darkMode = JSON.parse(localStorage.getItem('darkMode'));
+      $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'b eh': darkMode === true}"
+  >
+    <!-- ===== Header Start ===== -->
+    <header class="g s r vd ya cj" :class="{ 'hh sm _k dj bl ll' : stickyMenu }"
+      @scroll.window="stickyMenu = (window.pageYOffset > 20) ? true : false">
+      <div class="bb ze ki xn 2xl:ud-px-0 oo wf yf i">
+        <div class="vd to/4 tc wf yf">
+          <a th:href="@{/}" class="tc wf xf fg">
+           <img class="om wd" th:src="@{/images/logo.png}" alt="Logo Light" />
+           <img class="xc nm wd" th:src="@{/images/logo.png}" alt="Logo Dark" />
+          </a>
+        </div>
+        <div class="vd wo/4 sd qo f ho oo wf yf">
+          <nav>
+            <ul class="tc _o sf yo cg ep">
+              <li><a th:href="@{/}" class="xl" :class="{ 'mk': page === 'home' }">Home</a></li>
+              <li><a href="index.html#features" class="xl">Features</a></li>
+              <li><a href="index.html#support" class="xl">Support</a></li>
+            </ul>
+          </nav>
+          <div class="tc wf ig pb no">
+            <a th:href="@{/login}" class="ek pk xl">Sign In</a>
+            <a th:href="@{/register}" class="lk gh dk rg tc wf xf _l gi hi">Sign Up</a>
+          </div>
+        </div>
       </div>
-      <!-- 🔒 Password Match Validation Script -->
-      <script>
-         document.addEventListener("DOMContentLoaded", function () {
-           const form = document.querySelector("form");
-           const password = document.getElementById("userPassword");
-           const confirmPassword = document.getElementById("userConfirmPassword");
-         
-           // Create an error message element dynamically
-           const errorMsg = document.createElement("span");
-           errorMsg.id = "passwordError";
-           errorMsg.textContent = "Passwords do not match";
-           errorMsg.className = "text-red-500 text-sm hidden";
-         
-           // Insert the error message below the confirm password field
-           confirmPassword
-             .closest("div")
-             .parentNode.insertBefore(
-               errorMsg,
-               confirmPassword.closest("div").nextSibling
-             );
-         
-           form.addEventListener("submit", function (e) {
-             if (password.value !== confirmPassword.value) {
-               e.preventDefault();
-               errorMsg.classList.remove("hidden");
-               confirmPassword.focus();
-             } else {
-               errorMsg.classList.add("hidden");
-             }
-           });
-         });
-      </script>
-   </body>
+    </header>
+    <!-- ===== Header End ===== -->
+
+    <main>
+      <!-- ===== SignUp Form Start ===== -->
+      <section class="i pg fh rm ki xn vq gj qp gr hj rp hr">
+        <!-- Bg Shapes -->
+        <img src="images/shape-06.svg" alt="Shape" class="h j k" />
+        <img src="images/shape-03.svg" alt="Shape" class="h l m" />
+        <img src="images/shape-17.svg" alt="Shape" class="h n o" />
+        <img src="images/shape-18.svg" alt="Shape" class="h p q" />
+
+        <div class="animate_top bb af i va sg hh sm vk xm yi _n jp hi ao kp">
+          <!-- Bg Border -->
+          <span class="rc h r s zd/2 od zg gh"></span>
+          <span class="rc h r q zd/2 od xg mh"></span>
+
+          <div class="rj text-center">
+            <h2 class="ek ck kk wm xb">Create an Account</h2>
+            <p>Join Borrowhen to start borrowing and lending items with ease.</p>
+			
+            <h3 class="hk yj kk wm ob mc mt-6">Sign up with Social Media</h3>
+            <ul class="tc wf xf mg ec">
+              <li>
+                <a class="tc wf xf be dd di sg _g ch qm ml il bm rl/40 ym/40" href="#!">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M22.0001 11.2439C22.0134 10.4877 21.9338 9.73268 21.7629 8.99512H11.2246V13.0773H17.4105C17.2933 13.793 17.0296 14.4782 16.6352 15.0915C16.2409 15.7048 15.724 16.2336 15.1158 16.6461L15.0942 16.7828L18.4264 19.3125L18.6571 19.3351C20.7772 17.4162 21.9997 14.5928 21.9997 11.2439"
+                      fill="#4285F4"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a class="tc wf xf be dd di sg _g ch qm ml il bm rl/40 ym/40" href="#!">
+                  <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M22.1506 2.11765C21.3353 2.48824 20.4565 2.73176 19.5459 2.84824C20.4776 2.28706 21.1976 1.39765 21.5365 0.328235C20.6576 0.857647 19.6835 1.22824 18.6565 1.44C17.82 0.529412 16.6447 0 15.3106 0C12.8224 0 10.7894 2.03294 10.7894 4.54235C10.7894 4.90235 10.8318 5.25177 10.9059 5.58C7.13647 5.38941 3.78 3.57882 1.54588 0.836471C1.15412 1.50353 0.931765 2.28706 0.931765 3.11294C0.931765 4.69059 1.72588 6.08824 2.95412 6.88235C2.20235 6.88235 1.50353 6.67059 0.889412 6.35294C0.889412 8.58706 2.45647 10.4294 4.53176 10.8424C3.74823 11.0012 3.04941 11.0012 2.48823 10.9165C3.06 12.7059 4.72235 14.04 6.72353 14.0718C5.17765 15.3 3.21882 16.02 1.08 16.02C0.72 16.02 0.36 15.9988 0 15.9565C2.01176 17.2482 4.4047 18 6.96706 18C15.3106 18 19.8953 11.0753 19.8953 5.07176C19.8953 4.87059 19.8953 4.68 19.8847 4.47882C20.7741 3.84353 21.5365 3.03882 22.1506 2.11765Z"
+                      fill="#00AFED"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+
+            <span class="i rc sj hk xj">
+              <span class="rc h s z/2 nd oe rh tm"></span>
+              <span class="rc h q z/2 nd oe rh tm"></span>
+              Or, sign up with your user id
+            </span>
+          </div>
+
+          <!-- ===== Sign Up Form ===== -->
+          <form class="sb mt-6" th:action="@{/register}" method="POST">
+            <div class="wb">
+              <label class="rc kk wm vb" for="userid">User ID</label>
+              <input type="text" name="userId" id="userid" placeholder="devidwonder"
+                class="vd hh rg zk _g ch hm dm fm pl/50 xi mi sm xm pm dn/40" required />
+            </div>
+
+            <div class="wb">
+              <label class="rc kk wm vb" for="fullname">Full name</label>
+              <input type="text" name="fullName" id="fullname" placeholder="Joshua Damole"
+                class="vd hh rg zk _g ch hm dm fm pl/50 xi mi sm xm pm dn/40" required />
+            </div>
+
+            <div class="wb">
+              <label class="rc kk wm vb" for="email">Email Address</label>
+              <input type="email" name="emailAddress" id="email" placeholder="example@gmail.com"
+                class="vd hh rg zk _g ch hm dm fm pl/50 xi mi sm xm pm dn/40" required />
+            </div>
+
+            <div class="wb">
+              <label class="rc kk wm vb" for="userPassword">Password</label>
+              <input type="password" name="password" id="userPassword" placeholder="**************"
+                class="vd hh rg zk _g ch hm dm fm pl/50 xi mi sm xm pm dn/40 transition-all duration-200" required />
+            </div>
+
+            <div class="wb">
+              <label class="rc kk wm vb" for="userConfirmPassword">Confirm Password</label>
+              <input type="password" name="confirmPassword" id="userConfirmPassword" placeholder="**************"
+                class="vd hh rg zk _g ch hm dm fm pl/50 xi mi sm xm pm dn/40 transition-all duration-200" required />
+              <span id="passwordError" class="text-red-500 text-sm hidden mt-1 block">
+                Passwords do not match
+              </span>
+            </div>
+
+            <button class="vd rj ek rc rg gh lk ml il _l gi hi">
+              Sign Up
+            </button>
+
+            <p class="sj hk xj rj ob">
+              Already have an account?
+              <a class="mk" th:href="@{/login}">Sign In</a>
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="bb ze ki xn 2xl:ud-px-0">
+        <div class="bh ch pm tc uf sf yo wf xf ap cg fp bj">
+          <div class="animate_top">
+            <ul class="tc wf gg">
+              <li><a href="#!" class="xl">English</a></li>
+              <li><a href="#!" class="xl">Privacy Policy</a></li>
+              <li><a href="#!" class="xl">Support</a></li>
+            </ul>
+          </div>
+          <div class="animate_top">
+            <p>&copy; 2025 Borrowhen. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll Top Button -->
+    <button class="xc wf xf ie ld vg sr gh tr g sa ta _a" @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+      @scroll.window="scrollTop = (window.pageYOffset > 50) ? true : false" :class="{ 'uc' : scrollTop }">
+      <svg class="uh se qd" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path
+          d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" />
+      </svg>
+    </button>
+
+    <!-- ===== Scripts ===== -->
+    <script defer th:src="@{/script/bundle.js}"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const password = document.getElementById("userPassword");
+        const confirmPassword = document.getElementById("userConfirmPassword");
+        const errorMsg = document.getElementById("passwordError");
+
+        form.addEventListener("submit", function (e) {
+          if (password.value.trim() !== confirmPassword.value.trim()) {
+            e.preventDefault();
+            errorMsg.classList.remove("hidden");
+            confirmPassword.classList.add("border-red-500");
+            confirmPassword.focus();
+          } else {
+            errorMsg.classList.add("hidden");
+            confirmPassword.classList.remove("border-red-500");
+          }
+        });
+
+        confirmPassword.addEventListener("input", function () {
+          if (password.value.trim() === confirmPassword.value.trim()) {
+            errorMsg.classList.add("hidden");
+            confirmPassword.classList.remove("border-red-500");
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
