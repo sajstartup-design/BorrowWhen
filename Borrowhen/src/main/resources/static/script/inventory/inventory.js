@@ -59,6 +59,8 @@ async function loadInventories(page = 0, search = "") {
     const url = `/api/inventory?${params.toString()}`;
     const response = await fetch(url);
     const data = await response.json();
+	
+	console.log(data);
 
     const itemList = document.getElementById("itemList");
     itemList.innerHTML = "";
@@ -72,6 +74,14 @@ async function loadInventories(page = 0, search = "") {
           ? "text-green-700 bg-green-100"
           : "text-yellow-700 bg-yellow-100";
         const statusText = isAvailable ? "Available" : "Borrowed";
+
+        // ✅ Check if updatedDate is today
+        const updatedDate = new Date(inventory.updatedDate);
+        const today = new Date();
+        const isToday =
+          updatedDate.getDate() === today.getDate() &&
+          updatedDate.getMonth() === today.getMonth() &&
+          updatedDate.getFullYear() === today.getFullYear();
 
         // Borrow button
         const borrowBtn = isAvailable
@@ -96,13 +106,21 @@ async function loadInventories(page = 0, search = "") {
         // Card
         const card = document.createElement("div");
         card.className =
-          "bg-gray-50 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition p-4";
+          "bg-gray-50 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition p-4 relative";
+
+        // ✅ Add "NEW" badge if updated today
+        const newBadge = isToday
+          ? `<span class="absolute top-3 right-3 bg-red-500 text-white text-[10px] font-semibold px-2 py-1 rounded-full shadow-md">NEW</span>`
+          : "";
 
         card.innerHTML = `
           <div class="flex flex-col justify-between h-full">
             <!-- Header -->
             <div>
-              <h2 class="text-gray-800 text-base font-semibold mb-1">${inventory.itemName}</h2>
+              <h2 class="text-gray-800 text-base font-semibold mb-1 flex items-center justify-between">
+                ${inventory.itemName}
+              </h2>
+              ${newBadge}
 
               <!-- Rating -->
               <div class="flex items-center gap-1 mb-3 text-yellow-400 text-xs">
@@ -125,6 +143,11 @@ async function loadInventories(page = 0, search = "") {
                   <span>Lender:</span>
                   <span class="font-medium text-gray-700">${inventory.owner}</span>
                 </p>
+				<p class="flex items-center gap-2 text-gray-500">
+				  <i class="fa-solid fa-location-dot text-gray-400"></i>
+				  <span>Barangay:</span>
+				  <span class="font-medium text-gray-700">${inventory.barangay}</span>
+				</p>
               </div>
             </div>
 
@@ -150,3 +173,4 @@ async function loadInventories(page = 0, search = "") {
     removeLoadingScreenBody();
   }
 }
+

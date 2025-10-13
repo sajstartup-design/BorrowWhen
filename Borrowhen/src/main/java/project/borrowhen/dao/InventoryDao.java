@@ -36,7 +36,8 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    "   CASE WHEN (EXISTS (" +
 		    "       SELECT 1 FROM BorrowRequestEntity br " +
 		    "       WHERE br.inventoryId = e.id AND br.status <> 'PAID'" +
-		    "   )) THEN false ELSE true END " +  // isDeletable
+		    "   )) THEN false ELSE true END, " +  // isDeletable
+		    "   u.barangay " +
 		    ") " +
 		    "FROM InventoryEntity e " +
 		    "LEFT JOIN UserEntity u ON u.id = e.userId " +

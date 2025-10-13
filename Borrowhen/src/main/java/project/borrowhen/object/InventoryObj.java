@@ -27,4 +27,6 @@ public class InventoryObj {
 	private Boolean isDeletable;
 	
 	private Boolean isEditable;
+	
+	private String barangay;
 }

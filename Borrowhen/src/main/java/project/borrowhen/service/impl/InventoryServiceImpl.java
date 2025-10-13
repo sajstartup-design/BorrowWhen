@@ -128,7 +128,8 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setAvailableQty(inventory.getAvailableQty());
 			obj.setIsEditable(inventory.getIsEditable());
 			obj.setIsDeletable(inventory.getIsDeletable());
-			
+			obj.setBarangay(inventory.getBarangay());	
+
 			inventories.add(obj);
 			
 		}

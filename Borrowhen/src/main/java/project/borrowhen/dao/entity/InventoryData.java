@@ -43,4 +43,6 @@ public class InventoryData {
 	private Boolean isEditable;
 	
 	private Boolean isDeletable;
+	
+	private String barangay;
 }
