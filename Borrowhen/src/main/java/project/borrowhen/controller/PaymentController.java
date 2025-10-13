@@ -68,30 +68,7 @@ public class PaymentController {
 			return "redirect:/dashboard";
 		}
 	}
-	
-	@PostMapping("/payment/confirmed")
-	public String confirmPayment(@ModelAttribute BorrowRequestDto webDto,
-			RedirectAttributes ra) {
-		
-		try {
 
-			BorrowRequestDto inDto = new BorrowRequestDto();
-			
-			inDto.setEncryptedId(webDto.getEncryptedId());
-			
-			borrowRequestService.paidBorrowRequest(inDto);
-			
-			return "redirect:/payment";
-			
-		}catch(Exception e) {
-			
-			e.printStackTrace();
-			
-			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
-			
-			return "redirect:/payment";
-		}
-	}
 	
 	@GetMapping("/payment/view")
 	public String showPayment() {

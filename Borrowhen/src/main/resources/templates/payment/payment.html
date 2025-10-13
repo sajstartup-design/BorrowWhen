@@ -78,7 +78,7 @@
             </div>
             <!-- RIGHT SECTION: Modern Confirm Payment -->
             <div class="bg-gray-50 md:w-1/2 w-full flex items-center justify-center p-10">
-               <div class="bg-white shadow-xl border border-gray-100 rounded-2xl p-8 max-w-md w-full">
+               <div id="payment-container" class="bg-white shadow-xl border border-gray-100 rounded-2xl p-8 max-w-md w-full">
                   <h3 class="text-2xl font-semibold text-gray-800 mb-2 flex items-center gap-2">
                      <i class="fa-solid fa-wallet text-blue-600"></i>
                      Confirm Your Payment
@@ -118,7 +118,7 @@
             </div>
          </main>
       </div>
-      <script th:script="@{/script/loading.js}"></script>
+      <script th:src="@{/script/loading.js}"></script>
       <!-- Stripe Payment Script -->
       <script th:inline="javascript">
          const publicKey = /*[[${publicKey}]]*/ '';
@@ -129,11 +129,14 @@
          cardElement.mount("#card-element");
          
          const payBtn = document.getElementById("pay-btn");
+         const paymentContainer = document.querySelector('#payment-container');
          const errorDiv = document.getElementById("card-errors");
          
          payBtn.addEventListener("click", async () => {
            payBtn.disabled = true;
            payBtn.textContent = "Processing...";
+           
+           createLoadingScreenBody();
          
            const method = document.querySelector("input[name='method']:checked").value;
            let result;
@@ -159,23 +162,34 @@
              payBtn.disabled = false;
              payBtn.textContent = "Confirm Payment";
            } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
-             alert("Payment successful!");
-             payBtn.textContent = "Paid ✅";
              
-             createLoadingScreenBody();
+             removeLoadingScreenBody();
+             
+             paymentContainer.innerHTML = `
+            	  <div class="flex flex-col items-center w-full text-center space-y-3 mt-2">
+            	    <div class="flex items-center gap-2 text-green-600 font-semibold text-base">
+            	      <i class="fa-solid fa-circle-check text-green-600 text-lg"></i>
+            	      <span>Payment Successful!</span>
+            	    </div>
+            	    <p class="text-gray-500 text-sm">
+            	      Thank you for your payment. You can now return to your dashboard.
+            	    </p>
+            	    <a href="/dashboard"
+            	       class="inline-flex items-center justify-center px-6 py-2 bg-green-600 text-blue-500 rounded-lg font-semibold hover:bg-green-700 active:scale-95 shadow-md transition-all duration-200">
+            	       <i class="fa-solid fa-arrow-left mr-2"></i> Back to Dashboard
+            	    </a>
+            	  </div>
+            	`;
          
              const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
              const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
          
-             fetch("/payment/confirmed", {
+             fetch("/api/payment/confirmed", {
                method: "POST",
                headers: { "Content-Type": "application/x-www-form-urlencoded", [csrfHeader]: csrfToken },
                body: new URLSearchParams({
                  encryptedId: /*[[${borrowRequestDto.encryptedId}]]*/ ''
                })
-             })
-             .then(response => {
-               if (response.redirected) window.location.href = response.url;
              })
              .catch(err => {
                console.error("Error confirming payment:", err);
