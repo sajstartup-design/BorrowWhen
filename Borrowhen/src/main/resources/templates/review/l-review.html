@@ -1,0 +1,184 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Borrowhen | Request</title>
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Fira+Code:wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+   </head>
+   <body>
+      <th:block th:if="${isSuccess}">
+         <div th:replace="~{alert :: success}"></div>
+      </th:block>
+      <th:block th:if="${isError}">
+         <div th:replace="~{alert :: error}"></div>
+      </th:block>
+      <div class="bg-base-200 flex min-h-screen flex-col">
+         <!-- ---------- HEADER ---------- -->
+         <div th:replace="~{header :: header-lender}"></div>
+         <main class="flex-1 relative" th:object="${borrowRequestDto}">
+            <!-- Blue background section (stays fixed within main) -->
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
+            <!-- Content that appears over the blue section -->
+            <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <div class="flex flex-wrap items-center justify-between">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white">
+                        <li>
+                           <a th:href="@{/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Borrowhen</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
+                           <span>Request List</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <hr class="border-t border-white opacity-80" />
+               <div class="flex">
+                  <div class="flex items-center py-4 gap-3">
+                     <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
+                     </div>
+                     <div class="flex flex-col gap-0 text-white">
+                        <span class="text-lg font-bold">Request</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="bg-white rounded-2xl">
+                  <div class="bg-base-100 rounded-4xl p-6 shadow-md flex flex-col gap-6">
+                    	<div class="flex border border-gray-300 rounded-xl p-6 gap-8 bg-white">
+  <!-- Left Section: Rating Summary -->
+  <div class="flex flex-col gap-6 w-1/2">
+    <div class="text-center">
+      <span class="text-4xl font-bold text-blue-600">4.89 ★</span>
+      <div class="text-gray-600 mt-1">Total 187 reviews</div>
+      <div class="text-gray-500 text-sm mt-1">All reviews are from genuine customers</div>
+      <div class="text-blue-500 text-sm mt-2">+5 This week</div>
+    </div>
+
+    <!-- Star Ratings -->
+    <div class="flex flex-col gap-3">
+      <!-- 5 Stars -->
+      <div class="flex items-center gap-3">
+        <span class="w-5 font-medium text-gray-700">5</span>
+        <div class="flex-1 bg-gray-200 rounded-full h-2">
+          <div class="bg-blue-500 h-2 rounded-full" style="width: 66%"></div>
+        </div>
+        <span class="w-8 text-right text-gray-700">124</span>
+      </div>
+      <!-- 4 Stars -->
+      <div class="flex items-center gap-3">
+        <span class="w-5 font-medium text-gray-700">4</span>
+        <div class="flex-1 bg-gray-200 rounded-full h-2">
+          <div class="bg-blue-500 h-2 rounded-full" style="width: 21%"></div>
+        </div>
+        <span class="w-8 text-right text-gray-700">40</span>
+      </div>
+      <!-- 3 Stars -->
+      <div class="flex items-center gap-3">
+        <span class="w-5 font-medium text-gray-700">3</span>
+        <div class="flex-1 bg-gray-200 rounded-full h-2">
+          <div class="bg-blue-500 h-2 rounded-full" style="width: 6%"></div>
+        </div>
+        <span class="w-8 text-right text-gray-700">12</span>
+      </div>
+      <!-- 2 Stars -->
+      <div class="flex items-center gap-3">
+        <span class="w-5 font-medium text-gray-700">2</span>
+        <div class="flex-1 bg-gray-200 rounded-full h-2">
+          <div class="bg-blue-500 h-2 rounded-full" style="width: 4%"></div>
+        </div>
+        <span class="w-8 text-right text-gray-700">7</span>
+      </div>
+      <!-- 1 Star -->
+      <div class="flex items-center gap-3">
+        <span class="w-5 font-medium text-gray-700">1</span>
+        <div class="flex-1 bg-gray-200 rounded-full h-2">
+          <div class="bg-blue-500 h-2 rounded-full" style="width: 1%"></div>
+        </div>
+        <span class="w-8 text-right text-gray-700">2</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Section: Review Statistics -->
+  <div class="flex-1 border border-gray-300 rounded-xl p-5 flex flex-col justify-between gap-4 bg-white">
+    <div class="flex justify-between items-center">
+      <h3 class="font-semibold text-gray-700">Review Statistics</h3>
+      <span class="text-blue-500 font-medium">12 New Reviews <span class="text-sm text-blue-400">+8.4%</span></span>
+    </div>
+
+    <div class="flex justify-between items-end gap-2 h-36">
+      <div class="flex flex-col items-center">
+        <div class="w-6 bg-blue-500 rounded-t-full" style="height: 20%"></div>
+        <span class="text-gray-500 text-sm mt-1">M</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-6 bg-blue-500 rounded-t-full" style="height: 30%"></div>
+        <span class="text-gray-500 text-sm mt-1">T</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-6 bg-blue-500 rounded-t-full" style="height: 40%"></div>
+        <span class="text-gray-500 text-sm mt-1">W</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-6 bg-blue-500 rounded-t-full" style="height: 50%"></div>
+        <span class="text-gray-500 text-sm mt-1">T</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-6 bg-blue-500 rounded-t-full" style="height: 80%"></div>
+        <span class="text-gray-500 text-sm mt-1">F</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-6 bg-blue-500 rounded-t-full" style="height: 100%"></div>
+        <span class="text-gray-500 text-sm mt-1">S</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-6 bg-blue-500 rounded-t-full" style="height: 70%"></div>
+        <span class="text-gray-500 text-sm mt-1">S</span>
+      </div>
+    </div>
+
+    <div class="text-gray-500 text-sm mt-2">87% Positive Reviews • Weekly Report</div>
+  </div>
+</div>
+
+                  </div>
+               </div>
+               <footer th:replace="~{footer :: footer}"></footer>
+            </div>
+         </main>
+      </div>
+   </body>
+</html>

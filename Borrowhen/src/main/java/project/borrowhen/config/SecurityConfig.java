@@ -97,6 +97,7 @@ public class SecurityConfig {
 						.requestMatchers("/lender/request/**").hasAuthority(CommonConstant.ROLE_LENDER)
 						.requestMatchers("/lender/payment/**").hasAuthority(CommonConstant.ROLE_LENDER)
 						.requestMatchers("/lender/my-account/**").hasAuthority(CommonConstant.ROLE_LENDER)
+						.requestMatchers("/lender/reviews/**").hasAuthority(CommonConstant.ROLE_LENDER)
 						
 						.requestMatchers("/api/lender/inventory/**").hasAuthority(CommonConstant.ROLE_LENDER)
 						.requestMatchers("/api/lender/request/**").hasAuthority(CommonConstant.ROLE_LENDER)
