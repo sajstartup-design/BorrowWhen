@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Scope("prototype")
-public class LenderInventoryOverview {
+public class InventoryOverview {
 	
 	private int totalItems;
 	

@@ -3,6 +3,7 @@ package project.borrowhen.dto;
 import java.util.List;
 
 import lombok.Data;
+import project.borrowhen.dao.entity.BorrowRequestOverview;
 import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
@@ -28,5 +29,8 @@ public class BorrowRequestDto {
 	private PaginationObj pagination;
 	
 	private FilterAndSearchObj filter;
+	
+	private BorrowRequestOverview overview;
+
 	
 }

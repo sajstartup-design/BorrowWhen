@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import project.borrowhen.common.constant.MessageConstant;
-import project.borrowhen.dao.entity.LenderInventoryOverview;
+import project.borrowhen.dao.entity.InventoryOverview;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
@@ -49,5 +49,5 @@ public class InventoryDto {
 	
 	private FilterAndSearchObj filter;
 	
-	private LenderInventoryOverview inventoryOverview;
+	private InventoryOverview inventoryOverview;
 }

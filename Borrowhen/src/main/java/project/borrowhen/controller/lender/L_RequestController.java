@@ -22,7 +22,22 @@ public class L_RequestController {
 	private BorrowRequestService borrowRequestService;
 
 	@GetMapping()
-	public String showRequestViewScreen() {
+	public String showRequestViewScreen(Model model,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			BorrowRequestDto outDto = borrowRequestService.getLenderBorrowRequestOverview();
+			
+			model.addAttribute("borrowRequestDto", outDto);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			ra.addFlashAttribute("isError", true);
+	        ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+	        
+	        return "redirect:/lender/dashboard";
+		}
 		
 		return "request/lender/request";
 	}

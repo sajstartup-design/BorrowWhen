@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param;
 import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
-import project.borrowhen.dao.entity.LenderInventoryOverview;
+import project.borrowhen.dao.entity.InventoryOverview;
 
 public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	
@@ -157,14 +157,16 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		        ) AS totalRevenue
 		    FROM InventoryEntity e
 		    LEFT JOIN BorrowRequestEntity br 
-		        ON br.inventoryId = e.id AND br.status = 'PAID'
+		        ON br.inventoryId = e.id AND br.status = 'PAID' 
 		    WHERE e.userId = :userId
 		""";
 
 
 
 	@Query(GET_LENDER_INVENTORY_OVERVIEW)
-	public LenderInventoryOverview getLenderInventoryOverview(@Param("userId") int userId) throws DataAccessException;
+	public InventoryOverview getLenderInventoryOverview(@Param("userId") int userId) throws DataAccessException;
+	
+	
 
 
 }

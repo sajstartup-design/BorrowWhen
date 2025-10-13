@@ -19,6 +19,7 @@ import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.BorrowRequestDao;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
+import project.borrowhen.dao.entity.BorrowRequestOverview;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
@@ -709,4 +710,17 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    );
 	}
 
+	@Override
+	public BorrowRequestDto getLenderBorrowRequestOverview() throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+		
+		UserEntity lender = userService.getLoggedInUser();
+		
+		BorrowRequestOverview overview = borrowRequestDao.getLenderBorrowerRequestOverview(lender.getId());
+		
+		outDto.setOverview(overview);	
+		
+		return outDto;
+	}
 }

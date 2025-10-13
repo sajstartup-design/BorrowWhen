@@ -14,6 +14,7 @@ import org.springframework.data.repository.query.Param;
 import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
+import project.borrowhen.dao.entity.BorrowRequestOverview;
 
 public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Integer> {
 	
@@ -176,7 +177,7 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	""";
 
 	@Query(value = FIND_ONGOING_AND_OVERDUE_REQUESTS)
-	List<BorrowRequestEntity> findOngoingAndOverdue(@Param("today") Date today) throws DataAccessException;
+	public List<BorrowRequestEntity> findOngoingAndOverdue(@Param("today") Date today) throws DataAccessException;
 	
 	public final String FIND_VOIDABLE_REQUESTS = """
 	    SELECT b 
@@ -186,6 +187,23 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	""";
 
 	@Query(value = FIND_VOIDABLE_REQUESTS)
-	List<BorrowRequestEntity> findVoidableRequests(@Param("today") Date today) throws DataAccessException;
+	public List<BorrowRequestEntity> findVoidableRequests(@Param("today") Date today) throws DataAccessException;
+	
+	public final String GET_LENDER_BORROWER_REQUEST_OVERVIEW = """
+		    SELECT 
+		        CAST(SUM(CASE WHEN br.status = 'PENDING' THEN 1 ELSE 0 END) AS integer),
+		        CAST(SUM(CASE WHEN br.status = 'APPROVED' THEN 1 ELSE 0 END) AS integer),
+		        CAST(SUM(CASE WHEN br.status = 'ON GOING' THEN 1 ELSE 0 END) AS integer),
+		        CAST(SUM(CASE WHEN br.status = 'PENDING PAYMENT' THEN 1 ELSE 0 END) AS integer),
+		        CAST(SUM(CASE WHEN br.status = 'PAID' THEN 1 ELSE 0 END) AS integer),
+		        CAST(SUM(CASE WHEN br.status = 'OVERDUE' THEN 1 ELSE 0 END) AS integer)
+		    FROM InventoryEntity i
+		    LEFT JOIN BorrowRequestEntity br ON br.inventoryId = i.id
+		""";
+
+
+	
+	@Query(value = GET_LENDER_BORROWER_REQUEST_OVERVIEW)
+	public BorrowRequestOverview getLenderBorrowerRequestOverview(@Param("userId") int userId) throws DataAccessException;
 
 }

@@ -18,7 +18,7 @@ import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.InventoryDao;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.InventoryEntity;
-import project.borrowhen.dao.entity.LenderInventoryOverview;
+import project.borrowhen.dao.entity.InventoryOverview;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.InventoryDto;
@@ -245,7 +245,7 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		UserEntity user = userService.getLoggedInUser();
 		
-		LenderInventoryOverview overview = inventoryDao.getLenderInventoryOverview(user.getId());
+		InventoryOverview overview = inventoryDao.getLenderInventoryOverview(user.getId());
 		
 		outDto.setInventoryOverview(overview);
 		
