@@ -285,4 +285,34 @@ button{
 .text-pink-700 { color: #be185d !important; }
 .text-emerald-700 { color: #047857 !important; }
 
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes pop-out {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9) translateY(15px);
+  }
+}
+
+.animate-pop-in {
+  animation: pop-in 0.25s ease-out forwards;
+}
+
+.animate-pop-out {
+  animation: pop-out 0.2s ease-in forwards;
+}
+
 

@@ -33,9 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Global click to close all
-    document.addEventListener('click', () => {
+/*    document.addEventListener('click', () => {
       document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.add('hidden'));
       mobileMenu.classList.add('hidden');
-    });
+    });*/
 });
 

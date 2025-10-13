@@ -1,68 +1,102 @@
 document.addEventListener("DOMContentLoaded", () => {
-	
 	updateBtnsModal();
-});
 
-function updateBtnsModal(){
-		const btns = document.querySelectorAll('[data-toggle="modal"]');
-				
-		btns.forEach(btn => {
-		    btn.addEventListener("click", () => {
-		        const modalTarget = btn.getAttribute("data-target");
-		        const modal = document.querySelector(modalTarget);
+	const modals = document.querySelectorAll(".pop-up-modal");
 
-		        if (modal) {
-		            const modalBackground = document.createElement("div");
-		            modalBackground.classList.add("modal-background");
-					
-					if(!modal.getAttribute('name')){
+	if (modals.length > 0) {
+		modals.forEach(modal => {
+			const cancelBtn = modal.querySelector(".cancel-btn");
 
-						if(modal.id === 'borrowModal'){
-							
-							// Fill hidden input
-						 	modal.querySelector("#encryptedId").value = btn.dataset.id;
-							console.log("ID: " + btn.dataset.id);
+			if (cancelBtn) {
+				cancelBtn.addEventListener("click", () => {
+					// Start closing animation
+					modal.classList.remove("animate-pop-in");
+					modal.classList.add("animate-pop-out");
 
-						 	modal.querySelector(".item-name").textContent = btn.dataset.name;
-						  	modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;
-						  	modal.querySelector(".item-qty").textContent = btn.dataset.qty;
-						}
+					// Wait for animation to finish before hiding
+					modal.addEventListener(
+						"animationend",
+						() => {
+							modal.style.display = "none";
+							modal.classList.remove("animate-pop-out");
 
-						if(modal.id === 'approveModal' || 
-							modal.id === 'rejectModal' || 
-							modal.id === 'confirmModal' || 
-							modal.id === 'pickUpModal' || 
-							modal.id === 'issuePaymentModal' ||
-							modal.id === 'cancelModal'){
-								
-							modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
-
-						 	modal.querySelector(".item-name").textContent = btn.dataset.itemName;
-						  	modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;					
-							modal.querySelector('.date-to-borrow').textContent = btn.dataset.dateToBorrow;
-							modal.querySelector('.date-to-return').textContent = btn.dataset.dateToReturn;
-							modal.querySelector('.number-to-borrow').textContent = btn.dataset.numberToBorrow;
-						}
-
-					}
-					
-
-		            document.body.appendChild(modalBackground);
-
-		            modalBackground.appendChild(modal);
-
-		            modalBackground.style.display = "flex";
-		            modal.style.display = "flex";
-					
-					modal.addEventListener("click", (e) => {
-						console.log(e.target)
-					  if (e.target === modal || e.target.name?.includes('cancel')) {
-					    modal.style.display = "none";
-					    document.body.appendChild(modal);
-					    modalBackground.remove();
-					  }
-					});
-		        }
-		    });
+							// Safely detach modalBackground if present
+							const modalBackground = modal.parentElement;
+							if (modalBackground && modalBackground.classList.contains("modal-background")) {
+								document.body.appendChild(modal);
+								modalBackground.remove();
+							}
+						},
+						{ once: true }
+					);
+				});
+			}
 		});
 	}
+});
+
+
+function updateBtnsModal() {
+	const btns = document.querySelectorAll('[data-toggle="modal"]');
+	
+	console.log(btns);
+
+	btns.forEach(btn => {
+		btn.addEventListener("click", () => {
+			const modalTarget = btn.getAttribute("data-target");
+			const modal = document.querySelector(modalTarget);
+
+			if (modal) {
+				const modalBackground = document.createElement("div");
+				
+				document.body.appendChild(modalBackground);
+
+				if (!modal.getAttribute("name")) {
+					if (modal.id === "borrowModal") {
+						modal.querySelector("#encryptedId").value = btn.dataset.id;
+						modal.querySelector(".item-name").textContent = btn.dataset.name;
+						modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;
+						modal.querySelector(".item-qty").textContent = btn.dataset.qty;
+					}
+
+					if (
+						["approveModal", "rejectModal", "confirmModal", "pickUpModal", "issuePaymentModal", "cancelModal"].includes(modal.id)
+					) {
+						modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
+						modal.querySelector(".item-name").textContent = btn.dataset.itemName;
+						modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;
+						modal.querySelector(".date-to-borrow").textContent = btn.dataset.dateToBorrow;
+						modal.querySelector(".date-to-return").textContent = btn.dataset.dateToReturn;
+						modal.querySelector(".number-to-borrow").textContent = btn.dataset.numberToBorrow;
+					}
+				}
+
+				// 🟦 Show Modal with Pop-in Animation
+				modalBackground.appendChild(modal);
+				modal.style.display = "flex";
+				modal.classList.add("animate-pop-in");
+
+				// 🟥 Close modal logic (click background or cancel)
+				modal.addEventListener("click", e => {
+					if (e.target === modal || e.target.name?.includes("cancel")) {
+						// Start pop-out animation
+						modal.classList.remove("animate-pop-in");
+						modal.classList.add("animate-pop-out");
+
+						// Wait for animation to finish before hiding
+						modal.addEventListener(
+							"animationend",
+							() => {
+								modal.style.display = "none";
+								modal.classList.remove("animate-pop-out");
+								document.body.appendChild(modal);
+								modalBackground.remove();
+							},
+							{ once: true }
+						);
+					}
+				});
+			}
+		});
+	});
+}
