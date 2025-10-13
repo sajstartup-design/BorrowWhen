@@ -145,21 +145,17 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 			Pageable pageable) throws DataAccessException;
 	
 	public static final String GET_LENDER_INVENTORY_OVERVIEW = """
-		    SELECT DISTINCT
-		        CAST(COUNT(DISTINCT e.id) AS integer) AS totalItem,
-		        CAST(SUM(e.totalQty) AS integer) AS totalQty,
-		        CAST(SUM(e.availableQty) AS integer) AS totalAvailableQty,
-		        COALESCE(
-		            SUM(
-		                CASE WHEN br.status = 'PAID' THEN br.price * br.qty ELSE 0 END
-		            ),
-		            0
-		        ) AS totalRevenue
+		    SELECT 
+		        COALESCE(CAST(COUNT(DISTINCT e.id) AS integer), 0) AS totalItem,
+		        COALESCE(CAST(SUM(e.totalQty) AS integer), 0) AS totalQty,
+		        COALESCE(CAST(SUM(e.availableQty) AS integer), 0) AS totalAvailableQty,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END) AS double), 0) AS totalRevenue
 		    FROM InventoryEntity e
 		    LEFT JOIN BorrowRequestEntity br 
-		        ON br.inventoryId = e.id AND br.status = 'PAID' 
+		        ON br.inventoryId = e.id AND br.status = 'PAID'
 		    WHERE e.userId = :userId
 		""";
+
 
 
 
