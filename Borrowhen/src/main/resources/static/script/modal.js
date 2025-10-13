@@ -5,11 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	if (modals.length > 0) {
 		modals.forEach(modal => {
-			const cancelBtn = modal.querySelector(".cancel-btn");
-
-			if (cancelBtn) {
-				cancelBtn.addEventListener("click", () => {
-					// Start closing animation
+			
+			modal.addEventListener('click', function(e){
+				if (e.target === modal || e.target.name?.includes("cancel")) {
+					// Start pop-out animation
 					modal.classList.remove("animate-pop-in");
 					modal.classList.add("animate-pop-out");
 
@@ -19,18 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
 						() => {
 							modal.style.display = "none";
 							modal.classList.remove("animate-pop-out");
-
-							// Safely detach modalBackground if present
-							const modalBackground = modal.parentElement;
-							if (modalBackground && modalBackground.classList.contains("modal-background")) {
-								document.body.appendChild(modal);
-								modalBackground.remove();
-							}
+							document.body.appendChild(modal);
+							modalBackground.remove();
 						},
 						{ once: true }
-					);
-				});
-			}
+					);	
+				}
+			});
 		});
 	}
 });

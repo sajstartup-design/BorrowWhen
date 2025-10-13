@@ -31,6 +31,10 @@ public class BorrowRequestDto {
 	private FilterAndSearchObj filter;
 	
 	private BorrowRequestOverview overview;
+	
+	private Double rating;
+	
+	private String feedback;
 
 	
 }

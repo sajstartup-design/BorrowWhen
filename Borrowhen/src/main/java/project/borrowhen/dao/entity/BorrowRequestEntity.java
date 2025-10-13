@@ -42,4 +42,6 @@ public class BorrowRequestEntity {
 	private Boolean isDeleted;
 	
 	private Double rating;
+	
+	private String feedback;
 }

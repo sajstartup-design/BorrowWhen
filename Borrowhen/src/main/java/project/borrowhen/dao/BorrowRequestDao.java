@@ -1,6 +1,7 @@
 package project.borrowhen.dao;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -206,5 +207,25 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	
 	@Query(value = GET_LENDER_BORROWER_REQUEST_OVERVIEW)
 	public BorrowRequestOverview getLenderBorrowerRequestOverview(@Param("userId") int userId) throws DataAccessException;
+	
+	public final String UPDATE_FEEDBACK_BORROW_REQUEST = 
+			"""
+				UPDATE borrow_request
+				SET rating = :rating,
+				feedback = :feedback,
+				updated_date = :updatedDate
+				WHERE id = :id
+				
+			""";
+
+    @Modifying
+    @Transactional
+    @Query(value = UPDATE_FEEDBACK_BORROW_REQUEST, nativeQuery = true)
+    public void updateFeedbackBorrowRequest(
+            @Param("id") int id,
+            @Param("rating") double rating,
+            @Param("feedback") String feedback,
+            @Param("updatedDate") Timestamp updatedDate
+    )  throws DataAccessException;
 
 }

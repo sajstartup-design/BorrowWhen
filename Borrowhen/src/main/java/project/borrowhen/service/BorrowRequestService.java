@@ -38,4 +38,6 @@ public interface BorrowRequestService {
 	public void paidBorrowRequest(BorrowRequestDto inDto) throws Exception;
 	
 	public BorrowRequestDto getBorrowRequest(BorrowRequestDto inDto) throws Exception;
+	
+	public void feedbackBorrowRequest(BorrowRequestDto inDto) throws Exception;
 }

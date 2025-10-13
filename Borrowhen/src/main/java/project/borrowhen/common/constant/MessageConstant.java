@@ -31,6 +31,8 @@ public class MessageConstant {
 
     
     public static final String FIELDS_BLANK = "Please fill all the fields!";
+    
+    public static final String FEEDBACK_SUCCESS_MSG = "Thank you for sharing your feedback!";
 	
 	
 	

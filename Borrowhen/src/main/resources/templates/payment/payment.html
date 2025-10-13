@@ -123,6 +123,7 @@
       <script th:inline="javascript">
          const publicKey = /*[[${publicKey}]]*/ '';
          const clientSecret = /*[[${paymentDto.clientSecret}]]*/ '';
+         const encryptedRequestId = /*[[${borrowRequestDto.encryptedId}]]*/ '';
          const stripe = Stripe(publicKey);
          const elements = stripe.elements();
          const cardElement = elements.create("card");
@@ -174,7 +175,7 @@
             	    <p class="text-gray-500 text-sm">
             	      Thank you for your payment. You can now return to your dashboard.
             	    </p>
-            	    <a href="/dashboard"
+            	    <a href="/dashboard?feedback=${encryptedId}"
             	       class="inline-flex items-center justify-center px-6 py-2 bg-green-600 text-blue-500 rounded-lg font-semibold hover:bg-green-700 active:scale-95 shadow-md transition-all duration-200">
             	       <i class="fa-solid fa-arrow-left mr-2"></i> Back to Dashboard
             	    </a>
@@ -188,7 +189,7 @@
                method: "POST",
                headers: { "Content-Type": "application/x-www-form-urlencoded", [csrfHeader]: csrfToken },
                body: new URLSearchParams({
-                 encryptedId: /*[[${borrowRequestDto.encryptedId}]]*/ ''
+                 encryptedId: encryptedRequestId
                })
              })
              .catch(err => {

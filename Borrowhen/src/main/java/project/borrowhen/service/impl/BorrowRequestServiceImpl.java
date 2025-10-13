@@ -723,4 +723,15 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		
 		return outDto;
 	}
+
+	@Override
+	public void feedbackBorrowRequest(BorrowRequestDto inDto) throws Exception {
+		
+		Timestamp dateNow = DateFormatUtil.getCurrentTimestamp();
+		
+		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+		
+		borrowRequestDao.updateFeedbackBorrowRequest(id, inDto.getRating(), inDto.getFeedback(), dateNow);;
+		
+	}
 }
