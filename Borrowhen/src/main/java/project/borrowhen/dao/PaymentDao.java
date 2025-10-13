@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.PaymentData;
 import project.borrowhen.dao.entity.PaymentEntity;
+import project.borrowhen.dao.entity.PaymentOverview;
 
 public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 	
@@ -89,8 +90,8 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 		    "br.id ) " +
 		    "FROM BorrowRequestEntity br " +
 		    "INNER JOIN PaymentEntity p ON p.borrowRequestId = br.id " +
-		    "LEFT JOIN UserEntity u ON u.id = br.userId " +
-		    "LEFT JOIN InventoryEntity i ON i.id = br.inventoryId " +
+		    "INNER JOIN UserEntity u ON u.id = br.userId " +
+		    "INNER JOIN InventoryEntity i ON i.id = br.inventoryId " +
 		    "WHERE br.status IN ('PAYMENT PENDING', 'PAID') " +
 		    "AND i.userId = :userId " +
 		    "AND ( :search IS NULL OR :search = '' OR " +
@@ -112,5 +113,18 @@ public interface PaymentDao extends JpaRepository<PaymentEntity, Integer> {
 	Page<PaymentData> getAllPaymentForLender(Pageable pageable,
 	                                         @Param("userId") int userId,
 	                                         @Param("search") String search) throws DataAccessException;
+	
+	public static final String GET_LENDER_PAYMENT_OVERVIEW = """
+		    SELECT 
+		        CAST(SUM(CASE WHEN br.status = 'PAID' THEN 1 ELSE 0 END) AS INTEGER) AS totalPaid,
+		        CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN 1 ELSE 0 END) AS INTEGER) AS totalPending,
+		        CAST(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END) AS DOUBLE) AS totalRevenue,
+		        CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN (br.price * br.qty) ELSE 0 END) AS DOUBLE) AS expectedRevenue
+		    FROM BorrowRequestEntity br
+		    WHERE br.status IN ('PAID', 'PAYMENT PENDING')
+		""";
+
+	@Query(GET_LENDER_PAYMENT_OVERVIEW)
+	public PaymentOverview getLenderPaymentOverview() throws DataAccessException;
   
 }
