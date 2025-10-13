@@ -29,40 +29,41 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 	
-		// Retrieve user information
-		UserEntity user = userService.getLoggedInUser();
+		// ✅ Get user ID (usually email or username)
+	    String userId = authentication.getName();
 
-//		if (user.getBlockFlg()) {
-//			// If the user is blocked, redirect to login with an error message
-//			SecurityContextHolder.clearContext();
-//			request.getSession().invalidate();
-//			request.getSession().setAttribute("errorMessageLogin", "Your account has been blocked");
-//			response.sendRedirect("/login");
-//			return;
-//		}
-		
-		httpSession.setAttribute("user", user);
+	    // ✅ Fetch the user directly from the database
+	    UserEntity user = userService.getUserByUserId(userId);
 
-		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+	    // ✅ Safety check
+	    if (user == null) {
+	        // Something went wrong — no user found for the authenticated ID
+	        response.sendRedirect("/login?error=userNotFound");
+	        return;
+	    }
 
-		if (authorities.stream().anyMatch(role -> role.getAuthority().equals("ADMIN"))) {
+	    // ✅ Set session attributes
+	    HttpSession session = request.getSession();
+	    session.setAttribute("role", user.getRole());
+	    session.setAttribute("fullname", user.getFullName());
+	    session.setAttribute("userId", userId);
+	    session.setAttribute("id", user.getId());
 
-			response.sendRedirect("/admin/dashboard");
-		} else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("LENDER"))) { 
-																									
-			response.sendRedirect("/lender/dashboard");
-			
-		} else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("BORROWER"))) { 
-																									
-			response.sendRedirect("/dashboard");
-			
-		} else {
-			response.sendRedirect("/login");
-		}
+	    // ✅ Role-based redirect
+	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+	    if (authorities.stream().anyMatch(role -> role.getAuthority().equals("ADMIN"))) {
+	        response.sendRedirect("/admin/dashboard");
+	    } else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("LENDER"))) {
+	        response.sendRedirect("/lender/dashboard");
+	    } else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("BORROWER"))) {
+	        response.sendRedirect("/dashboard");
+	    } else {
+	        response.sendRedirect("/login");
+	    }
 
 		if (authentication != null) {
-			String userId = authentication.getName();
-			
+
 			request.getSession().setAttribute("role", user.getRole());
 
 			request.getSession().setAttribute("fullname", user.getFullName());

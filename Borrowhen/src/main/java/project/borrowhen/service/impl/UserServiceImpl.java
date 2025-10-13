@@ -327,32 +327,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserEntity getLoggedInUser() {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    if (authentication == null || !authentication.isAuthenticated()) return null;
 
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	  
-		String userId = CommonConstant.BLANK;
-	
-        if(httpSession.getAttribute("userId") == null || CommonConstant.BLANK.equals(httpSession.getAttribute("userId"))) {
-		
-        	userId = authentication.getName();
-
-		} else {
-
-			userId = (String) httpSession.getAttribute("userId");
-		}
-
-		httpSession.setAttribute("userId", userId);
-
-        UserEntity user = userDao.getUserByUserId(userId);
-
-		return user;
-		
-//		// Try to retrieve cached user from session
-//	    UserEntity user = (UserEntity) httpSession.getAttribute("user");
-//
-//	    // If not yet stored, return null (or you can throw an exception if you want strict behavior)
-//	    return user;
+	    String userId = authentication.getName();
+	    return userDao.getUserByUserId(userId);
 	}
+
 
 	@Override
 	public List<String> getAllUserId() {
