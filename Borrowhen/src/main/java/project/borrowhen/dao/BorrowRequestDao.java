@@ -227,5 +227,28 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
             @Param("feedback") String feedback,
             @Param("updatedDate") Timestamp updatedDate
     )  throws DataAccessException;
+    
+    
+    public final String GET_OVERDUE_REQUEST_FOR_BORROWER = """
+    			SELECT br.*
+    			FROM borrow_request br
+    			WHERE br.status = 'OVERDUE'
+    			AND br.user_id = :userId
+    			LIMIT 3
+    		""";
+    
+    @Query(value=GET_OVERDUE_REQUEST_FOR_BORROWER, nativeQuery=true)
+    public List<BorrowRequestEntity> getOverdueRequestForBorrower(@Param("userId") int userId) throws DataAccessException;
+    
+    public final String GET_PAYMENT_PENDING_REQUEST_FOR_BORROWER = """
+			SELECT br.*
+			FROM borrow_request br 
+			WHERE br.status = 'OVERDUE' 
+			AND br.user_id = :userId 
+			LIMIT 3
+		""";
+
+	@Query(value=GET_PAYMENT_PENDING_REQUEST_FOR_BORROWER, nativeQuery=true)
+	public List<BorrowRequestEntity> getPaymentPendingRequestForBorrower(@Param("userId") int userId) throws DataAccessException;
 
 }

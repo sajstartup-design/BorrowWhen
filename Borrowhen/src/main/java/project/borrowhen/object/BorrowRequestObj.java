@@ -32,4 +32,8 @@ public class BorrowRequestObj {
 	private String createdDate;
 	
 	private String updatedDate;
+	
+	private String timeAgo;
+	
+	private double amount;
 }
