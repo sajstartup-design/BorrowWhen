@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const webDto = await response.json();
     console.log("✅ Dashboard Data:", webDto);
 
-    const { overdues, paymentPendings, notifications, overview } = webDto;
+    const { overdues, paymentPendings, notifications, lenderDashboardOverview } = webDto;
 
     const overdueList = document.getElementById('overdue-list');
     const paymentPendingList = document.getElementById('payment-pending-list');
@@ -108,6 +108,27 @@ document.addEventListener("DOMContentLoaded", async () => {
       noData.textContent = 'No Notifications';
       notificationsList.appendChild(noData);
     }
+	
+	if(lenderDashboardOverview){
+		
+		const totalItemsId = document.getElementById('totalItems')
+		totalItemsId.innerHTML = lenderDashboardOverview.totalItems;
+		
+		const totalItemsQtyId = document.getElementById('totalItemsQty');
+		totalItemsQtyId.innerHTML = lenderDashboardOverview.totalItemsQty;
+		
+		const totalItemsBorrowedQtyId = document.getElementById('totalItemsBorrowedQty');
+		totalItemsBorrowedQtyId.innerHTML = lenderDashboardOverview.totalItemsBorrowedQty;
+		
+		const totalOngoingBorrowRequestId = document.getElementById('totalOngoingBorrowRequest');
+		totalOngoingBorrowRequestId.innerHTML = lenderDashboardOverview.totalOngoingBorrowRequest;
+		
+		const totalRevenue = document.getElementById('totalRevenue');
+		totalRevenue.innerHTML = `₱ ${lenderDashboardOverview.totalRevenue}`;
+		
+		const totalAvailableItemsQtyId = document.getElementById('totalAvailableItemsQty');
+		totalAvailableItemsQtyId.innerHTML = lenderDashboardOverview.totalAvailableItemsQty;
+	}
 
 	removeLoadingScreenBody();
   } catch (error) {

@@ -71,7 +71,16 @@
                            <div class="flex items-center justify-between">
                               <div>
                                  <h3 class="text-gray-600 text-sm">Total Items Listed</h3>
-                                 <p class="text-2xl font-bold text-gray-800 mt-1">24</p>
+                                 <p class="text-2xl font-bold text-gray-500 mt-1" id="totalItems">0</p>
+                              </div>
+                              <i class="fa-solid fa-boxes-stacked text-blue-500 text-2xl"></i>
+                           </div>
+                        </div>
+                        <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
+                           <div class="flex items-center justify-between">
+                              <div>
+                                 <h3 class="text-gray-600 text-sm">Total Items Qty (QTY)</h3>
+                                 <p class="text-2xl font-bold text-gray-500 mt-1" id="totalItemsQty">0</p>
                               </div>
                               <i class="fa-solid fa-boxes-stacked text-blue-500 text-2xl"></i>
                            </div>
@@ -80,7 +89,7 @@
                            <div class="flex items-center justify-between">
                               <div>
                                  <h3 class="text-gray-600 text-sm">Active Borrow Requests</h3>
-                                 <p class="text-2xl font-bold text-gray-800 mt-1">6</p>
+                                 <p class="text-2xl font-bold text-gray-500 mt-1" id="totalOngoingBorrowRequest">0</p>
                               </div>
                               <i class="fa-solid fa-hourglass-half text-yellow-500 text-2xl"></i>
                            </div>
@@ -88,8 +97,8 @@
                         <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
                            <div class="flex items-center justify-between">
                               <div>
-                                 <h3 class="text-gray-600 text-sm">Items Currently Borrowed</h3>
-                                 <p class="text-2xl font-bold text-gray-800 mt-1">12</p>
+                                 <h3 class="text-gray-600 text-sm">Items Currently Borrowed (QTY)</h3>
+                                 <p class="text-2xl font-bold text-gray-500 mt-1" id="totalItemsBorrowedQty">0</p>
                               </div>
                               <i class="fa-solid fa-handshake text-indigo-500 text-2xl"></i>
                            </div>
@@ -98,7 +107,16 @@
                            <div class="flex items-center justify-between">
                               <div>
                                  <h3 class="text-gray-600 text-sm">Total Earnings</h3>
-                                 <p class="text-2xl font-bold text-green-600 mt-1">₱ 14,800</p>
+                                 <p class="text-2xl font-bold text-gray-500 mt-1" id="totalRevenue">₱ 0.0</p>
+                              </div>
+                              <i class="fa-solid fa-coins text-green-500 text-2xl"></i>
+                           </div>
+                        </div>
+                        <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
+                           <div class="flex items-center justify-between">
+                              <div>
+                                 <h3 class="text-gray-600 text-sm">Available Items (QTY)</h3>
+                                 <p class="text-2xl font-bold text-gray-500 mt-1" id="totalAvailableItemsQty">0</p>
                               </div>
                               <i class="fa-solid fa-coins text-green-500 text-2xl"></i>
                            </div>
@@ -181,7 +199,7 @@
                            <!-- Overdue Items -->
                            <div class="bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
                               <div class="flex justify-between items-center mb-3 border-b border-gray-200 pb-2">
-                                 <h5 class="text-gray-800 font-semibold flex items-center gap-2">
+                                 <h5 class="text-gray-500 font-semibold flex items-center gap-2">
                                     <i class="fa-solid fa-exclamation-circle text-red-500"></i>
                                     Overdue Items
                                  </h5>
@@ -195,7 +213,7 @@
                            <!-- Items to be Paid -->
                            <div class="bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
                               <div class="flex justify-between items-center mb-3 border-b border-gray-200 pb-2">
-                                 <h5 class="text-gray-800 font-semibold flex items-center gap-2">
+                                 <h5 class="text-gray-500 font-semibold flex items-center gap-2">
                                     <i class="fa-solid fa-credit-card text-pink-500"></i>
                                     Items to be Paid
                                  </h5>
@@ -210,7 +228,7 @@
                         <!-- RIGHT COLUMN (Notifications) -->
                         <div class="bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
                            <div class="flex justify-between items-center mb-3 border-b border-gray-200 pb-2">
-                              <h5 class="text-gray-800 font-semibold flex items-center gap-2">
+                              <h5 class="text-gray-500 font-semibold flex items-center gap-2">
                                  <i class="fa-solid fa-bell text-blue-500"></i>
                                  Recent Notifications
                               </h5>
@@ -230,7 +248,7 @@
                         <div class="border-b border-gray-300 p-5 flex justify-between items-center">
                            <div>
                               <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                                 <i class="fa-solid fa-hand-holding-dollar text-green-500"></i>
+                                 <i class="fa-solid fa-hand-holding-dollar text-gray-500"></i>
                                  My Lent Items
                                  <span class="text-sm font-normal text-gray-500">(Currently Lent Out)</span>
                               </h2>

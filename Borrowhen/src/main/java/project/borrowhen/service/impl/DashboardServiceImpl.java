@@ -12,6 +12,7 @@ import project.borrowhen.dao.BorrowRequestDao;
 import project.borrowhen.dao.NotificationDao;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
+import project.borrowhen.dao.entity.LenderDashboardOverview;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.DashboardDto;
@@ -125,10 +126,12 @@ public class DashboardServiceImpl implements DashboardService{
 			
 		}
 		
+		LenderDashboardOverview lenderDashboardOverview = borrowRequestDao.getLenderDashboardOverview(user.getId())	;
+		
 		BorrowRequestOverview overview = borrowRequestDao.getBorrowRequestOverviewForBorrower(user.getId());
 		
 		outDto.setOverview(overview);
-		
+		outDto.setLenderDashboardOverview(lenderDashboardOverview);	
 		outDto.setNotifications(notifications);
 		
 		return outDto;

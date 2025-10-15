@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.Data;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
+import project.borrowhen.dao.entity.LenderDashboardOverview;
 import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.NotificationObj;
 
@@ -17,20 +18,6 @@ public class DashboardDto {
 	private List<NotificationObj> notifications;
 	
 	private BorrowRequestOverview overview;
-	
-	private int totalPending;
-	
-	private int totalApproved;
-	
-	private int totalPickUpReady;
-	
-	private int totalOngoing;
-	
-	private int totalComplete;
-	
-	private int totalPaymentPending;
-	
-	private int totalPaid;
-	
-	private int rejected;
+		
+	private LenderDashboardOverview lenderDashboardOverview;
 }

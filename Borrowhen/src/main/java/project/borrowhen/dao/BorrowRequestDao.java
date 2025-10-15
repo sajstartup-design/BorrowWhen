@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
+import project.borrowhen.dao.entity.LenderDashboardOverview;
 
 public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Integer> {
 	
@@ -269,5 +270,22 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 
 	@Query(value = GET_BORROW_REQUEST_OVERVIEW_FOR_BORROWER)
 	public BorrowRequestOverview getBorrowRequestOverviewForBorrower(@Param("userId") int userId) throws DataAccessException;
+	
+	public final String GET_LENDER_DASHBOARD_OVERVIEW = """
+		    SELECT 
+		        COALESCE(CAST(COUNT(DISTINCT i.id) AS integer), 0) AS totalItem,
+		        COALESCE(CAST(SUM(i.totalQty) AS integer), 0) AS totalQty,
+		        COALESCE(CAST(SUM(CASE WHEN br.status NOT IN ('COMPLETE', 'CANCELLED', 'PAYMENT PENDING', 'PAID') THEN br.qty ELSE 0 END) AS integer), 0) AS totalOngoingQty,
+		        COALESCE(CAST(SUM(CASE WHEN br.status IN ('PENDING', 'APPROVED', 'PICK-UP READY', 'ON GOING', 'COMPLETE') THEN 1 ELSE 0 END) AS integer), 0) AS totalOngoing,
+		        COALESCE(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END), 0) AS totalRevenue,
+		        COALESCE(CAST(SUM(i.availableQty) AS integer), 0) AS totalItemsAvailableQty
+		    FROM InventoryEntity i
+		    LEFT JOIN BorrowRequestEntity br ON br.inventoryId = i.id
+		    WHERE i.userId = :userId
+		""";
+
+	
+	@Query(GET_LENDER_DASHBOARD_OVERVIEW)
+	public LenderDashboardOverview getLenderDashboardOverview(@Param("userId") int userId) throws DataAccessException;
 
 }
