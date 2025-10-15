@@ -369,7 +369,7 @@ async function loadRequests(page = 0, search = "") {
         } else {
             tableBody.innerHTML = `
 	        <tr>
-	          <td colspan="8" class="text-center py-6 text-gray-500 text-sm">No requests found.</td>
+	          <td colspan="12" class="text-center py-6 text-gray-500 text-sm">No requests found.</td>
 	        </tr>
 	      `;
         }
