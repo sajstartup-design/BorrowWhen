@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import project.borrowhen.dto.DashboardDto;
 import project.borrowhen.service.DashboardService;
@@ -41,5 +42,20 @@ public class DashboardController {
 	public String showAdminDashboard(Model model) {
 		
 		return "dashboard/admin-dashboard";
+	}
+	
+	@ResponseBody
+	@GetMapping("/dashboard/retrieve")
+	public DashboardDto getBorrowerDashboardDetails() {
+		
+		try {
+			DashboardDto outDto = dashboardService.getBorrowerDashboardDetails();
+			
+			return outDto;
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			return new DashboardDto();
+		}
 	}
 }

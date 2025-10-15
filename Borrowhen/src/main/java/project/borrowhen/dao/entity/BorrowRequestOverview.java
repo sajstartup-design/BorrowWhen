@@ -14,11 +14,17 @@ public class BorrowRequestOverview {
 	
 	private int totalApproved;
 	
+	private int totalPickupReady;
+	
 	private int totalOngoing;
+	
+	private int totalComplete;
 	
 	private int totalPendingPayment;
 	
 	private int totalPaid;
 	
 	private int totalOverdue;
+	
+	private int totalRejected;
 }

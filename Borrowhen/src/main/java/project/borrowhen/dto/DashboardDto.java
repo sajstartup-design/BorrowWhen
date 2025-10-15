@@ -3,6 +3,7 @@ package project.borrowhen.dto;
 import java.util.List;
 
 import lombok.Data;
+import project.borrowhen.dao.entity.BorrowRequestOverview;
 import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.NotificationObj;
 
@@ -13,7 +14,9 @@ public class DashboardDto {
 	
 	private List<BorrowRequestObj> paymentPendings;
 	
-	private List<NotificationObj> recentNotifications;
+	private List<NotificationObj> notifications;
+	
+	private BorrowRequestOverview overview;
 	
 	private int totalPending;
 	

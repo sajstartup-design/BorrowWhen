@@ -194,17 +194,18 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    SELECT 
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PENDING' THEN 1 ELSE 0 END) AS integer), 0) AS totalPending,
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'APPROVED' THEN 1 ELSE 0 END) AS integer), 0) AS totalApproved,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PICK-UP READY' THEN 1 ELSE 0 END) AS integer), 0) AS totalPickupReady,
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'ON GOING' THEN 1 ELSE 0 END) AS integer), 0) AS totalOngoing,
-		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN 1 ELSE 0 END) AS integer), 0) AS totalPendingPayment,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'COMPLETED' THEN 1 ELSE 0 END) AS integer), 0) AS totalComplete,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN 1 ELSE 0 END) AS integer), 0) AS totalPaymentPending,
 		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN 1 ELSE 0 END) AS integer), 0) AS totalPaid,
-		        COALESCE(CAST(SUM(CASE WHEN br.status = 'OVERDUE' THEN 1 ELSE 0 END) AS integer), 0) AS totalOverdue
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'OVERDUE' THEN 1 ELSE 0 END) AS integer), 0) AS totalOverdue,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'REJECTED' THEN 1 ELSE 0 END) AS integer), 0) AS totalRejected
 		    FROM InventoryEntity i
 		    LEFT JOIN BorrowRequestEntity br ON br.inventoryId = i.id
 		    WHERE i.userId = :userId
 		""";
 
-
-	
 	@Query(value = GET_LENDER_BORROWER_REQUEST_OVERVIEW)
 	public BorrowRequestOverview getLenderBorrowerRequestOverview(@Param("userId") int userId) throws DataAccessException;
 	
@@ -243,12 +244,30 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
     public final String GET_PAYMENT_PENDING_REQUEST_FOR_BORROWER = """
 			SELECT br.*
 			FROM borrow_request br 
-			WHERE br.status = 'OVERDUE' 
+			WHERE br.status = 'PAYMENT PENDING' 
 			AND br.user_id = :userId 
 			LIMIT 3
 		""";
 
 	@Query(value=GET_PAYMENT_PENDING_REQUEST_FOR_BORROWER, nativeQuery=true)
 	public List<BorrowRequestEntity> getPaymentPendingRequestForBorrower(@Param("userId") int userId) throws DataAccessException;
+	
+	public final String GET_BORROW_REQUEST_OVERVIEW_FOR_BORROWER = """
+		    SELECT 
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PENDING' THEN 1 ELSE 0 END) AS integer), 0) AS totalPending,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'APPROVED' THEN 1 ELSE 0 END) AS integer), 0) AS totalApproved,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PICK-UP READY' THEN 1 ELSE 0 END) AS integer), 0) AS totalPickupReady,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'ON GOING' THEN 1 ELSE 0 END) AS integer), 0) AS totalOngoing,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'COMPLETED' THEN 1 ELSE 0 END) AS integer), 0) AS totalComplete,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN 1 ELSE 0 END) AS integer), 0) AS totalPaymentPending,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN 1 ELSE 0 END) AS integer), 0) AS totalPaid,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'OVERDUE' THEN 1 ELSE 0 END) AS integer), 0) AS totalOverdue,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'REJECTED' THEN 1 ELSE 0 END) AS integer), 0) AS totalRejected
+		    FROM BorrowRequestEntity br
+		    WHERE br.userId = :userId
+		""";
+
+	@Query(value = GET_BORROW_REQUEST_OVERVIEW_FOR_BORROWER)
+	public BorrowRequestOverview getBorrowRequestOverviewForBorrower(@Param("userId") int userId) throws DataAccessException;
 
 }

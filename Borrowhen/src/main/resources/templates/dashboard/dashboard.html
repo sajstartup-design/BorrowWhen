@@ -80,10 +80,7 @@
                                  <h5 class="text-gray-800 font-semibold">Overdue Items</h5>
                                  <a href="#" class="text-blue-500 text-sm hover:underline">View All</a>
                               </div>
-                              <div class="flex flex-col gap-3" id="overdue-div">
-                                 <div class="text-gray-500 text-sm italic">
-                                    No Overdue Items
-                                 </div>
+                              <div class="flex flex-col gap-3" id="overdue-list">
                                  <!-- <div class="flex justify-between items-center border-b border-gray-300 pb-2">
                                     <span class="text-gray-700 text-sm">Microphone</span>
                                     <span class="text-red-500 font-semibold text-sm">5 days overdue</span>
@@ -104,10 +101,8 @@
                                  <h5 class="text-gray-800 font-semibold">Items to be Paid</h5>
                                  <a href="#" class="text-blue-500 text-sm hover:underline">View All</a>
                               </div>
-                              <div class="flex flex-col gap-3">
-                                 <div class="text-gray-500 text-sm italic" id="payment-pending-div">
-                                    No Overdue Items
-                                 </div>
+                              <div class="flex flex-col gap-3" id="payment-pending-list">
+
                                  <!-- <div class="flex justify-between items-center border-b border-gray-300 pb-2">
                                     <span class="text-gray-700 text-sm">Camera</span>
                                     <span class="text-orange-500 font-semibold text-sm">₱1,200</span>
@@ -131,10 +126,8 @@
                            </div>
                            <!-- scroll only when content overflows -->
                            <div class="overflow-y-auto flex-1">
-                              <ul class="flex flex-col gap-3">
-                                 <li class="text-gray-500 text-sm italic">
-                                    No Notifications
-                                 </li>
+                              <ul class="flex flex-col gap-3" id="notifications-list">
+  
                                  <!--           <li class="flex items-start gap-3 border-b border-gray-300 pb-2">
                                     <i class="fa-solid fa-bell text-blue-500 mt-1"></i>
                                     <div>
@@ -185,42 +178,42 @@
                               <!-- Pending -->
                               <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
                                  <span class="text-gray-500 text-sm">Pending</span>
-                                 <span class="text-yellow-500 font-bold text-lg mt-1">0</span>
+                                 <span class="text-yellow-500 font-bold text-lg mt-1" id="pending">0</span>
                               </div>
                               <!-- Approved -->
                               <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
                                  <span class="text-gray-500 text-sm">Approved</span>
-                                 <span class="text-blue-500 font-bold text-lg mt-1">0</span>
+                                 <span class="text-blue-500 font-bold text-lg mt-1" id="approved">0</span>
                               </div>
                               <!-- Pick-up Ready -->
                               <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
                                  <span class="text-gray-500 text-sm">Pick-up Ready</span>
-                                 <span class="text-indigo-500 font-bold text-lg mt-1">0</span>
+                                 <span class="text-indigo-500 font-bold text-lg mt-1" id="pickupready">0</span>
                               </div>
                               <!-- On Going -->
                               <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
                                  <span class="text-gray-500 text-sm">On Going</span>
-                                 <span class="text-purple-500 font-bold text-lg mt-1">0</span>
+                                 <span class="text-purple-500 font-bold text-lg mt-1" id="ongoing">0</span>
                               </div>
                               <!-- Complete -->
                               <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
                                  <span class="text-gray-500 text-sm">Complete</span>
-                                 <span class="text-green-500 font-bold text-lg mt-1">0</span>
+                                 <span class="text-green-500 font-bold text-lg mt-1" id="complete">0</span>
                               </div>
                               <!-- Payment Pending -->
                               <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
                                  <span class="text-gray-500 text-sm">Payment Pending</span>
-                                 <span class="text-orange-500 font-bold text-lg mt-1">0</span>
+                                 <span class="text-orange-500 font-bold text-lg mt-1" id="paymentpending">0</span>
                               </div>
                               <!-- Paid -->
                               <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
                                  <span class="text-gray-500 text-sm">Paid</span>
-                                 <span class="text-teal-500 font-bold text-lg mt-1">0</span>
+                                 <span class="text-teal-500 font-bold text-lg mt-1" id="paid">0</span>
                               </div>
                               <!-- Rejected -->
                               <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
                                  <span class="text-gray-500 text-sm">Rejected</span>
-                                 <span class="text-red-500 font-bold text-lg mt-1">0</span>
+                                 <span class="text-red-500 font-bold text-lg mt-1" id="rejected">0</span>
                               </div>
                            </div>
                         </div>
@@ -533,42 +526,10 @@
             });
          </script>
       </div>
+      <script th:src="@{/script/loading.js}"></script>
       <script th:src="@{/script/modal.js}"></script>
-      <script th:inline="javascript">
-      document.addEventListener("DOMContentLoaded", () => {
-    	 const webDto = /*[[${dashboardDto}]]*/'';
-    	 
-    	 console.log(webDto);
-    	 
-    	 const overdues = webDto.overdues;
-    	 const paymentPendings = webDto.paymentPendings;
-    	 
-    	 const overdueDiv = document.getElementById('overdue-div');
-    	 const paymentPendingDiv = document.getElementById('payment-pending-div');
-    	 
-    	 if(overdues != null && overdues.length != 0){
+	  <script th:src="@{/script/dashboard/dashboard.js}"></script>
 
-    	 }else{
-			
-    		 const noData = document.createElement('div');
-    		 noData.classList.add('text-gray-500', 'text-sm', 'italic');
-    		 noData.innerHTML = 'No Request Found';
-    		 
-    		 overdueDiv.appendChild(noData);
-    	 }
-    	 
-    	 if(paymentPendings != null && paymentPendings.length != 0){
-
-    	 }else{
-    		 const noData = document.createElement('div');
-    		 noData.classList.add('text-gray-500', 'text-sm', 'italic');
-    		 noData.innerHTML = 'No Request Found';
-    		 
-    		 paymentPendingDiv.appendChild(noData);
-    	 }
-    	 
-      });
-      </script>
       <script>
          document.addEventListener("DOMContentLoaded", () => {
           // Check if ?feedback exists in the URL
