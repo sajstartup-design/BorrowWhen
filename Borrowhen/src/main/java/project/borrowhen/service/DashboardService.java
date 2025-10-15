@@ -8,4 +8,6 @@ import project.borrowhen.dto.DashboardDto;
 public interface DashboardService {
 
 	public DashboardDto getBorrowerDashboardDetails();
+	
+	public DashboardDto getLenderDashboardDetails();
 }

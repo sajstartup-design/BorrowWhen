@@ -101,4 +101,37 @@ public class DashboardServiceImpl implements DashboardService{
 		return outDto;
 	}
 
+	@Override
+	public DashboardDto getLenderDashboardDetails() {
+		
+		DashboardDto outDto = new DashboardDto();
+		
+		UserEntity user = userService.getLoggedInUser();
+		
+		List<NotificationEntity> allNotifications = notificationDao.getNotificationsForBorrower(user.getId());
+		
+		List<NotificationObj> notifications = new ArrayList<>();
+		
+		for(NotificationEntity notification : allNotifications) {
+			
+			NotificationObj obj = new NotificationObj(); 
+			
+			obj.setMessage(notification.getMessage());		
+			obj.setIsRead(notification.getIsRead());			
+			obj.setType(notification.getType());
+			obj.setDateAndTime(TimeAgoUtil.toTimeAgo(notification.getCreatedDate()));;
+			
+			notifications.add(obj);
+			
+		}
+		
+		BorrowRequestOverview overview = borrowRequestDao.getBorrowRequestOverviewForBorrower(user.getId());
+		
+		outDto.setOverview(overview);
+		
+		outDto.setNotifications(notifications);
+		
+		return outDto;
+	}
+
 }

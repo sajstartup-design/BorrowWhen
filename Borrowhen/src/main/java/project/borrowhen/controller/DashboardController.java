@@ -58,4 +58,19 @@ public class DashboardController {
 			return new DashboardDto();
 		}
 	}
+	
+	@ResponseBody
+	@GetMapping("/lender/dashboard/retrieve")
+	public DashboardDto getLenderDashboardDetails() {
+		
+		try {
+			DashboardDto outDto = dashboardService.getLenderDashboardDetails();
+			
+			return outDto;
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			return new DashboardDto();
+		}
+	}
 }

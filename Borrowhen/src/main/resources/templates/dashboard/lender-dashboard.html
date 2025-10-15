@@ -65,20 +65,201 @@
                </div>
                <div class="bg-white rounded-md">
                   <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
-                     <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
-                        <!-- Card 1 -->
-                        <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-transparent"></div>
-                        <!-- Card 2 -->
-                        <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-transparent"></div>
-                        <!-- Card 3 -->
-                        <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-transparent"></div>
-                        <!-- Card 4 -->
-                        <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-transparent"></div>
-                        <!-- Full-width row (for charts / lists) -->
+                     <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Summary Cards -->
+                        <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
+                           <div class="flex items-center justify-between">
+                              <div>
+                                 <h3 class="text-gray-600 text-sm">Total Items Listed</h3>
+                                 <p class="text-2xl font-bold text-gray-800 mt-1">24</p>
+                              </div>
+                              <i class="fa-solid fa-boxes-stacked text-blue-500 text-2xl"></i>
+                           </div>
+                        </div>
+                        <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
+                           <div class="flex items-center justify-between">
+                              <div>
+                                 <h3 class="text-gray-600 text-sm">Active Borrow Requests</h3>
+                                 <p class="text-2xl font-bold text-gray-800 mt-1">6</p>
+                              </div>
+                              <i class="fa-solid fa-hourglass-half text-yellow-500 text-2xl"></i>
+                           </div>
+                        </div>
+                        <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
+                           <div class="flex items-center justify-between">
+                              <div>
+                                 <h3 class="text-gray-600 text-sm">Items Currently Borrowed</h3>
+                                 <p class="text-2xl font-bold text-gray-800 mt-1">12</p>
+                              </div>
+                              <i class="fa-solid fa-handshake text-indigo-500 text-2xl"></i>
+                           </div>
+                        </div>
+                        <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
+                           <div class="flex items-center justify-between">
+                              <div>
+                                 <h3 class="text-gray-600 text-sm">Total Earnings</h3>
+                                 <p class="text-2xl font-bold text-green-600 mt-1">₱ 14,800</p>
+                              </div>
+                              <i class="fa-solid fa-coins text-green-500 text-2xl"></i>
+                           </div>
+                        </div>
+                        <!-- Full-width Row for Lists / Charts -->
                         <div class="col-span-full grid grid-cols-1 lg:grid-cols-3 gap-4">
-                           <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-transparent"></div>
-                           <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-transparent"></div>
-                           <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-transparent"></div>
+                           <!-- Borrow Requests -->
+                           <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
+                              <div class="flex justify-between items-center mb-3">
+                                 <h5 class="text-gray-800 font-semibold flex items-center gap-2">
+                                    <i class="fa-solid fa-envelope text-blue-500"></i> Recent Borrow Requests
+                                 </h5>
+                                 <a href="/requests" class="text-sm text-blue-600 hover:underline">View All</a>
+                              </div>
+                              <div class="space-y-2 text-sm">
+                                 <div class="flex justify-between border-b pb-2">
+                                    <span>John Doe — <span class="font-medium">Camera</span></span>
+                                    <span class="text-yellow-500 font-semibold">Pending</span>
+                                 </div>
+                                 <div class="flex justify-between border-b pb-2">
+                                    <span>Mary A. — <span class="font-medium">Tripod</span></span>
+                                    <span class="text-green-500 font-semibold">Approved</span>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- Payment Summary -->
+                           <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
+                              <div class="flex justify-between items-center mb-3">
+                                 <h5 class="text-gray-800 font-semibold flex items-center gap-2">
+                                    <i class="fa-solid fa-wallet text-green-500"></i> Payment Summary
+                                 </h5>
+                                 <a href="/payments" class="text-sm text-blue-600 hover:underline">Details</a>
+                              </div>
+                              <div class="text-sm text-gray-600 space-y-1">
+                                 <p>Pending Payments: <span class="font-bold text-yellow-600">₱ 3,500</span></p>
+                                 <p>Received This Month: <span class="font-bold text-green-600">₱ 12,000</span></p>
+                                 <p>Total Earnings: <span class="font-bold text-gray-800">₱ 14,800</span></p>
+                              </div>
+                           </div>
+                           <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
+                              <div class="flex justify-between items-center mb-3">
+                                 <h5 class="text-gray-800 font-semibold flex items-center gap-2">
+                                    <i class="fa-solid fa-boxes-stacked text-purple-500"></i> Popular Items
+                                 </h5>
+                                 <a href="/inventory" class="text-sm text-blue-600 hover:underline">View All</a>
+                              </div>
+                              <div class="space-y-2 text-sm">
+                                 <div class="flex justify-between border-b pb-2">
+                                    <span>Camera</span>
+                                    <span class="text-gray-800 font-medium">7 times lent</span>
+                                 </div>
+                                 <div class="flex justify-between border-b pb-2">
+                                    <span>Tripod</span>
+                                    <span class="text-gray-800 font-medium">5 times lent</span>
+                                 </div>
+                                 <div class="flex justify-between border-b pb-2">
+                                    <span>Microphone</span>
+                                    <span class="text-gray-800 font-medium">3 times lent</span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white">
+                        <div class="flex justify-between items-center mb-3">
+                           <h5 class="text-gray-800 font-semibold flex items-center gap-2">
+                              <i class="fa-solid fa-bell text-purple-500"></i> Recent Activity
+                           </h5>
+                           <a href="/notifications" class="text-sm text-blue-600 hover:underline">See All</a>
+                        </div>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                           <li><i class="fa-solid fa-check-circle text-green-500"></i> Camera returned by <span class="font-medium">John D.</span></li>
+                           <li><i class="fa-solid fa-credit-card text-yellow-500"></i> Payment received for <span class="font-medium">Tripod</span></li>
+                           <li><i class="fa-solid fa-exclamation-circle text-red-500"></i> Late return alert for <span class="font-medium">Microphone</span></li>
+                        </ul>
+                     </div>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- LEFT COLUMN (Overdue + To be Paid) -->
+                        <div class="space-y-4">
+                           <!-- Overdue Items -->
+                           <div class="bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
+                              <div class="flex justify-between items-center mb-3 border-b border-gray-200 pb-2">
+                                 <h5 class="text-gray-800 font-semibold flex items-center gap-2">
+                                    <i class="fa-solid fa-exclamation-circle text-red-500"></i>
+                                    Overdue Items
+                                 </h5>
+                                 <a th:href="@{/request}" class="text-sm text-blue-600 hover:underline hover:text-blue-700 transition">
+                                 View All
+                                 </a>
+                              </div>
+                              <div class="flex flex-col gap-3" id="overdue-list">
+                              </div>
+                           </div>
+                           <!-- Items to be Paid -->
+                           <div class="bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
+                              <div class="flex justify-between items-center mb-3 border-b border-gray-200 pb-2">
+                                 <h5 class="text-gray-800 font-semibold flex items-center gap-2">
+                                    <i class="fa-solid fa-credit-card text-pink-500"></i>
+                                    Items to be Paid
+                                 </h5>
+                                 <a th:href="@{/request}" class="text-sm text-blue-600 hover:text-blue-700 hover:underline transition">
+                                 View All
+                                 </a>
+                              </div>
+                              <div class="flex flex-col gap-3" id="payment-pending-list">
+                              </div>
+                           </div>
+                        </div>
+                        <!-- RIGHT COLUMN (Notifications) -->
+                        <div class="bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
+                           <div class="flex justify-between items-center mb-3 border-b border-gray-200 pb-2">
+                              <h5 class="text-gray-800 font-semibold flex items-center gap-2">
+                                 <i class="fa-solid fa-bell text-blue-500"></i>
+                                 Recent Notifications
+                              </h5>
+                              <a th:href="@{/notifications}" class="text-sm text-blue-600 hover:text-blue-700 hover:underline transition">
+                              See All
+                              </a>
+                           </div>
+                           <!-- scroll only when content overflows -->
+                           <div class="overflow-y-auto flex-1">
+                              <ul class="flex flex-col gap-3" id="notifications-list">
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="text-gray-500 rounded-lg shadow-md flex flex-col border border-gray-300 bg-white">
+                        <!-- Header -->
+                        <div class="border-b border-gray-300 p-5 flex justify-between items-center">
+                           <div>
+                              <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                                 <i class="fa-solid fa-hand-holding-dollar text-green-500"></i>
+                                 My Lent Items
+                                 <span class="text-sm font-normal text-gray-500">(Currently Lent Out)</span>
+                              </h2>
+                              <p class="text-sm text-gray-500 mt-1">
+                                 Monitor the items you’ve lent, who borrowed them, and their return status.
+                              </p>
+                           </div>
+                        </div>
+                        <!-- Table -->
+                        <div class="overflow-x-auto">
+                           <table class="min-w-full text-sm text-gray-600">
+                              <!-- HEADER -->
+                              <thead class="border-b border-gray-300">
+                                 <tr>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">#</th>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">ITEM NAME</th>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">BORROWER</th>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">STATUS</th>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">LENT DATE</th>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">EXPECTED RETURN</th>
+                                 </tr>
+                              </thead>
+                              <!-- BODY -->
+                              <tbody class="divide-y divide-gray-200 text-xs">
+                                 <tr>
+                                    <td colspan="6" class="py-2 px-3 text-gray-500 text-center">No lent items</td>
+                                 </tr>
+                              </tbody>
+                           </table>
                         </div>
                      </div>
                      <div class="text-gray-200 rounded-lg shadow-md flex flex-col border border-gray-300 text-gray-500">
@@ -174,5 +355,6 @@
       <script th:src="@{/script/pagination.js}"></script>
       <script th:src="@{/script/loading.js}"></script>
       <script th:src="@{/script/inventory/l-inventory-api.js}"></script>
+      <script th:src="@{/script/dashboard/l-dashboard.js}"></script>
    </body>
 </html>
