@@ -119,6 +119,11 @@ async function loadInventories(page = 0, search = "") {
                 ${inventory.itemName}
               </h2>
               ${newBadge}
+			  
+			  <div class="flex items-center gap-1 mb-2">
+		          <span class="text-base font-bold text-emerald-600">₱${inventory.price}</span>
+		          <span class="text-xs text-gray-400 font-medium">/ per item</span>
+		        </div>
 
               <!-- Rating -->
               <div class="flex items-center gap-1 mb-3 text-yellow-400 text-xs">
