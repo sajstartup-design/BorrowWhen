@@ -113,6 +113,18 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 			@Param("totalQty") int totalQty, 
 			@Param("updatedDate") Date updatedDate) throws DataAccessException;
     
+	public final String UPDATE_INVENTORY_LENT_TIMES = "UPDATE inventory "
+			+ "SET total_lent = total_lent + :qty, "
+			+ "updated_date = :updatedDate "
+			+ "WHERE id = :id ";
+	
+    @Modifying
+    @Transactional
+    @Query(value=UPDATE_INVENTORY_LENT_TIMES, nativeQuery=true)
+	public void updateInventoryLentTimes(@Param("id") int id,
+			@Param("qty") int qty,
+			@Param("updatedDate") Date updatedDate) throws DataAccessException;
+    
     public final String UPDATE_INVENTORY_QTY = 
     	    "UPDATE inventory " +
     	    "SET available_qty = available_qty + :deltaQty, " +
@@ -157,13 +169,20 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    WHERE e.userId = :userId
 		""";
 
-
-
-
 	@Query(GET_LENDER_INVENTORY_OVERVIEW)
 	public InventoryOverview getLenderInventoryOverview(@Param("userId") int userId) throws DataAccessException;
 	
 	
+	public static final String GET_LENDER_POPULAR_ITEMS = """
+				SELECT e.*
+				FROM inventory e
+				WHERE e.user_id = :userId
+				ORDER BY e.total_lent DESC
+				LIMIT 3 
+			""";
+	
+	@Query(value=GET_LENDER_POPULAR_ITEMS, nativeQuery=true)
+	public List<InventoryEntity> getLenderPopularItems(@Param("userId") int userId) throws DataAccessException;
 
 
 }

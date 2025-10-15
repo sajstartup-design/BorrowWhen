@@ -389,6 +389,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    UserEntity lender = userService.getUser(inventory.getUserId());
 	    
 	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.ON_GOING);
+	    inventoryService.updateInventoryLentTimes(id, request.getQty());    
 	    
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(lender.getId());

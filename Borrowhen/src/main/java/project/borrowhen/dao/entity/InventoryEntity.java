@@ -35,4 +35,6 @@ public class InventoryEntity {
 	private Timestamp updatedDate;
 	
 	private Boolean isDeleted;
+	
+	private int totalLent = 0;
 }

@@ -29,4 +29,6 @@ public class InventoryObj {
 	private Boolean isEditable;
 	
 	private String barangay;
+	
+	private int totalLent;
 }

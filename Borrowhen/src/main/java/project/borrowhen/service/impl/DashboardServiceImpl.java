@@ -9,14 +9,17 @@ import org.springframework.stereotype.Service;
 
 import project.borrowhen.common.util.TimeAgoUtil;
 import project.borrowhen.dao.BorrowRequestDao;
+import project.borrowhen.dao.InventoryDao;
 import project.borrowhen.dao.NotificationDao;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
+import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.LenderDashboardOverview;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.DashboardDto;
 import project.borrowhen.object.BorrowRequestObj;
+import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.NotificationObj;
 import project.borrowhen.object.OverdueBorrowRequestObj;
 import project.borrowhen.service.DashboardService;
@@ -30,6 +33,9 @@ public class DashboardServiceImpl implements DashboardService{
 	
 	@Autowired
 	private NotificationDao notificationDao;
+	
+	@Autowired
+	private InventoryDao inventoryDao;
 	
 	@Autowired
 	private UserService userService;
@@ -126,6 +132,20 @@ public class DashboardServiceImpl implements DashboardService{
 			
 		}
 		
+		List<InventoryEntity> allInventories = inventoryDao.getLenderPopularItems(user.getId());
+		
+		List<InventoryObj> inventories = new ArrayList<>();
+		
+		for(InventoryEntity inventory : allInventories) {
+			
+			InventoryObj obj = new InventoryObj();
+			
+			obj.setItemName(inventory.getItemName());
+			obj.setTotalLent(inventory.getTotalLent());
+		
+			inventories.add(obj);
+		}
+		
 		LenderDashboardOverview lenderDashboardOverview = borrowRequestDao.getLenderDashboardOverview(user.getId())	;
 		
 		BorrowRequestOverview overview = borrowRequestDao.getBorrowRequestOverviewForBorrower(user.getId());
@@ -133,6 +153,8 @@ public class DashboardServiceImpl implements DashboardService{
 		outDto.setOverview(overview);
 		outDto.setLenderDashboardOverview(lenderDashboardOverview);	
 		outDto.setNotifications(notifications);
+		outDto.setPopularItems(inventories);
+	
 		
 		return outDto;
 	}

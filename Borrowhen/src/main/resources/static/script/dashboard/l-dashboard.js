@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const webDto = await response.json();
     console.log("✅ Dashboard Data:", webDto);
 
-    const { overdues, paymentPendings, notifications, lenderDashboardOverview } = webDto;
+    const { overdues, paymentPendings, notifications, lenderDashboardOverview, popularItems} = webDto;
 
     const overdueList = document.getElementById('overdue-list');
     const paymentPendingList = document.getElementById('payment-pending-list');
@@ -129,6 +129,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 		const totalAvailableItemsQtyId = document.getElementById('totalAvailableItemsQty');
 		totalAvailableItemsQtyId.innerHTML = lenderDashboardOverview.totalAvailableItemsQty;
 	}
+	
+	if (popularItems && popularItems.length > 0) {
+	    const popularItemsList = document.getElementById('popular-items-list');
+	    popularItemsList.innerHTML = ''; // Clear existing content
+
+	    popularItems.forEach(item => {
+	        // Create the container div
+	        const div = document.createElement('div');
+	        div.className = 'flex justify-between border-b border-gray-300 pb-2';
+
+	        // Create the inner HTML
+	        div.innerHTML = `
+	            <span>${item.itemName || 'Unnamed Item'}</span>
+	            <span class="text-gray-500 font-medium">${item.totalLent || 0} times lent</span>
+	        `;
+
+	        // Append to the parent container
+	        popularItemsList.appendChild(div);
+	    });
+	} else {
+	    console.log('No popular items to display');
+	}
+
 
 	removeLoadingScreenBody();
   } catch (error) {

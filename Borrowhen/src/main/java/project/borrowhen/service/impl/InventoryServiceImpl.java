@@ -284,4 +284,13 @@ public class InventoryServiceImpl implements InventoryService{
 		return inventories;
 	}
 
+	@Override
+	public void updateInventoryLentTimes(int id, int qty) {
+		
+		Date dateNow = Date.valueOf(LocalDate.now());
+		
+		inventoryDao.updateInventoryLentTimes(id, qty, dateNow);;
+		
+	}
+
 }
