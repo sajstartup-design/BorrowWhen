@@ -39,8 +39,6 @@ function updateBtnsModal() {
 		btn.addEventListener("click", () => {
 			const modalTarget = btn.getAttribute("data-target");
 			const modal = document.querySelector(modalTarget);
-			
-			console.log("YAWA");
 
 			if (modal) {
 				const modalBackground = document.createElement("div");
