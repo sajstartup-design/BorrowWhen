@@ -383,4 +383,46 @@ async function loadRequests(page = 0, search = "") {
     } catch (error) {
         console.error("Error fetching inventories:", error);
     }
+	
+	const exportBtn = document.querySelector('button.bg-blue-200'); // your Export button
+	exportBtn.addEventListener('click', () => {
+	    const tableBody = document.getElementById("table-body");
+	    if (!tableBody) return;
+
+	    let csv = [];
+
+	    // Add headers
+	    const headers = [
+	        "BORROWER",
+	        "LENDER",
+	        "ITEM NAME",
+	        "PRICE",
+	        "QUANTITY",
+	        "DATE TO BORROW",
+	        "DATE TO RETURN",
+	        "CREATED DATE",
+	        "UPDATED DATE",
+	        "STATUS"
+	    ];
+	    csv.push(headers.map(h => `"${h}"`).join(','));
+
+	    // Add table rows (skip first checkbox and last action column)
+	    tableBody.querySelectorAll("tr").forEach(row => {
+	        const cells = row.querySelectorAll("td");
+	        const rowData = Array.from(cells).slice(1, -1).map(cell => {
+	            return `"${cell.innerText.replace(/"/g, '""').trim()}"`;
+	        });
+	        csv.push(rowData.join(','));
+	    });
+
+	    // Download CSV
+	    const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+	    const link = document.createElement('a');
+	    link.href = URL.createObjectURL(blob);
+	    link.download = 'requests.csv';
+	    link.style.visibility = 'hidden';
+	    document.body.appendChild(link);
+	    link.click();
+	    document.body.removeChild(link);
+	});
 }
