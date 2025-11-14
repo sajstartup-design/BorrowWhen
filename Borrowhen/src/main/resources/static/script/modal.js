@@ -39,6 +39,8 @@ function updateBtnsModal() {
 		btn.addEventListener("click", () => {
 			const modalTarget = btn.getAttribute("data-target");
 			const modal = document.querySelector(modalTarget);
+			
+			console.log("YAWA");
 
 			if (modal) {
 				const modalBackground = document.createElement("div");
@@ -62,6 +64,13 @@ function updateBtnsModal() {
 						modal.querySelector(".date-to-borrow").textContent = btn.dataset.dateToBorrow;
 						modal.querySelector(".date-to-return").textContent = btn.dataset.dateToReturn;
 						modal.querySelector(".number-to-borrow").textContent = btn.dataset.numberToBorrow;
+					}
+					
+					if(
+						modal.id === "deleteModal"
+					) {
+					    modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
+						modal.querySelector("#deleteName").value = btn.dataset.name;
 					}
 				}
 

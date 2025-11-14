@@ -310,4 +310,14 @@ public class InventoryServiceImpl implements InventoryService{
 		
 	}
 
+	@Override
+	public void deleteInventory(InventoryDto inDto) throws Exception {
+		
+		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+		
+		Date dateNow = Date.valueOf(LocalDate.now());
+		
+		inventoryDao.deleteInventory(id, dateNow);
+	}
+
 }

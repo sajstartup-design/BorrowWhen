@@ -170,6 +170,32 @@ public class L_InventoryController {
 		return "redirect:/lender/inventory";
 	}
 	
+	@PostMapping("/delete")
+	public String deleteInventory(@RequestParam("encryptedId") String encryptedId,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			InventoryDto inDto = new InventoryDto();
+			
+			inDto.setEncryptedId(encryptedId);
+			
+			inventoryService.deleteInventory(inDto);
+			
+			ra.addFlashAttribute("isSuccess", true);
+			ra.addFlashAttribute("successMsg", MessageConstant.INVENTORY_DELETE_MSG);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+		}
+		
+		return "redirect:/lender/inventory";
+	}
+	
 	@GetMapping("/details")
 	public String showInventoryDetailsScreen(Model model,
 			@RequestParam("encryptedId") String encryptedId,

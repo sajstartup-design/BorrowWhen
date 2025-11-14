@@ -187,6 +187,22 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	
 	@Query(value=GET_LENDER_POPULAR_ITEMS, nativeQuery=true)
 	public List<InventoryEntity> getLenderPopularItems(@Param("userId") int userId) throws DataAccessException;
+	
+    public final String DELETE_INVENTORY = 
+    	    """
+    			UPDATE inventory
+    			SET is_deleted = true,
+    			updated_date = :updatedDate
+    			WHERE id = :id
+    		""";
+
+	@Modifying
+	@Transactional
+	@Query(value=DELETE_INVENTORY, nativeQuery=true)
+	void deleteInventory(
+	    @Param("id") int inventoryId,
+	    @Param("updatedDate") Date updatedDate
+	) throws DataAccessException;
 
 
 }

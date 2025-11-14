@@ -23,6 +23,8 @@ public interface InventoryService {
 	
 	public InventoryDto getLenderInventoryOverview() throws Exception;
 	
+	public void deleteInventory(InventoryDto inDto) throws Exception;
+	
 	
 	/*
 	 * To be used from another services
