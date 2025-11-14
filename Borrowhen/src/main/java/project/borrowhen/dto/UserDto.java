@@ -3,9 +3,9 @@ package project.borrowhen.dto;
 import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import project.borrowhen.common.constant.MessageConstant;
+import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
@@ -63,6 +63,8 @@ public class UserDto {
 	private List<UserObj> users;
 	
 	private List<InventoryObj> recentInventory;
+	
+	private List<BorrowRequestObj> recentBorrow;
 	
 	private UserObj user;
 	

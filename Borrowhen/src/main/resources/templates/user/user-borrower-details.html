@@ -102,19 +102,19 @@
                         <!-- Right Section -->
                         <div class="flex justify-evenly items-center w-full">
                            <div class="flex flex-col items-center">
-                              <span class="text-xl font-semibold text-gray-800" >0</span>
+                              <span class="text-xl font-semibold text-gray-800" th:text="*{user.borrowedItems} ?: '0'">0</span>
                               <span class="text-sm text-gray-500">Borrowed Items</span>
                            </div>
                            <div class="flex flex-col items-center">
-                              <span class="text-xl font-semibold text-gray-800">0</span>
+                              <span class="text-xl font-semibold text-gray-800" th:text="*{user.pendingRequests} ?: '0'">0</span>
                               <span class="text-sm text-gray-500">Pending Requests</span>
                            </div>
                            <div class="flex flex-col items-center">
-                              <span class="text-xl font-semibold text-gray-800" >0</span>
+                              <span class="text-xl font-semibold text-gray-800" th:text="*{user.returnedItems} ?: '0'">0</span>
                               <span class="text-sm text-gray-500">Returned Items</span>
                            </div>
                            <div class="flex flex-col items-center">
-                              <span class="text-xl font-semibold text-gray-800" >0</span>
+                              <span class="text-xl font-semibold text-gray-800" th:text="*{user.activeLoans != null ? '₱' + user.activeLoans : '₱0'}">0</span>
                               <span class="text-sm text-gray-500">Active Loans</span>
                            </div>
                         </div>
@@ -127,10 +127,13 @@
                                  <h3 class="text-base font-semibold text-gray-800">Recent Borrowed Items</h3>
                                  <a href="/admin/inventory" class="text-sm text-blue-600 font-medium hover:underline">View All</a>
                               </div>
+                              <p class="text-xs text-gray-500 mb-3">
+						         These are items that have been returned and paid.
+						      </p>
                               <!-- Table -->
                               <div class="overflow-x-auto">
-                                 <table class="min-w-full text-sm text-left text-gray-600">
-                                    <thead class="bg-gray-100">
+                                 <table class="min-w-full text-xs text-left text-gray-600">
+                                    <thead class="bg-gray-100 text-xs">
                                        <tr>
                                           <th class="px-4 py-2">Item</th>
                                           <th class="px-4 py-2">Borrowed Date</th>
@@ -139,24 +142,15 @@
                                        </tr>
                                     </thead>
                                     <tbody>
-                                       <tr class="border-b hover:bg-gray-50 transition">
+                                       <tr class="border-b border-gray-300 hover:bg-gray-50 transition" th:each="request : *{recentBorrow}">
                                           <td class="px-4 py-2 flex items-center gap-3">
-                                             <img src="/images/logo.png" alt="Item Image" class="w-12 h-12 rounded-md object-cover">
-                                             <span class="font-medium text-gray-800">Hammer</span>
+                                             <img src="/images/logo.png" alt="Item Image" class="w-6 h-6 rounded-md object-cover mt-[2px]">
+                                             <span class="font-medium text-gray-800 text-xs mt-[2px]" th:text="${request.itemName}"></span>
                                           </td>
-                                          <td class="px-4 py-2">2025-11-01</td>
-                                          <td class="px-4 py-2">2025-11-07</td>
-                                          <td class="px-4 py-2">2</td>
-                                       </tr>
-                                       <tr class="border-b hover:bg-gray-50 transition">
-                                          <td class="px-4 py-2 flex items-center gap-3">
-                                             <img src="/images/logo.png" alt="Item Image" class="w-12 h-12 rounded-md object-cover">
-                                             <span class="font-medium text-gray-800">Screwdriver</span>
-                                          </td>
-                                          <td class="px-4 py-2">2025-11-03</td>
-                                          <td class="px-4 py-2">Pending</td>
-                                          <td class="px-4 py-2">1</td>
-                                       </tr>
+                                          <td class="px-4 py-2 text-xs mt-[2px]" th:text="${request.dateToBorrow}"></td>
+                                          <td class="px-4 py-2 text-xs mt-[2px]" th:text="${request.dateToReturn}"></td>
+                                          <td class="px-4 py-2 text-xs mt-[2px]" th:text="${request.qty}"></td>
+                                       </tr>                      
                                     </tbody>
                                  </table>
                               </div>

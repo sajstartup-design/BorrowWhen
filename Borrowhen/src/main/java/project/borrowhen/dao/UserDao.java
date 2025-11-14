@@ -181,5 +181,53 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 	@Query(GET_LENDER_DETAILS_BY_ID)
 	public UserDetailsData getLenderDetails(@Param("id") int id) throws DataAccessException;
 	
+	public final String GET_BORROWER_DETAILS_BY_ID = """
+			SELECT new project.borrowhen.dao.entity.UserDetailsData(
+			    u.id,
+			    u.fullName,
+			    u.userId,
+			    u.emailAddress,
+			    u.phoneNumber,
+			    u.about,
+			    u.barangay,
+			    u.street,
+			    u.city,
+			    u.province,
+			    u.postalCode,
+			    CAST((
+				    SELECT COALESCE(SUM(br.qty), 0)
+				    FROM BorrowRequestEntity br
+				    WHERE br.userId = u.id
+				      AND br.status IN ('PAID')
+				) AS INTEGER),
+				CAST((
+				    SELECT COALESCE(COUNT(br.id), 0)
+				    FROM BorrowRequestEntity br
+				    WHERE br.userId = u.id
+				      AND br.status IN ('PENDING')
+				) AS INTEGER),
+				CAST((
+				    SELECT COALESCE(SUM(br.price * br.qty), 0)
+				    FROM BorrowRequestEntity br
+				    WHERE br.userId = u.id
+				      AND br.status IN ('PAYMENT PENDING')
+				) AS DOUBLE),
+				CAST((
+				    SELECT COALESCE(SUM(br.qty), 0)
+				    FROM BorrowRequestEntity br
+				    WHERE br.userId = u.id
+				      AND br.status IN ('COMPLETED', 'PAYMENT PENDING', 'PAID')
+				) AS INTEGER),
+				false
+
+			)
+			FROM UserEntity u  
+			WHERE u.isDeleted = false	
+			AND u.id = :id	
+		""";
+
+	@Query(GET_BORROWER_DETAILS_BY_ID)
+	public UserDetailsData getBorrowerDetails(@Param("id") int id) throws DataAccessException;
+	
 
 }

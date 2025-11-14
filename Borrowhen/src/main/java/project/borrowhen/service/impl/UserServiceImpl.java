@@ -19,13 +19,16 @@ import jakarta.servlet.http.HttpSession;
 import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
+import project.borrowhen.dao.BorrowRequestDao;
 import project.borrowhen.dao.InventoryDao;
 import project.borrowhen.dao.UserDao;
+import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.InventoryData;
 import project.borrowhen.dao.entity.UserData;
 import project.borrowhen.dao.entity.UserDetailsData;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.UserDto;
+import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
@@ -51,6 +54,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private AdminSettingsService adminSettingsService;
+	
+	@Autowired
+	private BorrowRequestDao borrowRequestDao;
 	
 	@Autowired
 	private InventoryDao inventoryDao;
@@ -367,7 +373,7 @@ public class UserServiceImpl implements UserService {
 	    int id = Integer.parseInt(cipherUtil.decrypt(inDto.getEncryptedId()));
 
 	    // 🧩 Fetch user details from DAO (custom query projection)
-	    UserDetailsData userDetails = userDao.getLenderDetails(id);
+	    UserDetailsData userDetails = userDao.getBorrowerDetails(id);
 	    if (userDetails == null) {
 	        throw new Exception("Lender not found for ID: " + id);
 	    }
@@ -377,15 +383,38 @@ public class UserServiceImpl implements UserService {
 	    obj.setFullName(userDetails.getFullName());
 	    obj.setEmailAddress(userDetails.getEmailAddress());
 	    obj.setPhoneNumber(userDetails.getPhoneNumber());
-	    obj.setAbout(userDetails.getAbout());
 	    obj.setBarangay(userDetails.getBarangay());
 	    obj.setStreet(userDetails.getStreet());
 	    obj.setCity(userDetails.getCity());
 	    obj.setProvince(userDetails.getProvince());
 	    obj.setPostalCode(userDetails.getPostalCode());
-
+	    obj.setBorrowedItems(userDetails.getBorrowedItems());
+	    obj.setPendingRequests(userDetails.getPendingRequests());
+	    obj.setReturnedItems(userDetails.getReturnedItems());
+	    obj.setActiveLoans(userDetails.getActiveLoans());
+	    
 	    // 📦 Attach the user object to the output DTO
 	    outDto.setUser(obj);
+	    
+	    Pageable pageable = PageRequest.of(0, 5);
+	    
+	    List<BorrowRequestData> requests = borrowRequestDao.getAllOwnedBorrowRequestsForBorrower(pageable, id, CommonConstant.PAID).toList();	    
+	    
+	    List<BorrowRequestObj> recentBorrow = new ArrayList<>();
+	    
+	    for(BorrowRequestData request : requests) {
+	    	
+	    	BorrowRequestObj borrowObj = new BorrowRequestObj();
+	    	
+	    	borrowObj.setItemName(request.getItemName());
+	    	borrowObj.setDateToBorrow(request.getDateToBorrow());
+	    	borrowObj.setDateToReturn(request.getDateToReturn());
+	    	borrowObj.setQty(request.getQty());
+	    	
+	    	recentBorrow.add(borrowObj);
+	    }
+	    
+	    outDto.setRecentBorrow(recentBorrow);    
 	    
 	    return outDto;
 	}
