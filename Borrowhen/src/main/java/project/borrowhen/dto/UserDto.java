@@ -16,42 +16,42 @@ public class UserDto {
 	
 	private String encryptedId;
 
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class, ValidationGroup.Update.class})
 	private String fullName;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class})
 	private String gender;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class})
 	private String birthDate;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class})
 	private String phoneNumber;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class, ValidationGroup.Update.class})
 	private String emailAddress;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class})
 	private String barangay;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class})
 	private String street;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class})
 	private String city;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class})
 	private String province;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class})
 	private String postalCode;
 	
 	private String about;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class, ValidationGroup.Update.class})
 	private String userId;
 	
-	@NotBlank(message = MessageConstant.NOT_BLANK)
+	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class})
 	private String password;
 	
 	private String role;

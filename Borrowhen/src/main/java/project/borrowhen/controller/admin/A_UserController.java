@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 import project.borrowhen.common.constant.MessageConstant;
 import project.borrowhen.dto.UserDto;
+import project.borrowhen.dto.ValidationGroup;
 import project.borrowhen.service.UserService;
 
 @Controller
@@ -30,6 +32,78 @@ public class A_UserController {
 	public String showBorrowerScreen() {
 
 		return "user/user-borrower-view";
+	}
+	
+	@GetMapping("/admin/borrowers/edit")
+	public String showBorrowerEditScreen(Model model,
+			@RequestParam("encryptedId") String encryptedId,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			UserDto inDto = new UserDto();
+			
+			inDto.setEncryptedId(encryptedId);
+			
+			UserDto outDto = userService.getUser(inDto);
+			
+			outDto.setEncryptedId(encryptedId);
+			
+			model.addAttribute("userDto", outDto);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+			
+			return "redirect:/admin/borrowers";
+		}
+		
+		return "user/user-borrower-edit";
+	}
+	
+	@PostMapping("/admin/borrowers/edit")
+	public String postBorrowerEditScreen(Model model,
+			@ModelAttribute @Validated(ValidationGroup.Update.class) UserDto userWebDto, 
+			BindingResult result,
+			RedirectAttributes ra) {
+		
+		if(result.hasErrors()) {
+	
+			Map<String, String> fieldErrors = result.getFieldErrors()
+	                .stream()
+	                .collect(Collectors.toMap(
+	                        FieldError::getField, 
+	                        DefaultMessageSourceResolvable::getDefaultMessage,
+	                        (existing, replacement) -> existing 
+	                ));
+
+	        ra.addFlashAttribute("fieldErrors", fieldErrors);
+	        
+	        ra.addFlashAttribute("userDto", userWebDto);
+	        
+	        return "redirect:/admin/borrowers/edit?encryptedId=" + userWebDto.getEncryptedId();
+	        
+		}
+		
+		try {
+			
+			userService.editUser(userWebDto);
+			
+			ra.addFlashAttribute("isSuccess", true);
+			ra.addFlashAttribute("successMsg", MessageConstant.USER_EDIT_MSG);
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+		}
+
+		return "redirect:/admin/borrowers";
 	}
 	
 	@GetMapping("/admin/lenders")
@@ -52,7 +126,7 @@ public class A_UserController {
 	
 	@PostMapping("/admin/lenders/create")
 	public String postUserCreateScreen(Model model,
-			@ModelAttribute @Valid UserDto userWebDto,
+			@ModelAttribute @Validated(ValidationGroup.Create.class) UserDto userWebDto,
 			BindingResult result,
 			RedirectAttributes ra
 			) {
