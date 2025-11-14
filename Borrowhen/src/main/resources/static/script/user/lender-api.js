@@ -216,4 +216,43 @@ async function loadUsers(page = 0,
    } catch (error) {
       console.error("Error fetching users:", error);
    }
+   
+   // CSV Export
+      const exportBtn = document.querySelector('button.bg-blue-200'); // your Export button
+      exportBtn.addEventListener('click', () => {
+          const tableBody = document.getElementById("table-body");
+          if (!tableBody) return;
+
+          let csv = [];
+
+          // Add headers
+          const headers = [
+              "LENDER",
+              "EMAIL",
+              "PHONE NUMBER",
+              "BIRTH DATE",
+              "CREATED DATE",
+              "UPDATED DATE"
+          ];
+          csv.push(headers.map(h => `"${h}"`).join(','));
+
+          // Add table rows (skip first checkbox and last action column)
+          tableBody.querySelectorAll("tr").forEach(row => {
+              const cells = row.querySelectorAll("td");
+              const rowData = Array.from(cells).slice(1, -1).map(cell => {
+                  return `"${cell.innerText.replace(/"/g, '""').trim()}"`;
+              });
+              csv.push(rowData.join(','));
+          });
+
+          // Download CSV
+          const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = 'borrowers.csv';
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      });
 }
