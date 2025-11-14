@@ -168,7 +168,10 @@ async function loadInventories(page = 0, search = "") {
 			      <a
 			        href="#"
 			        class="delete-record border border-gray-300 hover:bg-gray-200 flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition shadow-sm"
-			        data-id="${inventory.encryptedId}"
+					data-toggle="modal"
+                    data-target="#deleteModal"
+                    data-id="${inventory.encryptedId}"
+                    data-name="${inventory.itemName}"
 			        aria-label="Delete"
 			      >
 			        <img src="/images/delete.png" alt="Delete" class="h-3 w-3" />
@@ -204,6 +207,9 @@ async function loadInventories(page = 0, search = "") {
             });
 
             tableBody.appendChild(fragment);
+			
+			updateBtnsModal();
+			
         } else {
             tableBody.innerHTML = `
         <tr>
