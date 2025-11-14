@@ -26,6 +26,8 @@ public interface UserService {
 	
 	public void editUser(UserDto inDto) throws Exception;
 	
+	public void deleteUser(UserDto inDto) throws Exception;
+	
 	
 	
 	/*

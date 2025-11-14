@@ -158,14 +158,16 @@ async function loadUsers(page = 0,
 					  ${
 					    user.isDeletable
 					      ? `
-					        <a
-					          href="#"
+					        <button
 					          class="delete-record border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition shadow-sm"
-					          data-id="${user.encryptedId}"
+							  data-toggle="modal"
+		  	                  data-target="#deleteModal"
+		  	                  data-id="${user.encryptedId}"
+		  	                  data-name="${user.fullName}(@${user.userId})"
 					          aria-label="Delete"
 					        >
 					          <img src="/images/delete.png" alt="Delete" class="h-3 w-3" />
-					        </a>
+					        </button>
 					        <span class="tooltip-text">Delete User</span>
 					      `
 					      : `
@@ -204,6 +206,8 @@ async function loadUsers(page = 0,
       });
 
       tableBody.appendChild(fragment);
+	  
+	  updateBtnsModal();
 
       document.querySelector(".input-page").value = data.pagination.page + 1;
 

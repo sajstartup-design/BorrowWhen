@@ -426,7 +426,6 @@ public class UserServiceImpl implements UserService {
 	public UserDto getBorrowerDetails(UserDto inDto) throws Exception {
 		UserDto outDto = new UserDto();
 
-	    // 🔐 Decrypt the encrypted ID from the incoming DTO
 	    int id = Integer.parseInt(cipherUtil.decrypt(inDto.getEncryptedId()));
 
 	    // 🧩 Fetch user details from DAO (custom query projection)
@@ -474,6 +473,16 @@ public class UserServiceImpl implements UserService {
 	    outDto.setRecentBorrow(recentBorrow);    
 	    
 	    return outDto;
+	}
+
+	@Override
+	public void deleteUser(UserDto inDto) throws Exception {
+		
+		Date dateNow = Date.valueOf(LocalDate.now());
+		
+		int id = Integer.parseInt(cipherUtil.decrypt(inDto.getEncryptedId()));
+		
+		userDao.deleteUser(id, dateNow);
 	}
 
 

@@ -259,5 +259,21 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 	@Query(GET_BORROWER_DETAILS_BY_ID)
 	public UserDetailsData getBorrowerDetails(@Param("id") int id) throws DataAccessException;
 	
+    public final String DELETE_USER = 
+    	    """
+    			UPDATE users
+    			SET is_deleted = true,
+    			updated_date = :updatedDate
+    			WHERE id = :id
+    		""";
+
+	@Modifying
+	@Transactional
+	@Query(value=DELETE_USER, nativeQuery=true)
+	public void deleteUser(
+	    @Param("id") int userId,
+	    @Param("updatedDate") Date updatedDate
+	) throws DataAccessException;
+	
 
 }

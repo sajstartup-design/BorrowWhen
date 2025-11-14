@@ -300,4 +300,30 @@ public class A_UserController {
 		return "user/user-lender-details";
 	}
 	
+	@PostMapping("/admin/lenders/delete")
+	public String deleteLender(@RequestParam("encryptedId") String encryptedId,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			UserDto inDto = new UserDto();
+			
+			inDto.setEncryptedId(encryptedId);
+			
+			userService.deleteUser(inDto);
+			
+			ra.addFlashAttribute("isSuccess", true);
+			ra.addFlashAttribute("successMsg", MessageConstant.USER_DELETE_MSG);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+		}
+		
+		return "redirect:/admin/lenders";
+	}
+	
 }

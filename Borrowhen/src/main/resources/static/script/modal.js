@@ -70,7 +70,7 @@ function updateBtnsModal() {
 						modal.id === "deleteModal"
 					) {
 					    modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
-						modal.querySelector("#deleteName").value = btn.dataset.name;
+						modal.querySelector("#deleteName").textContent = btn.dataset.name;
 					}
 				}
 
