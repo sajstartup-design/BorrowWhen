@@ -59,15 +59,21 @@
                   </div>
                </div>
                <hr class="border-t border-white opacity-80" />
-               <div class="flex">
+               <div class="flex justify-between items-center">
                   <div class="flex items-center py-4 gap-3">
                      <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
-                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500"></i>
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
                      </div>
                      <div class="flex flex-col gap-0 text-white">
                         <span class="text-lg font-bold">Item Details</span>
                      </div>
                   </div>
+                  <a th:href="@{/lender/inventory}"
+                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-500 hover:bg-indigo-700 
+                     border border-white rounded-md text-sm text-white transition">
+                  <i class="fa-solid fa-arrow-left text-white text-sm"></i>
+                  Back
+                  </a>
                </div>
                <!-- ---------- ITEM DETAILS ---------- -->
                <div class="bg-white rounded-md" th:object="${inventoryDto}">
@@ -115,15 +121,7 @@
                                  <p><span class="font-medium">Total Qty:</span> <span id="previewBirthDate" th:text="*{totalQty}">—</span></p>
                                  <p><span class="font-medium">Available Qty:</span> <span id="previewAvailable" th:text="*{availableQty}">—</span></p>
                               </div>
-                           </div>
-                           <!-- Back Button -->
-                           <div class="flex items-center justify-end gap-3">
-                              <a th:href="@{/lender/inventory}"
-                                 class="h-8 px-2 py-1 rounded-md border border-gray-300 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
-                              <i class="fa-solid fa-arrow-left"></i>
-                              Back
-                              </a>
-                           </div>
+                           </div>                    
                         </div>
                      </div>
                   </div>
