@@ -359,6 +359,37 @@ public class UserServiceImpl implements UserService {
 		return userDao.getAllUsersByRole(role, search);
 	}
 
+	@Override
+	public UserDto getBorrowerDetails(UserDto inDto) throws Exception {
+		UserDto outDto = new UserDto();
+
+	    // 🔐 Decrypt the encrypted ID from the incoming DTO
+	    int id = Integer.parseInt(cipherUtil.decrypt(inDto.getEncryptedId()));
+
+	    // 🧩 Fetch user details from DAO (custom query projection)
+	    UserDetailsData userDetails = userDao.getLenderDetails(id);
+	    if (userDetails == null) {
+	        throw new Exception("Lender not found for ID: " + id);
+	    }
+
+	    UserObj obj = new UserObj();
+	    obj.setEncryptedId(inDto.getEncryptedId());
+	    obj.setFullName(userDetails.getFullName());
+	    obj.setEmailAddress(userDetails.getEmailAddress());
+	    obj.setPhoneNumber(userDetails.getPhoneNumber());
+	    obj.setAbout(userDetails.getAbout());
+	    obj.setBarangay(userDetails.getBarangay());
+	    obj.setStreet(userDetails.getStreet());
+	    obj.setCity(userDetails.getCity());
+	    obj.setProvince(userDetails.getProvince());
+	    obj.setPostalCode(userDetails.getPostalCode());
+
+	    // 📦 Attach the user object to the output DTO
+	    outDto.setUser(obj);
+	    
+	    return outDto;
+	}
+
 
 
 

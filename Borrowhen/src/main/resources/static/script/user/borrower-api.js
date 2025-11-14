@@ -130,7 +130,7 @@ async function loadUsers(page = 0,
 			      <!-- View Button -->
 			      <div class="tooltip-wrapper">
 			        <a
-			          href="#"
+			          href="/admin/borrowers/details?encryptedId=${user.encryptedId}"
 			          class="view-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
 			          data-id="${user.encryptedId}"
 			          aria-label="View"

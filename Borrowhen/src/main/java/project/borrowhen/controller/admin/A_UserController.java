@@ -106,6 +106,36 @@ public class A_UserController {
 		return "redirect:/admin/borrowers";
 	}
 	
+	@GetMapping("/admin/borrowers/details")
+	public String showBorrowersDetailsScreen(Model model,
+			@RequestParam("encryptedId") String encryptedId,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			UserDto inDto = new UserDto();
+			
+			inDto.setEncryptedId(encryptedId);
+			
+			UserDto outDto = userService.getBorrowerDetails(inDto);
+			
+			outDto.setEncryptedId(encryptedId);
+			
+			model.addAttribute("userDto", outDto);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+			
+			return "redirect:/admin/borrowers";
+		}
+		
+		return "user/user-borrower-details";
+	}
+	
 	@GetMapping("/admin/lenders")
 	public String showLenderScreen() {
 
@@ -241,7 +271,7 @@ public class A_UserController {
 	}
 	
 	@GetMapping("/admin/lenders/details")
-	public String showUserDetailsScreen(Model model,
+	public String showLendersDetailsScreen(Model model,
 			@RequestParam("encryptedId") String encryptedId,
 			RedirectAttributes ra) {
 		
