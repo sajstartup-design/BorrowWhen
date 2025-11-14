@@ -185,6 +185,7 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		    FROM InventoryEntity e
 		    LEFT JOIN BorrowRequestEntity br 
 		        ON br.inventoryId = e.id AND br.status = 'PAID'
+		    WHERE e.isDeleted = false
 		""";
 
 	@Query(GET_ADMIN_INVENTORY_OVERVIEW)
