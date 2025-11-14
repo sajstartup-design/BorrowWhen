@@ -106,10 +106,10 @@ async function loadInventories(page = 0, search = "") {
           : "-";
 
         row.innerHTML = `
-          <td class="py-3 px-2 text-center align-middle">
+          <td class="py-4 px-2 text-center align-middle">
             <input type="checkbox" class="w-3 h-3 accent-blue-600 rounded row-select-checkbox" />
           </td>
-		  <td class="px-4 align-middle">
+		  <td class="align-middle">
 		  			  <div class="flex items-center gap-3">
 		  			    <div class="min-w-0">
 		  			      <p class="text-sm font-semibold text-gray-500 truncate">${inventory.owner}</p>
@@ -117,13 +117,13 @@ async function loadInventories(page = 0, search = "") {
 		  			    </div>
 		  			  </div>
 		  			</td>
-          <td class="py-3 px-2">${inventory.itemName}</td>
-          <td class="py-3 px-2 font-semibold text-blue-600">₱${inventory.price}</td>
-          <td class="py-3 px-2">${inventory.totalQty} pcs</td>
-          <td class="py-3 px-2">${inventory.availableQty} pcs</td>
-          <td class="py-3 px-2 text-gray-500">${created}</td>
-          <td class="py-3 px-2 text-gray-500">${updated}</td>
-         <td class="py-3 px-2 text-sm align-middle">
+          <td class="px-2">${inventory.itemName}</td>
+          <td class="px-2 font-semibold text-blue-600">₱${inventory.price}</td>
+          <td class="px-2">${inventory.totalQty} pcs</td>
+          <td class="px-2">${inventory.availableQty} pcs</td>
+          <td class="px-2 text-gray-500">${created}</td>
+          <td class="px-2 text-gray-500">${updated}</td>
+         <td class="px-2 text-sm align-middle">
   <div class="flex items-center gap-2 text-gray-500">
 
     <!-- View Button -->

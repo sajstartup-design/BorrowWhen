@@ -176,6 +176,20 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	@Query(GET_LENDER_INVENTORY_OVERVIEW)
 	public InventoryOverview getLenderInventoryOverview(@Param("userId") int userId) throws DataAccessException;
 	
+	public static final String GET_ADMIN_INVENTORY_OVERVIEW = """
+		    SELECT 
+		        COALESCE(CAST(COUNT(DISTINCT e.id) AS integer), 0) AS totalItem,
+		        COALESCE(CAST(SUM(e.totalQty) AS integer), 0) AS totalQty,
+		        COALESCE(CAST(SUM(e.availableQty) AS integer), 0) AS totalAvailableQty,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END) AS double), 0) AS totalRevenue
+		    FROM InventoryEntity e
+		    LEFT JOIN BorrowRequestEntity br 
+		        ON br.inventoryId = e.id AND br.status = 'PAID'
+		""";
+
+	@Query(GET_ADMIN_INVENTORY_OVERVIEW)
+	public InventoryOverview getAdminInventoryOverview() throws DataAccessException;
+	
 	
 	public static final String GET_LENDER_POPULAR_ITEMS = """
 				SELECT e.*

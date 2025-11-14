@@ -23,6 +23,8 @@ public interface InventoryService {
 	
 	public InventoryDto getLenderInventoryOverview() throws Exception;
 	
+	public InventoryDto getAdminInventoryOverview() throws Exception;
+	
 	public void deleteInventory(InventoryDto inDto) throws Exception;
 	
 	

@@ -269,6 +269,18 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		return outDto;
 	}
+	
+	@Override
+	public InventoryDto getAdminInventoryOverview() throws Exception {
+		
+		InventoryDto outDto = new InventoryDto();
+		
+		InventoryOverview overview = inventoryDao.getAdminInventoryOverview();
+		
+		outDto.setInventoryOverview(overview);
+		
+		return outDto;
+	}
 
 	@Override
 	public InventoryEntity getInventory(int id) {
@@ -319,5 +331,6 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		inventoryDao.deleteInventory(id, dateNow);
 	}
+
 
 }

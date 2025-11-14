@@ -32,7 +32,7 @@
       <div class="bg-base-200 flex min-h-screen flex-col">
          <!-- ---------- HEADER ---------- -->
          <div th:replace="~{header :: admin-header}"></div>
-         <main class="flex-1 relative">
+         <main class="flex-1 relative" th:object="${inventoryDto}">
             <!-- Blue background section (stays fixed within main) -->
             <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
             <!-- Content that appears over the blue section -->
@@ -71,8 +71,8 @@
                         <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
                      </div>
                      <div class="flex flex-col gap-0 text-white">
-                        <span class="text-lg font-bold">ADD</span>
-                        <span class="text-xs text-gray-300 italic">“Everything you’ve shared, all in one place.”</span>
+                        <span class="text-lg font-bold">Inventory</span>
+                        <span class="text-xs text-gray-300 italic">“A complete view of all items shared across the platform.”</span>
                      </div>
                   </div>
                </div>
@@ -82,54 +82,51 @@
                         <!-- In-store Sales -->
                         <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
                            <div class="space-y-1">
-                              <p class="text-gray-500 text-sm">In-store Sales</p>
-                              <div class="text-gray-800 text-lg font-semibold">$5,345.43</div>
+                              <p class="text-gray-500 text-sm">Total Items</p>
+                              <div class="text-gray-800 text-lg font-semibold" th:text="*{inventoryOverview.totalItems}">0</div>
                               <div class="flex items-center gap-2 text-xs">
-                                 <p class="text-gray-500">5k orders</p>
-                                 <p class="bg-green-50 text-green-600 px-2 py-0.5 rounded font-semibold">+5.7%</p>
+                                 <p class="text-gray-500">All registered items</p>
                               </div>
                            </div>
                            <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
-                              <i class="fa-solid fa-store text-gray-600 text-lg"></i>
+                              <i class="fa-solid fa-boxes-stacked text-gray-600 text-lg"></i>
                            </div>
                         </div>
                         <!-- Website Sales -->
                         <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
                            <div class="space-y-1">
-                              <p class="text-gray-500 text-sm">Website Sales</p>
-                              <div class="text-gray-800 text-lg font-semibold">$674,347.12</div>
+                              <p class="text-gray-500 text-sm">Total Quantity</p>
+                              <div class="text-gray-800 text-lg font-semibold" th:text="|*{inventoryOverview.totalQty} pcs|">0</div>
                               <div class="flex items-center gap-2 text-xs">
-                                 <p class="text-gray-500">21k orders</p>
-                                 <p class="bg-green-50 text-green-600 px-2 py-0.5 rounded font-semibold">+12.4%</p>
+                                 <p class="text-gray-500 text-xs">Combined stock count</p>
                               </div>
                            </div>
                            <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
-                              <i class="fa-solid fa-laptop text-gray-600 text-lg"></i>
+                              <i class="fa-solid fa-cubes text-gray-600 text-lg"></i>
                            </div>
                         </div>
                         <!-- Discount -->
                         <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
                            <div class="space-y-1">
-                              <p class="text-gray-500 text-sm">Discount</p>
-                              <div class="text-gray-800 text-lg font-semibold">$14,235.12</div>
-                              <p class="text-xs text-gray-500">6k orders</p>
+                              <p class="text-gray-500 text-sm">Total Available Quantity</p>
+                              <div class="text-gray-800 text-lg font-semibold" th:text="|*{inventoryOverview.totalAvailableQty} pcs|">0</div>
+                              <p class="text-gray-500 text-xs">Currently borrowable items</p>
                            </div>
                            <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
-                              <i class="fa-solid fa-gift text-gray-600 text-lg"></i>
+                              <i class="fa-solid fa-hand-holding text-gray-600 text-lg"></i>
                            </div>
                         </div>
                         <!-- Affiliate -->
                         <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
                            <div class="space-y-1">
-                              <p class="text-gray-500 text-sm">Affiliate</p>
-                              <div class="text-gray-800 text-lg font-semibold">$8,345.23</div>
+                              <p class="text-gray-500 text-sm">Total Revenue</p>
+                              <div class="text-gray-800 text-lg font-semibold" th:text="|₱ *{inventoryOverview.totalRevenue}|">₱0</div>
                               <div class="flex items-center gap-2 text-xs">
-                                 <p class="text-gray-500">150 orders</p>
-                                 <p class="bg-red-50 text-red-600 px-2 py-0.5 rounded font-semibold">-3.5%</p>
+                                 <p class="text-gray-500 text-xs">From all paid request</p>
                               </div>
                            </div>
                            <div class="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center">
-                              <i class="fa-solid fa-wallet text-gray-600 text-lg"></i>
+                              <i class="fa-solid fa-sack-dollar text-gray-600 text-lg"></i>
                            </div>
                         </div>
                      </div>

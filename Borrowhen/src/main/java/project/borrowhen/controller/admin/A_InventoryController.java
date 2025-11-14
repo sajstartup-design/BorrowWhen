@@ -36,24 +36,25 @@ public class A_InventoryController {
 	private UserService userService;
 	
 	@GetMapping()
-	public String showInventoryScreen(Model model) throws Exception {
+	public String showInventoryScreen(Model model,
+			RedirectAttributes ra) throws Exception {
 		
-		InventoryDto inDto = new InventoryDto();
+		try {
+			
+			InventoryDto outDto = inventoryService.getAdminInventoryOverview();
+			
+			model.addAttribute("inventoryDto", outDto);
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+			ra.addFlashAttribute("isError", true);
+	        ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+	        
+	        return "redirect:/admin/dashboard";
+		}
 
-        PaginationObj pagination = new PaginationObj();
-        pagination.setPage(1);
-        
-        FilterAndSearchObj filter = new FilterAndSearchObj();
-        filter.setSearch(CommonConstant.BLANK);
-
-        inDto.setPagination(pagination);
-        inDto.setFilter(filter);
-        
-
-        InventoryDto outDto = inventoryService.getAllInventory(inDto);
-
-        model.addAttribute("inventoryDto", outDto);
-		
 		return "inventory/admin/inventory-view";
 	}
 	
