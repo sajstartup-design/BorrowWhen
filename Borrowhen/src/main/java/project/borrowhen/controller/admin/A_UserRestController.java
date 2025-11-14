@@ -33,7 +33,7 @@ public class A_UserRestController {
             inDto.setPagination(pagination);
             inDto.setFilter(filter);
 
-            return userService.getAllUsers(inDto);
+            return userService.getAllBorrowers(inDto);
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -58,7 +58,7 @@ public class A_UserRestController {
             inDto.setPagination(pagination);
             inDto.setFilter(filter);
 
-            return userService.getAllUsers(inDto);
+            return userService.getAllLenders(inDto);
         } catch (Exception e) {
             e.printStackTrace();
 

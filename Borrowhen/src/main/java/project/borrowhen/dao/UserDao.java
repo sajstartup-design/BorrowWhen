@@ -18,36 +18,66 @@ import project.borrowhen.dao.entity.UserEntity;
 
 public interface UserDao extends JpaRepository<UserEntity, Integer> {
 
-	public final String GET_ALL_USERS_NO_GROUP =
+	public final String GET_ALL_BORROWERS =
 		    "SELECT new project.borrowhen.dao.entity.UserData(" +
 		    "   u.id, u.fullName, u.gender, u.birthDate, u.phoneNumber, u.emailAddress, " +
 		    "   u.barangay, u.street, u.city, u.province, u.postalCode, u.about, u.userId, u.password, u.role, " +
 		    "   u.createdDate, u.updatedDate, " +
-		    "   (CASE WHEN (" +
-		    "       SELECT COUNT(br2) " +
-		    "       FROM BorrowRequestEntity br2 " +
-		    "       WHERE br2.userId = u.id " +
-		    "       AND br2.status NOT IN ('PAID', 'CANCELLED', 'REJECTED', 'VOID')" +
-		    "   ) = 0 " +
-		    "   THEN false ELSE true END) AS isDeletable " +
+		    "   CASE WHEN (" +
+		    "       SELECT COUNT(br) " +
+		    "       FROM BorrowRequestEntity br " +
+		    "       WHERE br.userId = u.id " +
+		    "       AND br.status IN ('PENDING', 'APPROVED', 'PICK-UP READY', 'ON GOING', 'PAYMENT PENDING', 'OVERDUE')" +
+		    "   ) > 0 THEN false ELSE true END AS isDeletable " +
 		    ") " +
 		    "FROM UserEntity u " +
 		    "WHERE u.isDeleted = false " +
-		    "AND u.role = :role " +
+		    "AND u.role = 'BORROWER' " +
 		    "AND ( " +
-		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
+		    "   (:search IS NOT NULL AND :search <> '' AND (" +
 		    "       LOWER(u.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
 		    "       LOWER(u.emailAddress) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
 		    "       LOWER(u.phoneNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "       LOWER(u.userId) LIKE LOWER(CONCAT('%', :search, '%')) " +
+		    "       LOWER(u.userId) LIKE LOWER(CONCAT('%', :search, '%'))" +
 		    "   )) " +
-		    "   OR (:search IS NULL OR :search = '') " +
+		    "   OR (:search IS NULL OR :search = '')" +
 		    ")";
 
-	@Query(GET_ALL_USERS_NO_GROUP)
-	Page<UserData> getAllUsers(Pageable pageable, 
-			@Param("search") String search,
-			@Param("role") String role) throws DataAccessException;
+
+	@Query(GET_ALL_BORROWERS)
+	Page<UserData> getAllBorrowers(Pageable pageable, 
+			@Param("search") String search) throws DataAccessException;
+	
+	public final String GET_ALL_LENDERS =
+		    "SELECT new project.borrowhen.dao.entity.UserData(" +
+		    "   u.id, u.fullName, u.gender, u.birthDate, u.phoneNumber, u.emailAddress, " +
+		    "   u.barangay, u.street, u.city, u.province, u.postalCode, u.about, u.userId, u.password, u.role, " +
+		    "   u.createdDate, u.updatedDate, " +
+		    "   CASE WHEN (" +
+		    "       SELECT COUNT(br2) " +
+		    "       FROM BorrowRequestEntity br2 " +
+		    "       JOIN InventoryEntity ii ON ii.id = br2.inventoryId " +
+		    "       WHERE ii.isDeleted = false AND ii.userId = u.id " +
+		    "       AND br2.status NOT IN ('PAID', 'CANCELLED', 'REJECTED', 'VOID')" +
+		    "   ) > 0 THEN false ELSE true END AS isDeletable " +
+		    ") " +
+		    "FROM UserEntity u " +
+		    "WHERE u.isDeleted = false " +
+		    "AND u.role = 'LENDER' " +
+		    "AND ( " +
+		    "   (:search IS NOT NULL AND :search <> '' AND (" +
+		    "       LOWER(u.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.emailAddress) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.phoneNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+		    "       LOWER(u.userId) LIKE LOWER(CONCAT('%', :search, '%'))" +
+		    "   )) " +
+		    "   OR (:search IS NULL OR :search = '')" +
+		    ")";
+
+
+	@Query(GET_ALL_LENDERS)
+	Page<UserData> getAllLenders(Pageable pageable, 
+			@Param("search") String search) throws DataAccessException;
 
 	
 	public final String GET_USER_BY_ID = "SELECT e "

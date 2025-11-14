@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto getAllUsers(UserDto inDto) throws Exception {
+	public UserDto getAllBorrowers(UserDto inDto) throws Exception {
 		
 		UserDto outDto = new UserDto();
 		
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
 		
 		FilterAndSearchObj filter = inDto.getFilter();
 		
-		Page<UserData> allUsers = userDao.getAllUsers(pageable, filter.getSearch(), filter.getRole());
+		Page<UserData> allUsers = userDao.getAllBorrowers(pageable, filter.getSearch());
 		
 		List<UserObj> users = new ArrayList<>();
 		
@@ -178,6 +178,63 @@ public class UserServiceImpl implements UserService {
 
 		return outDto;
 	}
+	
+	@Override
+	public UserDto getAllLenders(UserDto inDto) throws Exception {
+		
+		UserDto outDto = new UserDto();
+		
+		Pageable pageable = PageRequest.of(inDto.getPagination().getPage(), Integer.valueOf(getMaxUserDisplay()));
+		
+		FilterAndSearchObj filter = inDto.getFilter();
+		
+		Page<UserData> allUsers = userDao.getAllLenders(pageable, filter.getSearch());
+		
+		List<UserObj> users = new ArrayList<>();
+		
+		for (UserData user : allUsers) {
+		    UserObj obj = new UserObj();
+
+		    obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(user.getId())));
+		    obj.setFullName(user.getFullName());
+		    obj.setGender(user.getGender());
+		    
+		    if (user.getBirthDate() != null) {
+		        obj.setBirthDate(user.getBirthDate().toString());
+		    }
+		    
+		    obj.setPhoneNumber(user.getPhoneNumber());
+		    obj.setEmailAddress(user.getEmailAddress());
+		    obj.setBarangay(user.getBarangay());
+		    obj.setStreet(user.getStreet());
+		    obj.setCity(user.getCity());
+		    obj.setProvince(user.getProvince());
+		    obj.setPostalCode(user.getPostalCode());
+		    obj.setAbout(user.getAbout());		    
+		    obj.setUserId(user.getUserId());
+		    obj.setRole(user.getRole());
+			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(user.getCreatedDate()));
+			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(user.getUpdatedDate()));	
+			obj.setIsDeletable(user.getIsDeletable());
+			
+		    users.add(obj);
+		}
+		
+		PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allUsers.getNumber());
+		pagination.setTotalPages(allUsers.getTotalPages());
+		pagination.setTotalElements(allUsers.getTotalElements());
+		pagination.setHasNext(allUsers.hasNext());
+		pagination.setHasPrevious(allUsers.hasPrevious());
+		pagination.setPageSize(getMaxUserDisplay());
+		
+		outDto.setUsers(users);
+		outDto.setPagination(pagination);
+
+		return outDto;
+	}
+
 
 	@Override
 	public UserDto getUser(UserDto inDto) throws Exception {

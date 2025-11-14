@@ -14,7 +14,9 @@ public interface UserService {
 	
 	public void registerUser(UserDto inDto) throws Exception;
 	
-	public UserDto getAllUsers(UserDto inDto) throws Exception;
+	public UserDto getAllBorrowers(UserDto inDto) throws Exception;
+	
+	public UserDto getAllLenders(UserDto inDto) throws Exception;
 	
 	public UserDto getUser(UserDto inDto) throws Exception;
 	
