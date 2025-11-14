@@ -170,13 +170,16 @@ const buttons = {
 	  `,
 
     fake: (icon) => `
-	    <div class="tooltip-wrapper">
-	      <button 
-	        class="fake-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-gray-100 opacity-60 cursor-not-allowed shadow-sm pointer-events-none">
-	        <img src="/images/${icon}.png" alt="${icon}" class="h-4 w-4" />
-	      </button>
-	      <span class="tooltip-text">Unavailable</span>
-	    </div>
+	<div class="tooltip-wrapper cursor-not-allowed">
+	  <button 
+	    class="fake-btn border border-gray-300 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-gray-100 opacity-50 shadow-sm"
+	    disabled
+	  >
+	    <img src="/images/${icon}.png" alt="${icon}" class="h-4 w-4 object-contain" />
+	  </button>
+	  <span class="tooltip-text">Unavailable</span>
+	</div>
+
 	  `
 };
 
@@ -205,7 +208,7 @@ async function loadRequests(page = 0, search = "") {
         if (data.requests && data.requests.length > 0) {
             data.requests.forEach((request) => {
                 const row = document.createElement("tr");
-                row.className = "hover:bg-gray-50 transition";
+                row.className = "hover:bg-gray-50 transition border-b border-gray-300";
                 row.setAttribute("data-id", request.encryptedId);
 
                 const status = request.status?.toLowerCase().replace(" ", "").trim();
