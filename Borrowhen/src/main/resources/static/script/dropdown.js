@@ -10,7 +10,12 @@ function createCustomDropdown(originalSelect) {
   const selected = document.createElement("div");
   selected.className =
     "border border-gray-300 rounded-md h-8 px-2 py-1 text-sm cursor-pointer bg-white flex items-center justify-between";
-  selected.textContent = options[0].textContent;
+	// Find the real selected option
+	const preselected = options.find(o => o.selected) || options[0];
+	selected.textContent = preselected.textContent;
+
+	// Make sure the original select reflects it
+	originalSelect.value = preselected.value;
 
   const menu = document.createElement("div");
   menu.className =

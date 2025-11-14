@@ -221,6 +221,9 @@ public class InventoryServiceImpl implements InventoryService{
 	public void editInventory(InventoryDto inDto) throws Exception {
 
 	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+	    
+	    System.out.println(inDto.getUserId());
+	    
 	    Date dateNow = Date.valueOf(LocalDate.now());
 
 	    UserEntity user = userService.getLoggedInUser();

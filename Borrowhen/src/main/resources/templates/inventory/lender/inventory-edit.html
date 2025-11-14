@@ -74,7 +74,7 @@
                <div class="bg-white rounded-md ">
                   <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
                      <form th:action="@{/lender/inventory/edit}" method="POST" th:object="${inventoryDto}">
-                     	<input type="hidden" name="encryptedId" th:value="*{encryptedId}" />
+                        <input type="hidden" name="encryptedId" th:value="*{encryptedId}" />
                         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                            <!-- LEFT SIDE — BASIC INFORMATION -->
                            <div class="xl:col-span-2 space-y-6">
@@ -117,6 +117,7 @@
                                     <p><span class="font-medium">Item:</span> <span id="previewName">—</span></p>
                                     <p><span class="font-medium">Price:</span> <span id="previewGender">—</span></p>
                                     <p><span class="font-medium">Total Qty:</span> <span id="previewBirthDate">—</span></p>
+                                    <p><span class="font-medium">Available Qty:</span> <span id="previewAvailableQty">—</span></p>
                                  </div>
                               </div>
                               <!-- Buttons -->
@@ -140,75 +141,91 @@
          </main>
       </div>
       <script th:src="@{/script/loading.js}"></script>
-     <script th:inline="javascript">
-/*<![CDATA[*/
-document.addEventListener("DOMContentLoaded", () => {
-    const totalQtyInput = document.getElementById("itemQty");
-    const availableQty = parseInt(/*[[${inventoryDto.availableQty}]]*/ 0);
-    const currentTotal = parseInt(/*[[${inventoryDto.totalQty}]]*/ 0);
-    const borrowedQty = currentTotal - availableQty;
-    const errorSpan = document.getElementById("itemInfoError");
-    const updateBtn = document.getElementById("updateButton");
-
-    function validateQty() {
-        const newTotal = parseInt(totalQtyInput.value);
-
-        if (isNaN(newTotal) || newTotal < borrowedQty) {
-            errorSpan.textContent = `Total Qty cannot be less than borrowed items (${borrowedQty}).`;
-            errorSpan.classList.remove("hidden");
-            updateBtn.disabled = true;
-            updateBtn.classList.add("opacity-50", "cursor-not-allowed");
-            return false;
-        }
-
-        errorSpan.classList.add("hidden");
-        updateBtn.disabled = false;
-        updateBtn.classList.remove("opacity-50", "cursor-not-allowed");
-        return true;
-    }
-
-    totalQtyInput.addEventListener("input", validateQty);
-    validateQty();
-
-    const form = document.querySelector("form");
-    form.addEventListener("submit", (e) => {
-        if (!validateQty()) e.preventDefault();
-    });
-});
-
-/*]]>*/
-</script>
-      <script>
-         document.addEventListener("DOMContentLoaded", function () {
-           const inputs = {
-             name: document.getElementById("itemName"),
-             price: document.getElementById("itemPrice"),
-             qty: document.getElementById("itemQty"),
-           };
+      <script th:inline="javascript">
+         /*<![CDATA[*/
+         document.addEventListener("DOMContentLoaded", () => {
+             const totalQtyInput = document.getElementById("itemQty");
+             const availableQty = parseInt(/*[[${inventoryDto.availableQty}]]*/ 0);
+             const currentTotal = parseInt(/*[[${inventoryDto.totalQty}]]*/ 0);
+             const borrowedQty = currentTotal - availableQty;
+             const errorSpan = document.getElementById("itemInfoError");
+             const updateBtn = document.getElementById("updateButton");
          
-           const preview = {
-             name: document.getElementById("previewName"),
-             price: document.getElementById("previewGender"),   // price placeholder
-             qty: document.getElementById("previewBirthDate"), // qty placeholder
-           };
+             function validateQty() {
+                 const newTotal = parseInt(totalQtyInput.value);
+         
+                 if (isNaN(newTotal) || newTotal < borrowedQty) {
+                     errorSpan.textContent = `Total Qty cannot be less than borrowed items (${borrowedQty}).`;
+                     errorSpan.classList.remove("hidden");
+                     updateBtn.disabled = true;
+                     updateBtn.classList.add("opacity-50", "cursor-not-allowed");
+                     return false;
+                 }
+         
+                 errorSpan.classList.add("hidden");
+                 updateBtn.disabled = false;
+                 updateBtn.classList.remove("opacity-50", "cursor-not-allowed");
+                 return true;
+             }
+         
+             totalQtyInput.addEventListener("input", validateQty);
+             validateQty();
+         
+             const form = document.querySelector("form");
+             form.addEventListener("submit", (e) => {
+                 if (!validateQty()) e.preventDefault();
+             });
+         });
+         
+         /*]]>*/
+      </script>
+      <script th:inline="javascript">
+         document.addEventListener("DOMContentLoaded", function () {
+         
+           // Input fields
+           const nameInput = document.getElementById("itemName");
+           const priceInput = document.getElementById("itemPrice");
+           const qtyInput = document.getElementById("itemQty");
+         
+           // Preview fields
+           const previewName = document.getElementById("previewName");
+           const previewPrice = document.getElementById("previewGender");
+           const previewQty = document.getElementById("previewBirthDate");
+           const previewAvailable = document.getElementById("previewAvailableQty");
+         
+           // Real values from backend
+           const originalTotal = parseInt(/*[[${inventoryDto.totalQty}]]*/ 0);
+           const originalAvailable = parseInt(/*[[${inventoryDto.availableQty}]]*/ 0);
+         
+           // Borrowed = total - available
+           const borrowedQty = originalTotal - originalAvailable;
          
            function updatePreview() {
-             preview.name.textContent = inputs.name.value || "—";
+             // NAME
+             previewName.textContent = nameInput.value || "—";
          
-             // Format price (numbers + dot only)
-             let priceVal = inputs.price.value.replace(/[^\d.]/g, '');
-             inputs.price.value = priceVal;
-             preview.price.textContent = priceVal ? `₱ ${priceVal}` : "—";
+             // PRICE
+             let p = priceInput.value.replace(/[^\d.]/g, "");
+             priceInput.value = p;
+             previewPrice.textContent = p ? `₱ ${p}` : "—";
          
-             // Format qty (numbers only)
-             let qtyVal = inputs.qty.value.replace(/\D/g, '');
-             inputs.qty.value = qtyVal;
-             preview.qty.textContent = qtyVal ? `${qtyVal} pcs` : "—";
+             // TOTAL QTY
+             let total = qtyInput.value.replace(/\D/g, "");
+             qtyInput.value = total;
+             previewQty.textContent = total ? `${total} pcs` : "—";
+         
+             // AVAILABLE QTY (AUTO UPDATE)
+             if (total) {
+               let newAvailable = parseInt(total) - borrowedQty;
+               previewAvailable.textContent = newAvailable >= 0 ? `${newAvailable} pcs` : "0 pcs";
+             } else {
+               previewAvailable.textContent = "—";
+             }
            }
          
-           Object.values(inputs).forEach((input) => {
-             input.addEventListener("input", updatePreview);
-           });
+           [nameInput, priceInput, qtyInput].forEach(input =>
+             input.addEventListener("input", updatePreview)
+           );
          
            updatePreview();
          });
