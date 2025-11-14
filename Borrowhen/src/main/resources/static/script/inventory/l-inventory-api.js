@@ -133,7 +133,7 @@ async function loadInventories(page = 0,
 			      <!-- Edit Button -->
 			      <div class="tooltip-wrapper">
 			        <a
-			          href="#"
+			          href="/lender/inventory/edit?encryptedId=${inventory.encryptedId}"
 			          class="edit-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-yellow-100 hover:bg-yellow-200 transition shadow-sm"
 			          data-id="${inventory.encryptedId}"
 			          aria-label="Edit"

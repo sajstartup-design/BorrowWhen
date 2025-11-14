@@ -95,13 +95,16 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	@Query(value=GET_INVENTORY)
 	public InventoryEntity getInventory(@Param("id") int id) throws DataAccessException;
 	
-	public final String UPDATE_INVENTORY = "UPDATE inventory "
-			+ "SET user_id = :userId, "
-			+ "item_name = :itemName, "
-			+ "price = :price, "
-			+ "total_qty = :totalQty, "
-			+ "updated_date = :updatedDate "
-			+ "WHERE id = :id ";
+	public final String UPDATE_INVENTORY = """
+				UPDATE inventory
+				SET user_id = :userId,
+				item_name = :itemName,
+				price = :price,
+				total_qty = :totalQty,
+				available_qty = :availableQty,
+				updated_date = :updatedDate
+				WHERE id = :id
+			""";
 	
     @Modifying
     @Transactional
@@ -111,6 +114,7 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 			@Param("itemName") String itemName,
 			@Param("price") double price, 
 			@Param("totalQty") int totalQty, 
+			@Param("availableQty") int availableQty,
 			@Param("updatedDate") Date updatedDate) throws DataAccessException;
     
 	public final String UPDATE_INVENTORY_LENT_TIMES = "UPDATE inventory "

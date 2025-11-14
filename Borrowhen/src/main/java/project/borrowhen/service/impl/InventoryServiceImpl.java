@@ -210,6 +210,7 @@ public class InventoryServiceImpl implements InventoryService{
 		outDto.setItemName(inventory.getItemName());
 		outDto.setPrice(inventory.getPrice());
 		outDto.setTotalQty(inventory.getTotalQty());
+		outDto.setAvailableQty(inventory.getAvailableQty());	
 		outDto.setCreatedDate(DateFormatUtil.formatTimestampToString(inventory.getCreatedDate()));
 		outDto.setUpdatedDate(DateFormatUtil.formatTimestampToString(inventory.getUpdatedDate()));
 		
@@ -218,26 +219,42 @@ public class InventoryServiceImpl implements InventoryService{
 
 	@Override
 	public void editInventory(InventoryDto inDto) throws Exception {
-			
-		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
-		
-		Date dateNow = Date.valueOf(LocalDate.now());
-		
-		UserEntity user = userService.getLoggedInUser();
 
-		if (inDto.getUserId() != null && !inDto.getUserId().isBlank()) {
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+	    Date dateNow = Date.valueOf(LocalDate.now());
+
+	    UserEntity user = userService.getLoggedInUser();
+	    InventoryEntity inv = inventoryDao.getInventory(id);
+
+	    if (inDto.getUserId() != null && !inDto.getUserId().isBlank()) {
 	        user = userService.getUserByUserId(inDto.getUserId());
 	    }
-		
-		inventoryDao.updateInventory(id, 
-				user.getId().intValue(), 
-				inDto.getItemName(), 
-				inDto.getPrice().doubleValue(),
-				inDto.getTotalQty().intValue(),
-				dateNow);
-		
-	
+
+	    int oldTotal = inv.getTotalQty();
+	    int oldAvailable = inv.getAvailableQty();
+	    int borrowed = oldTotal - oldAvailable;          // borrowed items
+
+	    int newTotal = inDto.getTotalQty();
+	    int newAvailable = newTotal - borrowed;          // recalc available
+
+	    // Validation: total cannot be smaller than borrowed items
+	    if (newTotal < borrowed) {
+	        throw new RuntimeException("Total Quantity cannot be smaller than borrowed quantity (" + borrowed + ").");
+	    }
+
+	    if (newAvailable < 0) newAvailable = 0;         // safety
+
+	    inventoryDao.updateInventory(
+	            id,
+	            user.getId().intValue(),
+	            inDto.getItemName(),
+	            inDto.getPrice().doubleValue(),
+	            newTotal,
+	            newAvailable,       // update availableQty
+	            dateNow
+	    );
 	}
+
 	
 	@Override
 	public InventoryDto getLenderInventoryOverview() throws Exception {

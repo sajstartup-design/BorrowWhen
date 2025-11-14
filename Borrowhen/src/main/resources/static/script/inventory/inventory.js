@@ -71,7 +71,7 @@ async function loadInventories(page = 0, search = "") {
         const statusColor = isAvailable
           ? "text-green-700 bg-green-100"
           : "text-yellow-700 bg-yellow-100";
-        const statusText = isAvailable ? "Available" : "Borrowed";
+        const statusText = isAvailable ? "Available" : "No Stock";
 
         // ✅ Check if updatedDate is today
         const updatedDate = new Date(inventory.updatedDate);
@@ -98,7 +98,7 @@ async function loadInventories(page = 0, search = "") {
             <button
               class="h-8 px-2 py-1 bg-gray-300 text-gray-700 text-sm rounded-md cursor-not-allowed"
               disabled>
-              Borrowed
+              Not Available
             </button>`;
 
         // Card

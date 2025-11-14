@@ -120,6 +120,7 @@ public class L_InventoryController {
 			
 			e.printStackTrace();
 			
+			ra.addFlashAttribute("isError", true);
 			ra.addFlashAttribute("errorMsg", "Something went wrong!");
 			
 			return "redirect:/lender/inventory";
@@ -155,13 +156,15 @@ public class L_InventoryController {
 			
 			inventoryService.editInventory(inventoryWebDto);
 			
+			ra.addFlashAttribute("isSuccess", true);
 			ra.addFlashAttribute("successMsg", MessageConstant.INVENTORY_EDIT_MSG);
 			
 		}catch(Exception e) {
 			
 			e.printStackTrace();
 			
-			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 		}
 		
 		return "redirect:/lender/inventory";
@@ -186,7 +189,8 @@ public class L_InventoryController {
 			
 			e.printStackTrace();
 			
-			ra.addFlashAttribute("errorMsg", "Something went wrong!");
+			ra.addFlashAttribute("isError", true);
+			ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
 			
 			return "redirect:/lender/inventory";
 		}
