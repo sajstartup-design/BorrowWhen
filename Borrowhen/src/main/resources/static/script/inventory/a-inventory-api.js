@@ -225,4 +225,46 @@ async function loadInventories(page = 0, search = "") {
     } catch (error) {
         console.error("Error fetching inventories:", error);
     }
+	
+	// CSV Export for Inventory
+	const exportInventoryBtn = document.querySelector('button.bg-blue-200'); // make sure this points to your inventory Export button
+	exportInventoryBtn.addEventListener('click', () => {
+	    const tableBody = document.getElementById("table-body");
+	    if (!tableBody) return;
+
+	    let csv = [];
+
+	    // Add headers
+	    const headers = [
+	        "OWNER",
+	        "USER ID",
+	        "ITEM NAME",
+	        "PRICE",
+	        "TOTAL QTY",
+	        "AVAILABLE QTY",
+	        "CREATED DATE",
+	        "UPDATED DATE"
+	    ];
+	    csv.push(headers.map(h => `"${h}"`).join(','));
+
+	    // Add table rows (skip first checkbox and last action column)
+	    tableBody.querySelectorAll("tr").forEach(row => {
+	        const cells = row.querySelectorAll("td");
+	        // slice(1, -1) skips checkbox and actions
+	        const rowData = Array.from(cells).slice(1, -1).map(cell => {
+	            return `"${cell.innerText.replace(/"/g, '""').trim()}"`;
+	        });
+	        csv.push(rowData.join(','));
+	    });
+
+	    // Download CSV
+	    const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+	    const link = document.createElement('a');
+	    link.href = URL.createObjectURL(blob);
+	    link.download = 'inventories.csv';
+	    link.style.visibility = 'hidden';
+	    document.body.appendChild(link);
+	    link.click();
+	    document.body.removeChild(link);
+	});
 }
