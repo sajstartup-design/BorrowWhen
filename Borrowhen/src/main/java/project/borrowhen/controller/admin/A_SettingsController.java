@@ -38,6 +38,7 @@ public class A_SettingsController {
 	    settings.setRequestPerPage(adminSettingsWebDto.getRequestPerPage());
 	    settings.setShowInventoryPage(adminSettingsWebDto.isShowInventoryPage());
 	    settings.setPaymentPerPage(adminSettingsWebDto.getPaymentPerPage());
+	    settings.setNotificationPerPage(adminSettingsWebDto.getNotificationPerPage());
 	    settings.setShowNotificationPage(adminSettingsWebDto.isShowNotificationPage());
 	    settings.setShowHistoryPage(adminSettingsWebDto.isShowHistoryPage());
 	    settings.setShowPaymentPage(adminSettingsWebDto.isShowPaymentPage());

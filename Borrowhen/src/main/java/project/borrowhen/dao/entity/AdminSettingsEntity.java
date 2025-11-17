@@ -17,6 +17,7 @@ public class AdminSettingsEntity {
     private int inventoryPerPage = 10;
     private int requestPerPage = 10;
     private int paymentPerPage = 10;
+    private int notificationPerPage = 10;
 
     private boolean showInventoryPage = true;
     private boolean showNotificationPage = true;
