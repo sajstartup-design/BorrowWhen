@@ -382,29 +382,35 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 			@Param("search") String search) throws DataAccessException; 
 	
 	public final String GET_REVIEW_OVERVIEW_FOR_LENDER = """
-		    SELECT
-		        CAST(AVG(COALESCE(br.rating, 0)) AS DOUBLE PRECISION) AS averageRating,
-		        CAST(COUNT(br.id) AS INTEGER) AS totalReview,
-		        CAST(SUM(CASE WHEN br.updated_date >= CURRENT_DATE - INTERVAL '7 days' THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewThisWeek,
-		        CAST(SUM(CASE WHEN br.rating = 5 THEN 1 ELSE 0 END) AS INTEGER) AS totalReview5Star,
-		        CAST(SUM(CASE WHEN br.rating = 4 THEN 1 ELSE 0 END) AS INTEGER) AS totalReview4Star,
-		        CAST(SUM(CASE WHEN br.rating = 3 THEN 1 ELSE 0 END) AS INTEGER) AS totalReview3Star,
-		        CAST(SUM(CASE WHEN br.rating = 2 THEN 1 ELSE 0 END) AS INTEGER) AS totalReview2Star,
-		        CAST(SUM(CASE WHEN br.rating = 1 THEN 1 ELSE 0 END) AS INTEGER) AS totalReview1Star,
-		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 1 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewMon,
-		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 2 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewTue,
-		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 3 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewWed,
-		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 4 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewThu,
-		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 5 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewFri,
-		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 6 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewSat,
-		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 0 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewSun,
-		        CAST(SUM(CASE WHEN br.updated_date >= CURRENT_DATE THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewToday,
-		        CAST(SUM(CASE WHEN br.rating >= 4 THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(br.id),0) AS DOUBLE PRECISION) AS positiveReviews
-		    FROM borrow_request br
-		    INNER JOIN inventory i ON i.id = br.inventory_id
-		    WHERE br.is_deleted = false
-		    AND i.user_id = :userId
-		    AND br.status = 'PAID'
+		     SELECT
+			    CAST(COALESCE(AVG(COALESCE(br.rating, 0)), 0) AS DOUBLE PRECISION) AS averageRating,
+			    CAST(COALESCE(COUNT(br.id), 0) AS INTEGER) AS totalReview,
+			    CAST(COALESCE(SUM(CASE WHEN br.updated_date >= CURRENT_DATE - INTERVAL '7 days' THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReviewThisWeek,
+			    CAST(COALESCE(SUM(CASE WHEN br.rating = 5 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReview5Star,
+			    CAST(COALESCE(SUM(CASE WHEN br.rating = 4 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReview4Star,
+			    CAST(COALESCE(SUM(CASE WHEN br.rating = 3 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReview3Star,
+			    CAST(COALESCE(SUM(CASE WHEN br.rating = 2 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReview2Star,
+			    CAST(COALESCE(SUM(CASE WHEN br.rating = 1 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReview1Star,
+			    CAST(COALESCE(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 1 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReviewMon,
+			    CAST(COALESCE(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 2 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReviewTue,
+			    CAST(COALESCE(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 3 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReviewWed,
+			    CAST(COALESCE(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 4 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReviewThu,
+			    CAST(COALESCE(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 5 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReviewFri,
+			    CAST(COALESCE(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 6 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReviewSat,
+			    CAST(COALESCE(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 0 THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReviewSun,
+			    CAST(COALESCE(SUM(CASE WHEN br.updated_date >= CURRENT_DATE THEN 1 ELSE 0 END), 0) AS INTEGER) AS totalReviewToday,
+			    CAST(
+					CASE 
+						WHEN COUNT(br.id) = 0 THEN 0
+							ELSE SUM(CASE WHEN br.rating >= 4 THEN 1 ELSE 0 END) * 100.0 / COUNT(br.id)
+					END 
+				AS DOUBLE PRECISION) AS positiveReviews
+			FROM borrow_request br
+			INNER JOIN inventory i ON i.id = br.inventory_id
+			WHERE br.is_deleted = false
+			  AND i.user_id = :userId
+			  AND br.status = 'PAID';
+
 		""";
 
 

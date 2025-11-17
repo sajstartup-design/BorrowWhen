@@ -119,7 +119,7 @@ async function loadPayments(page = 0, search = "") {
 	        } else {
 	            tableBody.innerHTML = `
 	        <tr>
-	          <td colspan="9" class="text-center py-6 text-gray-500 text-sm">No requests found.</td>
+	          <td colspan="9" class="text-center py-6 text-gray-500 text-sm">No reviews found.</td>
 	        </tr>
 	      `;
 	        }

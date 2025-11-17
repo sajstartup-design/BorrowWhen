@@ -120,7 +120,7 @@ async function loadInventories(page = 0,
 			      <!-- View Button -->
 			      <div class="tooltip-wrapper">
 			        <a
-			          href="#"
+			          href="/lender/inventory/details?encryptedId=${inventory.encryptedId}"
 			          class="view-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
 			          data-id="${inventory.encryptedId}"
 			          aria-label="View"
@@ -162,22 +162,6 @@ async function loadInventories(page = 0,
 			  </td>
 
 			`;
-
-         row.querySelector('.edit-btn').addEventListener('click', function () {
-            const form = document.querySelector('#editForm');
-
-            form.querySelector('#hiddenEncryptedId').value = this.getAttribute('data-id');
-
-            form.submit();
-         });
-
-         row.querySelector('.view-btn').addEventListener('click', function (e) {
-
-            const encryptedId = this.getAttribute('data-id');
-
-            window.location.href = "/lender/inventory/details?encryptedId=" + encryptedId;
-         });
-
 
          fragment.appendChild(row);
       });
