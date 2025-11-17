@@ -45,8 +45,11 @@ public class A_SettingsController {
 	    adminSettingsInitService.updateSettings(settings);
 	    adminSettingsInitService.refreshCache();
 
+	    ra.addFlashAttribute("isSuccess", true);
 	    ra.addFlashAttribute("successMsg", MessageConstant.SETTINGS_UPDATE);
 	    ra.addFlashAttribute("settings", settings);
+	    
+	    
 
 	    return "redirect:/admin/settings"; 
 	}

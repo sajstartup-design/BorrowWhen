@@ -1,102 +1,338 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>BW | Settings</title>
-<link rel="stylesheet" th:href="@{/css/settings/admin-settings.css}" />
-<link rel="stylesheet" th:href="@{/css/common.css}" />
-</head>
-<body>
-	<div class="container">
-		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
-		<main>
-			<div class="content-header">ADMIN SETTINGS</div>
-			<div class="content-body">
-				<form th:object="${adminSettingsDto}" th:action="@{/admin/settings}" method="POST" id="saveForm">
-					<div class="rule-container">
-						<div>🔢 PAGINATION</div>
-						<hr class="soft-gradient">
-						<div>
-						    <div class="field">
-						    	<label>USERS PER PAGE</label>
-						    	<input type="text" name="userPerPage" th:value="${settings.userPerPage}" />
-						    </div>
-						</div>
-						<hr class="soft-gradient">
-						<div>
-						    <div class="field">
-						    	<label>INVENTORY PER PAGE</label>
-						    	<input type="text" name="inventoryPerPage" th:value="${settings.inventoryPerPage}"/>
-						    </div>
-						</div>
-						<hr class="soft-gradient">
-						<div>
-						    <div class="field">
-						    	<label>REQUEST PER PAGE</label>
-						    	<input type="text" name="requestPerPage" th:value="${settings.requestPerPage}"/>
-						    </div>
-						</div>
-						<hr class="soft-gradient">
-						<div>
-						    <div class="field">
-						    	<label>PAYMENT PER PAGE</label>
-						    	<input type="text" name="paymentPerPage" th:value="${settings.paymentPerPage}"/>
-						    </div>
-						</div>
-					</div>
-					<div class="rule-container">
-						<div>🔢 AVAILABILITY</div>
-						<hr class="soft-gradient">
-						<div>
-						    <div class="field">
-						    	<label>SHOW NOTIFICATION</label>
-						    	<select name="showNotificationPage">
-						    		<option>TRUE</option>
-						    		<option>FALSE</option>
-						    	</select>
-						    </div>
-						</div>
-						<hr class="soft-gradient">
-						<div>
-						    <div class="field">
-						    	<label>SHOW DASHBOARD</label>
-						    	<select name="showDashboardPage">
-						    		<option>TRUE</option>
-						    		<option>FALSE</option>
-						    	</select>
-						    </div>
-						</div>
-						<hr class="soft-gradient">
-						<div>
-						    <div class="field">
-						    	<label>SHOW HISTORY</label>
-						    	<select name="showHistoryPage">
-						    		<option>TRUE</option>
-						    		<option>FALSE</option>
-						    	</select>
-						    </div>
-						</div>
-						<hr class="soft-gradient">
-						<div>
-						    <div class="field">
-						    	<label>SHOW PAYMENT</label>
-						    	<select name="showPaymentPage">
-						    		<option>TRUE</option>
-						    		<option>FALSE</option>
-						    	</select>
-						    </div>
-						</div>
-					</div>
-					<div class="btns">
-						<a class="button" th:href="@{/admin/dashboard}"><img th:src="@{/images/left-arrow.png}"> BACK</a>
-						<button class="save-btn">SAVE</button>
-					</div>
-				</form>
-			</div>
-		</main>
-		<aside th:replace="~{aside/aside :: content}"></aside>
-	</div>
-	<script th:src="@{/script/loading.js}"></script>
-	<script th:src="@{/script/submit.js}"></script>
-</body>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport"
+         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Borrowhen | Dashboard</title>
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <!-- Fonts -->
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <!-- Icons + CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+   </head>
+   <body>
+   	      <th:block th:if="${isSuccess}">
+         <div th:replace="~{alert :: success}"></div>
+      </th:block>
+      <th:block th:if="${isError}">
+         <div th:replace="~{alert :: error}"></div>
+      </th:block>
+      <div class="bg-base-200 flex min-h-screen flex-col">
+         <div th:replace="~{header :: admin-header}"></div>
+         <main class="flex-1 relative">
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0">			
+            </div>
+            <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <div class="flex flex-wrap items-center justify-between">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white">
+                        <li>
+                           <a th:href="@{/admin/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/admin/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Borrowhen</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
+                           <span>Settings</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <hr class="border-t border-white opacity-80" />
+               <div class="flex">
+                  <div class="flex items-center py-4 gap-3">
+                     <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
+                     </div>
+                     <div class="flex flex-col gap-0 text-white">
+                        <span class="text-lg font-bold">Pagination</span>
+                     </div>
+                  </div>
+               </div>
+               <!-- ---------- FORM ---------- -->
+               <div class="bg-white rounded-md ">
+                  <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
+                     <form th:object="${adminSettingsDto}" th:action="@{/admin/settings}" method="POST" id="saveForm" class="flex flex-col gap-8">
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                           <!-- LEFT SIDE — BASIC INFORMATION -->
+                           <div class="xl:col-span-2 space-y-6">
+                              <div class="border border-gray-200 rounded-lg p-5 shadow-md">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Pagination</h2>
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- USERS PER PAGE -->
+                                    <div>
+                                       <div class="field">
+                                          <label class="block text-sm font-medium text-gray-600 mb-1">USERS PER PAGE</label>
+                                          <select name="userPerPage"
+                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                             <option value="5" th:selected="${settings.userPerPage} == 5">5</option>
+                                             <option value="10" th:selected="${settings.userPerPage} == 10">10</option>
+                                             <option value="25" th:selected="${settings.userPerPage} == 25">25</option>
+                                             <option value="50" th:selected="${settings.userPerPage} == 50">50</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <!-- INVENTORY PER PAGE -->
+                                    <div>
+                                       <div class="field">
+                                          <label class="block text-sm font-medium text-gray-600 mb-1">INVENTORY PER PAGE</label>
+                                          <select name="inventoryPerPage"
+                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                             <option value="5">5</option>
+                                             <option value="10">10</option>
+                                             <option value="25">25</option>
+                                             <option value="50">50</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <!-- REQUEST PER PAGE -->
+                                    <div>
+                                       <div class="field">
+                                          <label class="block text-sm font-medium text-gray-600 mb-1">REQUEST PER PAGE</label>
+                                          <select name="requestPerPage"
+                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                             <option value="5">5</option>
+                                             <option value="10">10</option>
+                                             <option value="25">25</option>
+                                             <option value="50">50</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <!-- PAYMENT PER PAGE -->
+                                    <div>
+                                       <div class="field">
+                                          <label class="block text-sm font-medium text-gray-600 mb-1">PAYMENT PER PAGE</label>
+                                          <select name="paymentPerPage"
+                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                             <option value="5">5</option>
+                                             <option value="10">10</option>
+                                             <option value="25">25</option>
+                                             <option value="50">50</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- RIGHT SIDE — PREVIEW -->
+                           <div class="space-y-6">
+                              <div class="border border-gray-200 rounded-lg p-5 shadow-md">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Pagination Preview</h2>
+                                 <div class="space-y-4 text-sm text-gray-600">
+                                    <div class="flex flex-row items-center gap-3">
+                                       <p class="font-medium text-gray-800">Users per page:</p>
+                                       <div id="prevUsers"
+                                          class="h-7 w-20 rounded-md border border-gray-300 bg-gray-100 flex items-center justify-center">
+                                          —
+                                       </div>
+                                    </div>
+                                    <div class="flex flex-row items-center gap-3">
+                                       <p class="font-medium text-gray-800">Inventory per page:</p>
+                                       <div id="prevInventory"
+                                          class="h-7 w-20 rounded-md border border-gray-300 bg-gray-100 flex items-center justify-center">
+                                          —
+                                       </div>
+                                    </div>
+                                    <div class="flex flex-row items-center gap-3">
+                                       <p class="font-medium text-gray-800">Requests per page:</p>
+                                       <div id="prevRequest"
+                                          class="h-7 w-20 rounded-md border border-gray-300 bg-gray-100 flex items-center justify-center">
+                                          —
+                                       </div>
+                                    </div>
+                                    <div class="flex flex-row items-center gap-3">
+                                       <p class="font-medium text-gray-800">Payments per page:</p>
+                                       <div id="prevPayment"
+                                          class="h-7 w-20 rounded-md border border-gray-300 bg-gray-100 flex items-center justify-center">
+                                          —
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                           <!-- LEFT SIDE — BASIC INFORMATION -->
+                           <div class="xl:col-span-2 space-y-6">
+                              <div class="border border-gray-200 rounded-lg p-5 shadow-md">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Availability (Under Construction)</h2>
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- USERS PER PAGE -->
+                                    <div>
+                                       <div class="field">
+                                          <label class="block text-sm font-medium text-gray-600 mb-1">SHOW NOTIFICATION</label>
+                                          <select name="showNotification"
+                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                             <option value="TRUE">TRUE</option>
+                                             <option value="FALSE">FALSE</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <!-- INVENTORY PER PAGE -->
+                                    <div>
+                                       <div class="field">
+                                          <label class="block text-sm font-medium text-gray-600 mb-1">SHOW DASHBOARD</label>
+                                          <select name="showDashboard"
+                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                             <option value="TRUE">TRUE</option>
+                                             <option value="FALSE">FALSE</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <!-- REQUEST PER PAGE -->
+                                    <div>
+                                       <div class="field">
+                                          <label class="block text-sm font-medium text-gray-600 mb-1">SHOW HISTORY</label>
+                                          <select name="showHistory"
+                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                             <option value="TRUE">TRUE</option>
+                                             <option value="FALSE">FALSE</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <!-- PAYMENT PER PAGE -->
+                                    <div>
+                                       <div class="field">
+                                          <label class="block text-sm font-medium text-gray-600 mb-1">>SHOW PAYMENT</label>
+                                          <select name="showPayment"
+                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                             <option value="TRUE">TRUE</option>
+                                             <option value="FALSE">FALSE</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- RIGHT SIDE — PREVIEW -->
+                           <div class="space-y-6">
+                              <div class="border border-gray-200 rounded-lg p-5 shadow-md">
+                                 <h2 class="text-lg font-semibold text-gray-800 mb-4">Availability Preview</h2>
+                                 <div class="space-y-4 text-sm text-gray-600">
+                                    <div class="flex flex-row items-center gap-3">
+                                       <p class="font-medium text-gray-800">Notification:</p>
+                                       <div id="prevNotif"
+                                          class="h-7 w-24 rounded-md border border-gray-300 bg-gray-100 flex items-center justify-center">—</div>
+                                    </div>
+                                    <div class="flex flex-row items-center gap-3">
+                                       <p class="font-medium text-gray-800">Dashboard:</p>
+                                       <div id="prevDash"
+                                          class="h-7 w-24 rounded-md border border-gray-300 bg-gray-100 flex items-center justify-center">—</div>
+                                    </div>
+                                    <div class="flex flex-row items-center gap-3">
+                                       <p class="font-medium text-gray-800">History:</p>
+                                       <div id="prevHistory"
+                                          class="h-7 w-24 rounded-md border border-gray-300 bg-gray-100 flex items-center justify-center">—</div>
+                                    </div>
+                                    <div class="flex flex-row items-center gap-3">
+                                       <p class="font-medium text-gray-800">Payment:</p>
+                                       <div id="prevPay"
+                                          class="h-7 w-24 rounded-md border border-gray-300 bg-gray-100 flex items-center justify-center">—</div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- Buttons -->
+                              <div class="flex items-center justify-end gap-3">
+                                 <a th:href="@{/lender/inventory}"
+                                    class="h-8 px-2 py-1 rounded-md border border-gray-300 text-sm text-gray-600 hover:bg-gray-50">
+                                 Cancel
+                                 </a>
+                                 <button type="submit"
+                                    class="h-8 px-2 py-1 rounded-md bg-blue-500 text-white text-sm hover:bg-indigo-700 transition shadow-md">
+                                 <i class="fa-solid fa-check mr-2"></i>Update Settings
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+               <footer th:replace="~{footer :: footer}"></footer>
+            </div>
+         </main>
+      </div>
+      <script>
+         document.addEventListener("DOMContentLoaded", () => {
+         
+             const selects = {
+                 users: document.querySelector("select[name='userPerPage']"),
+                 inventory: document.querySelector("select[name='inventoryPerPage']"),
+                 request: document.querySelector("select[name='requestPerPage']"),
+                 payment: document.querySelector("select[name='paymentPerPage']")
+             };
+         
+             const preview = {
+                 users: document.getElementById("prevUsers"),
+                 inventory: document.getElementById("prevInventory"),
+                 request: document.getElementById("prevRequest"),
+                 payment: document.getElementById("prevPayment")
+             };
+         
+             function update() {
+                 preview.users.textContent = selects.users.value || "—";
+                 preview.inventory.textContent = selects.inventory.value || "—";
+                 preview.request.textContent = selects.request.value || "—";
+                 preview.payment.textContent = selects.payment.value || "—";
+             }
+         
+             Object.values(selects).forEach(select => {
+                 select.addEventListener("change", update);
+             });
+         
+             update(); // initial load
+         });
+      </script>
+      <script>
+         document.addEventListener("DOMContentLoaded", () => {
+         
+             // AVAILABILITY SELECTS
+             const selectsA = {
+                 notif: document.querySelector("select[name='showNotification']"),
+                 dash: document.querySelector("select[name='showDashboard']"),
+                 history: document.querySelector("select[name='showHistory']"),
+                 pay: document.querySelector("select[name='showPayment']")
+             };
+         
+             // AVAILABILITY PREVIEW TARGETS
+             const previewA = {
+                 notif: document.getElementById("prevNotif"),
+                 dash: document.getElementById("prevDash"),
+                 history: document.getElementById("prevHistory"),
+                 pay: document.getElementById("prevPay")
+             };
+         
+             function updateAvailability() {
+                 previewA.notif.textContent = selectsA.notif.value || "—";
+                 previewA.dash.textContent = selectsA.dash.value || "—";
+                 previewA.history.textContent = selectsA.history.value || "—";
+                 previewA.pay.textContent = selectsA.pay.value || "—";
+             }
+         
+             Object.values(selectsA).forEach(select => {
+                 select.addEventListener("change", updateAvailability);
+             });
+         
+             updateAvailability(); // initial load
+         });
+      </script>
+   </body>
 </html>
