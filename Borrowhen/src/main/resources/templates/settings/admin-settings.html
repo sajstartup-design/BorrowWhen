@@ -79,70 +79,61 @@
                                  <h2 class="text-lg font-semibold text-gray-800 mb-4">Pagination</h2>
                                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <!-- USERS PER PAGE -->
-                                    <div>
-                                       <div class="field">
-                                          <label class="block text-sm font-medium text-gray-600 mb-1">USERS PER PAGE</label>
-                                          <select name="userPerPage"
-                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                                             <option value="5" th:selected="${settings.userPerPage} == 5">5</option>
-                                             <option value="10" th:selected="${settings.userPerPage} == 10">10</option>
-                                             <option value="25" th:selected="${settings.userPerPage} == 25">25</option>
-                                             <option value="50" th:selected="${settings.userPerPage} == 50">50</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <!-- INVENTORY PER PAGE -->
-                                    <div>
-                                       <div class="field">
-                                          <label class="block text-sm font-medium text-gray-600 mb-1">INVENTORY PER PAGE</label>
-                                          <select name="inventoryPerPage"
-                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                                             <option value="5">5</option>
-                                             <option value="10">10</option>
-                                             <option value="25">25</option>
-                                             <option value="50">50</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <!-- REQUEST PER PAGE -->
-                                    <div>
-                                       <div class="field">
-                                          <label class="block text-sm font-medium text-gray-600 mb-1">REQUEST PER PAGE</label>
-                                          <select name="requestPerPage"
-                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                                             <option value="5">5</option>
-                                             <option value="10">10</option>
-                                             <option value="25">25</option>
-                                             <option value="50">50</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <!-- PAYMENT PER PAGE -->
-                                    <div>
-                                       <div class="field">
-                                          <label class="block text-sm font-medium text-gray-600 mb-1">PAYMENT PER PAGE</label>
-                                          <select name="paymentPerPage"
-                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                                             <option value="5">5</option>
-                                             <option value="10">10</option>
-                                             <option value="25">25</option>
-                                             <option value="50">50</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <!-- NOTIFICATION PER PAGE -->
-                                    <div>
-                                       <div class="field">
-                                          <label class="block text-sm font-medium text-gray-600 mb-1">NOTIFICATION PER PAGE</label>
-                                          <select name="notificationPerPage"
-                                             class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                                             <option value="5">5</option>
-                                             <option value="10">10</option>
-                                             <option value="25">25</option>
-                                             <option value="50">50</option>
-                                          </select>
-                                       </div>
-                                    </div>
+                                    <!-- USERS PER PAGE -->
+<div class="field">
+    <label class="block text-sm font-medium text-gray-600 mb-1">USERS PER PAGE</label>
+    <select name="userPerPage" class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+        <option value="5" th:selected="${settings.userPerPage} == 5">5</option>
+        <option value="10" th:selected="${settings.userPerPage} == 10">10</option>
+        <option value="25" th:selected="${settings.userPerPage} == 25">25</option>
+        <option value="50" th:selected="${settings.userPerPage} == 50">50</option>
+    </select>
+</div>
+
+<!-- INVENTORY PER PAGE -->
+<div class="field">
+    <label class="block text-sm font-medium text-gray-600 mb-1">INVENTORY PER PAGE</label>
+    <select name="inventoryPerPage" class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+        <option value="5" th:selected="${settings.inventoryPerPage} == 5">5</option>
+        <option value="10" th:selected="${settings.inventoryPerPage} == 10">10</option>
+        <option value="25" th:selected="${settings.inventoryPerPage} == 25">25</option>
+        <option value="50" th:selected="${settings.inventoryPerPage} == 50">50</option>
+    </select>
+</div>
+
+<!-- REQUEST PER PAGE -->
+<div class="field">
+    <label class="block text-sm font-medium text-gray-600 mb-1">REQUEST PER PAGE</label>
+    <select name="requestPerPage" class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+        <option value="5" th:selected="${settings.requestPerPage} == 5">5</option>
+        <option value="10" th:selected="${settings.requestPerPage} == 10">10</option>
+        <option value="25" th:selected="${settings.requestPerPage} == 25">25</option>
+        <option value="50" th:selected="${settings.requestPerPage} == 50">50</option>
+    </select>
+</div>
+
+<!-- PAYMENT PER PAGE -->
+<div class="field">
+    <label class="block text-sm font-medium text-gray-600 mb-1">PAYMENT PER PAGE</label>
+    <select name="paymentPerPage" class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+        <option value="5" th:selected="${settings.paymentPerPage} == 5">5</option>
+        <option value="10" th:selected="${settings.paymentPerPage} == 10">10</option>
+        <option value="25" th:selected="${settings.paymentPerPage} == 25">25</option>
+        <option value="50" th:selected="${settings.paymentPerPage} == 50">50</option>
+    </select>
+</div>
+
+<!-- NOTIFICATION PER PAGE -->
+<div class="field">
+    <label class="block text-sm font-medium text-gray-600 mb-1">NOTIFICATION PER PAGE</label>
+    <select name="notificationPerPage" class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+        <option value="5" th:selected="${settings.notificationPerPage} == 5">5</option>
+        <option value="10" th:selected="${settings.notificationPerPage} == 10">10</option>
+        <option value="25" th:selected="${settings.notificationPerPage} == 25">25</option>
+        <option value="50" th:selected="${settings.notificationPerPage} == 50">50</option>
+    </select>
+</div>
+
                                  </div>
                               </div>
                            </div>
