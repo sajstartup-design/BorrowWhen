@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class NotificationController {
 
 	@GetMapping("/notifications")
-	public String showNotifications() {
-		
-		
-		
+	public String showNotificationsBorrower() {
 		return "notification/notifications";
+	}
+	
+	@GetMapping("/lender/notifications")
+	public String showNotificationsLender() {
+		return "notification/l-notifications";
 	}
 }

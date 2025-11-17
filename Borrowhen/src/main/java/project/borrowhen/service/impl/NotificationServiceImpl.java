@@ -1,7 +1,5 @@
 package project.borrowhen.service.impl;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,11 +126,7 @@ public class NotificationServiceImpl implements NotificationService{
 		NotificationDto outDto = new NotificationDto();
 		
 		UserEntity user = userService.getLoggedInUser();
-		
-		System.out.println("START DATE: " + inDto.getFilter().getStartDate());
-		System.out.println("START DATE: " + inDto.getFilter().getEndDate());
-		System.out.println("STATUS: " + inDto.getFilter().getStatus());
-	    
+
 	    Pageable pageable = PageRequest.of(
 	        inDto.getPagination().getPage(),
 	        Integer.valueOf(getMaxNotifcationsDisplay())
@@ -141,7 +135,7 @@ public class NotificationServiceImpl implements NotificationService{
 	    FilterAndSearchObj filter = inDto.getFilter();
 	
 		 // Call DAO
-		 Page<NotificationEntity> allNotifications = notificationDao.getAllNotificationsForBorrower(
+		 Page<NotificationEntity> allNotifications = notificationDao.getAllNotifications(
 		         pageable,
 		         user.getId(),
 		         filter.getStartDate(),

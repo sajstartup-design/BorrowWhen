@@ -1,6 +1,5 @@
 package project.borrowhen.dao;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -58,7 +57,7 @@ public interface NotificationDao extends JpaRepository<NotificationEntity, Integ
 	@Query(value=GET_NOTIFICATIONS_FOR_BORROWER)
 	public List<NotificationEntity> getNotificationsForBorrower(int userId) throws DataAccessException;
 	
-	public final String GET_ALL_NOTIFICATIONS_FOR_BORROWER = """
+	public final String GET_ALL_NOTIFICATIONS = """
 		    SELECT 
 		        n.id,
 		        n.created_date,
@@ -86,17 +85,15 @@ public interface NotificationDao extends JpaRepository<NotificationEntity, Integ
 		    ORDER BY n.created_date DESC
 		""";
 
-
-
-
-
-		@Query(value = GET_ALL_NOTIFICATIONS_FOR_BORROWER, nativeQuery=true)
-		public Page<NotificationEntity> getAllNotificationsForBorrower(
+		@Query(value = GET_ALL_NOTIFICATIONS, nativeQuery=true)
+		public Page<NotificationEntity> getAllNotifications(
 		        Pageable pageable,
 		        @Param("userId") int userId,
 		        @Param("startDate") String startDate,
 		        @Param("endDate") String endDate,
 		        @Param("status") String status
 		) throws DataAccessException;
+		
+
 
 }

@@ -1,0 +1,146 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Borrowhen | Notifications</title>
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <!-- Your CSS -->
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+      <!-- jQuery (only once!) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <!-- Moment.js (required by daterangepicker) -->
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+      <!-- DateRangePicker JS & CSS -->
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+      <!-- Popper & Bootstrap (optional, if you use Bootstrap components) -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+   </head>
+   <body>
+      <div class="bg-base-200 flex min-h-screen flex-col">
+         <div th:replace="~{header :: header-lender}"></div>
+         <main class="flex-1 relative">
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
+            <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <!-- Breadcrumb -->
+               <ul class="py-3 flex items-center text-white text-xs">
+                  <li><a th:href="@{/lender/dashboard}" class="px-2"><i class="fa-solid fa-house"></i></a></li>
+                  <li><i class="fa-solid fa-chevron-right px-1 fa-2xs"></i></li>
+                  <li><a href="#" class="px-2 font-bold">Notifications</a></li>
+               </ul>
+               <hr class="border-t border-white opacity-80" />
+               <!-- Title -->
+               <div class="flex items-center py-4 gap-3">
+                  <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                     <i class="fa-solid fa-chart-pie text-2xl text-blue-500"></i>
+                  </div>
+                  <div class="flex flex-col text-white">
+                     <span class="text-lg font-bold">Notifications</span>
+                  </div>
+               </div>
+               <!-- Main Content -->
+               <div class="bg-white rounded-2xl shadow-md p-6 flex gap-6">
+                  <!-- Sidebar -->
+                  <aside class="w-64 border-r border-gray-200 pr-6">
+                     <ul class="space-y-2">
+                        <li>
+                           <a th:href="@{/lender/my-account}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
+                           <i class="fa-solid fa-circle-info text-gray-400 text-base"></i>
+                           <span>Informations</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md">
+                           <i class="fa-solid fa-bell text-blue-500 text-base"></i>
+                           <span>Notifications</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </aside>
+                  <!-- Form Section -->
+                  <section class="flex-1 flex flex-col gap-8">
+                     <div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Notifications</h3>
+                        <div class="text-gray-200 rounded-lg shadow-md flex flex-col border border-gray-300 text-gray-500">
+                           <!-- Filter Header -->
+                           <div class="border-b border-gray-300 p-5">
+                              <h2 class="text-lg font-semibold mb-4">Filter</h2>
+                              <div class="flex flex-wrap gap-4">
+                                 <select class="status-filter border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    <option value="ALL">All</option>
+                                    <option value="TRUE">Read</option>
+                                    <option value="FALSE">Unread</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <!-- Search & Actions -->
+                           <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-300 p-5">
+                              <!-- Search Bar -->
+                              <div class="flex items-center border border-gray-300 rounded-md h-10 w-[240px] px-2">
+                                 <i class="fa-solid fa-calendar text-gray-400 mr-2"></i>
+                                 <input
+                                    type="text"
+                                    class="select-date flex-1 h-full text-sm text-gray-700 bg-transparent outline-none cursor-pointer"
+                                    readonly
+                                    />
+                              </div>
+                              <!-- Actions -->
+                              <div class="flex items-center gap-3">
+                                 <select
+                                    class="h-8 px-2 py-1 bg-transparent border border-gray-300 rounded-md text-sm text-gray-500 focus:outline-none input-page"
+                                    >
+                                    <option>1</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <!-- Table -->
+                           <div class="overflow-x-auto">
+                              <table class="min-w-full text-sm text-gray-300">
+                                 <tbody class="divide-y divide-gray-500" id="table-body">                             
+                                 </tbody>
+                              </table>
+                           </div>
+                           <!-- Pagination -->
+                           <div class="flex flex-wrap items-center justify-between border-t border-gray-300 p-5 text-gray-400">
+                              <p id="table-info" class="text-xs">Showing 1 to 10 of 100 entries</p>
+                              <div class="flex items-center gap-1 pagination">
+                                 <!-- Previous -->
+                                 <button class="px-3 py-1 text-sm rounded hover:bg-[#eef2ff] text-lg leading-none prev-btn">&laquo;</button>
+                                 <!-- Page Numbers -->
+                                 <button class="page-btn px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">1</button>
+                                 <button class="page-btn px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">2</button>
+                                 <button class="page-btn px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">3</button>
+                                 <span class="px-2">...</span>
+                                 <button class="end-btn px-3 py-1 text-sm rounded hover:bg-[#eef2ff]">10</button>
+                                 <!-- Next -->
+                                 <button class="px-3 py-1 text-sm rounded hover:bg-[#eef2ff] text-lg leading-none next-btn">&raquo;</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </section>
+               </div>
+            </div>
+         </main>
+      </div>
+      <!-- jQuery -->
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+      <!-- Moment.js -->
+      <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+      <!-- DateRangePicker -->
+      <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+      <!-- Popper & Bootstrap -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+      <!-- Your custom script -->
+      <script th:src="@{/script/loading.js}"></script>
+      <script th:src="@{/script/pagination.js}"></script>
+      <script th:src="@{/script/notification/borrower-notification-api.js}"></script>
+   </body>
+</html>
