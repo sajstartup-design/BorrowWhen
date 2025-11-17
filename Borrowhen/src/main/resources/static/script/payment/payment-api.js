@@ -171,6 +171,56 @@ async function loadPayments(page = 0, search = "") {
   } catch (error) {
     console.error("Error fetching payments:", error);
   }
+  
+  // ===============================
+  // CSV EXPORT FOR PAYMENTS TABLE
+  // ===============================
+  const exportPaymentsBtn = document.querySelector('button.bg-blue-200'); 
+  if (exportPaymentsBtn) {
+      exportPaymentsBtn.addEventListener('click', () => {
+          const tableBody = document.getElementById("table-body");
+          if (!tableBody) return;
+
+          const csv = [];
+
+          // CSV Headers
+          const headers = [
+              "ITEM NAME",
+              "PRICE",
+              "QTY",
+              "TOTAL AMOUNT",
+              "STATUS"
+          ];
+          csv.push(headers.map(h => `"${h}"`).join(','));
+
+          // Extract table rows
+          tableBody.querySelectorAll("tr").forEach(row => {
+              const cells = row.querySelectorAll("td");
+              if (cells.length < 7) return; // skip empty or malformed rows
+
+              const rowData = [
+                  cells[1].innerText.trim(), // Item Name
+                  cells[2].innerText.trim(), // Price
+                  cells[3].innerText.trim(), // Qty
+                  cells[4].innerText.trim(), // Total Amount
+                  cells[5].innerText.trim()  // Status
+              ].map(text => `"${text.replace(/"/g, '""')}"`); // escape quotes
+
+              csv.push(rowData.join(','));
+          });
+
+          // Trigger CSV download
+          const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = 'payments.csv';
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      });
+  }
+
 }
 
 
