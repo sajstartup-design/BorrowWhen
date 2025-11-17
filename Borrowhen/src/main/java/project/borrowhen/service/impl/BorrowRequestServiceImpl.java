@@ -354,6 +354,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        obj.setQty(request.getQty());
 	        obj.setDateToBorrow(request.getDateToBorrow());
 	        obj.setDateToReturn(request.getDateToReturn());
+	        obj.setRating(request.getRating());
+	        obj.setFeedback(request.getFeedback());
 	        obj.setStatus(request.getStatus());	
 	        
 	        requests.add(obj);

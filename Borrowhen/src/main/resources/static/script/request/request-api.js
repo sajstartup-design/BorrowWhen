@@ -114,6 +114,22 @@ const buttons = {
       <span class="tooltip-text">Mark as Received</span>
     </div>
   `,
+  
+  rate: (request) => `
+  <div class="tooltip-wrapper">
+    <a
+      href="#"
+      class="rate-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
+      data-toggle="modal"
+      data-target="#rateModal"
+      data-id="${request.encryptedId}"
+      data-item-name="${request.itemName}">
+      <img src="/images/star.png" alt="Rate" class="h-4 w-4" />
+    </a>
+    <span class="tooltip-text">Rate Item</span>
+  </div>
+  `,
+
 
     fake: (icon) => `
     <div class="tooltip-wrapper">
@@ -141,6 +157,8 @@ async function loadRequests(page = 0, search = "") {
         const data = await response.json();
         
         updatePagination(data.pagination);
+		
+		console.log(data);
 
         const tableBody = document.getElementById("table-body");
         tableBody.innerHTML = "";
@@ -213,15 +231,24 @@ async function loadRequests(page = 0, search = "") {
 				}
 
 
-                // Action Buttons
-                let actionButtons = "";
-                if (status === "pending") {
-                    actionButtons = buttons.cancel(request) + buttons.fake("received-icon");
-                } else if (status === "pick-upready") {
-                    actionButtons = buttons.fake("cancelled") + buttons.received(request);
-                } else {
-                    actionButtons = buttons.fake("cancelled") + buttons.fake("received-icon");
-                }
+				// Action Buttons
+				let actionButtons = "";
+
+				if (status === "pending") {
+				    actionButtons = buttons.cancel(request) + buttons.fake("received-icon");
+				} else if (status === "pick-upready") {
+				    actionButtons = buttons.fake("cancelled") + buttons.received(request);
+				} else if (status === "paid") {
+					console.log(status);
+					console.log(request.rating);
+				    if (request.rating && Number(request.rating) > 0) {
+				        actionButtons = `<span class="text-sm text-gray-500 italic">Rated</span>`;
+				    } else {
+				        actionButtons = buttons.rate(request); // show rate button
+				    }
+				} else {
+				    actionButtons = buttons.fake("cancelled") + buttons.fake("received-icon");
+				}
 
                 // Row
                 const row = document.createElement("tr");

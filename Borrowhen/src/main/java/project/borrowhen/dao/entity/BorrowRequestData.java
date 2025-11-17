@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @Scope("prototype")
 public class BorrowRequestData {
 	
+	
+	
 	// Constructor for main borrow request details
     public BorrowRequestData(int borrowRequestId, String borrowerFullName, String borrowerUserId,
                              String lenderFullName, String lenderUserId, String itemName,
@@ -45,7 +47,6 @@ public class BorrowRequestData {
         this.feedback = feedback;
         this.rating = rating;
     }
-
 
 	private int borrowRequestId;
 	

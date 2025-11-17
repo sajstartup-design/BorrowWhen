@@ -108,7 +108,9 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    " br.dateToReturn, " +                
 		    " br.status, " +                    
 		    " br.createdDate, " +                 
-		    " br.updatedDate) " +              
+		    " br.updatedDate, " +    
+		    " COALESCE(br.feedback, ''), " +   
+		    " COALESCE(br.rating, 0)) " +   
 		    "FROM BorrowRequestEntity br " +     
 		    "INNER JOIN InventoryEntity i ON i.id = br.inventoryId " +     
 		    "LEFT JOIN UserEntity borrower ON borrower.id = br.userId " + 
