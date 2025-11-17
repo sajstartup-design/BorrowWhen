@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const webDto = await response.json();
     console.log("✅ Dashboard Data:", webDto);
 
-    const { overdues, paymentPendings, notifications, lenderDashboardOverview, popularItems} = webDto;
+    const { overdues, paymentPendings, ongoingRequests, notifications, lenderDashboardOverview, popularItems} = webDto;
 
     const overdueList = document.getElementById('overdue-list');
     const paymentPendingList = document.getElementById('payment-pending-list');
@@ -151,6 +151,58 @@ document.addEventListener("DOMContentLoaded", async () => {
 	} else {
 	    console.log('No popular items to display');
 	}
+	
+	// 🟦 Ongoing Requests (NEW)
+	const ongoingTableBody = document.getElementById("ongoing-requests-body");
+
+	ongoingTableBody.innerHTML = ""; // clear first
+
+	if (ongoingRequests && ongoingRequests.length > 0) {
+
+	    const frag = document.createDocumentFragment();
+
+	    ongoingRequests.forEach(req => {
+
+	        const tr = document.createElement("tr");
+	        tr.className = "hover:bg-gray-50";
+
+	        tr.innerHTML = `
+	            <td class="py-2 px-3">
+	               <div class="flex flex-col">
+	                  <span class="font-semibold text-gray-700">${req.borrower}</span>
+	                  <span class="text-gray-400 text-[11px]">@${req.borrowerUserId}</span>
+	               </div>
+	            </td>
+
+	            <td class="py-2 px-3">${req.itemName}</td>
+
+	            <td class="py-2 px-3">₱${req.price}</td>
+
+	            <td class="py-2 px-3">${req.qty} pcs</td>
+
+	            <td class="py-2 px-3">
+	                ${formatDashboardDate(req.dateToBorrow)}
+	            </td>
+
+	            <td class="py-2 px-3">
+	                ${formatDashboardDate(req.dateToReturn)}
+	            </td>
+	        `;
+
+	        frag.appendChild(tr);
+	    });
+
+	    ongoingTableBody.appendChild(frag);
+
+	} else {
+	    ongoingTableBody.innerHTML = `
+	        <tr>
+	          <td colspan="7" class="py-3 px-3 text-center text-gray-500">
+	            No items currently borrowed.
+	          </td>
+	        </tr>
+	    `;
+	}
 
 
 	removeLoadingScreenBody();
@@ -158,3 +210,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("❌ Error fetching dashboard data:", error);
   }
 });
+
+function formatDashboardDate(date) {
+    const d = new Date(date);
+    return d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+    });
+}

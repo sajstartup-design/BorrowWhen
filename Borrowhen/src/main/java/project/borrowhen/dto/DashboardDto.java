@@ -16,6 +16,8 @@ public class DashboardDto {
 	
 	private List<BorrowRequestObj> paymentPendings;
 	
+	private List<BorrowRequestObj> ongoingRequests;
+	
 	private List<NotificationObj> notifications;
 	
 	private BorrowRequestOverview overview;

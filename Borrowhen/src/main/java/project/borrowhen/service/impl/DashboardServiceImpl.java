@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import project.borrowhen.common.util.TimeAgoUtil;
 import project.borrowhen.dao.BorrowRequestDao;
 import project.borrowhen.dao.InventoryDao;
 import project.borrowhen.dao.NotificationDao;
+import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
 import project.borrowhen.dao.entity.InventoryEntity;
@@ -154,7 +157,28 @@ public class DashboardServiceImpl implements DashboardService{
 		outDto.setLenderDashboardOverview(lenderDashboardOverview);	
 		outDto.setNotifications(notifications);
 		outDto.setPopularItems(inventories);
-	
+		
+		Pageable pageable = PageRequest.of(0, 5);
+		List<BorrowRequestData> recentOngoingRequests = borrowRequestDao.getCurrentlyBorrowedRequestOngoing(pageable, user.getId()).toList();
+		
+		List<BorrowRequestObj> ongoingRequests = new ArrayList<>();
+		
+		for(BorrowRequestData br : recentOngoingRequests) {
+			
+			BorrowRequestObj obj = new BorrowRequestObj();
+			
+			obj.setItemName(br.getItemName());
+			obj.setBorrower(br.getBorrowerFullName());
+			obj.setBorrowerUserId(br.getBorrowerUserId());
+			obj.setStatus(br.getStatus());
+			obj.setDateToBorrow(br.getDateToBorrow());
+			obj.setDateToReturn(br.getDateToReturn());
+			obj.setQty(br.getQty());		
+			
+			ongoingRequests.add(obj);
+		}
+		
+		outDto.setOngoingRequests(ongoingRequests);	
 		
 		return outDto;
 	}
