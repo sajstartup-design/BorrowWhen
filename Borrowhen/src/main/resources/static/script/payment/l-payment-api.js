@@ -173,6 +173,73 @@ async function loadPayments(page = 0, search = "") {
   } catch (error) {
     console.error("Error fetching payments:", error);
   }
+  
+  // ===============================
+  // CSV EXPORT FOR PAYMENTS TABLE
+  // ===============================
+
+  const exportPaymentsBtn = document.querySelector('button.bg-blue-200');
+  if (exportPaymentsBtn) {
+      exportPaymentsBtn.addEventListener('click', () => {
+
+          const tableBody = document.getElementById("table-body");
+          if (!tableBody) return;
+
+          let csv = [];
+
+          // CSV Headers
+          const headers = [
+              "FULL NAME",
+              "USERNAME",
+              "EMAIL",
+              "ITEM NAME",
+              "PRICE",
+              "QTY",
+              "TOTAL AMOUNT",
+              "DATE CHECKOUT",
+              "PAYMENT METHOD",
+              "STATUS"
+          ];
+          csv.push(headers.map(h => `"${h}"`).join(','));
+
+          // Extract table rows
+          tableBody.querySelectorAll("tr").forEach(row => {
+              const cells = row.querySelectorAll("td");
+              if (cells.length < 11) return;
+
+              // borrower block: full name + @username
+              const borrowerBlock = cells[1].innerText.split("\n").map(t => t.trim()).filter(Boolean);
+              const fullName = borrowerBlock[0] || "";
+              const username = (borrowerBlock[1] || "").replace("@", "");
+
+              const rowData = [
+                  fullName,
+                  username,
+                  cells[2].innerText.trim(), // email
+                  cells[3].innerText.trim(), // itemName
+                  cells[4].innerText.trim(), // price
+                  cells[5].innerText.trim(), // qty
+                  cells[6].innerText.trim(), // total amount
+                  cells[7].innerText.trim(), // checkout date
+                  cells[8].innerText.trim(), // payment method
+                  cells[9].innerText.trim()  // status
+              ].map(text => `"${text.replace(/"/g, '""')}"`);
+
+              csv.push(rowData.join(','));
+          });
+
+          // Download CSV
+          const blob = new Blob([csv.join("\n")], { type: "text/csv;charset=utf-8;" });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = 'lender-payments.csv';
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      });
+  }
+
 }
 
 
