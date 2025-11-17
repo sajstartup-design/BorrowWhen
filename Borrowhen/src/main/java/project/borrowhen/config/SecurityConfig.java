@@ -98,6 +98,7 @@ public class SecurityConfig {
 						.requestMatchers("/lender/payment/**").hasAuthority(CommonConstant.ROLE_LENDER)
 						.requestMatchers("/lender/my-account/**").hasAuthority(CommonConstant.ROLE_LENDER)
 						.requestMatchers("/lender/reviews/**").hasAuthority(CommonConstant.ROLE_LENDER)
+						.requestMatchers("/lender/notifications/**").hasAuthority(CommonConstant.ROLE_LENDER)
 						
 						.requestMatchers("/api/lender/inventory/**").hasAuthority(CommonConstant.ROLE_LENDER)
 						.requestMatchers("/api/lender/request/**").hasAuthority(CommonConstant.ROLE_LENDER)
@@ -109,6 +110,7 @@ public class SecurityConfig {
 						.requestMatchers("/payment/**").hasAuthority(CommonConstant.ROLE_BORROWER)
 						.requestMatchers("/my-account/**").hasAuthority(CommonConstant.ROLE_BORROWER)
 						.requestMatchers("/feedback/**").hasAuthority(CommonConstant.ROLE_BORROWER)
+						.requestMatchers("/notifications/**").hasAuthority(CommonConstant.ROLE_BORROWER)
 						
 						.requestMatchers("/api/request/**").hasAuthority(CommonConstant.ROLE_BORROWER)
 						.requestMatchers("/api/payment/**").hasAuthority(CommonConstant.ROLE_BORROWER)
