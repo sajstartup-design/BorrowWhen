@@ -10,4 +10,10 @@ public class FilterAndSearchObj {
 	private String role;
 	
 	private String availability;
+	
+	private String startDate;
+	
+	private String endDate;
+
+	private String status;
 }

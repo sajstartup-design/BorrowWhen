@@ -21,4 +21,6 @@ public interface NotificationService {
 	public NotificationDto getNotificationsCountByUser() throws Exception;
 	
 	public void sendToBorrowers(List<UserEntity> borrowers, String message) throws Exception;
+	
+	public NotificationDto getAllNotificationsByUser(NotificationDto inDto) throws Exception;
 }

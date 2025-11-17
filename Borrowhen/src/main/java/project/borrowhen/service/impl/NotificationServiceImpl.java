@@ -1,9 +1,14 @@
 package project.borrowhen.service.impl;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -14,7 +19,10 @@ import project.borrowhen.dao.NotificationDao;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.NotificationDto;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.NotificationObj;
+import project.borrowhen.object.PaginationObj;
+import project.borrowhen.service.AdminSettingsService;
 import project.borrowhen.service.NotificationService;
 import project.borrowhen.service.UserService;
 
@@ -32,6 +40,13 @@ public class NotificationServiceImpl implements NotificationService{
 	
 	@Autowired
 	private CipherUtil cipherUtil;
+	
+	@Autowired
+	private AdminSettingsService adminSettingsService;
+    
+    private int getMaxNotifcationsDisplay() {
+        return adminSettingsService.getSettings().getNotificationPerPage();
+    }
 	
 	@Override
 	public void saveNotification(NotificationEntity notification) {
@@ -63,7 +78,7 @@ public class NotificationServiceImpl implements NotificationService{
 			obj.setMessage(notification.getMessage());		
 			obj.setIsRead(notification.getIsRead());			
 			obj.setType(notification.getType());
-			obj.setDateAndTime(TimeAgoUtil.toTimeAgo(notification.getCreatedDate()));;
+			obj.setDateAndTime(TimeAgoUtil.toTimeAgo(notification.getCreatedDate()));
 			
 			notifications.add(obj);
 		}
@@ -103,6 +118,64 @@ public class NotificationServiceImpl implements NotificationService{
             );
         }
 		
+	}
+
+
+
+	@Override
+	public NotificationDto getAllNotificationsByUser(NotificationDto inDto) throws Exception {
+		
+		NotificationDto outDto = new NotificationDto();
+		
+		UserEntity user = userService.getLoggedInUser();
+		
+		System.out.println("START DATE: " + inDto.getFilter().getStartDate());
+		System.out.println("START DATE: " + inDto.getFilter().getEndDate());
+		System.out.println("STATUS: " + inDto.getFilter().getStatus());
+	    
+	    Pageable pageable = PageRequest.of(
+	        inDto.getPagination().getPage(),
+	        Integer.valueOf(getMaxNotifcationsDisplay())
+	    );
+	    
+	    FilterAndSearchObj filter = inDto.getFilter();
+	
+		 // Call DAO
+		 Page<NotificationEntity> allNotifications = notificationDao.getAllNotificationsForBorrower(
+		         pageable,
+		         user.getId(),
+		         filter.getStartDate(),
+		         filter.getEndDate(),
+		         filter.getStatus()
+		);
+	    
+	    List<NotificationObj> notifications = new ArrayList<>();
+	    
+	    for (NotificationEntity notification : allNotifications) {
+	    	NotificationObj obj = new NotificationObj();
+	        
+			obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(notification.getId())));
+			obj.setMessage(notification.getMessage());		
+			obj.setIsRead(notification.getIsRead());			
+			obj.setType(notification.getType());
+			obj.setDateAndTime(TimeAgoUtil.toTimeAgo(notification.getCreatedDate()));
+	        
+	    	notifications.add(obj);
+	    }
+	    
+	    PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allNotifications.getNumber());
+		pagination.setTotalPages(allNotifications.getTotalPages());
+		pagination.setTotalElements(allNotifications.getTotalElements());
+		pagination.setHasNext(allNotifications.hasNext());
+		pagination.setHasPrevious(allNotifications.hasPrevious());
+		pagination.setPageSize(getMaxNotifcationsDisplay());
+		
+		outDto.setNotifications(notifications);	
+		outDto.setPagination(pagination);
+		
+	    return outDto;
 	}
 
 }
