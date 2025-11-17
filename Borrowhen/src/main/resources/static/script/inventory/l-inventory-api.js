@@ -193,4 +193,45 @@ async function loadInventories(page = 0,
    } catch (error) {
       console.error("Error fetching inventories:", error);
    }
+   
+   const exportInventoryBtn = document.querySelector('button.bg-blue-200'); 
+   if (exportInventoryBtn) {
+       exportInventoryBtn.addEventListener('click', () => {
+           const tableBody = document.getElementById("table-body");
+           if (!tableBody) return;
+
+           let csv = [];
+
+           // CSV Headers
+           const headers = [
+               "ITEM NAME",
+               "PRICE",
+               "TOTAL QTY",
+               "AVAILABLE QTY"
+           ];
+           csv.push(headers.map(h => `"${h}"`).join(','));
+
+           // Add table rows (skip first checkbox col & last action col)
+           tableBody.querySelectorAll("tr").forEach(row => {
+               const cells = row.querySelectorAll("td");
+
+               // slice: (1 to -1) → remove checkbox & actions
+               const rowData = Array.from(cells).slice(1, -1).map(cell => {
+                   return `"${cell.innerText.replace(/"/g, '""').trim()}"`;
+               });
+
+               csv.push(rowData.join(','));
+           });
+
+           // Download CSV
+           const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+           const link = document.createElement('a');
+           link.href = URL.createObjectURL(blob);
+           link.download = 'lender-inventories.csv';
+           link.style.visibility = 'hidden';
+           document.body.appendChild(link);
+           link.click();
+           document.body.removeChild(link);
+       });
+   }
 }
