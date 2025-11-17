@@ -52,4 +52,8 @@ public class InventoryDto {
 	private FilterAndSearchObj filter;
 	
 	private InventoryOverview inventoryOverview;
+	
+	private int totalBorrows;
+	
+	private double totalRevenue;
 }

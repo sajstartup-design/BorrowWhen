@@ -204,6 +204,9 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		InventoryEntity inventory = inventoryDao.getInventory(id);
 		
+		int totalBorrows = inventoryDao.getTotalBorrowsOfInventory(inventory.getId());
+		double totalRevenue = inventoryDao.getTotalRevenueOfInventory(inventory.getId());
+		
 		UserEntity user = userService.getUser(inventory.getUserId());
 		
 		outDto.setUserId(user.getUserId());
@@ -213,7 +216,8 @@ public class InventoryServiceImpl implements InventoryService{
 		outDto.setAvailableQty(inventory.getAvailableQty());	
 		outDto.setCreatedDate(DateFormatUtil.formatTimestampToString(inventory.getCreatedDate()));
 		outDto.setUpdatedDate(DateFormatUtil.formatTimestampToString(inventory.getUpdatedDate()));
-		
+		outDto.setTotalBorrows(totalBorrows);
+		outDto.setTotalRevenue(totalRevenue);		
 		return outDto;
 	}
 

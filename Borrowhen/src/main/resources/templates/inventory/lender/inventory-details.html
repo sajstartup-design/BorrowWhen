@@ -5,7 +5,7 @@
       <meta name="viewport"
          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
       <meta name="robots" content="noindex, nofollow" />
-      <title>Borrowhen | Dashboard</title>
+      <title>Borrowhen | Inventory</title>
       <!-- Favicon -->
       <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
       <!-- Fonts -->
@@ -87,25 +87,37 @@
                                  <div>
                                     <label class="block text-sm font-medium text-gray-600 mb-1">Item Name</label>
                                     <div class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm">
-                                       <span th:text="*{itemName}">Sample Item</span>
+                                       <span th:text="*{itemName}">-</span>
                                     </div>
                                  </div>
                                  <div>
                                     <label class="block text-sm font-medium text-gray-600 mb-1">Price</label>
                                     <div class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm">
-                                       <span th:text="*{price}">100.00</span>
+                                       <span th:text="*{price}">0.0</span>
                                     </div>
                                  </div>
                                  <div>
                                     <label class="block text-sm font-medium text-gray-600 mb-1">Total Qty</label>
                                     <div class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm ">
-                                       <span th:text="*{totalQty}">10</span>
+                                       <span th:text="*{totalQty}">0</span>
                                     </div>
                                  </div>
                                  <div>
                                     <label class="block text-sm font-medium text-gray-600 mb-1">Available Qty</label>
                                     <div class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm ">
-                                       <span th:text="*{availableQty}">5</span>
+                                       <span th:text="*{availableQty}">0</span>
+                                    </div>
+                                 </div>
+                                 <div>
+                                    <label class="block text-sm font-medium text-gray-600 mb-1">Total Borrows</label>
+                                    <div class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm ">
+                                       <span th:text="*{totalBorrows}">0</span>
+                                    </div>
+                                 </div>
+                                 <div>
+                                    <label class="block text-sm font-medium text-gray-600 mb-1">Total Revenue</label>
+                                    <div class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm ">
+                                       <span th:text="|₱*{totalRevenue}|">₱0</span>
                                     </div>
                                  </div>
                               </div>
@@ -120,6 +132,8 @@
                                  <p><span class="font-medium">Price:</span> <span id="previewGender" th:text="*{price}">—</span></p>
                                  <p><span class="font-medium">Total Qty:</span> <span id="previewBirthDate" th:text="*{totalQty}">—</span></p>
                                  <p><span class="font-medium">Available Qty:</span> <span id="previewAvailable" th:text="*{availableQty}">—</span></p>
+                                 <p><span class="font-medium">Total Borrows:</span> <span id="previewAvailable" th:text="*{totalBorrows}">—</span></p>
+								 <p><span class="font-medium">Total Revenue:</span> <span id="previewRevenue" th:text="|₱*{totalRevenue}|">₱ —</span></p>
                               </div>
                            </div>                    
                         </div>

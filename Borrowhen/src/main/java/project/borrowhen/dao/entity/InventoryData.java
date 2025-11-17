@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Scope;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Scope("prototype")
 public class InventoryData {
-	
+		
 	public InventoryData(Integer inventoryId, String itemName, Double price, Integer totalQty, Integer availableQty) {
 		this.inventoryId = inventoryId;
 		this.itemName = itemName;
@@ -20,7 +22,15 @@ public class InventoryData {
 		this.availableQty = availableQty;
 	}
 	
-	
+	public InventoryData(Integer inventoryId, String itemName, Double price, Integer totalQty, Integer availableQty, Integer totalBorrows, Double totalRevenue) {
+		this.inventoryId = inventoryId;
+		this.itemName = itemName;
+		this.price = price;
+		this.totalQty = totalQty;
+		this.availableQty = availableQty;
+		this.totalBorrows = totalBorrows;
+		this.totalRevenue = totalRevenue;
+	}
 
 	private Integer inventoryId;
 	
@@ -28,7 +38,7 @@ public class InventoryData {
 	
 	private String userId;
 	
-	private String itemName;
+	private String itemName; 
 	
 	private Double price;
 	
@@ -45,4 +55,8 @@ public class InventoryData {
 	private Boolean isDeletable;
 	
 	private String barangay;
+	
+	private int totalBorrows;
+	
+	private Double totalRevenue;
 }

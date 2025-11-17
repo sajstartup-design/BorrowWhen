@@ -19,39 +19,45 @@ import project.borrowhen.dao.entity.InventoryOverview;
 public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	
 	public final String GET_ALL_INVENTORY =
-		    "SELECT new project.borrowhen.dao.entity.InventoryData(" +
-		    "   e.id, " +
-		    "   u.fullName, " +
-		    "   u.userId, " +
-		    "   e.itemName, " +
-		    "   e.price, " +
-		    "   e.totalQty, " +
-		    "   e.availableQty, " +
-		    "   e.createdDate, " +
-		    "   e.updatedDate, " +
-		    "   CASE WHEN (EXISTS (" +
-		    "       SELECT 1 FROM BorrowRequestEntity br " +
-		    "       WHERE br.inventoryId = e.id AND br.status <> 'PAID'" +
-		    "   )) THEN false ELSE true END, " + // isEditable
-		    "   CASE WHEN (EXISTS (" +
-		    "       SELECT 1 FROM BorrowRequestEntity br " +
-		    "       WHERE br.inventoryId = e.id AND br.status <> 'PAID'" +
-		    "   )) THEN false ELSE true END, " +  // isDeletable
-		    "   u.barangay " +
-		    ") " +
-		    "FROM InventoryEntity e " +
-		    "LEFT JOIN UserEntity u ON u.id = e.userId " +
-		    "WHERE e.isDeleted = false " +
-		    "AND u.isDeleted = false " +
-		    "AND ( " +
-		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
-		    "       LOWER(e.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "       LOWER(u.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "       CAST(e.price AS string) LIKE CONCAT('%', :search, '%') OR " +
-		    "       CAST(e.totalQty AS string) LIKE CONCAT('%', :search, '%')" +
-		    "   )) " +
-		    "   OR (:search IS NULL OR :search = '') " +
-		    ")";
+		    """
+				SELECT new project.borrowhen.dao.entity.InventoryData(
+				   e.id,
+				   u.fullName,
+				   u.userId,
+				   e.itemName,
+				   e.price,
+				   e.totalQty,
+				   e.availableQty,
+				   e.createdDate,
+				   e.updatedDate,
+				   CASE WHEN (EXISTS (
+				       SELECT 1 FROM BorrowRequestEntity br
+				       WHERE br.inventoryId = e.id AND br.status <> 'PAID'
+				   )) THEN false ELSE true END,
+				   CASE WHEN (EXISTS (
+				       SELECT 1 FROM BorrowRequestEntity br
+				       WHERE br.inventoryId = e.id AND br.status <> 'PAID'
+				   )) THEN false ELSE true END,
+				   u.barangay,
+				   0,
+				   0.0
+				)
+				FROM InventoryEntity e
+				LEFT JOIN UserEntity u ON u.id = e.userId
+				WHERE e.isDeleted = false
+				AND u.isDeleted = false
+				AND (
+				   (:search IS NOT NULL AND :search <> '' AND (
+				       LOWER(e.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR
+				       LOWER(u.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR
+				       CAST(e.price AS string) LIKE CONCAT('%', :search, '%') OR
+				       CAST(e.totalQty AS string) LIKE CONCAT('%', :search, '%')
+				   ))
+				   OR (:search IS NULL OR :search = '')
+				)
+
+			""";
+
 
 
 	@Query(value=GET_ALL_INVENTORY)
@@ -62,25 +68,43 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	
 	
 	public final String GET_ALL_OWNER_INVENTORY =
-		    "SELECT new project.borrowhen.dao.entity.InventoryData(" +
-		    "   e.id, " +
-		    "   e.itemName, " +
-		    "   e.price, " +
-		    "   e.totalQty, " +
-		    "   e.availableQty " +
-		    ") " +
-		    "FROM InventoryEntity e " +
-		    "WHERE e.userId = :userId " +
-		    "AND e.isDeleted = false " +
-		    "AND ( " +
-		    "   (:search IS NOT NULL AND :search <> '' AND ( " +
-		    "       LOWER(e.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "       CAST(e.price AS string) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "       CAST(e.totalQty AS string) LIKE CONCAT('%', :search, '%') OR " +
-		    "       CAST(e.availableQty AS string) LIKE CONCAT('%', :search, '%')" +
-		    "   )) " +
-		    "   OR (:search IS NULL OR :search = '') " +
-		    ")";
+		"""
+			SELECT new project.borrowhen.dao.entity.InventoryData(
+		       e.id,
+		       e.itemName,
+		       e.price,
+		       e.totalQty,
+		       e.availableQty,
+		       CAST((
+                 SELECT COALESCE(SUM(br.qty), 0)
+                 FROM BorrowRequestEntity br
+                 WHERE br.inventoryId = e.id
+                 AND br.status IN ('COMPLETED', 'PAYMENT PENDING', 'PAID')
+              ) AS INTEGER) AS total_borrows,
+              CAST((
+                SELECT COALESCE(SUM(br.price * br.qty), 0)
+			    FROM BorrowRequestEntity br
+	            WHERE br.inventoryId = e.id
+	            AND br.status IN ('COMPLETED', 'PAYMENT PENDING', 'PAID')
+              ) AS DOUBLE) AS total_revenue
+		   )
+		   FROM InventoryEntity e
+		   WHERE e.userId = :userId
+		     AND e.isDeleted = false
+		     AND (
+		         (
+		             :search IS NOT NULL
+		             AND :search <> ''
+		             AND (
+		                 LOWER(e.itemName) LIKE LOWER(CONCAT('%', :search, '%'))
+		                 OR CAST(e.price AS string) LIKE LOWER(CONCAT('%', :search, '%'))
+		                 OR CAST(e.totalQty AS string) LIKE CONCAT('%', :search, '%')
+		                 OR CAST(e.availableQty AS string) LIKE CONCAT('%', :search, '%')
+		             )
+		         )
+		         OR (:search IS NULL OR :search = '')
+		     )
+		""";
 
 	@Query(value = GET_ALL_OWNER_INVENTORY)
 	public Page<InventoryData> getAllOwnedInventory(Pageable pageable, 
@@ -218,6 +242,24 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	    @Param("id") int inventoryId,
 	    @Param("updatedDate") Date updatedDate
 	) throws DataAccessException;
+	
+	public final String GET_TOTAL_BORROWS_OF_INVENTORY = """
+				 SELECT CAST(COALESCE(SUM(br.qty), 0) AS INTEGER)
+                 FROM BorrowRequestEntity br
+                 WHERE br.inventoryId = :inventoryId
+                 AND br.status IN ('COMPLETED', 'PAYMENT PENDING', 'PAID')
+			""";
 
+	@Query(GET_TOTAL_BORROWS_OF_INVENTORY)
+	public int getTotalBorrowsOfInventory(@Param("inventoryId") int inventoryId) throws DataAccessException;
+	
+	public final String GET_TOTAL_REVENUE_OF_INVENTORY = """
+			 SELECT CAST(COALESCE(SUM(br.price * br.qty), 0) AS DOUBLE)
+			 FROM BorrowRequestEntity br
+			 WHERE br.inventoryId = :inventoryId
+	         AND br.status IN ('COMPLETED', 'PAYMENT PENDING', 'PAID')
+		""";
 
+	@Query(GET_TOTAL_REVENUE_OF_INVENTORY)
+	public double getTotalRevenueOfInventory(@Param("inventoryId") int inventoryId) throws DataAccessException;
 }
