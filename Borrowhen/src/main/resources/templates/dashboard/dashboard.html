@@ -176,30 +176,6 @@
                               </div>
                            </div>
                         </div>
-                        <!-- Return Trends -->
-                        <!-- <div class="bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
-                           <div class="flex justify-between mb-3">
-                              <h5 class="text-gray-800 font-semibold">Return Trends</h5>
-                              <p class="text-gray-500 text-sm">Last Week</p>
-                           </div>
-                           <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                              Total Returned
-                              <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
-                                 <span class="text-gray-500 text-sm">Total Returned</span>
-                                 <span class="text-green-500 font-bold text-lg mt-1">0</span>
-                              </div>
-                              Late Returns
-                              <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
-                                 <span class="text-gray-500 text-sm">Late Returns</span>
-                                 <span class="text-red-500 font-bold text-lg mt-1">0</span>
-                              </div>
-                              Pending Returns
-                              <div class="bg-white border border-gray-200 rounded-md p-3 flex flex-col items-center justify-center">
-                                 <span class="text-gray-500 text-sm">Pending Returns</span>
-                                 <span class="text-yellow-500 font-bold text-lg mt-1">0</span>
-                              </div>
-                           </div>
-                           </div> -->
                      </div>
                      <!-- My Borrowed Items Table -->
                      <div class="text-gray-500 rounded-lg shadow-md flex flex-col border border-gray-300 bg-white">
@@ -222,79 +198,19 @@
                               <!-- HEADER -->
                               <thead class="border-b border-gray-300">
                                  <tr>
-                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">#</th>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">LENDER</th>
                                     <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">ITEM NAME</th>
-                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">CATEGORY</th>
-                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">STATUS</th>
-                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">BORROWED DATE</th>
-                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">RETURNED DATE</th>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">PRICE</th>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">QTY</th>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">DATE TO BORROW</th>
+                                    <th class="py-2 px-3 text-left text-xs text-gray-500 font-bold">DATE TO RETURN</th>
                                  </tr>
                               </thead>
                               <!-- BODY -->
-                              <tbody class="divide-y divide-gray-200 text-xs">
+                              <tbody class="divide-y divide-gray-200 text-xs" id="ongoing-requests-body">
                                  <tr>
                                     <td colspan="6" class="py-2 px-3 text-gray-500 text-center">No borrowed items</td>
-                                 </tr>
-                                 <!-- <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-2 px-3">1</td>
-                                    <td class="py-2 px-3">Laptop</td>
-                                    <td class="py-2 px-3">Electronics</td>
-                                    <td class="py-2 px-3">
-                                       <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-yellow-100 text-yellow-700">
-                                       Pending
-                                       </span>
-                                    </td>
-                                    <td class="py-2 px-3 text-gray-500">01/Oct/2025</td>
-                                    <td class="py-2 px-3 text-gray-500">10/Oct/2025</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-2 px-3">2</td>
-                                    <td class="py-2 px-3">Projector</td>
-                                    <td class="py-2 px-3">Electronics</td>
-                                    <td class="py-2 px-3">
-                                       <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-green-100 text-green-700">
-                                       Returned
-                                       </span>
-                                    </td>
-                                    <td class="py-2 px-3 text-gray-500">25/Sep/2025</td>
-                                    <td class="py-2 px-3 text-gray-500">30/Sep/2025</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-2 px-3">3</td>
-                                    <td class="py-2 px-3">Office Chair</td>
-                                    <td class="py-2 px-3">Furniture</td>
-                                    <td class="py-2 px-3">
-                                       <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-blue-100 text-blue-700">
-                                       Approved
-                                       </span>
-                                    </td>
-                                    <td class="py-2 px-3 text-gray-500">03/Oct/2025</td>
-                                    <td class="py-2 px-3 text-gray-500">12/Oct/2025</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-2 px-3">4</td>
-                                    <td class="py-2 px-3">Microphone</td>
-                                    <td class="py-2 px-3">Electronics</td>
-                                    <td class="py-2 px-3">
-                                       <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-orange-100 text-orange-700">
-                                       Overdue
-                                       </span>
-                                    </td>
-                                    <td class="py-2 px-3 text-gray-500">20/Sep/2025</td>
-                                    <td class="py-2 px-3 text-gray-500">27/Sep/2025</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-2 px-3">5</td>
-                                    <td class="py-2 px-3">Camera</td>
-                                    <td class="py-2 px-3">Accessories</td>
-                                    <td class="py-2 px-3">
-                                       <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-gray-100 text-gray-600">
-                                       Cancelled
-                                       </span>
-                                    </td>
-                                    <td class="py-2 px-3 text-gray-500">28/Sep/2025</td>
-                                    <td class="py-2 px-3 text-gray-500">05/Oct/2025</td>
-                                    </tr> -->
+                                 </tr>                      
                               </tbody>
                            </table>
                         </div>

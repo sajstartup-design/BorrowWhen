@@ -107,7 +107,30 @@ public class DashboardServiceImpl implements DashboardService{
 		outDto.setPaymentPendings(paymentPendings);	
 		outDto.setOverdues(overdues);
 		outDto.setOverview(overview);
-		;
+		
+		Pageable pageable = PageRequest.of(0, 5);
+		List<BorrowRequestData> recentOngoingRequests = borrowRequestDao.getCurrentlyBorrowedRequestOngoingForBorrower(pageable, user.getId()).toList();
+		
+		List<BorrowRequestObj> ongoingRequests = new ArrayList<>();
+		
+		for(BorrowRequestData br : recentOngoingRequests) {
+			
+			BorrowRequestObj obj = new BorrowRequestObj();
+			
+			obj.setItemName(br.getItemName());
+			obj.setLender(br.getLenderFullName());
+			obj.setLenderUserId(br.getLenderUserId());
+			obj.setStatus(br.getStatus());
+			obj.setDateToBorrow(br.getDateToBorrow());
+			obj.setDateToReturn(br.getDateToReturn());
+			obj.setQty(br.getQty());		
+			obj.setPrice(br.getPrice());
+			
+			ongoingRequests.add(obj);
+		}
+		
+		outDto.setOngoingRequests(ongoingRequests);	
+		
 		return outDto;
 	}
 
@@ -174,6 +197,7 @@ public class DashboardServiceImpl implements DashboardService{
 			obj.setDateToBorrow(br.getDateToBorrow());
 			obj.setDateToReturn(br.getDateToReturn());
 			obj.setQty(br.getQty());		
+			obj.setPrice(br.getPrice());
 			
 			ongoingRequests.add(obj);
 		}

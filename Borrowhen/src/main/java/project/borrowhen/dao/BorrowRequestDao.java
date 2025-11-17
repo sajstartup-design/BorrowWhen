@@ -315,4 +315,35 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	@Query(value=GET_CURRENTLY_BORROWED_REQUEST_ONGOING)
 	public Page<BorrowRequestData> getCurrentlyBorrowedRequestOngoing(Pageable pageable, 
 			@Param("userId") int userId) throws DataAccessException; 
+	
+	public final String GET_CURRENTLY_BORROWED_REQUEST_ONGOING_FOR_BORROWER =
+		   """
+			SELECT new project.borrowhen.dao.entity.BorrowRequestData(
+			    br.id,
+			    borrower.fullName,
+			    borrower.userId,
+			    lender.fullName,
+			    lender.userId,
+			    br.itemName,
+			    br.price,
+			    br.qty,
+			    br.dateToBorrow,
+			    br.dateToReturn,
+			    br.status,
+			    br.createdDate,
+			    br.updatedDate
+			)
+			FROM BorrowRequestEntity br
+			INNER JOIN InventoryEntity i ON i.id = br.inventoryId
+			LEFT JOIN UserEntity borrower ON borrower.id = br.userId
+			LEFT JOIN UserEntity lender ON lender.id = i.userId
+			WHERE br.isDeleted = false
+			AND br.userId = :userId
+			AND br.status = 'ON GOING' 
+		  """;
+
+	
+	@Query(value=GET_CURRENTLY_BORROWED_REQUEST_ONGOING_FOR_BORROWER)
+	public Page<BorrowRequestData> getCurrentlyBorrowedRequestOngoingForBorrower(Pageable pageable, 
+			@Param("userId") int userId) throws DataAccessException; 
 }
