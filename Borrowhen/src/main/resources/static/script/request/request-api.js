@@ -275,4 +275,59 @@ async function loadRequests(page = 0, search = "") {
     } catch (error) {
         console.error("Error fetching requests:", error);
     }
+	
+	// ===============================
+	// CSV EXPORT FOR REQUESTS TABLE
+	// ===============================
+	const exportRequestsBtn = document.querySelector('button.bg-blue-200'); 
+	if (exportRequestsBtn) {
+	    exportRequestsBtn.addEventListener('click', () => {
+	        const tableBody = document.getElementById("table-body");
+	        if (!tableBody) return;
+
+	        const csv = [];
+
+	        // CSV Headers based on current table
+	        const headers = [
+	            "ITEM NAME",
+	            "PRICE",
+	            "QTY",
+	            "DATE TO BORROW",
+	            "DATE TO RETURN",
+	            "STATUS"
+	        ];
+	        csv.push(headers.map(h => `"${h}"`).join(','));
+
+	        // Extract table rows
+	        tableBody.querySelectorAll("tr").forEach(row => {
+	            const cells = row.querySelectorAll("td");
+	            if (cells.length < 8) return; // skip empty or malformed rows
+
+	            // Row data corresponds to your table columns
+	            const rowData = [
+	                cells[1].innerText.trim(), // Item Name
+	                cells[2].innerText.trim(), // Price
+	                cells[3].innerText.trim(), // Qty
+	                cells[4].innerText.trim(), // Date to Borrow
+	                cells[5].innerText.trim(), // Date to Return
+	                cells[6].innerText.trim()  // Status
+	            ].map(text => `"${text.replace(/"/g, '""')}"`); // escape quotes
+
+	            csv.push(rowData.join(','));
+	        });
+
+	        // Trigger CSV download
+	        const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+	        const link = document.createElement('a');
+	        link.href = URL.createObjectURL(blob);
+	        link.download = 'inventory-requests.csv';
+	        link.style.visibility = 'hidden';
+	        document.body.appendChild(link);
+	        link.click();
+	        document.body.removeChild(link);
+	    });
+	}
+
+
+	
 }
