@@ -369,4 +369,69 @@ async function loadRequests(page = 0, search = "") {
     } catch (error) {
         console.error("Error fetching inventories:", error);
     }
+	
+	// ===============================
+	// CSV EXPORT FOR REQUESTS TABLE
+	// ===============================
+
+	const exportRequestsBtn = document.querySelector('button.bg-blue-200'); 
+	if (exportRequestsBtn) {
+	    exportRequestsBtn.addEventListener('click', () => {
+	        const tableBody = document.getElementById("table-body");
+	        if (!tableBody) return;
+
+	        let csv = [];
+
+	        // CSV Headers
+	        const headers = [
+	            "BORROWER",
+	            "USERNAME",
+	            "ITEM NAME",
+	            "PRICE",
+	            "QTY",
+	            "DATE TO BORROW",
+	            "DATE TO RETURN",
+	            "STATUS"
+	        ];
+	        csv.push(headers.map(h => `"${h}"`).join(','));
+
+	        // Extract table rows
+	        tableBody.querySelectorAll("tr").forEach(row => {
+
+	            const cells = row.querySelectorAll("td");
+
+	            if (cells.length < 9) return;
+
+	            // cells: [0] checkbox, [1] borrower block, [2] item, [3] price, [4] qty...
+	            const borrowerBlock = cells[1].innerText.split("\n").map(t => t.trim()).filter(Boolean);
+	            const borrowerName = borrowerBlock[0] || "";
+	            const borrowerUsername = borrowerBlock[1] || "";
+
+	            // Format row data
+	            const rowData = [
+	                borrowerName,
+	                borrowerUsername.replace("@", ""), // remove @
+	                cells[2].innerText.trim(),        // item name
+	                cells[3].innerText.trim(),        // price
+	                cells[4].innerText.trim(),        // qty
+	                cells[5].innerText.trim(),        // date to borrow
+	                cells[6].innerText.trim(),        // date to return
+	                cells[7].innerText.trim()         // status
+	            ].map(text => `"${text.replace(/"/g, '""')}"`);
+
+	            csv.push(rowData.join(','));
+	        });
+
+	        // Download CSV
+	        const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+	        const link = document.createElement('a');
+	        link.href = URL.createObjectURL(blob);
+	        link.download = 'lender-requests.csv';
+	        link.style.visibility = 'hidden';
+	        document.body.appendChild(link);
+	        link.click();
+	        document.body.removeChild(link);
+	    });
+	}
+
 }
