@@ -17,6 +17,7 @@ import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
 import project.borrowhen.dao.entity.LenderDashboardOverview;
+import project.borrowhen.dao.entity.ReviewOverviewData;
 
 public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Integer> {
 	
@@ -346,4 +347,69 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	@Query(value=GET_CURRENTLY_BORROWED_REQUEST_ONGOING_FOR_BORROWER)
 	public Page<BorrowRequestData> getCurrentlyBorrowedRequestOngoingForBorrower(Pageable pageable, 
 			@Param("userId") int userId) throws DataAccessException; 
+	
+	public final String GET_ALL_PAID_BORROW_REQUEST_FOR_LENDER =
+		   """
+			SELECT new project.borrowhen.dao.entity.BorrowRequestData(
+			    br.id, 
+			    borrower.fullName, 
+			    borrower.userId, 
+			    br.itemName,
+			    COALESCE(br.feedback, ''),
+			    CAST(COALESCE(br.rating, 0.0) AS DOUBLE) AS rating
+			)
+			FROM BorrowRequestEntity br
+			INNER JOIN InventoryEntity i ON i.id = br.inventoryId
+			LEFT JOIN UserEntity borrower ON borrower.id = br.userId
+			LEFT JOIN UserEntity lender ON lender.id = i.userId
+			WHERE br.isDeleted = false
+			AND i.userId = :userId
+			AND br.status = 'PAID'
+			AND (
+			      :search IS NULL 
+			      OR :search = '' 
+			      OR LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%'))
+			      OR LOWER(borrower.fullName) LIKE LOWER(CONCAT('%', :search, '%'))
+			      OR LOWER(br.feedback) LIKE LOWER(CONCAT('%', :search, '%'))
+			      OR CAST(br.rating AS string) LIKE CONCAT('%', :search, '%')
+			    )
+
+			""";
+	
+	@Query(value=GET_ALL_PAID_BORROW_REQUEST_FOR_LENDER)
+	public Page<BorrowRequestData> getAllPaidBorrowRequestForLender(Pageable pageable,
+			@Param("userId") int userId,
+			@Param("search") String search) throws DataAccessException; 
+	
+	public final String GET_REVIEW_OVERVIEW_FOR_LENDER = """
+		    SELECT
+		        CAST(AVG(COALESCE(br.rating, 0)) AS DOUBLE PRECISION) AS averageRating,
+		        CAST(COUNT(br.id) AS INTEGER) AS totalReview,
+		        CAST(SUM(CASE WHEN br.updated_date >= CURRENT_DATE - INTERVAL '7 days' THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewThisWeek,
+		        CAST(SUM(CASE WHEN br.rating = 5 THEN 1 ELSE 0 END) AS INTEGER) AS totalReview5Star,
+		        CAST(SUM(CASE WHEN br.rating = 4 THEN 1 ELSE 0 END) AS INTEGER) AS totalReview4Star,
+		        CAST(SUM(CASE WHEN br.rating = 3 THEN 1 ELSE 0 END) AS INTEGER) AS totalReview3Star,
+		        CAST(SUM(CASE WHEN br.rating = 2 THEN 1 ELSE 0 END) AS INTEGER) AS totalReview2Star,
+		        CAST(SUM(CASE WHEN br.rating = 1 THEN 1 ELSE 0 END) AS INTEGER) AS totalReview1Star,
+		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 1 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewMon,
+		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 2 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewTue,
+		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 3 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewWed,
+		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 4 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewThu,
+		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 5 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewFri,
+		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 6 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewSat,
+		        CAST(SUM(CASE WHEN EXTRACT(DOW FROM br.updated_date) = 0 THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewSun,
+		        CAST(SUM(CASE WHEN br.updated_date >= CURRENT_DATE THEN 1 ELSE 0 END) AS INTEGER) AS totalReviewToday,
+		        CAST(SUM(CASE WHEN br.rating >= 4 THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(br.id),0) AS DOUBLE PRECISION) AS positiveReviews
+		    FROM borrow_request br
+		    INNER JOIN inventory i ON i.id = br.inventory_id
+		    WHERE br.is_deleted = false
+		    AND i.user_id = :userId
+		    AND br.status = 'PAID'
+		""";
+
+
+
+			@Query(value = GET_REVIEW_OVERVIEW_FOR_LENDER, nativeQuery=true)
+			public ReviewOverviewData getReviewOverviewForLender(@Param("userId") int userId) throws DataAccessException;
+ 
 }

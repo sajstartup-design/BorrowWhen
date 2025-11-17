@@ -22,6 +22,7 @@ import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.NotificationEntity;
+import project.borrowhen.dao.entity.ReviewOverviewData;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.BorrowRequestDto;
 import project.borrowhen.dto.PaymentDto;
@@ -734,5 +735,67 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		
 		borrowRequestDao.updateFeedbackBorrowRequest(id, inDto.getRating(), inDto.getFeedback(), dateNow);;
 		
+	}
+
+	@Override
+	public BorrowRequestDto getPaidBorrowRequestForLender(BorrowRequestDto inDto) throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+		Pageable pageable = PageRequest.of(
+	        inDto.getPagination().getPage(),
+	        Integer.valueOf(getMaxRequestDisplay())
+	    );
+	    
+	    UserEntity user = userService.getLoggedInUser();
+	    
+	    FilterAndSearchObj filter = inDto.getFilter();
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllPaidBorrowRequestForLender(pageable, user.getId(), filter.getSearch());
+	    
+	    List<BorrowRequestObj> requests = new ArrayList<>();
+	    
+	    for (BorrowRequestData request : allRequests) {
+	        BorrowRequestObj obj = new BorrowRequestObj();
+	        
+	        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getBorrowRequestId())));
+	        
+	        String borrowerFullName = request.getBorrowerFullName();
+	        obj.setBorrower(borrowerFullName.trim());
+	        obj.setBorrowerUserId(request.getBorrowerUserId());
+	        	        
+	        obj.setItemName(request.getItemName());
+	        obj.setFeedback(request.getFeedback());
+	        obj.setRating(request.getRating());
+	        
+	        requests.add(obj);
+	    }
+	    
+	    PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allRequests.getNumber());
+		pagination.setTotalPages(allRequests.getTotalPages());
+		pagination.setTotalElements(allRequests.getTotalElements());
+		pagination.setHasNext(allRequests.hasNext());
+		pagination.setHasPrevious(allRequests.hasPrevious());
+		pagination.setPageSize(getMaxRequestDisplay());
+		
+		outDto.setRequests(requests);
+		outDto.setPagination(pagination);
+		
+	    return outDto;
+	}
+
+	@Override
+	public BorrowRequestDto getReviewOverviewForLender() throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+		
+		UserEntity user = userService.getLoggedInUser();
+		
+		ReviewOverviewData data = borrowRequestDao.getReviewOverviewForLender(user.getId());
+		
+		outDto.setReviewOverview(data);
+		
+		return outDto;
 	}
 }

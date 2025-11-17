@@ -36,4 +36,8 @@ public class BorrowRequestObj {
 	private String timeAgo;
 	
 	private double amount;
+	
+	private String feedback;
+	
+	private double rating;
 }

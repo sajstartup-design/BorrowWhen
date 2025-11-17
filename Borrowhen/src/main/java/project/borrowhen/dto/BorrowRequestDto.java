@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.Data;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
+import project.borrowhen.dao.entity.ReviewOverviewData;
 import project.borrowhen.object.BorrowRequestObj;
 import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.PaginationObj;
@@ -35,6 +36,8 @@ public class BorrowRequestDto {
 	private Double rating;
 	
 	private String feedback;
+	
+	private ReviewOverviewData reviewOverview;
 
 	
 }

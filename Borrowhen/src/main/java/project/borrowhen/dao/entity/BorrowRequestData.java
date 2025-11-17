@@ -7,11 +7,44 @@ import org.springframework.context.annotation.Scope;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Scope("prototype")
 public class BorrowRequestData {
+	
+	// Constructor for main borrow request details
+    public BorrowRequestData(int borrowRequestId, String borrowerFullName, String borrowerUserId,
+                             String lenderFullName, String lenderUserId, String itemName,
+                             double price, int qty, Date dateToBorrow, Date dateToReturn,
+                             String status, Timestamp createdDate, Timestamp updatedDate) {
+        this.borrowRequestId = borrowRequestId;
+        this.borrowerFullName = borrowerFullName;
+        this.borrowerUserId = borrowerUserId;
+        this.lenderFullName = lenderFullName;
+        this.lenderUserId = lenderUserId;
+        this.itemName = itemName;
+        this.price = price;
+        this.qty = qty;
+        this.dateToBorrow = dateToBorrow;
+        this.dateToReturn = dateToReturn;
+        this.status = status;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+    }
+
+    // Constructor for feedback & rating only
+    public BorrowRequestData(int borrowRequestId, String borrowerFullName, String borrowerUserId, String itemName,
+                             String feedback, double rating) {
+        this.borrowRequestId = borrowRequestId;
+        this.borrowerFullName = borrowerFullName;
+        this.borrowerUserId = borrowerUserId;
+        this.itemName = itemName;
+        this.feedback = feedback;
+        this.rating = rating;
+    }
 
 
 	private int borrowRequestId;
@@ -39,4 +72,8 @@ public class BorrowRequestData {
 	private Timestamp createdDate;
 	
 	private Timestamp updatedDate;
+	
+	private String feedback;
+	
+	private double rating;
 }
