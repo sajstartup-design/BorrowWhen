@@ -49,14 +49,22 @@
                   <!-- Sidebar -->
                   <aside class="w-64 border-r border-gray-200 pr-6">
                      <ul class="space-y-2">
-                        <!-- Informations -->
+                        <li class="pt-4 px-3">
+                           <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                           My Account
+                           </span>
+                        </li>
                         <li>
                            <a th:href="@{/my-account}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
                            <i class="fa-solid fa-circle-info text-gray-400 text-base"></i>
                            <span>Informations</span>
                            </a>
                         </li>
-                        <!-- Notifications -->
+                        <li class="pt-4 px-3">
+                           <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                           Notifications
+                           </span>
+                        </li>
                         <li>
                            <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md">
                            <i class="fa-solid fa-bell text-blue-500 text-base"></i>
@@ -155,6 +163,7 @@
                      </div>
                   </section>
                </div>
+               <footer th:replace="~{footer :: footer}"></footer>
             </div>
          </main>
       </div>

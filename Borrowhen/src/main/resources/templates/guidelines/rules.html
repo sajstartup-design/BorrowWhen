@@ -1,68 +1,177 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>BW | Guidelines</title>
-<link rel="stylesheet" th:href="@{/css/guidelines/rules.css}" />
-<link rel="stylesheet" th:href="@{/css/common.css}" />
-</head>
-<body>
-	<div class="container">
-		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
-		<main>
-			<div class="content-header">RULES</div>
-			<div class="content-body">
-				<div class="rule-container">
-					<div>📌 ACCOUNTABILITY RULES</div>
-					<hr class="soft-gradient">
-					<div>
-					    <ul>
-					        <li>Maintain an updated inventory of available disaster equipment.</li>
-					        <li>Verify borrower eligibility before approving requests.</li>
-					        <li>Ensure proper documentation of all borrowing transactions.</li>
-					        <li>Enforce penalties for late returns or misuse of equipment.</li>
-					        <li>Post charges for any damaged or missing equipment.</li>
-					    </ul>
-					</div>
-				</div>
-				<div class="rule-container">
-					<div>📌 RESPONSIBILITY RULES</div>
-					<hr class="soft-gradient">
-					<div>
-					    <ul>
-					        <li>Provide timely approvals and efficient processing of borrowing requests.</li>
-					        <li>Store equipment securely and perform regular maintenance.</li>
-					        <li>Ensure borrowers understand lending policies, return deadlines, and penalties.</li>
-					        <li>Ensure fairness by prioritizing requests based on urgency and availability.</li>
-					        <li>Continuously improve the platform by addressing borrower feedback.</li>
-					    </ul>
-					</div>
-				</div>
-				
-				<div class="rule-container">
-				    <div class="title">📌 BORROWER RULES</div>
-				    <ul>
-				        <li>Return borrowed items on or before the due date.</li>
-				        <li>Handle all borrowed equipment with care and report any damages immediately.</li>
-				        <li>Use borrowed items only for their intended purpose.</li>
-				        <li>Respect borrowing limits (quantity and duration).</li>
-				        <li>Pay penalties for late returns, damages, or losses.</li>
-				    </ul>
-				</div>
-				
-				<div class="rule-container">
-				    <div class="title">📌 LENDER RULES</div>
-				    <ul>
-				        <li>Provide accurate item details (condition, availability, quantity).</li>
-				        <li>Ensure items are in usable condition before lending.</li>
-				        <li>Clearly state borrowing terms (return date, penalties).</li>
-				        <li>Respond promptly to borrower requests.</li>
-				        <li>Track returned items and update inventory accordingly.</li>
-				    </ul>
-				</div>
-			</div>
-		</main>
-		<aside th:replace="~{aside/aside :: content}"></aside>
-	</div>
-</body>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Borrowhen | Rules</title>
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+   </head>
+   <body>
+      <div class="bg-base-200 flex min-h-screen flex-col">
+         <div th:replace="~{header :: header-borrower}"></div>
+         <main class="flex-1 relative">
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
+            <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <!-- Breadcrumb -->
+               <ul class="py-3 flex items-center text-white text-xs">
+                  <li><a th:href="@{/dashboard}" class="px-2"><i class="fa-solid fa-house"></i></a></li>
+                  <li><i class="fa-solid fa-chevron-right px-1 fa-2xs"></i></li>
+                  <li><a href="#" class="px-2 font-bold">Rules</a></li>
+               </ul>
+               <hr class="border-t border-white opacity-80" />
+               <!-- Title -->
+               <div class="flex items-center py-4 gap-3">
+                  <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                     <i class="fa-solid fa-chart-pie text-2xl text-blue-500"></i>
+                  </div>
+                  <div class="flex flex-col text-white">
+                     <span class="text-lg font-bold">Rules</span>
+                  </div>
+               </div>
+               <!-- Main Content -->
+               <div class="bg-white rounded-2xl shadow-md p-6 flex gap-6">
+                  <!-- Sidebar -->
+                  <aside class="w-64 border-r border-gray-200 pr-6">
+                     <ul class="space-y-2">
+                        <li class="pt-4 px-3">
+                           <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                           My Account
+                           </span>
+                        </li>
+                        <li sec:authorize="hasAuthority('BORROWER')">
+                           <a th:href="@{/my-account}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
+                           <i class="fa-solid fa-circle-info text-gray-400 text-base"></i>
+                           <span>Informations</span>
+                           </a>
+                        </li>
+                        <li sec:authorize="hasAuthority('LENDER')">
+                           <a th:href="@{/lender/my-account}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
+                           <i class="fa-solid fa-circle-info text-gray-400 text-base"></i>
+                           <span>Informations</span>
+                           </a>
+                        </li>
+                        <li class="pt-4 px-3">
+                           <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                           Notifications
+                           </span>
+                        </li>
+                        <li sec:authorize="hasAuthority('BORROWER')">
+                           <a th:href="@{/notifications}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
+                           <i class="fa-solid fa-bell text-gray-400 text-base"></i>
+                           <span>Notifications</span>
+                           </a>
+                        </li>
+                        <li sec:authorize="hasAuthority('LENDER')">
+                           <a th:href="@{/lender/notifications}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
+                           <i class="fa-solid fa-bell text-gray-400 text-base"></i>
+                           <span>Notifications</span>
+                           </a>
+                        </li>
+                        <!-- Guidelines Header -->
+                        <li class="pt-4 px-3">
+                           <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                           Guidelines
+                           </span>
+                        </li>
+                        <!-- Rules -->
+                        <li>
+                           <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md">
+                           <i class="fa-solid fa-scale-balanced text-blue-500 text-base"></i>
+                           <span>Rules</span>
+                           </a>
+                        </li>
+                        <!-- Support / Help Header -->
+                        <li class="pt-4 px-3">
+                           <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                           Support
+                           </span>
+                        </li>
+                        <!-- Support / Help -->
+                        <li>
+                           <a th:href="@{/support}" 
+                              class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
+                           <i class="fa-solid fa-circle-question text-gray-400 text-base"></i>
+                           <span>Help & Support</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </aside>
+                  <!-- Form Section -->
+                  <section class="flex-1 flex flex-col gap-8">
+                     <div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Rules</h3>
+                        <div class="flex flex-col gap-6">
+                           <!-- ACCOUNTABILITY RULES -->
+                           <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-300">
+                              <div class="flex items-center gap-2 text-gray-700 font-semibold text-lg">
+                                 <span>📌</span>
+                                 <span class="text-gray-500">ACCOUNTABILITY RULES</span>
+                              </div>
+                              <hr class="my-3 border-t-2 border-gray-300 from-blue-200 via-blue-300 to-blue-200 opacity-50">
+                              <ul class="list-disc list-inside space-y-2 text-gray-600 text-sm">
+                                 <li>Maintain an updated inventory of available disaster equipment.</li>
+                                 <li>Verify borrower eligibility before approving requests.</li>
+                                 <li>Ensure proper documentation of all borrowing transactions.</li>
+                                 <li>Enforce penalties for late returns or misuse of equipment.</li>
+                                 <li>Post charges for any damaged or missing equipment.</li>
+                              </ul>
+                           </div>
+                           <!-- RESPONSIBILITY RULES -->
+                           <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-300">
+                              <div class="flex items-center gap-2 text-gray-700 font-semibold text-lg">
+                                 <span>📌</span>
+                                 <span class="text-gray-500">RESPONSIBILITY RULES</span>
+                              </div>
+                              <hr class="my-3 border-t-2 border-gray-300 from-green-200 via-green-300 to-green-200 opacity-50">
+                              <ul class="list-disc list-inside space-y-2 text-gray-600 text-sm">
+                                 <li>Provide timely approvals and efficient processing of borrowing requests.</li>
+                                 <li>Store equipment securely and perform regular maintenance.</li>
+                                 <li>Ensure borrowers understand lending policies, return deadlines, and penalties.</li>
+                                 <li>Ensure fairness by prioritizing requests based on urgency and availability.</li>
+                                 <li>Continuously improve the platform by addressing borrower feedback.</li>
+                              </ul>
+                           </div>
+                           <!-- BORROWER RULES -->
+                           <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-300">
+                              <div class="flex items-center gap-2 text-gray-700 font-semibold text-lg">
+                                 <span>📌</span>
+                                 <span class="text-gray-500">BORROWER RULES</span>
+                              </div>
+                              <hr class="my-3 border-t-2 border-gray-300 from-purple-200 via-purple-300 to-purple-200 opacity-50">
+                              <ul class="list-disc list-inside space-y-2 text-gray-600 text-sm">
+                                 <li>Return borrowed items on or before the due date.</li>
+                                 <li>Handle all borrowed equipment with care and report any damages immediately.</li>
+                                 <li>Use borrowed items only for their intended purpose.</li>
+                                 <li>Respect borrowing limits (quantity and duration).</li>
+                                 <li>Pay penalties for late returns, damages, or losses.</li>
+                              </ul>
+                           </div>
+                           <!-- LENDER RULES -->
+                           <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-300">
+                              <div class="flex items-center gap-2 text-gray-700 font-semibold text-lg">
+                                 <span>📌</span>
+                                 <span class="text-gray-500">LENDER RULES</span>
+                              </div>
+                              <hr class="my-3 border-t-2 border-gray-300 from-yellow-200 via-yellow-300 to-yellow-200 opacity-50">
+                              <ul class="list-disc list-inside space-y-2 text-gray-600 text-sm">
+                                 <li>Provide accurate item details (condition, availability, quantity).</li>
+                                 <li>Ensure items are in usable condition before lending.</li>
+                                 <li>Clearly state borrowing terms (return date, penalties).</li>
+                                 <li>Respond promptly to borrower requests.</li>
+                                 <li>Track returned items and update inventory accordingly.</li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </section>
+               </div>
+               <footer th:replace="~{footer :: footer}"></footer>
+            </div>
+         </main>
+      </div>
+   </body>
 </html>

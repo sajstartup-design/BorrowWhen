@@ -45,24 +45,58 @@
                <div class="bg-white rounded-2xl shadow-md p-6 flex gap-6">
                   <!-- Sidebar -->
                   <aside class="w-64 border-r border-gray-200 pr-6">
-				    <ul class="space-y-2">
-				        <!-- Informations first and active -->
-				        <li>
-				            <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md">
-				                <i class="fa-solid fa-circle-info text-blue-500 text-base"></i>
-				                <span>Informations</span>
-				            </a>
-				        </li>
-				
-				        <!-- Notifications second and inactive -->
-				        <li>
-				            <a th:href="@{/lender/notifications}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
-				                <i class="fa-solid fa-bell text-gray-400 text-base"></i>
-				                <span>Notifications</span>
-				            </a>
-				        </li>
-				    </ul>
-				</aside>
+                     <ul class="space-y-2">
+                        <li class="pt-4 px-3">
+                           <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                           My Account
+                           </span>
+                        </li>
+                        <li>
+                           <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md">
+                           <i class="fa-solid fa-circle-info text-blue-500 text-base"></i>
+                           <span>Informations</span>
+                           </a>
+                        </li>
+                        <li class="pt-4 px-3">
+                           <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                           Notifications
+                           </span>
+                        </li>
+                        <li>
+                           <a th:href="@{/lender/notifications}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
+                           <i class="fa-solid fa-bell text-gray-400 text-base"></i>
+                           <span>Notifications</span>
+                           </a>
+                        </li>
+                        <!-- Guidelines Header -->
+                        <li class="pt-4 px-3">
+                           <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                           Guidelines
+                           </span>
+                        </li>
+                        <!-- Rules -->
+                        <li>
+                           <a th:href="@{/guidelines/rules}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
+                           <i class="fa-solid fa-scale-balanced text-gray-400 text-base"></i>
+                           <span>Rules</span>
+                           </a>
+                        </li>
+                        <!-- Support / Help Header -->
+                        <li class="pt-4 px-3">
+                           <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                           Support
+                           </span>
+                        </li>
+                        <!-- Support / Help -->
+                        <li>
+                           <a th:href="@{/support}" 
+                              class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition">
+                           <i class="fa-solid fa-circle-question text-gray-400 text-base"></i>
+                           <span>Help & Support</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </aside>
 
                   <!-- Form Section -->
                   <section class="flex-1 flex flex-col gap-8">
@@ -236,6 +270,7 @@
                      </form>
                   </section>
                </div>
+               <footer th:replace="~{footer :: footer}"></footer>
             </div>
          </main>
       </div>
