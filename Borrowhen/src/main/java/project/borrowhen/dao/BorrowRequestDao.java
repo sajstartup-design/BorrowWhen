@@ -343,7 +343,7 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 			LEFT JOIN UserEntity lender ON lender.id = i.userId
 			WHERE br.isDeleted = false
 			AND br.userId = :userId
-			AND br.status = 'ON GOING' 
+			AND br.status IN ('ON GOING', 'OVERDUE')
 		  """;
 
 	

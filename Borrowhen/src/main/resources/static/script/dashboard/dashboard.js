@@ -27,14 +27,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // 🟥 Overdues
     if (overdues && overdues.length > 0) {
-
+		console.log(overdues);
       const frag = document.createDocumentFragment();
       overdues.forEach(overdue => {
         const div = document.createElement('div');
         div.className = 'flex justify-between items-center border-b border-gray-300 pb-2';
         div.innerHTML = `
           <span class="text-gray-700 text-sm">${overdue.itemName}</span>
-          <span class="text-red-500 font-semibold text-sm">${overdue.dateTimeAgo}</span>
+          <span class="text-red-500 font-semibold text-sm">${overdue.timeAgo}</span>
         `;
         frag.appendChild(div);
       });
@@ -146,8 +146,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 		    ongoingRequests.forEach(req => {
 
+		        const isOverdue = req.status && req.status.toUpperCase() === "OVERDUE";
+
 		        const tr = document.createElement("tr");
-		        tr.className = "hover:bg-gray-50";
+		        tr.className = `
+		            hover:bg-gray-50
+		            ${isOverdue ? "bg-red-100 border-l-4 border-red-500" : ""}
+		        `.trim();
 
 		        tr.innerHTML = `
 		            <td class="py-2 px-3">
@@ -158,26 +163,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 		            </td>
 
 		            <td class="py-2 px-3">${req.itemName}</td>
-
 		            <td class="py-2 px-3">₱${req.price}</td>
-
 		            <td class="py-2 px-3">${req.qty} pcs</td>
 
-		            <td class="py-2 px-3">
-		                ${formatDashboardDate(req.dateToBorrow)}
-		            </td>
+		            <td class="py-2 px-3">${formatDashboardDate(req.dateToBorrow)}</td>
 
-		            <td class="py-2 px-3">
-		                ${formatDashboardDate(req.dateToReturn)}
-		            </td>
+		            <td class="py-2 px-3">${formatDashboardDate(req.dateToReturn)}</td>
 		        `;
 
 		        frag.appendChild(tr);
 		    });
 
 		    ongoingTableBody.appendChild(frag);
-
-		} else {
+		}else {
 		    ongoingTableBody.innerHTML = `
 		        <tr>
 		          <td colspan="7" class="py-3 px-3 text-center text-gray-500">
