@@ -117,6 +117,7 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    "LEFT JOIN UserEntity lender ON lender.id = i.userId " +
 		    "WHERE br.isDeleted = false " +
 		    "AND br.userId = :userId " +
+		    "AND br.status NOT IN ('PAID') " +
 		    "AND ( :search IS NULL OR :search = '' OR " +
 		    "      LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
 		    "      CAST(br.price AS string) LIKE CONCAT('%', :search, '%') OR " +
