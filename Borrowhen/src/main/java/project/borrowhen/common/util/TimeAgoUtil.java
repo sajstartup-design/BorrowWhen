@@ -31,7 +31,7 @@ public class TimeAgoUtil {
 
         long days = hours / 24;
         if (days < 7) {
-            return days == 1 ? "A day ago" : days + " days ago";
+            return days == 1 ? "Yesterday" : days + " days ago";
         }
 
         long weeks = days / 7;
