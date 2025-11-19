@@ -111,13 +111,13 @@ public class SecurityConfig {
 						.requestMatchers("/my-account/**").hasAuthority(CommonConstant.ROLE_BORROWER)
 						.requestMatchers("/feedback/**").hasAuthority(CommonConstant.ROLE_BORROWER)
 						.requestMatchers("/notifications/**").hasAuthority(CommonConstant.ROLE_BORROWER)
-						.requestMatchers("/history					/**").hasAuthority(CommonConstant.ROLE_BORROWER)
+						.requestMatchers("/history/**").hasAuthority(CommonConstant.ROLE_BORROWER)
 						
 						.requestMatchers("/guidelines/**").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
 						
 						.requestMatchers("/api/request/**").hasAuthority(CommonConstant.ROLE_BORROWER)
-						.requestMatchers("/api/payment/**").hasAuthority(CommonConstant.ROLE_BORROWER)
-						
+						.requestMatchers("/api/payment/**").hasAuthority(CommonConstant.ROLE_BORROWER)	
+						.requestMatchers("/api/history/**").hasAuthority(CommonConstant.ROLE_BORROWER)		
 						.requestMatchers("/api/inventory").authenticated()
 						
 						.requestMatchers("/api/**").authenticated()

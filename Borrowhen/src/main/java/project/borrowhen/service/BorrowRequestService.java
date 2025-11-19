@@ -46,5 +46,7 @@ public interface BorrowRequestService {
 	
 	public BorrowRequestDto getPaidBorrowRequestForLender(BorrowRequestDto inDto) throws Exception;
 	
+	public BorrowRequestDto getPaidBorrowRequestForBorrower(BorrowRequestDto inDto) throws Exception;
+	
 	public BorrowRequestDto getReviewOverviewForLender() throws Exception;
 }

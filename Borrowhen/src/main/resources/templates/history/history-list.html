@@ -76,36 +76,10 @@
                      </div>
                   </div>
                </div>
-               <div class="bg-white rounded-t-2xl">
-                  <div class="bg-base-100 rounded-4xl p-6 shadow-md flex flex-col gap-6">
+               <div class="bg-white rounded-xl">
+                  <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
                     
-                     <div class="text-gray-200 rounded-lg shadow-md flex flex-col border border-gray-300 text-gray-500">
-                        <!-- Filter Header -->
-                        <div class="border-b border-gray-300 p-5">
-                           <h2 class="text-lg font-semibold mb-4">Filter</h2>
-                           <div class="flex flex-wrap gap-4">
-                              <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                 <option>Status</option>
-                                 <option>Scheduled</option>
-                                 <option>Publish</option>
-                                 <option>Inactive</option>
-                              </select>
-                              <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                 <option>Category</option>
-                                 <option>Household</option>
-                                 <option>Office</option>
-                                 <option>Electronics</option>
-                                 <option>Shoes</option>
-                                 <option>Accessories</option>
-                                 <option>Game</option>
-                              </select>
-                              <select class="border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                 <option>Stock</option>
-                                 <option>Out of Stock</option>
-                                 <option>In Stock</option>
-                              </select>
-                           </div>
-                        </div>
+                     <div class="text-gray-200 rounded-lg shadow-md flex flex-col border border-gray-300 text-gray-500">                     
                         <!-- Search & Actions -->
                         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-300 p-5">
                            <!-- Search Bar -->
@@ -113,7 +87,7 @@
                               <i class="fa-solid fa-magnifying-glass text-gray-500 mr-2 text-sm"></i>
                               <input
                                  type="search"
-                                 placeholder="Search Item"
+                                 placeholder="Search Request"
                                  class="bg-transparent focus:outline-none w-full text-sm text-gray-500 placeholder-gray-500 search"
                                  />
                            </div>
@@ -130,12 +104,6 @@
                               <i class="fa-solid fa-upload text-gray-600 text-sm"></i>
                               Export
                               </button>
-                              <a th:href="@{/lender/inventory/create}"
-                                 class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-500 hover:bg-blue-300 rounded-md text-sm text-white transition shadow-md"
-                                 >
-                              <i class="fa-solid fa-plus text-white text-sm"></i>
-                              Add Item
-                              </a>
                            </div>
                         </div>
                         <!-- Table -->
@@ -353,9 +321,96 @@
             </div>
          </div>
       </div>
+      <div id="feedbackModal" class="pop-up-modal fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+         <!-- Modal -->
+         <div class="bg-gradient-to-br from-white via-blue-50 to-blue-100 border border-blue-200 shadow-2xl rounded-2xl w-full max-w-2xl overflow-hidden animate-pop-in">
+            <!-- Header -->
+            <div class="bg-blue-500 py-3 text-center text-white font-semibold text-lg tracking-wide shadow-sm">
+               FEEDBACK AND RATINGS
+            </div>
+            <!-- Body -->
+            <div class="px-8 py-6">
+               <!-- Icon / Preview -->
+               <div class="flex justify-center mb-6">
+                  <div class="w-24 h-24 bg-white border border-blue-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+                     <img th:src="@{/images/feedback.png}" alt="Feedback Icon" class="object-contain w-12 h-12" />
+                  </div>
+               </div>
+               <p class="text-gray-600 text-sm mb-5 text-center">
+                  We value your experience. Please provide a short feedback and rate your transaction.
+               </p>
+               <!-- Feedback Form -->
+               <form id="feedbackForm" th:action="@{/feedback}" method="POST" class="space-y-5">
+                  <input type="hidden" name="encryptedId" id="encryptedId" />
+                  <!-- Rating Stars -->
+                  <div class="flex flex-col items-center">
+                     <label class="text-gray-700 text-sm font-medium mb-2">Rate your experience</label>
+                     <div class="flex gap-2 text-yellow-400 text-xl cursor-pointer">
+                        <i class="fa-regular fa-star hover:text-yellow-500" data-value="1"></i>
+                        <i class="fa-regular fa-star hover:text-yellow-500" data-value="2"></i>
+                        <i class="fa-regular fa-star hover:text-yellow-500" data-value="3"></i>
+                        <i class="fa-regular fa-star hover:text-yellow-500" data-value="4"></i>
+                        <i class="fa-regular fa-star hover:text-yellow-500" data-value="5"></i>
+                     </div>
+                     <input type="hidden" name="rating" id="ratingValue" />
+                  </div>
+                  <!-- Feedback Textarea -->
+                  <div>
+                     <label class="block text-gray-700 text-sm font-medium mb-2">Your Feedback</label>
+                     <textarea
+                        name="feedback"
+                        id="feedback"
+                        rows="4"
+                        class="w-full border border-blue-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
+                        placeholder="Share your thoughts about your experience..."
+                        ></textarea>
+                  </div>
+               </form>
+               <p class="text-gray-500 text-xs text-center mt-6">
+                  Your feedback helps us improve and provide better service.
+               </p>
+            </div>
+            <!-- Footer -->
+            <div class="bg-blue-50 flex justify-end gap-3 px-8 py-4 border-t border-blue-200">
+               <button
+                  name="cancel"
+                  class="cancel-btn h-8 px-2 py-1 text-xs text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                  >
+               CANCEL
+               </button>
+               <button
+                  form="feedbackForm"
+                  class="h-8 px-3 py-1 text-xs text-white bg-blue-500 rounded-md hover:bg-blue-600 transition"
+                  >
+               SUBMIT FEEDBACK
+               </button>
+            </div>
+         </div>
+         <script>
+            // Simple star rating behavior
+            const stars = document.querySelectorAll('#feedbackModal .fa-star');
+            const ratingInput = document.getElementById('ratingValue');
+            
+            stars.forEach(star => {
+              star.addEventListener('click', () => {
+                const value = star.getAttribute('data-value');
+                ratingInput.value = value;
+            
+                stars.forEach(s => {
+                  s.classList.remove('fa-solid');
+                  s.classList.add('fa-regular');
+                });
+                for (let i = 0; i < value; i++) {
+                  stars[i].classList.remove('fa-regular');
+                  stars[i].classList.add('fa-solid');
+                }
+              });
+            });
+         </script>
+      </div>
       <script th:src="@{/script/modal.js}"></script>
       <script th:src="@{/script/pagination.js}"></script>
       <script th:src="@{/script/loading.js}"></script>
-      <script th:src="@{/script/request/history-api.js}"></script>
+      <script th:src="@{/script/history/history-api.js}"></script>
    </body>
 </html>

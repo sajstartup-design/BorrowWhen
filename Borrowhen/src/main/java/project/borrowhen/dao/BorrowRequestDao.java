@@ -457,9 +457,50 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 
 		""";
 
-
-
-			@Query(value = GET_REVIEW_OVERVIEW_FOR_LENDER, nativeQuery=true)
-			public ReviewOverviewData getReviewOverviewForLender(@Param("userId") int userId) throws DataAccessException;
+		@Query(value = GET_REVIEW_OVERVIEW_FOR_LENDER, nativeQuery=true)
+		public ReviewOverviewData getReviewOverviewForLender(@Param("userId") int userId) throws DataAccessException;
  
+		public final String GET_ALL_PAID_BORROW_REQUEST_FOR_BORROWER =
+		   """
+			SELECT new project.borrowhen.dao.entity.BorrowRequestData(
+			    br.id,
+			    borrower.fullName,
+			    borrower.userId,
+			    lender.fullName,
+			    lender.userId,
+			    br.itemName,
+			    br.price,
+			    br.qty,
+			    br.dateToBorrow,
+			    br.dateToReturn,
+			    br.status,
+			    br.createdDate,
+			    br.updatedDate,
+			    br.feedback,
+			    br.rating
+			)
+			FROM BorrowRequestEntity br
+			INNER JOIN InventoryEntity i ON i.id = br.inventoryId
+			LEFT JOIN UserEntity borrower ON borrower.id = br.userId
+			LEFT JOIN UserEntity lender ON lender.id = i.userId
+			WHERE br.isDeleted = false
+			AND br.userId = :userId
+			AND br.status = 'PAID'
+			AND (
+			      :search IS NULL 
+			      OR :search = '' 
+			      OR LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%'))
+			      OR CAST(br.price AS string) LIKE CONCAT('%', :search, '%')
+			      OR CAST(br.qty AS string) LIKE CONCAT('%', :search, '%')
+			      OR CAST(br.dateToBorrow AS string) LIKE CONCAT('%', :search, '%')
+			      OR CAST(br.dateToReturn AS string) LIKE CONCAT('%', :search, '%')
+			      OR LOWER(br.status) LIKE LOWER(CONCAT('%', :search, '%'))
+			)
+
+			""";
+	
+	@Query(value=GET_ALL_PAID_BORROW_REQUEST_FOR_BORROWER)
+	public Page<BorrowRequestData> getAllPaidBorrowRequestForBorrower(Pageable pageable,
+			@Param("userId") int userId,
+			@Param("search") String search) throws DataAccessException; 
 }

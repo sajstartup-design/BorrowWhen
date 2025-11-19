@@ -881,4 +881,54 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		
 		return outDto;
 	}
+
+	@Override
+	public BorrowRequestDto getPaidBorrowRequestForBorrower(BorrowRequestDto inDto) throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+		Pageable pageable = PageRequest.of(
+	        inDto.getPagination().getPage(),
+	        Integer.valueOf(getMaxRequestDisplay())
+	    );
+	    
+	    UserEntity user = userService.getLoggedInUser();
+	    
+	    FilterAndSearchObj filter = inDto.getFilter();
+	    
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllPaidBorrowRequestForBorrower(pageable, user.getId(), filter.getSearch());
+	    
+	    List<BorrowRequestObj> requests = new ArrayList<>();
+	    
+	    for (BorrowRequestData request : allRequests) {
+
+	        BorrowRequestObj obj = new BorrowRequestObj();
+	        
+	        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getBorrowRequestId())));
+	        
+	        obj.setItemName(request.getItemName());
+	        obj.setPrice(request.getPrice());
+	        obj.setQty(request.getQty());
+	        obj.setDateToBorrow(request.getDateToBorrow());
+	        obj.setDateToReturn(request.getDateToReturn());
+	        obj.setRating(request.getRating());
+	        obj.setFeedback(request.getFeedback());
+	        obj.setStatus(request.getStatus());	
+	        
+	        requests.add(obj);
+	    }
+	    
+	    PaginationObj pagination = new PaginationObj();
+		
+		pagination.setPage(allRequests.getNumber());
+		pagination.setTotalPages(allRequests.getTotalPages());
+		pagination.setTotalElements(allRequests.getTotalElements());
+		pagination.setHasNext(allRequests.hasNext());
+		pagination.setHasPrevious(allRequests.hasPrevious());
+		pagination.setPageSize(getMaxRequestDisplay());
+		
+		outDto.setRequests(requests);
+		outDto.setPagination(pagination);
+		
+	    return outDto;
+	}
 }

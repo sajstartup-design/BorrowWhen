@@ -1,0 +1,353 @@
+createLoadingScreenBody();
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const inputPage = document.querySelector('.input-page');
+	const pageBtns = document.querySelectorAll('.page-btn');
+	const endBtn = document.querySelector('.end-btn');
+    const search = document.querySelector('.search');
+
+
+    // Load first page
+    loadRequests(0);
+    
+    if(pageBtns){
+		pageBtns.forEach(btn => btn.addEventListener('click', function(){
+			createLoadingScreenBody();
+			const searchValue = search.value;
+            loadRequests(Number(this.textContent.trim()) - 1, searchValue); 
+		}));
+	}
+	
+	if (endBtn) {
+	  endBtn.addEventListener('click', function() {  // <-- regular function
+	    createLoadingScreenBody();
+	    const searchValue = search ? search.value : '';
+	    loadRequests(Number(this.textContent.trim()) - 1, searchValue); 
+	  });
+	}
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            createLoadingScreenBody();
+            const searchValue = search.value;
+            let currentPage = Number(inputPage.value);
+            loadRequests(currentPage, searchValue);
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            createLoadingScreenBody();
+            const searchValue = search.value;
+            let currentPage = Number(inputPage.value);
+            loadRequests(currentPage - 2, searchValue);
+        });
+    }
+
+    if (inputPage) {
+        inputPage.addEventListener('change', () => {
+            createLoadingScreenBody();
+            const searchValue = search.value;
+            let newPage = Number(inputPage.value);
+            if (newPage < 1) newPage = 1;
+            inputPage.value = newPage;
+            loadRequests(newPage - 1, searchValue);
+        });
+    }
+	
+    if (search) {
+        let typingTimer;
+        const delay = 500;
+
+        search.addEventListener('input', function() {
+            clearTimeout(typingTimer);
+
+            const currentPage = 0;
+            const searchValue = this.value;
+
+            typingTimer = setTimeout(() => {
+                createLoadingScreenBody();
+                loadRequests(currentPage, searchValue);
+            }, delay);
+        });
+    }
+
+});
+const buttons = {
+    cancel: (request) => `
+    <div class="tooltip-wrapper">
+      <a
+        href="#"
+        class="delete-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition shadow-sm"
+        data-toggle="modal"
+        data-target="#cancelModal"
+        data-id="${request.encryptedId}"
+        data-item-name="${request.itemName}"
+        data-price="${request.price}"
+        data-date-to-borrow="${request.dateToBorrow}"
+        data-date-to-return="${request.dateToReturn}"
+        data-number-to-borrow="${request.qty}">
+        <img src="/images/cancelled.png" alt="Cancel" class="h-4 w-4" />
+      </a>
+      <span class="tooltip-text">Cancel Request</span>
+    </div>
+  `,
+
+    received: (request) => `
+    <div class="tooltip-wrapper">
+      <a
+        href="#"
+        class="received-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-green-100 hover:bg-green-200 transition shadow-sm"
+        data-toggle="modal"
+        data-target="#confirmModal"
+        data-id="${request.encryptedId}"
+        data-item-name="${request.itemName}"
+        data-price="${request.price}"
+        data-date-to-borrow="${request.dateToBorrow}"
+        data-date-to-return="${request.dateToReturn}"
+        data-number-to-borrow="${request.qty}">
+        <img src="/images/received-icon.png" alt="Received" class="h-4 w-4" />
+      </a>
+      <span class="tooltip-text">Mark as Received</span>
+    </div>
+  `,
+  
+  rate: (request) => `
+  <div class="tooltip-wrapper">
+    <a
+      href="#"
+      class="rate-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
+      data-toggle="modal"
+      data-target="#feedbackModal"
+      data-id="${request.encryptedId}"
+      data-item-name="${request.itemName}">
+      <img src="/images/star.png" alt="Rate" class="h-4 w-4" />
+    </a>
+    <span class="tooltip-text">Rate Item</span>
+  </div>
+  `,
+
+
+    fake: (icon) => `
+    <div class="tooltip-wrapper">
+      <a
+        href="#"
+        class="fake-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-gray-100 opacity-60 cursor-not-allowed shadow-sm pointer-events-none">
+        <img src="/images/${icon}.png" alt="${icon}" class="h-4 w-4" />
+      </a>
+      <span class="tooltip-text">Unavailable</span>
+    </div>
+  `
+};
+
+
+
+
+async function loadRequests(page = 0, search = "") {
+    try {
+        const params = new URLSearchParams({
+            page,
+            search
+        });
+        const url = `/api/history?${params.toString()}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        updatePagination(data.pagination);
+		
+		console.log(data);
+
+        const tableBody = document.getElementById("table-body");
+        tableBody.innerHTML = "";
+
+        const fragment = document.createDocumentFragment();
+
+        if (data.requests && data.requests.length > 0) {
+            data.requests.forEach((request) => {
+                const status = request.status?.toLowerCase().replace(" ", "").trim();
+
+                // Status style
+				let statusColor = "";
+				let statusTextColor = "";
+				
+				switch (status.toUpperCase()) {
+				  case "PENDING":
+				    statusColor = "bg-yellow-100";
+				    statusTextColor = "text-yellow-700";
+				    break;
+				
+				  case "APPROVED":
+				    statusColor = "bg-green-100";
+				    statusTextColor = "text-green-700";
+				    break;
+				
+				  case "REJECTED":
+				    statusColor = "bg-red-100";
+				    statusTextColor = "text-red-700";
+				    break;
+				
+				  case "CANCELLED":
+				    statusColor = "bg-gray-200";
+				    statusTextColor = "text-gray-700";
+				    break;
+				
+				  case "VOID":
+				    statusColor = "bg-neutral-200";
+				    statusTextColor = "text-neutral-600";
+				    break;
+				
+				  case "OVERDUE":
+				    statusColor = "bg-orange-100";
+				    statusTextColor = "text-orange-700";
+				    break;
+				
+				  case "PICK-UPREADY":
+				    statusColor = "bg-indigo-100";
+				    statusTextColor = "text-indigo-700";
+				    break;
+				
+				  case "ONGOING":
+				    statusColor = "bg-blue-100";
+				    statusTextColor = "text-blue-700";
+				    break;
+				
+				  case "PAYMENTPENDING":
+				    statusColor = "bg-pink-100";
+				    statusTextColor = "text-pink-700";
+				    break;
+				
+				  case "PAID":
+				    statusColor = "bg-emerald-100";
+				    statusTextColor = "text-emerald-700";
+				    break;
+				
+				  default:
+				    statusColor = "bg-gray-100";
+				    statusTextColor = "text-gray-700";
+				    break;
+				}
+
+
+				// Action Buttons
+				let actionButtons = "";
+
+				if (request.rating && Number(request.rating) > 0) {
+			        actionButtons = `<span class="text-sm text-gray-500 italic">Rated</span>`;
+			    } else {
+			        actionButtons = buttons.rate(request); // show rate button
+			    }
+
+                // Row
+                const row = document.createElement("tr");
+                row.className = "hover:bg-gray-50 transition border border-gray-300";
+                row.setAttribute("data-id", request.encryptedId);
+
+
+                row.innerHTML = `
+				  <td class="py-2 px-2 text-xs align-middle text-gray-500">
+				    <div class="flex items-center justify-center">
+				      <input type="checkbox" class="w-3 h-3 accent-indigo-500 rounded row-select-checkbox">
+				    </div>
+				  </td>
+				  <td class="px-2 text-xs align-middle text-gray-500">${request.itemName}</td>
+				  <td class="px-2 text-xs align-middle text-gray-500">₱${request.price}</td>
+				  <td class="px-2 text-xs align-middle text-gray-500">${request.qty} pcs</td>
+				  <td class="px-2 text-xs align-middle text-gray-500">${request.dateToBorrow}</td>
+				  <td class="px-2 text-xs align-middle text-gray-500">${request.dateToReturn}</td>
+				  <td class="py-2 px-2 text-gray-500">
+				    <span class="px-3 py-1 text-xs font-medium rounded-full ${statusColor} ${statusTextColor}">
+				      ${request.status}
+				    </span>
+				  </td>
+				  <td class="py-2 px-2 text-sm flex items-center gap-2 text-gray-500">
+				  <div class="tooltip-wrapper">
+  			        <a
+  			          href="/request/details?encryptedId=${request.encryptedId}"
+  			          class="view-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
+  			          data-id="${request.encryptedId}"
+  			          aria-label="View"
+  			        >
+  			          <img src="/images/view.png" alt="View" class="h-3 w-3" />
+  			        </a>
+  			        <span class="tooltip-text">View Item</span>
+  			      </div>
+				    ${actionButtons}
+				  </td>
+				`;
+
+                fragment.appendChild(row);
+            });
+
+            tableBody.appendChild(fragment);
+            updateBtnsModal();
+        } else {
+            tableBody.innerHTML = `
+            <tr>
+               <td colspan="8" class="text-center py-6 text-gray-500 text-sm">No requests found.</td>
+            </tr>
+         `;
+        }
+
+        removeLoadingScreenBody();
+    } catch (error) {
+        console.error("Error fetching requests:", error);
+    }
+	
+	// ===============================
+	// CSV EXPORT FOR REQUESTS TABLE
+	// ===============================
+	const exportRequestsBtn = document.querySelector('button.bg-blue-200'); 
+	if (exportRequestsBtn) {
+	    exportRequestsBtn.addEventListener('click', () => {
+	        const tableBody = document.getElementById("table-body");
+	        if (!tableBody) return;
+
+	        const csv = [];
+
+	        // CSV Headers based on current table
+	        const headers = [
+	            "ITEM NAME",
+	            "PRICE",
+	            "QTY",
+	            "DATE TO BORROW",
+	            "DATE TO RETURN",
+	            "STATUS"
+	        ];
+	        csv.push(headers.map(h => `"${h}"`).join(','));
+
+	        // Extract table rows
+	        tableBody.querySelectorAll("tr").forEach(row => {
+	            const cells = row.querySelectorAll("td");
+	            if (cells.length < 8) return; // skip empty or malformed rows
+
+	            // Row data corresponds to your table columns
+	            const rowData = [
+	                cells[1].innerText.trim(), // Item Name
+	                cells[2].innerText.trim(), // Price
+	                cells[3].innerText.trim(), // Qty
+	                cells[4].innerText.trim(), // Date to Borrow
+	                cells[5].innerText.trim(), // Date to Return
+	                cells[6].innerText.trim()  // Status
+	            ].map(text => `"${text.replace(/"/g, '""')}"`); // escape quotes
+
+	            csv.push(rowData.join(','));
+	        });
+
+	        // Trigger CSV download
+	        const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+	        const link = document.createElement('a');
+	        link.href = URL.createObjectURL(blob);
+	        link.download = 'inventory-requests.csv';
+	        link.style.visibility = 'hidden';
+	        document.body.appendChild(link);
+	        link.click();
+	        document.body.removeChild(link);
+	    });
+	}
+
+
+	
+}

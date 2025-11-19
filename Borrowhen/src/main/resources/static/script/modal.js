@@ -39,6 +39,8 @@ function updateBtnsModal() {
 		btn.addEventListener("click", () => {
 			const modalTarget = btn.getAttribute("data-target");
 			const modal = document.querySelector(modalTarget);
+			
+			console.log(modal.id);
 
 			if (modal) {
 				const modalBackground = document.createElement("div");
@@ -65,10 +67,16 @@ function updateBtnsModal() {
 					}
 					
 					if(
-						modal.id === "deleteModal"
+						
+						["deleteModal", "feedbackModal"].includes(modal.id)
 					) {
+
 					    modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
-						modal.querySelector("#deleteName").textContent = btn.dataset.name;
+						
+						if(modal.id === "deleteModal"){
+							modal.querySelector("#deleteName").textContent = btn.dataset.name;
+						}
+						
 					}
 				}
 
