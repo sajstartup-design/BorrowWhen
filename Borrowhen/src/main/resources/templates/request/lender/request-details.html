@@ -1,286 +1,799 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>BW | Request Details</title>
-<meta name="_csrf" th:content="${_csrf.token}" />
-<meta name="_csrf_header" th:content="${_csrf.headerName}" />
-<link rel="stylesheet" th:href="@{/css/common.css}" />
-<link rel="stylesheet" th:href="@{/css/user/user-create.css}" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
-<body th:object="${borrowRequestDto}">
-	<div class="container">
-		<nav th:replace="~{sidebar/sidebar :: content}"></nav>
-		<main >
-			<div class="content-header">
-			    REQUESTS > REQUEST DETAILS
-			    <span th:text="*{request.status}"
-				      th:class="'status ' + *{@statusUtil.normalize(request.status)}">
-				</span>
-
-			</div>
-
-			<div class="content-body">
-				<div class="content">
-					<div class="btn-group">
-						<button th:if="*{@statusUtil.normalize(request.status) == 'pending'}"
-							data-toggle="modal"
-							data-target="#approveModal">
-			                <img th:src="@{/images/approved.png}"> APPROVE
-			            </button>
-			            <button th:if="*{@statusUtil.normalize(request.status) == 'pending'}"
-			            	data-toggle="modal"
-							data-target="#rejectModal">
-			                <img th:src="@{/images/rejected.png}"> REJECT
-			            </button>
-			            
-			            <button th:if="*{@statusUtil.normalize(request.status) == 'approved'}"
-			            	data-toggle="modal"
-							data-target="#pickUpModal">
-			                <img th:src="@{/images/location.png}"> READY FOR PICKUP
-			            </button>
-			
-			            <!-- Show ITEM RETURNED only if status is ONGOING -->
-			            <button th:if="*{@statusUtil.normalize(request.status) == 'ongoing'}"
-			            	data-toggle="modal"
-							data-target="#pickUpModal">
-			                <img th:src="@{/images/return-box.png}"> ITEM RETURNED
-			            </button>
-			            
-        			    <button th:if="*{@statusUtil.normalize(request.status) == 'completed'}"
-			            	data-toggle="modal"
-							data-target="#issuePaymentModal">
-			                <img th:src="@{/images/pending-payment.png}"> ISSUE PAYMENT
-			            </button>
-					</div>
-					<form >
-					    <input type="hidden" name="encryptedId"  />
-					
-					    <div class="field bold">
-					        <label>PERSON INFORMATION</label>
-					    </div>
-						<hr class="soft-gradient">
-					    <div class="field">
-					        <label>FIRST NAME</label>
-					        <!-- <div th:text="*{borrower.firstName}" ></div> -->
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>MIDDLE NAME</label>
-					        <!-- <div th:text="*{borrower.middleName}"></div> -->
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>FAMILY NAME</label>
-					        <!-- <div th:text="*{borrower.familyName}"></div> -->
-					    </div>
-		
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>EMAIL ADDRESS</label>
-					        <div th:text="*{borrower.emailAddress}"></div>
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>PHONE NUMBER</label>
-					        <div th:text="*{borrower.phoneNumber}"></div>
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>GENDER</label>
-					        <div th:text="*{borrower.gender}"></div>
-					    </div>
-					    <hr class="soft-gradient">
-						<br>
-					    <div class="field bold">
-					        <label>ITEM INFORMATION</label>
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>ITEM NAME</label>
-					        <div th:text="*{request.itemName}" ></div>
-					    </div>
-					    <hr class="soft-gradient">
-					
-					    <div class="field">
-					        <label>PRICE</label>
-					        <div th:text="*{request.price}"></div>
-					    </div>
-					    <hr class="soft-gradient">
-					    
-					    <div class="field">
-					        <label>NUMBER TO BORROW</label>
-					        <div th:text="*{request.qty}"></div>
-					    </div>
-					    <hr class="soft-gradient">
-					    
-					    <div class="field">
-					        <label>DATE TO BORROW</label>
-					        <div th:text="*{request.dateToBorrow}"></div>
-					    </div>
-					    <hr class="soft-gradient">
-					    
-					    <div class="field">
-					        <label>DATE TO RETURN</label>
-					        <div th:text="*{request.dateToReturn}"></div>
-					    </div>
-					</form>
-
-
-					<div class="form-btn">
-						<a class="button" th:href="@{/lender/request}"><img th:src="@{/images/left-arrow.png}"> BACK</a>
-					</div>
-				</div>			
-			</div>
-		</main>
-		<aside th:replace="~{aside/aside :: content}"></aside>
-	</div>
-	
-	<div class="modal" name="no-data" id="approveModal">
-		<div class="modal-content">
-			<div class="modal-header">
-				APPROVE REQUEST
-			</div>
-			<div class="modal-body">
-				<form id="approveForm" th:action="@{/lender/request/approve}" method="POST">
-					<input type="hidden" name="encryptedId" th:value="*{request.encryptedId}" id="encryptedId"/>
-					
-					<div class="field">
-					  <label>Item Name</label>
-					  <span class="item-name" th:text="*{request.itemName}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-					  <label>Price</label>
-					  <span class="item-price" th:text="'₱' + *{request.price}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-						<label>Date to Borrow</label>
-						<span class="date-to-borrow" th:text="*{request.dateToBorrow}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-						<label>Date to Return</label>
-						<span class="date-to-return" th:text="*{request.dateToReturn}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-						<label>Number to Borrow</label>
-						<span class="number-to-borrow" th:text="*{request.qty}"></span>
-					</div>
-				</form>	
-			</div>
-			<div class="modal-footer">
-				Once confirmed, this action cannot be undone.
-				<div>
-					<button class="cancel" name="cancel">CANCEL</button>
-					<button class="borrow-btn approve-btn" form="approveForm">APPROVE</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="modal" name="no-data" id="rejectModal">
-		<div class="modal-content">
-			<div class="modal-header">
-				REJECT REQUEST
-			</div>
-			<div class="modal-body">
-				<form id="rejectForm" th:action="@{/lender/request/reject}" method="POST">
-					<input type="hidden" name="encryptedId" th:value="*{request.encryptedId}" id="encryptedId"/>
-					
-					<div class="field">
-					  <label>Item Name</label>
-					  <span class="item-name" th:text="*{request.itemName}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-					  <label>Price</label>
-					  <span class="item-price" th:text="'₱' + *{request.price}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-						<label>Date to Borrow</label>
-						<span class="date-to-borrow" th:text="*{request.dateToBorrow}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-						<label>Date to Return</label>
-						<span class="date-to-return" th:text="*{request.dateToReturn}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-						<label>Number to Borrow</label>
-						<span class="number-to-borrow" th:text="*{request.qty}"></span>
-					</div>
-				</form>	
-			</div>
-			<div class="modal-footer">
-				Once confirmed, this action cannot be undone.
-				<div>
-					<button class="cancel" name="cancel">CANCEL</button>
-					<button class="borrow-btn reject-btn" form="rejectForm">REJECT</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="modal" name="no-data" id="pickUpModal" th:if="*{@statusUtil.normalize(request.status) == 'approved'}">
-		<div class="modal-content">
-			<div class="modal-header">
-				READY FOR PICKUP
-			</div>
-			<div class="modal-body">
-				<form id="pickUpForm" th:action="@{/lender/request/pick-up}" method="POST">
-					<input type="hidden" name="encryptedId" th:value="*{request.encryptedId}" id="encryptedId"/>
-					 <p>This will notify the borrower that the item is ready for pick up.</p>
-	                <hr class="soft-gradient">
-					<div class="field">
-					  <label>Item Name</label>
-					  <span class="item-name" th:text="*{request.itemName}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-					  <label>Price</label>
-					  <span class="item-price" th:text="'₱' + *{request.price}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-						<label>Date to Borrow</label>
-						<span class="date-to-borrow" th:text="*{request.dateToBorrow}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-						<label>Date to Return</label>
-						<span class="date-to-return" th:text="*{request.dateToReturn}"></span>
-					</div>
-					<hr class="soft-gradient">
-					<div class="field">
-						<label>Number to Borrow</label>
-						<span class="number-to-borrow" th:text="*{request.qty}"></span>
-					</div>
-				</form>	
-			</div>
-			<div class="modal-footer">
-				Once confirmed, this action cannot be undone.
-				<div>
-					<button class="cancel" name="cancel">CANCEL</button>
-					<button class="pick-up-btn" form="pickUpForm">CONFIRM</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<script th:src="@{/script/loading.js}"></script>
-	<script th:src="@{/script/submit.js}"></script>
-	<script th:src="@{/script/modal.js}"></script>
-</body>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Borrowhen | Request Details</title>
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+      <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Fira+Code:wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <link rel="stylesheet" th:href="@{/css/output.css}" />
+   </head>
+   <body>
+      <th:block th:if="${isSuccess}">
+         <div th:replace="~{alert :: success}"></div>
+      </th:block>
+      <th:block th:if="${isError}">
+         <div th:replace="~{alert :: error}"></div>
+      </th:block>
+      <div class="bg-base-200 flex min-h-screen flex-col">
+         <!-- ---------- HEADER ---------- -->
+         <div th:replace="~{header :: header-lender}"></div>
+         <main class="flex-1 relative">
+            <!-- Blue background section (stays fixed within main) -->
+            <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
+            <!-- Content that appears over the blue section -->
+            <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
+               <div class="flex flex-wrap items-center justify-between">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white">
+                        <li>
+                           <a th:href="@{/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/lender/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Borrowhen</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a th:href="@{/lender/request}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Request List</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
+                           <span>Details</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <hr class="border-t border-white opacity-80" />
+               <div class="flex justify-between items-center">
+                  <div class="flex items-center py-4 gap-3">
+                     <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
+                     </div>
+                     <div class="flex flex-col gap-0 text-white">
+                        <span class="text-lg font-bold">Request Details</span>
+                     </div>
+                  </div>
+                  <a th:href="@{/lender/request}"
+                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-500 hover:bg-indigo-700 
+                     border border-white rounded-md text-sm text-white transition">
+                  <i class="fa-solid fa-arrow-left text-white text-sm"></i>
+                  Back
+                  </a>
+               </div>
+               <div class="bg-white rounded-2xl" th:object="${borrowRequestDto}">
+                  <div class="bg-base-100 rounded-2xl p-6 shadow-md flex flex-row">
+                     <!-- FLEX CONTAINER WITH GAP -->
+                     <div class="flex flex-row gap-10 w-full">
+                        <!-- LEFT COLUMN — DETAILS -->
+                        <div class="flex-1 flex flex-col gap-6 bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
+                           <!-- Section Header -->
+                           <div class="flex justify-between items-start">
+                              <!-- Left: Title + Badge + Message -->
+                              <div class="flex flex-col">
+                                 <div class="flex items-center gap-3">
+                                    <h2 class="text-xl font-semibold text-gray-700">Request Details #1</h2>
+                                    <!-- STATUS BADGE -->
+                                    <!-- Status Badge -->
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700"
+                                       th:if="*{request.status == 'PENDING'}">
+                                    PENDING
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700"
+                                       th:if="*{request.status == 'APPROVED'}">
+                                    APPROVED
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700"
+                                       th:if="*{request.status == 'REJECTED'}">
+                                    REJECTED
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-gray-200 text-gray-700"
+                                       th:if="*{request.status == 'CANCELLED'}">
+                                    CANCELLED
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-neutral-200 text-neutral-600"
+                                       th:if="*{request.status == 'VOID'}">
+                                    VOID
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-700"
+                                       th:if="*{request.status == 'OVERDUE'}">
+                                    OVERDUE
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-indigo-100 text-indigo-700"
+                                       th:if="*{request.status == 'PICK-UP READY'}">
+                                    PICK-UP READY
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700"
+                                       th:if="*{request.status == 'ON GOING'}">
+                                    ON GOING
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-pink-100 text-pink-700"
+                                       th:if="*{request.status == 'PAYMENT PENDING'}">
+                                    PAYMENT PENDING
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-100 text-emerald-700"
+                                       th:if="*{request.status == 'PAID'}">
+                                    PAID
+                                    </span>
+                                    <!-- Default / fallback -->
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700"
+                                       th:if="*{request.status != 'PENDING' and request.status != 'APPROVED' and request.status != 'REJECTED' and request.status != 'CANCELLED' and request.status != 'VOID' and request.status != 'OVERDUE' and request.status != 'PICK-UP READY' and request.status != 'ON GOING' and request.status != 'PAYMENT PENDING' and request.status != 'PAID'}">
+                                    Unknown
+                                    </span>
+                                 </div>
+                                 <!-- Message -->
+                                 <p class="text-sm text-gray-500 -mt-1">
+                                    Here are the complete details for your borrow request.
+                                 </p>
+                              </div>
+                              <!-- Right: Cancel Button -->
+                              <div class="flex items-center gap-2">
+                                 <!-- APPROVE button: only if status is PENDING -->
+                                 <button th:if="*{@statusUtil.normalize(request.status) == 'pending'}"
+                                    data-toggle="modal"
+                                    data-target="#approveModal"
+                                    th:data-id="*{request.encryptedId}"
+                                    th:data-item-name="*{request.itemName}"
+                                    th:data-price="*{request.price}"
+                                    th:data-date-to-borrow="*{request.dateToBorrow}"
+                                    th:data-date-to-return="*{request.dateToReturn}"
+                                    th:data-number-to-borrow="*{request.qty}"
+                                    class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
+                                 <img th:src="@{/images/approved.png}" class="w-4 h-4"/>
+                                 APPROVE
+                                 </button>
+                                 <!-- REJECT button: only if status is PENDING -->
+                                 <button th:if="*{@statusUtil.normalize(request.status) == 'pending'}"
+                                    data-toggle="modal"
+                                    data-target="#rejectModal"
+                                    th:data-id="*{request.encryptedId}"
+                                    th:data-item-name="*{request.itemName}"
+                                    th:data-price="*{request.price}"
+                                    th:data-date-to-borrow="*{request.dateToBorrow}"
+                                    th:data-date-to-return="*{request.dateToReturn}"
+                                    th:data-number-to-borrow="*{request.qty}"
+                                    class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
+                                 <img th:src="@{/images/rejected.png}" class="w-4 h-4"/>
+                                 REJECT
+                                 </button>
+                                 <!-- READY FOR PICKUP button: only if status is APPROVED -->
+                                 <button th:if="*{@statusUtil.normalize(request.status) == 'approved'}"
+                                    data-toggle="modal"
+                                    data-target="#pickUpModal"
+                                    th:data-id="*{request.encryptedId}"
+                                    th:data-item-name="*{request.itemName}"
+                                    th:data-price="*{request.price}"
+                                    th:data-date-to-borrow="*{request.dateToBorrow}"
+                                    th:data-date-to-return="*{request.dateToReturn}"
+                                    th:data-number-to-borrow="*{request.qty}"
+                                    class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
+                                 <img th:src="@{/images/location.png}" class="w-4 h-4"/>
+                                 READY FOR PICKUP
+                                 </button>
+                                 <!-- ITEM RETURNED button: only if status is ONGOING -->
+                                 <button th:if="*{@statusUtil.normalize(request.status) == 'ongoing'}"
+                                    data-toggle="modal"
+                                    data-target="#pickUpModal"
+                                    th:data-id="*{request.encryptedId}"
+                                    th:data-item-name="*{request.itemName}"
+                                    th:data-price="*{request.price}"
+                                    th:data-date-to-borrow="*{request.dateToBorrow}"
+                                    th:data-date-to-return="*{request.dateToReturn}"
+                                    th:data-number-to-borrow="*{request.qty}"
+                                    class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
+                                 <img th:src="@{/images/return-box.png}" class="w-4 h-4"/>
+                                 ITEM RETURNED
+                                 </button>
+                                 <!-- ISSUE PAYMENT button: only if status is COMPLETED -->
+                                 <button th:if="*{@statusUtil.normalize(request.status) == 'completed'}"
+                                    data-toggle="modal"
+                                    data-target="#issuePaymentModal"
+                                    th:data-id="*{request.encryptedId}"
+                                    th:data-item-name="*{request.itemName}"
+                                    th:data-price="*{request.price}"
+                                    th:data-date-to-borrow="*{request.dateToBorrow}"
+                                    th:data-date-to-return="*{request.dateToReturn}"
+                                    th:data-number-to-borrow="*{request.qty}"
+                                    class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
+                                 <img th:src="@{/images/pending-payment.png}" class="w-4 h-4"/>
+                                 ISSUE PAYMENT
+                                 </button>
+                              </div>
+                           </div>
+                           <!-- Rating & Feedback Card -->
+                           <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100 flex flex-col gap-1"
+                              th:if="*{request.status == 'PAID'} and *{request.rating} != 0">
+                              <h3 class="text-lg font-semibold text-gray-500">Rating & Feedback</h3>
+                              <div th:with="rating=*{request.rating}" class="flex items-center gap-1 mb-2">
+                                 <span th:each="i : ${#numbers.sequence(1,5)}">
+                                 <i class="fa-solid fa-star text-sm"
+                                    th:classappend="${i <= rating} ? ' text-yellow-400' : ' text-gray-300'"></i>
+                                 </span>
+                              </div>
+                              <p class="text-gray-600 text-sm" 
+                                 th:text="*{request.feedback} != null ? *{request.feedback} : 'No feedback yet.'">
+                              </p>
+                           </div>
+                           <!-- Details Card -->
+                           <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100 flex flex-col gap-3">
+                              <!-- Borrower Name -->
+                              <div class="flex justify-between items-center pb-2">
+                                 <span class="text-gray-600 text-sm font-medium">Borrower's Name</span>
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-64 text-center"
+                                    th:text="*{borrower.fullName}">
+                                 -
+                                 </span>
+                              </div>
+                              <hr class="border-gray-100" />
+                              <!-- Borrower Email Address -->
+                              <div class="flex justify-between items-center pb-2">
+                                 <span class="text-gray-600 text-sm font-medium">Borrower's Email Address</span>
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-64 break-words whitespace-normal"
+                                    th:text="*{borrower.emailAddress}">
+                                 -
+                                 </span>
+                              </div>
+                              <hr class="border-gray-100" />
+                              <!-- Borrower Name -->
+                              <div class="flex justify-between items-center pb-2">
+                                 <span class="text-gray-600 text-sm font-medium">Borrower's Phone Number</span>
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-64 text-center"
+                                    th:text="*{borrower.phoneNumber == null OR borrower.phoneNumber == '' ? '-' : borrower.phoneNumber}">
+                                 -
+                                 </span>
+                              </div>
+                              <hr class="border-gray-100" />
+                              <!-- Item Name -->
+                              <div class="flex justify-between items-center pb-2">
+                                 <span class="text-gray-600 text-sm font-medium">Item Name</span>
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-64 text-center"
+                                    th:text="*{request.itemName}">
+                                 -
+                                 </span>
+                              </div>
+                              <hr class="border-gray-100" />
+                              <!-- Quantity -->
+                              <div class="flex justify-between items-center pb-2">
+                                 <span class="text-gray-600 text-sm font-medium">Quantity</span>
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-64 text-center"
+                                    th:text="|*{request.qty} pcs|">
+                                 -
+                                 </span>
+                              </div>
+                              <hr class="border-gray-100" />
+                              <!-- Price -->
+                              <div class="flex justify-between items-center pb-2">
+                                 <span class="text-gray-600 text-sm font-medium">Price</span>
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-64 text-center"
+                                    th:text="|₱*{request.price}|">
+                                 -
+                                 </span>
+                              </div>
+                              <hr class="border-gray-100" />
+                              <!-- Date to Borrow -->
+                              <div class="flex justify-between items-center pb-2">
+                                 <span class="text-gray-600 text-sm font-medium">Date to Borrow</span>
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-64 text-center"
+                                    th:text="|*{request.dateToBorrow}|">
+                                 -
+                                 </span>
+                              </div>
+                              <hr class="border-gray-100" />
+                              <!-- Date to Return -->
+                              <div class="flex justify-between items-center pb-2">
+                                 <span class="text-gray-600 text-sm font-medium">Date to Return</span>
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-64 text-center"
+                                    th:text="|*{request.dateToReturn}|">
+                                 -
+                                 </span>
+                              </div>
+                              <hr class="border-gray-100" />
+                              <!-- Total Amount -->
+                              <div class="flex justify-between items-center pb-2">
+                                 <span class="text-gray-600 text-sm font-medium">Total Amount</span>
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-64 text-center"
+                                    th:text="|₱*{request.qty * request.price}|">
+                                 -
+                                 </span>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- RIGHT COLUMN — ACTIVITY TIMELINE -->
+                        <div class="flex-1 bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
+                           <h2 class="text-xl font-semibold text-gray-700 mb-4">Request Activity</h2>
+                           <div class="vertical-progress">
+                              <div th:each="step, iterStat : ${steps}">
+                                 <div class="v-step" th:classappend="${iterStat.index} <= ${currentStepIndex} ? ' active'">
+                                    <div class="v-dot"></div>
+                                    <div class="flex flex-col">
+                                       <span class="font-medium" th:text="${step}"></span>
+                                       <span class="text-xs text-gray-400" th:switch="${step}">
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PENDING}">Your request has been submitted and is waiting for review.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).APPROVED}">The lender has reviewed your request and responded.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).REJECTED}">Your request has been rejected.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PICK_UP_READY}">Your item is now ready to be picked up.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).ITEM_RECEIVED}">You have received the item from the lender.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).ON_GOING}">You are currently using the borrowed item.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).COMPLETED}">Item has been returned. The process is complete.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PAYMENT_PENDING}">Please settle your payment to finish the transaction.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PAID}">Payment received. Thank you!</span>
+                                       </span>
+                                    </div>
+                                 </div>
+                                 <div class="v-line" th:if="${!iterStat.last}"></div>
+                              </div>
+                           </div>
+                           <!-- View Receipt Button: only show if status is PAID -->
+                           <div class="mt-4 flex items-center justify-center" th:if="*{request.status == 'PAID'}">
+                              <button
+                                 class="h-8 px-4 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 transition"
+                                 >
+                              View Receipt
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <footer th:replace="~{footer :: footer}"></footer>
+            </div>
+         </main>
+      </div>
+      <!-- Approve Modal -->
+      <div id="approveModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+         <!-- Modal -->
+         <div class="bg-gradient-to-br from-white via-blue-50 to-blue-100 border border-blue-200 shadow-2xl rounded-2xl w-full max-w-2xl overflow-hidden animate-fade-in-up">
+            <!-- Header -->
+            <div class="bg-blue-500 py-3 text-center text-white font-semibold text-lg tracking-wide shadow-sm">
+               APPROVE REQUEST
+            </div>
+            <!-- Body -->
+            <div class="px-8 py-6">
+               <!-- Icon / Preview -->
+               <div class="flex justify-center mb-6">
+                  <div class="w-24 h-24 bg-white border border-blue-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+                     <img src="/images/approved.png" alt="Approve Icon" class="object-contain w-12 h-12" />
+                  </div>
+               </div>
+               <p class="text-gray-600 text-sm mb-5 text-center">
+                  Please review the request details carefully before approving. Once confirmed, this action cannot be undone.
+               </p>
+               <!-- Form -->
+               <form id="approveForm" th:action="@{/lender/request/approve}" method="POST" class="space-y-4">
+                  <input type="hidden" name="encryptedId" id="encryptedId" />
+                  <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                     <!-- Item Name -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Item Name</label>
+                        <span class="item-name text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        Hammer
+                        </span>
+                     </div>
+                     <!-- Price -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Price</label>
+                        <span class="item-price text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        ₱100
+                        </span>
+                     </div>
+                     <!-- Date to Borrow -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Date to Borrow</label>
+                        <span class="date-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2025-10-01
+                        </span>
+                     </div>
+                     <!-- Date to Return -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Date to Return</label>
+                        <span class="date-to-return text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2025-10-05
+                        </span>
+                     </div>
+                     <!-- Number to Borrow -->
+                     <div class="flex justify-between items-center col-span-2">
+                        <label class="text-gray-700 text-sm font-medium">Number to Borrow</label>
+                        <span class="number-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2
+                        </span>
+                     </div>
+                  </div>
+               </form>
+               <p class="text-gray-500 text-xs text-center mt-6">
+                  Approval confirms that you agree to lend this item under the stated conditions.
+               </p>
+            </div>
+            <!-- Footer -->
+            <div class="bg-blue-50 flex justify-end gap-3 px-8 py-4 border-t border-blue-200">
+               <button
+                  name="cancel"
+                  class="h-8 px-2 py-1 text-xs text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                  >
+               CANCEL
+               </button>
+               <button
+                  form="approveForm"
+                  class="h-8 px-2 py-1 text-xs text-white bg-blue-500 rounded-md hover:bg-blue-600 transition"
+                  >
+               APPROVE
+               </button>
+            </div>
+         </div>
+      </div>
+      <!-- Reject Modal -->
+      <div id="rejectModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+         <!-- Modal -->
+         <div class="bg-white border border-gray-200 shadow-2xl rounded-2xl w-full max-w-2xl overflow-hidden animate-fade-in-up">
+            <!-- Header -->
+            <div class="bg-blue-500 py-3 text-center text-white font-semibold text-lg tracking-wide shadow-sm">
+               REJECT REQUEST
+            </div>
+            <!-- Body -->
+            <div class="px-8 py-6">
+               <!-- Preview Image -->
+               <div class="flex justify-center mb-6">
+                  <div class="w-32 h-32 bg-white border border-gray-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+                     <img th:src="@{/images/rejected.png}" alt="Item Preview" class="object-contain w-12 h-12" />
+                  </div>
+               </div>
+               <!-- Instruction -->
+               <p class="text-gray-600 text-sm mb-5 text-center">
+                  Please review all details below before rejecting this request. This action cannot be undone.
+               </p>
+               <!-- Form -->
+               <form id="rejectForm" th:action="@{/lender/request/reject}" method="POST" class="space-y-3">
+                  <input type="hidden" name="encryptedId" id="encryptedId" />
+                  <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                     <!-- Item Name -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Item Name</label>
+                        <span class="item-name text-sm text-gray-800 bg-white border border-gray-200 rounded-md px-3 py-1 w-40 text-center">
+                        Hammer
+                        </span>
+                     </div>
+                     <!-- Price -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Price</label>
+                        <span class="item-price text-sm text-gray-800 bg-white border border-gray-200 rounded-md px-3 py-1 w-40 text-center">
+                        ₱100
+                        </span>
+                     </div>
+                     <!-- Date to Borrow -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Date to Borrow</label>
+                        <span class="date-to-borrow text-sm text-gray-800 bg-white border border-gray-200 rounded-md px-3 py-1 w-40 text-center">
+                        2025-10-01
+                        </span>
+                     </div>
+                     <!-- Date to Return -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Date to Return</label>
+                        <span class="date-to-return text-sm text-gray-800 bg-white border border-gray-200 rounded-md px-3 py-1 w-40 text-center">
+                        2025-10-05
+                        </span>
+                     </div>
+                     <!-- Number to Borrow -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Number to Borrow</label>
+                        <span class="number-to-borrow text-sm text-gray-800 bg-white border border-gray-200 rounded-md px-3 py-1 w-40 text-center">
+                        2
+                        </span>
+                     </div>
+                  </div>
+               </form>
+               <p class="text-gray-500 text-xs text-center mt-6">
+                  Once confirmed, the request will be permanently rejected.
+               </p>
+            </div>
+            <!-- Footer -->
+            <div class="bg-gray-50 flex justify-end gap-3 px-8 py-4 border-t border-gray-200">
+               <button
+                  name="cancel"
+                  class="h-8 px-2 py-1 text-xs text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                  >
+               CANCEL
+               </button>
+               <button
+                  form="rejectForm"
+                  class="h-8 px-2 py-1 text-xs text-white bg-blue-500 rounded-md hover:bg-red-600 transition"
+                  >
+               REJECT
+               </button>
+            </div>
+         </div>
+      </div>
+      <div id="pickUpModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+         <!-- Modal -->
+         <div class="bg-gradient-to-br from-white via-blue-50 to-blue-100 border border-blue-200 shadow-2xl rounded-2xl w-full max-w-2xl overflow-hidden animate-fade-in-up">
+            <!-- Header -->
+            <div class="bg-blue-500 py-3 text-center text-white font-semibold text-lg tracking-wide shadow-sm">
+               READY FOR PICKUP
+            </div>
+            <!-- Body -->
+            <div class="px-8 py-6">
+               <!-- Preview Image -->
+               <div class="flex justify-center mb-6">
+                  <div class="w-32 h-32 bg-white border border-blue-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+                     <img
+                        th:src="@{/images/location.png}"
+                        alt="Item Preview"
+                        class="object-contain w-12 h-12"
+                        />
+                  </div>
+               </div>
+               <p class="text-gray-600 text-sm mb-5 text-center">
+                  This will notify the borrower that the item is ready for pick up.
+               </p>
+               <!-- Form -->
+               <form id="pickUpForm" th:action="@{/lender/request/pick-up}" method="POST" class="space-y-3">
+                  <input type="hidden" name="encryptedId" id="encryptedId" />
+                  <!-- Two-column grid -->
+                  <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                     <!-- Item Name -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Item Name</label>
+                        <span class="item-name text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        Hammer
+                        </span>
+                     </div>
+                     <!-- Price -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Price</label>
+                        <span class="item-price text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        ₱100
+                        </span>
+                     </div>
+                     <!-- Date to Borrow -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Date to Borrow</label>
+                        <span class="date-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2025-10-01
+                        </span>
+                     </div>
+                     <!-- Date to Return -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Date to Return</label>
+                        <span class="date-to-return text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2025-10-05
+                        </span>
+                     </div>
+                     <!-- Number to Borrow -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Number to Borrow</label>
+                        <span class="number-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2
+                        </span>
+                     </div>
+                  </div>
+               </form>
+               <p class="text-gray-500 text-xs text-center mt-6">
+                  Once confirmed, this action cannot be undone.
+               </p>
+            </div>
+            <!-- Footer -->
+            <div class="bg-blue-50 flex justify-end gap-3 px-8 py-4 border-t border-blue-200">
+               <button
+                  name="cancel"
+                  class="h-8 px-2 py-1 text-xs text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition">
+               CANCEL
+               </button>
+               <button
+                  form="pickUpForm"
+                  class="h-8 px-2 py-1 text-xs text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
+               CONFIRM
+               </button>
+            </div>
+         </div>
+      </div>
+      <div id="confirmModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+         <!-- Modal -->
+         <div class="bg-gradient-to-br from-white via-blue-50 to-blue-100 border border-blue-200 shadow-2xl rounded-2xl w-full max-w-2xl overflow-hidden animate-fade-in-up">
+            <!-- Header -->
+            <div class="bg-blue-500 py-3 text-center text-white font-semibold text-lg tracking-wide shadow-sm">
+               ITEM RETURNED
+            </div>
+            <!-- Body -->
+            <div class="px-8 py-6">
+               <!-- Preview Image -->
+               <div class="flex justify-center mb-6">
+                  <div class="w-32 h-32 bg-white border border-blue-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+                     <img
+                        th:src="@{/images/logo.png}"
+                        alt="Item Preview"
+                        class="object-contain w-full h-full"
+                        />
+                  </div>
+               </div>
+               <p class="text-gray-600 text-sm mb-5 text-center">
+                  Have you received the item back from the borrower? Confirm below to update the request status.
+               </p>
+               <!-- Form -->
+               <form id="confirmForm" th:action="@{/lender/request/item-returned}" method="POST" class="space-y-3">
+                  <input type="hidden" name="encryptedId" id="encryptedId" />
+                  <!-- Two-column grid -->
+                  <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                     <!-- Item Name -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Item Name</label>
+                        <span class="item-name text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        Hammer
+                        </span>
+                     </div>
+                     <!-- Price -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Price</label>
+                        <span class="item-price text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        ₱100
+                        </span>
+                     </div>
+                     <!-- Date to Borrow -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Date to Borrow</label>
+                        <span class="date-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2025-10-01
+                        </span>
+                     </div>
+                     <!-- Date to Return -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Date to Return</label>
+                        <span class="date-to-return text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2025-10-05
+                        </span>
+                     </div>
+                     <!-- Number to Borrow -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Number to Borrow</label>
+                        <span class="number-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2
+                        </span>
+                     </div>
+                  </div>
+               </form>
+               <p class="text-gray-500 text-xs text-center mt-6">
+                  Once confirmed, this action cannot be undone.
+               </p>
+            </div>
+            <!-- Footer -->
+            <div class="bg-blue-50 flex justify-end gap-3 px-8 py-4 border-t border-blue-200">
+               <button
+                  name="cancel"
+                  class="h-8 px-2 py-1 text-xs text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition">
+               CANCEL
+               </button>
+               <button
+                  form="confirmForm"
+                  class="h-8 px-2 py-1 text-xs text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
+               CONFIRM
+               </button>
+            </div>
+         </div>
+      </div>
+      <div id="issuePaymentModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+         <!-- Modal -->
+         <div class="bg-gradient-to-br from-white via-blue-50 to-blue-100 border border-blue-200 shadow-2xl rounded-2xl w-full max-w-2xl overflow-hidden animate-fade-in-up">
+            <!-- Header -->
+            <div class="bg-blue-500 py-3 text-center text-white font-semibold text-lg tracking-wide shadow-sm">
+               ISSUE PAYMENT
+            </div>
+            <!-- Body -->
+            <div class="px-8 py-6">
+               <!-- Image preview -->
+               <div class="flex justify-center mb-6">
+                  <div class="w-32 h-32 bg-white border border-blue-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+                     <img
+                        th:src="@{/images/credit-cards.png}"
+                        alt="Item Preview"
+                        class="object-contain w-12 h-12"
+                        />
+                  </div>
+               </div>
+               <p class="text-gray-600 text-sm mb-5 text-center">
+                  You are about to issue payment to the borrower.
+               </p>
+               <!-- Form -->
+               <form id="issuePaymentForm" th:action="@{/lender/request/issue-payment}" method="POST" class="space-y-3">
+                  <input type="hidden" name="encryptedId" id="encryptedId" />
+                  <!-- Two-column grid -->
+                  <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                     <!-- Item Name -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Item Name</label>
+                        <span class="item-name text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        Hammer
+                        </span>
+                     </div>
+                     <!-- Amount -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Amount</label>
+                        <span class="item-price text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        ₱100
+                        </span>
+                     </div>
+                     <!-- Borrow Date -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Borrow Date</label>
+                        <span class="date-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2025-09-16
+                        </span>
+                     </div>
+                     <!-- Return Date -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Return Date</label>
+                        <span class="date-to-return text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        2025-09-20
+                        </span>
+                     </div>
+                     <!-- Quantity -->
+                     <div class="flex justify-between items-center">
+                        <label class="text-gray-700 text-sm font-medium">Quantity</label>
+                        <span class="number-to-borrow text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+                        1
+                        </span>
+                     </div>
+                  </div>
+               </form>
+               <p class="text-gray-500 text-xs text-center mt-6">
+                  Once confirmed, this action cannot be undone.
+               </p>
+            </div>
+            <!-- Footer -->
+            <div class="bg-blue-50 flex justify-end gap-3 px-8 py-4 border-t border-blue-200">
+               <button
+                  name="cancel"
+                  class="h-8 px-2 py-1 text-xs text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition">
+               CANCEL
+               </button>
+               <button
+                  form="issuePaymentForm"
+                  class="h-8 px-2 py-1 text-xs text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
+               CONFIRM
+               </button>
+            </div>
+         </div>
+      </div>
+      <script th:inline="javascript">
+         console.log(/*[[${borrowRequestDto}]]*/'');
+      </script>
+      <script th:src="@{/script/modal.js}"></script>
+      <script th:src="@{/script/loading.js}"></script>
+   </body>
 </html>

@@ -166,31 +166,38 @@
                                  </p>
                               </div>
                               <!-- Right: Cancel Button -->
-                              <div class="flex items-center gap-2">
-							    <!-- Cancel Request button: only for PENDING -->
-							    <button 
-							        id="cancelBtn" 
-							        class="h-8 px-3 py-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition"
-							        th:if="*{request.status == 'PENDING'}"
-							        data-toggle="modal"
-							        data-target="#cancelModal"
-							        th:data-id="*{request.encryptedId}"
-							        th:data-item-name="*{request.itemName}"
-							        th:data-price="*{request.price}"
-							        th:data-date-to-borrow="*{request.dateToBorrow}"
-							        th:data-date-to-return="*{request.dateToReturn}"
-							        th:data-number-to-borrow="*{request.qty}">
-							        Cancel Request
-							    </button>
-							
-							    <!-- Mark as Received button: only for PICK-UP READY -->
-							    <button
-							        id="markReceivedBtn"
-							        class="h-8 px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 transition"
-							        th:if="*{request.status == 'PICK-UP READY'}">
-							        Mark as Received
-							    </button>
-							</div>
+                           <div class="flex items-center gap-2">
+						    <!-- Cancel Request button: only for PENDING -->
+						    <button th:if="*{request.status == 'PENDING'}"
+						            data-toggle="modal"
+						            data-target="#cancelModal"
+						            th:data-id="*{request.encryptedId}"
+						            th:data-item-name="*{request.itemName}"
+						            th:data-price="*{request.price}"
+						            th:data-date-to-borrow="*{request.dateToBorrow}"
+						            th:data-date-to-return="*{request.dateToReturn}"
+						            th:data-number-to-borrow="*{request.qty}"
+						            class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
+						        <img th:src="@{/images/cancelled.png}" class="w-4 h-4"/>
+						        Cancel Request
+						    </button>
+						
+						    <!-- Mark as Received button: only for PICK-UP READY -->
+						    <button th:if="*{request.status == 'PICK-UP READY'}"
+						            data-toggle="modal"
+						            data-target="#markReceivedModal"
+						            th:data-id="*{request.encryptedId}"
+						            th:data-item-name="*{request.itemName}"
+						            th:data-price="*{request.price}"
+						            th:data-date-to-borrow="*{request.dateToBorrow}"
+						            th:data-date-to-return="*{request.dateToReturn}"
+						            th:data-number-to-borrow="*{request.qty}"
+						            class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
+						        <img th:src="@{/images/received.png}" class="w-4 h-4"/>
+						        Mark as Received
+						    </button>
+						</div>
+
 
                            </div>
                            <!-- Details Card -->

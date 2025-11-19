@@ -447,6 +447,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
         obj.setDateToBorrow(request.getDateToBorrow());
         obj.setDateToReturn(request.getDateToReturn());
         obj.setStatus(request.getStatus());	     
+        obj.setFeedback(request.getFeedback());
+        obj.setRating(request.getRating() == null ? '0' : request.getRating());
         
         UserObj borrowerObj = new UserObj();
         

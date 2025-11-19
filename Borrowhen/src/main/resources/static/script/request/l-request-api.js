@@ -337,6 +337,18 @@ async function loadRequests(page = 0, search = "") {
 					</td>
 					<td class="py-2 px-2 text-sm text-gray-500">
 					  <div class="inline-flex items-center gap-2">
+					  
+					  <div class="tooltip-wrapper">
+    			        <a
+    			          href="/lender/request/details?encryptedId=${request.encryptedId}"
+    			          class="view-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
+    			          data-id="${request.encryptedId}"
+    			          aria-label="View"
+    			        >
+    			          <img src="/images/view.png" alt="View" class="h-3 w-3" />
+    			        </a>
+    			        <span class="tooltip-text">View Item</span>
+    			      </div>
 					    ${actionButtons}
 					  </div>
 					</td>
