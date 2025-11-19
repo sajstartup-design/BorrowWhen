@@ -54,7 +54,7 @@ function updateBtnsModal() {
 					}
 
 					if (
-						["approveModal", "rejectModal", "confirmModal", "pickUpModal", "issuePaymentModal", "cancelModal"].includes(modal.id)
+						["approveModal", "rejectModal", "confirmModal", "receiveModal", "returnModal", "pickUpModal", "issuePaymentModal", "cancelModal"].includes(modal.id)
 					) {
 						modal.querySelector("input[name='encryptedId']").value = btn.dataset.id;
 						modal.querySelector(".item-name").textContent = btn.dataset.itemName;

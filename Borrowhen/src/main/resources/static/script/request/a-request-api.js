@@ -168,6 +168,43 @@ const buttons = {
 	      <span class="tooltip-text">Mark as Ready for Pick-Up</span>
 	    </div>
 	  `,
+	  cancel: (request) => `
+	      <div class="tooltip-wrapper">
+	        <a
+	          href="#"
+	          class="delete-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-red-100 hover:bg-red-200 transition shadow-sm"
+	          data-toggle="modal"
+	          data-target="#cancelModal"
+	          data-id="${request.encryptedId}"
+	          data-item-name="${request.itemName}"
+	          data-price="${request.price}"
+	          data-date-to-borrow="${request.dateToBorrow}"
+	          data-date-to-return="${request.dateToReturn}"
+	          data-number-to-borrow="${request.qty}">
+	          <img src="/images/cancelled.png" alt="Cancel" class="h-4 w-4" />
+	        </a>
+	        <span class="tooltip-text">Cancel Request</span>
+	      </div>
+	    `,
+
+	      received: (request) => `
+	      <div class="tooltip-wrapper">
+	        <a
+	          href="#"
+	          class="received-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-green-100 hover:bg-green-200 transition shadow-sm"
+	          data-toggle="modal"
+	          data-target="#receiveModal"
+	          data-id="${request.encryptedId}"
+	          data-item-name="${request.itemName}"
+	          data-price="${request.price}"
+	          data-date-to-borrow="${request.dateToBorrow}"
+	          data-date-to-return="${request.dateToReturn}"
+	          data-number-to-borrow="${request.qty}">
+	          <img src="/images/received-icon.png" alt="Received" class="h-4 w-4" />
+	        </a>
+	        <span class="tooltip-text">Mark as Received</span>
+	      </div>
+	    `,
 
     fake: (icon) => `
 	<div class="tooltip-wrapper cursor-not-allowed">
@@ -278,37 +315,56 @@ async function loadRequests(page = 0, search = "") {
                 let actionButtons = "";
                 if (status === "pending") {
                     actionButtons =
+						buttons.cancel(request) +
                         buttons.approve(request) +
                         buttons.reject(request) +
                         buttons.fake("location") +
+						buttons.fake("received-icon") +
                         buttons.fake("return-box") +
                         buttons.fake("credit-cards");
                 } else if (status === "approved") {
                     actionButtons =
+						buttons.fake("cancelled") +
                         buttons.fake("approved") +
                         buttons.fake("rejected") +
                         buttons.pickUpBtn(request) +
+						buttons.fake("received-icon") +
+                        buttons.fake("return-box") +
+                        buttons.fake("credit-cards");
+				}else if (status === "pick-upready") {
+                    actionButtons =
+						buttons.fake("cancelled") +
+                        buttons.fake("approved") +
+                        buttons.fake("rejected") +
+						buttons.fake("location") +
+                        buttons.received(request) +
                         buttons.fake("return-box") +
                         buttons.fake("credit-cards");
                 } else if (status === "ongoing") {
                     actionButtons =
+						buttons.fake("cancelled") +
                         buttons.fake("approved") +
                         buttons.fake("rejected") +
                         buttons.fake("location") +
+						buttons.fake("received-icon") +
                         buttons.returnBtn(request) +
                         buttons.fake("credit-cards");
                 } else if (status === "completed") {
                     actionButtons =
+						buttons.fake("cancelled") +
                         buttons.fake("approved") +
                         buttons.fake("rejected") +
                         buttons.fake("location") +
+						buttons.fake("received-icon") +
                         buttons.fake("return-box") +
                         buttons.payBtn(request);
                 } else {
                     actionButtons =
+						buttons.fake("cancelled") +
                         buttons.fake("approved") +
                         buttons.fake("rejected") +
                         buttons.fake("location") +
+						buttons.fake("received-icon") +
                         buttons.fake("return-box") +
                         buttons.fake("credit-cards");
                 }
@@ -354,15 +410,20 @@ async function loadRequests(page = 0, search = "") {
 					  </span>
 					</td>
 					<td class="py-2 px-2 text-sm flex items-center gap-2 text-gray-500 whitespace-nowrap">
+					<div class="tooltip-wrapper">
+    			        <a
+    			          href="/admin/request/details?encryptedId=${request.encryptedId}"
+    			          class="view-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
+    			          data-id="${request.encryptedId}"
+    			          aria-label="View"
+    			        >
+    			          <img src="/images/view.png" alt="View" class="h-3 w-3" />
+    			        </a>
+    			        <span class="tooltip-text">View Item</span>
+    			      </div>
 					  ${actionButtons}
 					</td>`;
 
-                // ✅ Click listener (ignore buttons)
-                row.addEventListener("click", function(e) {
-                    if (e.target.closest("button") || e.target.closest("a")) return;
-                    const encryptedId = this.getAttribute("data-id");
-                    window.location.href = "/lender/request/details?encryptedId=" + encryptedId;
-                });
 
                 fragment.appendChild(row);
             });

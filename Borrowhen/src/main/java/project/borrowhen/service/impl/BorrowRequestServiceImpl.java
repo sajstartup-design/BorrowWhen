@@ -248,12 +248,18 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(request.getUserId());
+	    
+	    UserEntity user = userService.getLoggedInUser();
+	    String approvedBy = CommonConstant.ROLE_ADMIN.equals(user.getRole())
+	            ? "the admin" 
+	            : "the lender";
 
 	    String message = String.format(
-	        "Your borrow request for '%s' from %s to %s has been rejected by the lender.",
+	        "Your borrow request for '%s' from %s to %s has been rejected by %s.",
 	        request.getItemName(),
 	        request.getDateToBorrow(),
-	        request.getDateToReturn()
+	        request.getDateToReturn(),
+	        approvedBy
 	    );
 
 	    notification.setMessage(message);
@@ -396,14 +402,27 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(lender.getId());
+	    
+	    UserEntity user = userService.getLoggedInUser();
 
-	    String message = String.format(
-	        "%s has marked the borrow request for '%s' from %s to %s as RECEIVED.",
-	        borrower.getFullName(),
-	        request.getItemName(),
-	        request.getDateToBorrow(),
-	        request.getDateToReturn()
-	    );
+	    String message;
+	    if (CommonConstant.ROLE_ADMIN.equals(user.getRole())) {
+	        message = String.format(
+	            "ADMIN marked the borrow request for '%s' from %s to %s as RECEIVED on behalf of %s.",
+	            request.getItemName(),
+	            request.getDateToBorrow(),
+	            request.getDateToReturn(),
+	            borrower.getFullName()
+	        );
+	    } else {
+	        message = String.format(
+	            "%s has marked the borrow request for '%s' from %s to %s as RECEIVED.",
+	            borrower.getFullName(),
+	            request.getItemName(),
+	            request.getDateToBorrow(),
+	            request.getDateToReturn()
+	        );
+	    }
 
 	    notification.setMessage(message);
 	    notification.setIsRead(false);
@@ -436,7 +455,10 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    BorrowRequestEntity request = borrowRequestDao.getBorrowRequest(id);
 	    
+	    InventoryEntity inventory = inventoryService.getInventory(request.getInventoryId());
+	    
 	    UserEntity borrower = userService.getUser(request.getUserId());
+	    UserEntity lender = userService.getUser(inventory.getUserId());
 	    
 	    BorrowRequestObj obj = new BorrowRequestObj();
         
@@ -456,9 +478,16 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
         borrowerObj.setEmailAddress(borrower.getEmailAddress());
         borrowerObj.setPhoneNumber(borrower.getPhoneNumber());
         borrowerObj.setGender(borrower.getGender());       
-	           
+        
+        UserObj lenderObj = new UserObj();
+        lenderObj.setFullName(lender.getFullName());
+        lenderObj.setEmailAddress(lender.getEmailAddress());
+        lender.setPhoneNumber(lender.getPhoneNumber());
+        lender.setGender(lender.getGender());
+        
         outDto.setRequest(obj);
-        outDto.setBorrower(borrowerObj);       
+        outDto.setBorrower(borrowerObj);   
+        outDto.setLender(lenderObj);
 	
 	    return outDto;
 	    
@@ -545,12 +574,25 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(borrower.getId());
 
-	    String message = String.format(
-    	    "Your borrow request for '%s' from %s to %s is now ready for pick-up.",
-    	    request.getItemName(),
-    	    request.getDateToBorrow(),
-    	    request.getDateToReturn()
-    	);
+	    UserEntity user = userService.getLoggedInUser();
+	    String message;
+
+	    if (CommonConstant.ROLE_ADMIN.equals(user.getRole())) {
+	        message = String.format(
+	            "ADMIN has marked the borrow request for '%s' from %s to %s as ready for pick-up on behalf of the lender.",
+	            request.getItemName(),
+	            request.getDateToBorrow(),
+	            request.getDateToReturn()
+	        );
+	    } else {
+	        message = String.format(
+	            "Your borrow request for '%s' from %s to %s is now ready for pick-up.",
+	            request.getItemName(),
+	            request.getDateToBorrow(),
+	            request.getDateToReturn()
+	        );
+	    }
+
 
 
 	    notification.setMessage(message);
@@ -593,11 +635,22 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(borrower.getId());
 
-	    String message = String.format(
-    	    "Please complete the payment for the item '%s'. <a href=\"/payment?encryptedId=%s\">Click here to continue</a>.",
-    	    request.getItemName(),
-    	    inDto.getEncryptedId()
-    	);
+	    UserEntity user = userService.getLoggedInUser();
+	    String message;
+
+	    if (CommonConstant.ROLE_ADMIN.equals(user.getRole())) {
+	        message = String.format(
+	            "ADMIN has marked the borrow request for '%s' as PAYMENT PENDING on behalf of the lender. <a href=\"/payment?encryptedId=%s\">Click here to continue</a>.",
+	            request.getItemName(),
+	            inDto.getEncryptedId()
+	        );
+	    } else {
+	        message = String.format(
+	            "Please complete the payment for the item '%s'. <a href=\"/payment?encryptedId=%s\">Click here to continue</a>.",
+	            request.getItemName(),
+	            inDto.getEncryptedId()
+	        );
+	    }
 
 
 	    notification.setMessage(message);
@@ -692,13 +745,27 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(lender.getId());
 	    
-	    String message = String.format(
+	    UserEntity user = userService.getLoggedInUser();
+
+	    String message;
+	    if (CommonConstant.ROLE_ADMIN.equals(user.getRole())) {
+	        message = String.format(
+	            "ADMIN has cancelled the borrow request for '%s' from %s to %s on behalf of %s.",
+	            request.getItemName(),
+	            request.getDateToBorrow(),
+	            request.getDateToReturn(),
+	            borrower.getFullName()
+	        );
+	    } else {
+	        message = String.format(
 	            "The borrower '%s' has cancelled their request for your item '%s' scheduled from %s to %s.",
-	    	    borrower.getFullName(),
+	            borrower.getFullName(),
 	            request.getItemName(),
 	            request.getDateToBorrow(),
 	            request.getDateToReturn()
-	    );
+	        );
+	    }
+
 	    
 	    notification.setMessage(message);
 	    notification.setIsRead(false);

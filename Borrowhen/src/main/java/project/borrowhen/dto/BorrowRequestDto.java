@@ -25,6 +25,8 @@ public class BorrowRequestDto {
 	
 	private UserObj borrower;
 	
+	private UserObj lender;
+	
 	private List<BorrowRequestObj> requests;
 	
 	private PaginationObj pagination;
