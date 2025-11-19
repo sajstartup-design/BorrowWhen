@@ -25,7 +25,22 @@ public class A_RequestController {
 	private BorrowRequestService borrowRequestService;
 
 	@GetMapping()
-	public String showRequestViewScreen() {
+	public String showRequestViewScreen(Model model,
+			RedirectAttributes ra) {
+		
+		try {
+			
+			BorrowRequestDto outDto = borrowRequestService.getAdminBorrowRequestOverview();
+			
+			model.addAttribute("borrowRequestDto", outDto);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			ra.addFlashAttribute("isError", true);
+	        ra.addFlashAttribute("errorMsg", MessageConstant.SOMETHING_WENT_WRONG);
+	        
+	        return "redirect:/admin/dashboard";
+		}
 		
 		return "request/admin/request";
 	}

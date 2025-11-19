@@ -214,6 +214,23 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	@Query(value = GET_LENDER_BORROWER_REQUEST_OVERVIEW)
 	public BorrowRequestOverview getLenderBorrowerRequestOverview(@Param("userId") int userId) throws DataAccessException;
 	
+	public final String GET_ADMIN_BORROWER_REQUEST_OVERVIEW = """
+		    SELECT 
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PENDING' THEN 1 ELSE 0 END) AS integer), 0) AS totalPending,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'APPROVED' THEN 1 ELSE 0 END) AS integer), 0) AS totalApproved,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PICK-UP READY' THEN 1 ELSE 0 END) AS integer), 0) AS totalPickupReady,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'ON GOING' THEN 1 ELSE 0 END) AS integer), 0) AS totalOngoing,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'COMPLETED' THEN 1 ELSE 0 END) AS integer), 0) AS totalComplete,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAYMENT PENDING' THEN 1 ELSE 0 END) AS integer), 0) AS totalPaymentPending,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN 1 ELSE 0 END) AS integer), 0) AS totalPaid,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'OVERDUE' THEN 1 ELSE 0 END) AS integer), 0) AS totalOverdue,
+		        COALESCE(CAST(SUM(CASE WHEN br.status = 'REJECTED' THEN 1 ELSE 0 END) AS integer), 0) AS totalRejected
+		    FROM BorrowRequestEntity br
+		""";
+
+	@Query(value = GET_ADMIN_BORROWER_REQUEST_OVERVIEW)
+	public BorrowRequestOverview getAdminBorrowerRequestOverview() throws DataAccessException;
+	
 	public final String UPDATE_FEEDBACK_BORROW_REQUEST = 
 			"""
 				UPDATE borrow_request

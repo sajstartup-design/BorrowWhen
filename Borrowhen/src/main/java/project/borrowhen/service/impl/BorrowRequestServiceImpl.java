@@ -869,4 +869,16 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		
 		return outDto;
 	}
+
+	@Override
+	public BorrowRequestDto getAdminBorrowRequestOverview() throws Exception {
+		
+		BorrowRequestDto outDto = new BorrowRequestDto();
+		
+		BorrowRequestOverview overview = borrowRequestDao.getAdminBorrowerRequestOverview();
+		
+		outDto.setOverview(overview);	
+		
+		return outDto;
+	}
 }
