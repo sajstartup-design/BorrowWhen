@@ -454,7 +454,7 @@ public class UserServiceImpl implements UserService {
 	    
 	    Pageable pageable = PageRequest.of(0, 5);
 	    
-	    List<BorrowRequestData> requests = borrowRequestDao.getAllOwnedBorrowRequestsForBorrower(pageable, id, CommonConstant.PAID).toList();	    
+	    List<BorrowRequestData> requests = borrowRequestDao.getAllOwnedBorrowRequestsForBorrower(pageable, id, CommonConstant.PAID, "ALL").toList();	    
 	    
 	    List<BorrowRequestObj> recentBorrow = new ArrayList<>();
 	    

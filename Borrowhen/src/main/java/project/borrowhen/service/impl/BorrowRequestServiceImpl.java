@@ -294,7 +294,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    FilterAndSearchObj filter = inDto.getFilter();
 	    
-	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForLender(pageable, user.getId(), filter.getSearch());
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllOwnedBorrowRequestsForLender(pageable, user.getId(), filter.getSearch(), filter.getStatus());
 	    
 	    List<BorrowRequestObj> requests = new ArrayList<>();
 	    

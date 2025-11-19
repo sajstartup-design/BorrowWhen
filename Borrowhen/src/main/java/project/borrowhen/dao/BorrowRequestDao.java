@@ -87,6 +87,10 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    "LEFT JOIN UserEntity lender ON lender.id = i.userId " +
 		    "WHERE br.isDeleted = false " +
 		    "AND i.userId = :userId " +
+		    "AND ( " + 
+		    "    :status = 'ALL' " +
+		    "    OR (br.status IN (:status)) " +
+		    ") " + 
 		    "AND ( :search IS NULL OR :search = '' OR " +
 		    "      LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
 		    "      LOWER(borrower.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " + // ✅ search borrower full name
@@ -100,7 +104,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	@Query(value=GET_ALL_OWNED_BORROW_REQUESTS_FOR_LENDER)
 	public Page<BorrowRequestData> getAllOwnedBorrowRequestsForLender(Pageable pageable, 
 			@Param("userId") int userId,
-			@Param("search") String search) throws DataAccessException; 
+			@Param("search") String search,
+			@Param("status") String status) throws DataAccessException; 
 	
 	public final String GET_ALL_OWNED_BORROW_REQUESTS_FOR_BORROWER =
 		   """
