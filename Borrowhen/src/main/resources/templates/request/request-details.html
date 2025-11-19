@@ -56,7 +56,7 @@
                         <li>
                            <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
                         </li>
-                         <li>
+                        <li>
                            <a th:href="@{/request}" class="px-2 text-xs flex items-center gap-2">
                            <span>Request List</span>
                            </a>
@@ -96,7 +96,7 @@
                         <!-- LEFT COLUMN — DETAILS -->
                         <div class="flex-1 flex flex-col gap-6 bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
                            <!-- Section Header -->
-                           <div class="flex justify-between items-start mb-2">
+                           <div class="flex justify-between items-start">
                               <!-- Left: Title + Badge + Message -->
                               <div class="flex flex-col">
                                  <div class="flex items-center gap-3">
@@ -106,52 +106,52 @@
                                     <span 
                                        class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700"
                                        th:if="*{request.status == 'PENDING'}">
-                                    Pending
+                                    PENDING
                                     </span>
                                     <span 
                                        class="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700"
                                        th:if="*{request.status == 'APPROVED'}">
-                                    Approved
+                                    APPROVED
                                     </span>
                                     <span 
                                        class="px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700"
                                        th:if="*{request.status == 'REJECTED'}">
-                                    Rejected
+                                    REJECTED
                                     </span>
                                     <span 
                                        class="px-3 py-1 text-xs font-medium rounded-full bg-gray-200 text-gray-700"
                                        th:if="*{request.status == 'CANCELLED'}">
-                                    Cancelled
+                                    CANCELLED
                                     </span>
                                     <span 
                                        class="px-3 py-1 text-xs font-medium rounded-full bg-neutral-200 text-neutral-600"
                                        th:if="*{request.status == 'VOID'}">
-                                    Void
+                                    VOID
                                     </span>
                                     <span 
                                        class="px-3 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-700"
                                        th:if="*{request.status == 'OVERDUE'}">
-                                    Overdue
+                                    OVERDUE
                                     </span>
                                     <span 
                                        class="px-3 py-1 text-xs font-medium rounded-full bg-indigo-100 text-indigo-700"
                                        th:if="*{request.status == 'PICK-UP READY'}">
-                                    Pick-Up Ready
+                                    PICK-UP READY
                                     </span>
                                     <span 
                                        class="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700"
                                        th:if="*{request.status == 'ON GOING'}">
-                                    Ongoing
+                                    ON GOING
                                     </span>
                                     <span 
                                        class="px-3 py-1 text-xs font-medium rounded-full bg-pink-100 text-pink-700"
                                        th:if="*{request.status == 'PAYMENT PENDING'}">
-                                    Payment Pending
+                                    PAYMENT PENDING
                                     </span>
                                     <span 
                                        class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-100 text-emerald-700"
                                        th:if="*{request.status == 'PAID'}">
-                                    Paid
+                                    PAID
                                     </span>
                                     <!-- Default / fallback -->
                                     <span 
@@ -166,39 +166,49 @@
                                  </p>
                               </div>
                               <!-- Right: Cancel Button -->
-                           <div class="flex items-center gap-2">
-						    <!-- Cancel Request button: only for PENDING -->
-						    <button th:if="*{request.status == 'PENDING'}"
-						            data-toggle="modal"
-						            data-target="#cancelModal"
-						            th:data-id="*{request.encryptedId}"
-						            th:data-item-name="*{request.itemName}"
-						            th:data-price="*{request.price}"
-						            th:data-date-to-borrow="*{request.dateToBorrow}"
-						            th:data-date-to-return="*{request.dateToReturn}"
-						            th:data-number-to-borrow="*{request.qty}"
-						            class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
-						        <img th:src="@{/images/cancelled.png}" class="w-4 h-4"/>
-						        Cancel Request
-						    </button>
-						
-						    <!-- Mark as Received button: only for PICK-UP READY -->
-						    <button th:if="*{request.status == 'PICK-UP READY'}"
-						            data-toggle="modal"
-						            data-target="#markReceivedModal"
-						            th:data-id="*{request.encryptedId}"
-						            th:data-item-name="*{request.itemName}"
-						            th:data-price="*{request.price}"
-						            th:data-date-to-borrow="*{request.dateToBorrow}"
-						            th:data-date-to-return="*{request.dateToReturn}"
-						            th:data-number-to-borrow="*{request.qty}"
-						            class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
-						        <img th:src="@{/images/received.png}" class="w-4 h-4"/>
-						        Mark as Received
-						    </button>
-						</div>
-
-
+                              <div class="flex items-center gap-2">
+                                 <!-- Cancel Request button: only for PENDING -->
+                                 <button th:if="*{request.status == 'PENDING'}"
+                                    data-toggle="modal"
+                                    data-target="#cancelModal"
+                                    th:data-id="*{request.encryptedId}"
+                                    th:data-item-name="*{request.itemName}"
+                                    th:data-price="*{request.price}"
+                                    th:data-date-to-borrow="*{request.dateToBorrow}"
+                                    th:data-date-to-return="*{request.dateToReturn}"
+                                    th:data-number-to-borrow="*{request.qty}"
+                                    class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
+                                 <img th:src="@{/images/cancelled.png}" class="w-4 h-4"/>
+                                 Cancel Request
+                                 </button>
+                                 <!-- Mark as Received button: only for PICK-UP READY -->
+                                 <button th:if="*{request.status == 'PICK-UP READY'}"
+                                    data-toggle="modal"
+                                    data-target="#markReceivedModal"
+                                    th:data-id="*{request.encryptedId}"
+                                    th:data-item-name="*{request.itemName}"
+                                    th:data-price="*{request.price}"
+                                    th:data-date-to-borrow="*{request.dateToBorrow}"
+                                    th:data-date-to-return="*{request.dateToReturn}"
+                                    th:data-number-to-borrow="*{request.qty}"
+                                    class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
+                                 <img th:src="@{/images/received.png}" class="w-4 h-4"/>
+                                 Mark as Received
+                                 </button>
+                              </div>
+                           </div>
+                           <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100 flex flex-col gap-1"
+                              th:if="*{request.status == 'PAID'} and *{request.rating} != 0">
+                              <h3 class="text-lg font-semibold text-gray-500">Rating & Feedback</h3>
+                              <div th:with="rating=*{request.rating}" class="flex items-center gap-1 mb-2">
+                                 <span th:each="i : ${#numbers.sequence(1,5)}">
+                                 <i class="fa-solid fa-star text-sm"
+                                    th:classappend="${i <= rating} ? ' text-yellow-400' : ' text-gray-300'"></i>
+                                 </span>
+                              </div>
+                              <p class="text-gray-600 text-sm" 
+                                 th:text="*{request.feedback} != null ? *{request.feedback} : 'No feedback yet.'">
+                              </p>
                            </div>
                            <!-- Details Card -->
                            <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100 flex flex-col gap-3">
@@ -259,31 +269,30 @@
                         </div>
                         <!-- RIGHT COLUMN — ACTIVITY TIMELINE -->
                         <div class="flex-1 bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
-    <h2 class="text-xl font-semibold text-gray-700 mb-4">Request Activity</h2>
-                        <div class="vertical-progress">
-    <div th:each="step, iterStat : ${steps}">
-        <div class="v-step" th:classappend="${iterStat.index} <= ${currentStepIndex} ? ' active'">
-            <div class="v-dot"></div>
-            <div class="flex flex-col">
-                <span class="font-medium" th:text="${step}"></span>
-                <span class="text-xs text-gray-400" th:switch="${step}">
-                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PENDING}">Your request has been submitted and is waiting for review.</span>
-                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).APPROVED}">The lender has reviewed your request and responded.</span>
-                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).REJECTED}">Your request has been rejected.</span>
-                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PICK_UP_READY}">Your item is now ready to be picked up.</span>
-                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).ITEM_RECEIVED}">You have received the item from the lender.</span>
-                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).ON_GOING}">You are currently using the borrowed item.</span>
-                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).COMPLETED}">Item has been returned. The process is complete.</span>
-                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PAYMENT_PENDING}">Please settle your payment to finish the transaction.</span>
-                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PAID}">Payment received. Thank you!</span>
-                </span>
-            </div>
-        </div>
-        <div class="v-line" th:if="${!iterStat.last}"></div>
-    </div>
-</div>
-</div>
-
+                           <h2 class="text-xl font-semibold text-gray-700 mb-4">Request Activity</h2>
+                           <div class="vertical-progress">
+                              <div th:each="step, iterStat : ${steps}">
+                                 <div class="v-step" th:classappend="${iterStat.index} <= ${currentStepIndex} ? ' active'">
+                                    <div class="v-dot"></div>
+                                    <div class="flex flex-col">
+                                       <span class="font-medium" th:text="${step}"></span>
+                                       <span class="text-xs text-gray-400" th:switch="${step}">
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PENDING}">Your request has been submitted and is waiting for review.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).APPROVED}">The lender has reviewed your request and responded.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).REJECTED}">Your request has been rejected.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PICK_UP_READY}">Your item is now ready to be picked up.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).ITEM_RECEIVED}">You have received the item from the lender.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).ON_GOING}">You are currently using the borrowed item.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).COMPLETED}">Item has been returned. The process is complete.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PAYMENT_PENDING}">Please settle your payment to finish the transaction.</span>
+                                       <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PAID}">Payment received. Thank you!</span>
+                                       </span>
+                                    </div>
+                                 </div>
+                                 <div class="v-line" th:if="${!iterStat.last}"></div>
+                              </div>
+                           </div>
+                        </div>
                      </div>
                   </div>
                </div>
