@@ -273,17 +273,20 @@ async function loadRequests(page = 0, search = "") {
 				    </span>
 				  </td>
 				  <td class="py-2 px-2 text-sm flex items-center gap-2 text-gray-500">
+				  <div class="tooltip-wrapper">
+  			        <a
+  			          href="/request/details?encryptedId=${request.encryptedId}"
+  			          class="view-btn border border-gray-300 hover:bg-gray-200 shadow-md flex items-center justify-center h-8 w-8 rounded-md bg-blue-100 hover:bg-blue-200 transition shadow-sm"
+  			          data-id="${request.encryptedId}"
+  			          aria-label="View"
+  			        >
+  			          <img src="/images/view.png" alt="View" class="h-3 w-3" />
+  			        </a>
+  			        <span class="tooltip-text">View Item</span>
+  			      </div>
 				    ${actionButtons}
 				  </td>
 				`;
-
-
-                // Click listener
-                /*row.addEventListener("click", function (e) {
-                   if (e.target.closest("button") || e.target.closest("a")) return;
-                   const encryptedId = this.getAttribute("data-id");
-                   window.location.href = "/admin/inventory/details?encryptedId=" + encryptedId;
-                });*/
 
                 fragment.appendChild(row);
             });

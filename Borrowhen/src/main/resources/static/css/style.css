@@ -316,3 +316,51 @@ button{
 }
 
 
+.vertical-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 20px 0;
+  padding-left: 10px;
+  position: relative;
+}
+
+/* A single step row */
+.v-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* The dot */
+.v-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background-color: #d1d5db; /* gray */
+}
+
+/* Active dot */
+.v-step.active .v-dot {
+  background-color: #2563eb; /* blue */
+}
+
+/* Step label */
+.v-step span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.v-step.active span {
+  color: #2563eb;
+}
+
+/* Connecting line */
+.v-line {
+  width: 2px;
+  height: 24px;
+  background-color: #d1d5db;
+  margin-left: 6px; /* centers under dot */
+}
+
+
