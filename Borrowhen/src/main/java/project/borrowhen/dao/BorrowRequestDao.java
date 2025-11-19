@@ -21,42 +21,50 @@ import project.borrowhen.dao.entity.ReviewOverviewData;
 
 public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Integer> {
 	
-	public final String GET_ALL_BORROW_REQUESTS =
-		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +
-		    " br.id, " +                         
-		    " borrower.fullName, " +  
-		    " borrower.userId, " + 
-		    " lender.fullName, " +       
-		    " lender.userId, " +     
-		    " br.itemName, " +                    
-		    " br.price, " +                     
-		    " br.qty, " +                        
-		    " br.dateToBorrow, " +                
-		    " br.dateToReturn, " +                
-		    " br.status, " +                    
-		    " br.createdDate, " +                 
-		    " br.updatedDate) " +              
-		    "FROM BorrowRequestEntity br " +     
-		    "LEFT JOIN InventoryEntity i ON i.id = br.inventoryId " +     
-		    "LEFT JOIN UserEntity borrower ON borrower.id = br.userId " + 
-		    "LEFT JOIN UserEntity lender ON lender.id = i.userId " +
-		    "WHERE br.isDeleted = false " + 
-		    "AND ( :search IS NULL OR :search = '' OR " +
-		    "      LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "      LOWER(borrower.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "      LOWER(borrower.userId) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "      LOWER(lender.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "      LOWER(lender.userId) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "      CAST(br.price AS string) LIKE CONCAT('%', :search, '%') OR " +
-		    "      CAST(br.qty AS string) LIKE CONCAT('%', :search, '%') OR " +
-		    "      CAST(br.dateToBorrow AS string) LIKE CONCAT('%', :search, '%') OR " +
-		    "      CAST(br.dateToReturn AS string) LIKE CONCAT('%', :search, '%') OR " +
-		    "      LOWER(br.status) LIKE LOWER(CONCAT('%', :search, '%')) " +
-		    "    )";
+	public final String GET_ALL_BORROW_REQUESTS = """
+				SELECT new project.borrowhen.dao.entity.BorrowRequestData(
+				    br.id,
+				    borrower.fullName,
+				    borrower.userId,
+				    lender.fullName,
+				    lender.userId,
+				    br.itemName,
+				    br.price,
+				    br.qty,
+				    br.dateToBorrow,
+				    br.dateToReturn,
+				    br.status,
+				    br.createdDate,
+				    br.updatedDate
+				)
+				FROM BorrowRequestEntity br
+				LEFT JOIN InventoryEntity i ON i.id = br.inventoryId
+				LEFT JOIN UserEntity borrower ON borrower.id = br.userId
+				LEFT JOIN UserEntity lender ON lender.id = i.userId
+				WHERE br.isDeleted = false
+				AND (
+		          :status = 'ALL' 
+		          OR (br.status IN (:status)) 
+			    )
+				AND (
+				      :search IS NULL OR :search = '' OR
+				      LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR
+				      LOWER(borrower.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR
+				      LOWER(borrower.userId) LIKE LOWER(CONCAT('%', :search, '%')) OR
+				      LOWER(lender.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR
+				      LOWER(lender.userId) LIKE LOWER(CONCAT('%', :search, '%')) OR
+				      CAST(br.price AS string) LIKE CONCAT('%', :search, '%') OR
+				      CAST(br.qty AS string) LIKE CONCAT('%', :search, '%') OR
+				      CAST(br.dateToBorrow AS string) LIKE CONCAT('%', :search, '%') OR
+				      CAST(br.dateToReturn AS string) LIKE CONCAT('%', :search, '%') OR
+				      LOWER(br.status) LIKE LOWER(CONCAT('%', :search, '%'))
+				)
+			""";
 	
 	@Query(value=GET_ALL_BORROW_REQUESTS)
 	public Page<BorrowRequestData> getAllBorrowRequests(Pageable pageable,
-			@Param("search") String search) throws DataAccessException; 
+			@Param("search") String search,
+			@Param("status") String status) throws DataAccessException; 
 	
 	public final String GET_ALL_OWNED_BORROW_REQUESTS_FOR_LENDER =
 		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +
