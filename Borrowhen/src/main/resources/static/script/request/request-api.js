@@ -8,15 +8,18 @@ document.addEventListener("DOMContentLoaded", () => {
 	const pageBtns = document.querySelectorAll('.page-btn');
 	const endBtn = document.querySelector('.end-btn');
     const search = document.querySelector('.search');
+	const status = document.querySelector('.status');
+
 
     // Load first page
-    loadRequests(0);
+    loadRequests(0, "", "ALL");
     
     if(pageBtns){
 		pageBtns.forEach(btn => btn.addEventListener('click', function(){
 			createLoadingScreenBody();
 			const searchValue = search.value;
-            loadRequests(Number(this.textContent.trim()) - 1, searchValue); 
+			const statusValue = status.value;
+            loadRequests(Number(this.textContent.trim()) - 1, searchValue, statusValue); 
 		}));
 	}
 	
@@ -24,8 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	  endBtn.addEventListener('click', function() {  // <-- regular function
 	    createLoadingScreenBody();
 	    const searchValue = search ? search.value : '';
-	    console.log(this.textContent.trim());
-	    loadRequests(Number(this.textContent.trim()) - 1, searchValue); 
+		const statusValue = status.value;
+	    loadRequests(Number(this.textContent.trim()) - 1, searchValue, statusValue); 
 	  });
 	}
 
@@ -33,8 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
         nextBtn.addEventListener('click', () => {
             createLoadingScreenBody();
             const searchValue = search.value;
+			const statusValue = status.value;
             let currentPage = Number(inputPage.value);
-            loadRequests(currentPage, searchValue);
+            loadRequests(currentPage, searchValue, statusValue);
         });
     }
 
@@ -42,8 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
         prevBtn.addEventListener('click', () => {
             createLoadingScreenBody();
             const searchValue = search.value;
+			const statusValue = status.value;
             let currentPage = Number(inputPage.value);
-            loadRequests(currentPage - 2, searchValue);
+            loadRequests(currentPage - 2, searchValue, statusValue);
         });
     }
 
@@ -51,12 +56,25 @@ document.addEventListener("DOMContentLoaded", () => {
         inputPage.addEventListener('change', () => {
             createLoadingScreenBody();
             const searchValue = search.value;
+			const statusValue = status.value;
             let newPage = Number(inputPage.value);
             if (newPage < 1) newPage = 1;
             inputPage.value = newPage;
-            loadRequests(newPage - 1, searchValue);
+            loadRequests(newPage - 1, searchValue, statusValue);
         });
     }
+	
+	if (status) {
+	    status.addEventListener('change', () => {
+	        createLoadingScreenBody();
+	        const searchValue = search.value;
+			const statusValue = status.value;
+	        let newPage = Number(inputPage.value);
+	        if (newPage < 1) newPage = 1;
+	        inputPage.value = newPage;
+	        loadRequests(newPage - 1, searchValue, statusValue);
+	    });
+	}
 
     if (search) {
         let typingTimer;
@@ -67,10 +85,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const currentPage = 0;
             const searchValue = this.value;
+			const statusValue = status.value;
 
             typingTimer = setTimeout(() => {
                 createLoadingScreenBody();
-                loadRequests(currentPage, searchValue);
+                loadRequests(currentPage, searchValue, statusValue);
             }, delay);
         });
     }
@@ -146,11 +165,12 @@ const buttons = {
 
 
 
-async function loadRequests(page = 0, search = "") {
+async function loadRequests(page = 0, search = "", status = "") {
     try {
         const params = new URLSearchParams({
             page,
-            search
+            search,
+			status
         });
         const url = `/api/request?${params.toString()}`;
         const response = await fetch(url);

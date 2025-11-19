@@ -103,43 +103,54 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 			@Param("search") String search) throws DataAccessException; 
 	
 	public final String GET_ALL_OWNED_BORROW_REQUESTS_FOR_BORROWER =
-		    "SELECT new project.borrowhen.dao.entity.BorrowRequestData(" +
-		    " br.id, " +                         
-		    " borrower.fullName, " +  
-		    " borrower.userId, " +     
-		    " lender.fullName, " +    
-		    " lender.userId, " +                      
-		    " br.itemName, " +                    
-		    " br.price, " +                     
-		    " br.qty, " +                        
-		    " br.dateToBorrow, " +                
-		    " br.dateToReturn, " +                
-		    " br.status, " +                    
-		    " br.createdDate, " +                 
-		    " br.updatedDate, " +    
-		    " COALESCE(br.feedback, ''), " +   
-		    " COALESCE(br.rating, 0)) " +   
-		    "FROM BorrowRequestEntity br " +     
-		    "INNER JOIN InventoryEntity i ON i.id = br.inventoryId " +     
-		    "LEFT JOIN UserEntity borrower ON borrower.id = br.userId " + 
-		    "LEFT JOIN UserEntity lender ON lender.id = i.userId " +
-		    "WHERE br.isDeleted = false " +
-		    "AND br.userId = :userId " +
-		    "AND br.status NOT IN ('PAID') " +
-		    "AND ( :search IS NULL OR :search = '' OR " +
-		    "      LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-		    "      CAST(br.price AS string) LIKE CONCAT('%', :search, '%') OR " +
-		    "      CAST(br.qty AS string) LIKE CONCAT('%', :search, '%') OR " +
-		    "      CAST(br.dateToBorrow AS string) LIKE CONCAT('%', :search, '%') OR " +
-		    "      CAST(br.dateToReturn AS string) LIKE CONCAT('%', :search, '%') OR " +
-		    "      LOWER(br.status) LIKE LOWER(CONCAT('%', :search, '%')) " +
-		    "    )";
+		   """
+			SELECT new project.borrowhen.dao.entity.BorrowRequestData(
+			    br.id,
+			    borrower.fullName,
+			    borrower.userId,
+			    lender.fullName,
+			    lender.userId,
+			    br.itemName,
+			    br.price,
+			    br.qty,
+			    br.dateToBorrow,
+			    br.dateToReturn,
+			    br.status,
+			    br.createdDate,
+			    br.updatedDate,
+			    COALESCE(br.feedback, ''),
+			    COALESCE(br.rating, 0)
+			)
+			FROM BorrowRequestEntity br
+			INNER JOIN InventoryEntity i ON i.id = br.inventoryId
+			LEFT JOIN UserEntity borrower ON borrower.id = br.userId
+			LEFT JOIN UserEntity lender ON lender.id = i.userId
+			WHERE br.isDeleted = false
+			AND br.userId = :userId
+			AND br.status NOT IN ('PAID')
+			AND (
+			    :status = 'ALL'
+			    OR br.status IN (:status)
+			)
+			AND (
+			      :search IS NULL 
+			      OR :search = '' 
+			      OR LOWER(br.itemName) LIKE LOWER(CONCAT('%', :search, '%'))
+			      OR CAST(br.price AS string) LIKE CONCAT('%', :search, '%')
+			      OR CAST(br.qty AS string) LIKE CONCAT('%', :search, '%')
+			      OR CAST(br.dateToBorrow AS string) LIKE CONCAT('%', :search, '%')
+			      OR CAST(br.dateToReturn AS string) LIKE CONCAT('%', :search, '%')
+			      OR LOWER(br.status) LIKE LOWER(CONCAT('%', :search, '%'))
+			)
+
+			""";
 
 	
 	@Query(value=GET_ALL_OWNED_BORROW_REQUESTS_FOR_BORROWER)
 	public Page<BorrowRequestData> getAllOwnedBorrowRequestsForBorrower(Pageable pageable, 
 			@Param("userId") int userId, 
-			@Param("search") String search) throws DataAccessException; 
+			@Param("search") String search,
+			@Param("status") String status) throws DataAccessException; 
 	
     public final String UPDATE_BORROW_REQUEST_STATUS =
         "UPDATE BorrowRequestEntity br " +

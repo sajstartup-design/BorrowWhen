@@ -18,7 +18,8 @@ public class RequestRestController {
 
     @GetMapping("/api/request")
     public BorrowRequestDto getRequests(@RequestParam(defaultValue = "0") int page,
-    		@RequestParam(required = false) String search) {
+    		@RequestParam(required = false) String search,
+    		@RequestParam(required = false) String status) {
         try {
         	BorrowRequestDto inDto = new BorrowRequestDto();
 
@@ -27,6 +28,7 @@ public class RequestRestController {
 
             FilterAndSearchObj filter = new FilterAndSearchObj();
             filter.setSearch(search);
+            filter.setStatus(status);
 
             inDto.setPagination(pagination);
             inDto.setFilter(filter);
