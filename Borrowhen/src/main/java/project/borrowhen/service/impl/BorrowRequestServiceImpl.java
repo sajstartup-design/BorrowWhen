@@ -96,7 +96,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		request.setIsDeleted(false);
 	
 		borrowRequestDao.save(request);
-		
+
 		inventoryService.updateInventoryAvailableQty(id, inDto.getQty(), CommonConstant.DECREASE);
 		
 		NotificationEntity notification = new NotificationEntity();
@@ -109,12 +109,14 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		    inDto.getDateToBorrow(),
 		    inDto.getDateToReturn()
 		);
+		
 		notification.setMessage(message);
 		notification.setIsRead(false);
 		notification.setType(CommonConstant.REQUEST_PENDING);
 		notification.setCreatedDate(dateNow);
 		notification.setUpdatedDate(dateNow);
 		notification.setIsDeleted(false);
+		notification.setBorrowRequestId(request.getId());
 		
 		notificationService.saveNotification(notification);	
 		
@@ -219,7 +221,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setCreatedDate(dateNow);
 	    notification.setUpdatedDate(dateNow);
 	    notification.setIsDeleted(false);
-
+	    notification.setBorrowRequestId(id);
+	    
 	    notificationService.saveNotification(notification);	
 
 	    messagingTemplate.convertAndSendToUser(
@@ -268,6 +271,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setCreatedDate(dateNow);
 	    notification.setUpdatedDate(dateNow);
 	    notification.setIsDeleted(false);
+	    notification.setBorrowRequestId(id);
 
 	    notificationService.saveNotification(notification);	
 
@@ -430,6 +434,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setCreatedDate(dateNow);
 	    notification.setUpdatedDate(dateNow);
 	    notification.setIsDeleted(false);
+	    notification.setBorrowRequestId(id);
 
 	    notificationService.saveNotification(notification);
 
@@ -547,6 +552,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setCreatedDate(dateNow);
 	    notification.setUpdatedDate(dateNow);
 	    notification.setIsDeleted(false);
+	    notification.setBorrowRequestId(id);
 
 	    notificationService.saveNotification(notification);
 
@@ -601,6 +607,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setCreatedDate(dateNow);
 	    notification.setUpdatedDate(dateNow);
 	    notification.setIsDeleted(false);
+	    notification.setBorrowRequestId(id);
 
 	    notificationService.saveNotification(notification);
 
@@ -659,6 +666,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setCreatedDate(dateNow);
 	    notification.setUpdatedDate(dateNow);
 	    notification.setIsDeleted(false);
+	    notification.setBorrowRequestId(id);
 
 	    notificationService.saveNotification(notification);
 
@@ -713,7 +721,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setCreatedDate(dateNow);
 	    notification.setUpdatedDate(dateNow);
 	    notification.setIsDeleted(false);
-
+	    notification.setBorrowRequestId(id);
+	    
 	    notificationService.saveNotification(notification);
 
 	    messagingTemplate.convertAndSendToUser(
@@ -773,6 +782,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    notification.setCreatedDate(dateNow);
 	    notification.setUpdatedDate(dateNow);
 	    notification.setIsDeleted(false);
+	    notification.setBorrowRequestId(id);
 
 	    notificationService.saveNotification(notification);
 

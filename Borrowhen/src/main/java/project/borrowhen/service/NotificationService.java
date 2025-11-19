@@ -13,6 +13,8 @@ public interface NotificationService {
 
 	public void saveNotification(NotificationEntity notification);
 	
+	public void readNotification(String encryptedId)  throws Exception; 
+	
 	/*
 	 * This is for MODAL Notification
 	 */

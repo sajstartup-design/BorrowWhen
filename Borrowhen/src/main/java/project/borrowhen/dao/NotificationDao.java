@@ -6,9 +6,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import jakarta.transaction.Transactional;
 import project.borrowhen.dao.entity.NotificationEntity;
 
 public interface NotificationDao extends JpaRepository<NotificationEntity, Integer>{
@@ -17,7 +19,7 @@ public interface NotificationDao extends JpaRepository<NotificationEntity, Integ
 		    + "SELECT COUNT(e) "
 		    + "FROM NotificationEntity e "
 		    + "INNER JOIN UserEntity u ON u.id = :userId "
-		    + "WHERE e.isDeleted = false "
+		    + "WHERE e.isDeleted = false AND e.isRead = false "
 		    + "AND ( "
 		    + "    (u.role = 'BORROWER' AND (e.userId = :userId OR e.targetRole = 'BORROWER' OR e.targetRole = 'ALL')) "
 		    + " OR (u.role <> 'BORROWER' AND (e.userId = :userId OR e.targetRole = 'ALL')) "
@@ -94,6 +96,16 @@ public interface NotificationDao extends JpaRepository<NotificationEntity, Integ
 		        @Param("status") String status
 		) throws DataAccessException;
 		
-
+	
+	public final String READ_NOTIFICATION = """
+				UPDATE notifications
+				SET is_read = true
+				WHERE id = :notificationId
+			""";
+	
+    @Modifying
+    @Transactional
+    @Query(value = READ_NOTIFICATION, nativeQuery = true)
+	public void readNotification(@Param("notificationId") int notificationId) throws DataAccessException;
 
 }

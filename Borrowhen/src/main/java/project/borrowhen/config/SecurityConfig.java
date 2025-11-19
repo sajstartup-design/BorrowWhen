@@ -123,6 +123,7 @@ public class SecurityConfig {
 						.requestMatchers("/api/**").authenticated()
 						
 						.requestMatchers("/chat/**").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
+						.requestMatchers("/read/**").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
 						
 						.requestMatchers("/borrow-when-websocket/**").authenticated()
 														

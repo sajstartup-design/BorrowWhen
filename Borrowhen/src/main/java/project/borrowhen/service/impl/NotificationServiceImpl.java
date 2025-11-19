@@ -11,6 +11,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.TimeAgoUtil;
 import project.borrowhen.dao.NotificationDao;
@@ -64,19 +65,28 @@ public class NotificationServiceImpl implements NotificationService{
 
 		List<NotificationEntity> retrievedNotifications = notificationDao.getNotificationsByUser(user.getId());
 		
-		System.out.println(retrievedNotifications);
-		
 		List<NotificationObj> notifications = new ArrayList<>();
+		
+		String link = "";
+		if(CommonConstant.ROLE_BORROWER.equals(user.getRole())) {
+			link = "/request/details?encryptedId=";
+		}else {
+			link = "/lender/request/details?encryptedId=";
+		}
 		
 		for(NotificationEntity notification : retrievedNotifications) {
 			
 			NotificationObj obj = new NotificationObj();
 			
-			obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(notification.getId())));
+			String encryptedId = cipherUtil.encrypt(String.valueOf(notification.getId()));
+			String encryptedBorrowRequestId = cipherUtil.encrypt(String.valueOf(notification.getBorrowRequestId()));
+			
+			obj.setEncryptedId(encryptedId);
+			obj.setLink(link + encryptedBorrowRequestId);
 			obj.setMessage(notification.getMessage());		
 			obj.setIsRead(notification.getIsRead());			
 			obj.setType(notification.getType());
-			obj.setDateAndTime(TimeAgoUtil.toTimeAgo(notification.getCreatedDate()));
+			obj.setDateAndTime(TimeAgoUtil.toTimeAgo(notification.getCreatedDate()));						
 			
 			notifications.add(obj);
 		}
@@ -142,13 +152,24 @@ public class NotificationServiceImpl implements NotificationService{
 		         filter.getEndDate(),
 		         filter.getStatus()
 		);
+		 
+		 String link = "";
+		if(CommonConstant.ROLE_BORROWER.equals(user.getRole())) {
+			link = "/request/details?encryptedId=";
+		}else {
+			link = "/lender/request/details?encryptedId=";
+		}
 	    
 	    List<NotificationObj> notifications = new ArrayList<>();
 	    
 	    for (NotificationEntity notification : allNotifications) {
 	    	NotificationObj obj = new NotificationObj();
+	    	
+	    	String encryptedId = cipherUtil.encrypt(String.valueOf(notification.getId()));
+	    	String encryptedBorrowRequestId = cipherUtil.encrypt(String.valueOf(notification.getBorrowRequestId()));
 	        
-			obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(notification.getId())));
+			obj.setEncryptedId(encryptedId);		
+			obj.setLink(link + encryptedBorrowRequestId);		
 			obj.setMessage(notification.getMessage());		
 			obj.setIsRead(notification.getIsRead());			
 			obj.setType(notification.getType());
@@ -170,6 +191,14 @@ public class NotificationServiceImpl implements NotificationService{
 		outDto.setPagination(pagination);
 		
 	    return outDto;
+	}
+
+	@Override
+	public void readNotification(String encryptedId) throws Exception{
+		
+		int id = Integer.valueOf(cipherUtil.decrypt(encryptedId));
+		
+		notificationDao.readNotification(id);
 	}
 
 }

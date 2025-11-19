@@ -20,6 +20,8 @@ public class NotificationEntity {
 	
 	private int userId;
 	
+	private int borrowRequestId;
+	
 	private String targetRole;
 	
 	private String message;

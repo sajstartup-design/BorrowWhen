@@ -77,4 +77,20 @@ public class NotificationRestController {
             return new NotificationDto();
         }
     }
+    
+    @GetMapping("/read")
+    public void readNotification(@RequestParam(required=false) String encryptedId) {
+    	
+    	try {
+    		
+    		System.out.println("YAWA");
+    		
+    		notificationService.readNotification(encryptedId);
+    	}catch(Exception e) {
+    		
+    		e.printStackTrace();
+    		
+    		
+    	}
+    }
 }

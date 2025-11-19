@@ -44,6 +44,8 @@ async function updateNotificationModal(triggerElement, forceRefresh = false) {
     // Fetch notifications
     const response = await fetch(`/api/notifications`);
     const data = await response.json();
+	
+	console.log(data);
 
     notificationsList.innerHTML = ""; // Clear previous
 
@@ -56,42 +58,60 @@ async function updateNotificationModal(triggerElement, forceRefresh = false) {
 
     const frag = document.createDocumentFragment();
 
-    data.notifications.forEach((notification) => {
-      const li = document.createElement("li");
-      li.className = "px-4 py-2 hover:bg-gray-100 flex items-start gap-3 border-b border-gray-100";
+	data.notifications.forEach((notification) => {
+	  const li = document.createElement("li");
+	  li.className = "cursor-pointer px-4 py-2 hover:bg-gray-100 flex items-start gap-3 border-b border-gray-100";
 
-      let iconClass = "fa-info-circle";
-      let colorClass = "text-gray-500";
+	  let iconClass = "fa-info-circle";
+	  let colorClass = "text-gray-500";
 
-      switch (notification.type) {
-        case "REQUEST_PENDING":
-          iconClass = "fa-hourglass-half"; colorClass = "text-yellow-500"; break;
-        case "REQUEST_APPROVED":
-          iconClass = "fa-check-circle"; colorClass = "text-green-500"; break;
-        case "REQUEST_REJECTED":
-          iconClass = "fa-times-circle"; colorClass = "text-red-500"; break;
-        case "NEW_ITEM":
-          iconClass = "fa-box"; colorClass = "text-blue-500"; break;
-        case "ITEM_RECEIVED":
-          iconClass = "fa-box-open"; colorClass = "text-indigo-500"; break;
-        case "REQUEST_PICKUP_READY":
-          iconClass = "fa-location-dot"; colorClass = "text-purple-500"; break;
-        case "REQUEST_PAYMENT_PENDING":
-          iconClass = "fa-credit-card"; colorClass = "text-pink-500"; break;
-        case "OVERDUE":
-          iconClass = "fa-exclamation-triangle"; colorClass = "text-orange-500"; break;
-      }
+	  switch (notification.type) {
+	    case "REQUEST_PENDING":
+	      iconClass = "fa-hourglass-half"; colorClass = "text-yellow-500"; break;
+	    case "REQUEST_APPROVED":
+	      iconClass = "fa-check-circle"; colorClass = "text-green-500"; break;
+	    case "REQUEST_REJECTED":
+	      iconClass = "fa-times-circle"; colorClass = "text-red-500"; break;
+	    case "NEW_ITEM":
+	      iconClass = "fa-box"; colorClass = "text-blue-500"; break;
+	    case "ITEM_RECEIVED":
+	      iconClass = "fa-box-open"; colorClass = "text-indigo-500"; break;
+	    case "REQUEST_PICKUP_READY":
+	      iconClass = "fa-location-dot"; colorClass = "text-purple-500"; break;
+	    case "REQUEST_PAYMENT_PENDING":
+	      iconClass = "fa-credit-card"; colorClass = "text-pink-500"; break;
+	    case "OVERDUE":
+	      iconClass = "fa-exclamation-triangle"; colorClass = "text-orange-500"; break;
+	  }
 
-      li.innerHTML = `
-        <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
-        <div class="flex flex-col text-sm text-gray-700 leading-tight">
-          <span>${notification.message}</span>
-          <span class="text-[11px] text-gray-400 mt-0.5">${notification.dateAndTime}</span>
-        </div>
-      `;
+	  // Create <a> element
+	  const a = document.createElement("a");
+	  a.href = notification.link;
+	  a.className = "flex flex-row items-start gap-2 w-full h-full";
+	  a.innerHTML = `
+	    <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
+	    <div class="flex flex-col text-sm text-gray-700 leading-tight">
+	      <span>${notification.message}</span>
+	      <span class="text-[11px] text-gray-400 mt-0.5">${notification.dateAndTime}</span>
+	    </div>
+	  `;
 
-      frag.appendChild(li);
-    });
+	  // Intercept click to mark as read first
+	  a.addEventListener("click", async (e) => {
+	    e.preventDefault(); // prevent immediate navigation
+	    try {
+	      await fetch(`/api/notifications/read?encryptedId=${notification.encryptedId}`, { method: "GET" });
+	    } catch (err) {
+	      console.error("Failed to mark notification as read:", err);
+	    }
+	    // After marking as read, navigate to the link
+	    window.location.href = notification.link;
+	  });
+
+	  li.appendChild(a);
+	  frag.appendChild(li);
+	});
+
 
     notificationsList.appendChild(frag);
 

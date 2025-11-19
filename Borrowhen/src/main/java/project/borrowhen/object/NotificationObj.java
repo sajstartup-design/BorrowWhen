@@ -14,4 +14,6 @@ public class NotificationObj {
 	private String dateAndTime;
 	
 	private String type;
+	
+	private String link;
 }
