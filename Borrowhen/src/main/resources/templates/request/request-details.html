@@ -56,26 +56,40 @@
                         <li>
                            <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
                         </li>
+                         <li>
+                           <a th:href="@{/request}" class="px-2 text-xs flex items-center gap-2">
+                           <span>Request List</span>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
                         <li>
                            <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
-                           <span>Request List</span>
+                           <span>Details</span>
                            </a>
                         </li>
                      </ul>
                   </div>
                </div>
                <hr class="border-t border-white opacity-80" />
-               <div class="flex">
+               <div class="flex justify-between items-center">
                   <div class="flex items-center py-4 gap-3">
                      <div class="text-base rounded-md bg-white w-10 h-10 flex items-center justify-center">
                         <i class="fa-solid fa-chart-pie text-2xl text-blue-500" ></i>
                      </div>
                      <div class="flex flex-col gap-0 text-white">
-                        <span class="text-lg font-bold">Request</span>
+                        <span class="text-lg font-bold">Request Details</span>
                      </div>
                   </div>
+                  <a th:href="@{/request}"
+                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-500 hover:bg-indigo-700 
+                     border border-white rounded-md text-sm text-white transition">
+                  <i class="fa-solid fa-arrow-left text-white text-sm"></i>
+                  Back
+                  </a>
                </div>
-               <div class="bg-white rounded-2xl">
+               <div class="bg-white rounded-2xl" th:object="${borrowRequestDto}">
                   <div class="bg-base-100 rounded-2xl p-6 shadow-md flex flex-row">
                      <!-- FLEX CONTAINER WITH GAP -->
                      <div class="flex flex-row gap-10 w-full">
@@ -88,8 +102,62 @@
                                  <div class="flex items-center gap-3">
                                     <h2 class="text-xl font-semibold text-gray-700">Request Details #1</h2>
                                     <!-- STATUS BADGE -->
-                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
+                                    <!-- Status Badge -->
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700"
+                                       th:if="*{request.status == 'PENDING'}">
+                                    Pending
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700"
+                                       th:if="*{request.status == 'APPROVED'}">
+                                    Approved
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700"
+                                       th:if="*{request.status == 'REJECTED'}">
+                                    Rejected
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-gray-200 text-gray-700"
+                                       th:if="*{request.status == 'CANCELLED'}">
+                                    Cancelled
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-neutral-200 text-neutral-600"
+                                       th:if="*{request.status == 'VOID'}">
+                                    Void
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-700"
+                                       th:if="*{request.status == 'OVERDUE'}">
+                                    Overdue
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-indigo-100 text-indigo-700"
+                                       th:if="*{request.status == 'PICK-UP READY'}">
+                                    Pick-Up Ready
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700"
+                                       th:if="*{request.status == 'ON GOING'}">
+                                    Ongoing
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-pink-100 text-pink-700"
+                                       th:if="*{request.status == 'PAYMENT PENDING'}">
+                                    Payment Pending
+                                    </span>
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-100 text-emerald-700"
+                                       th:if="*{request.status == 'PAID'}">
                                     Paid
+                                    </span>
+                                    <!-- Default / fallback -->
+                                    <span 
+                                       class="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700"
+                                       th:if="*{request.status != 'PENDING' and request.status != 'APPROVED' and request.status != 'REJECTED' and request.status != 'CANCELLED' and request.status != 'VOID' and request.status != 'OVERDUE' and request.status != 'PICK-UP READY' and request.status != 'ON GOING' and request.status != 'PAYMENT PENDING' and request.status != 'PAID'}">
+                                    Unknown
                                     </span>
                                  </div>
                                  <!-- Message -->
@@ -98,150 +166,117 @@
                                  </p>
                               </div>
                               <!-- Right: Cancel Button -->
-                              <div class="flex items-center">
-                                 <button 
-                                    id="cancelBtn" 
-                                    class="h-8 px-3 py-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition">
-                                 Cancel Request
-                                 </button>
-                              </div>
+                              <div class="flex items-center gap-2">
+							    <!-- Cancel Request button: only for PENDING -->
+							    <button 
+							        id="cancelBtn" 
+							        class="h-8 px-3 py-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 transition"
+							        th:if="*{request.status == 'PENDING'}"
+							        data-toggle="modal"
+							        data-target="#cancelModal"
+							        th:data-id="*{request.encryptedId}"
+							        th:data-item-name="*{request.itemName}"
+							        th:data-price="*{request.price}"
+							        th:data-date-to-borrow="*{request.dateToBorrow}"
+							        th:data-date-to-return="*{request.dateToReturn}"
+							        th:data-number-to-borrow="*{request.qty}">
+							        Cancel Request
+							    </button>
+							
+							    <!-- Mark as Received button: only for PICK-UP READY -->
+							    <button
+							        id="markReceivedBtn"
+							        class="h-8 px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 transition"
+							        th:if="*{request.status == 'PICK-UP READY'}">
+							        Mark as Received
+							    </button>
+							</div>
+
                            </div>
                            <!-- Details Card -->
                            <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100 flex flex-col gap-3">
                               <!-- Item Name -->
                               <div class="flex justify-between items-center pb-2">
                                  <span class="text-gray-600 text-sm font-medium">Item Name</span>
-                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center">
-                                 Hammer
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center"
+                                    th:text="*{request.itemName}">
+                                 -
                                  </span>
                               </div>
                               <hr class="border-gray-100" />
                               <!-- Quantity -->
                               <div class="flex justify-between items-center pb-2">
                                  <span class="text-gray-600 text-sm font-medium">Quantity</span>
-                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center">
-                                 2
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center"
+                                    th:text="|*{request.qty} pcs|">
+                                 -
                                  </span>
                               </div>
                               <hr class="border-gray-100" />
                               <!-- Price -->
                               <div class="flex justify-between items-center pb-2">
                                  <span class="text-gray-600 text-sm font-medium">Price</span>
-                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center">
-                                 ₱150
-                                 </span>
-                              </div>
-                              <hr class="border-gray-100" />
-                              <!-- Status -->
-                              <div class="flex justify-between items-center pb-2">
-                                 <span class="text-gray-600 text-sm font-medium">Status</span>
-                                 <span class="text-blue-600 text-sm font-medium px-3 py-1 bg-blue-50 border border-blue-200 rounded-md w-40 text-center">
-                                 Pending
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center"
+                                    th:text="|₱*{request.price}|">
+                                 -
                                  </span>
                               </div>
                               <hr class="border-gray-100" />
                               <!-- Date to Borrow -->
                               <div class="flex justify-between items-center pb-2">
                                  <span class="text-gray-600 text-sm font-medium">Date to Borrow</span>
-                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center">
-                                 2025-01-18
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center"
+                                    th:text="|*{request.dateToBorrow}|">
+                                 -
                                  </span>
                               </div>
                               <hr class="border-gray-100" />
                               <!-- Date to Return -->
                               <div class="flex justify-between items-center pb-2">
                                  <span class="text-gray-600 text-sm font-medium">Date to Return</span>
-                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center">
-                                 2025-01-22
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center"
+                                    th:text="|*{request.dateToReturn}|">
+                                 -
                                  </span>
                               </div>
                               <hr class="border-gray-100" />
                               <!-- Total Amount -->
                               <div class="flex justify-between items-center pb-2">
                                  <span class="text-gray-600 text-sm font-medium">Total Amount</span>
-                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center">
-                                 ₱150
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-40 text-center"
+                                    th:text="|₱*{request.qty * request.price}|">
+                                 -
                                  </span>
                               </div>
                            </div>
                         </div>
                         <!-- RIGHT COLUMN — ACTIVITY TIMELINE -->
                         <div class="flex-1 bg-white rounded-lg p-5 border border-gray-300 shadow-sm">
-                           <h2 class="text-xl font-semibold text-gray-700 mb-4">Request Activity</h2>
-                           <div class="vertical-progress">
-                              <!-- Pending -->
-                              <div class="v-step active">
-                                 <div class="v-dot"></div>
-                                 <div class="flex flex-col">
-                                    <span class="font-medium">Pending</span>
-                                    <span class="text-xs text-gray-400">Your request has been submitted and is waiting for review.</span>
-                                 </div>
-                              </div>
-                              <div class="v-line"></div>
-                              <!-- Approved / Rejected -->
-                              <div class="v-step active">
-                                 <div class="v-dot"></div>
-                                 <div class="flex flex-col">
-                                    <span class="font-medium">Approved / Rejected</span>
-                                    <span class="text-xs text-gray-400">The lender has reviewed your request and responded.</span>
-                                 </div>
-                              </div>
-                              <div class="v-line"></div>
-                              <!-- Pick Up Ready -->
-                              <div class="v-step">
-                                 <div class="v-dot"></div>
-                                 <div class="flex flex-col">
-                                    <span class="font-medium">Pick Up Ready</span>
-                                    <span class="text-xs text-gray-400">Your item is now ready to be picked up.</span>
-                                 </div>
-                              </div>
-                              <div class="v-line"></div>
-                              <!-- Received -->
-                              <div class="v-step">
-                                 <div class="v-dot"></div>
-                                 <div class="flex flex-col">
-                                    <span class="font-medium">Received</span>
-                                    <span class="text-xs text-gray-400">You have received the item from the lender.</span>
-                                 </div>
-                              </div>
-                              <div class="v-line"></div>
-                              <!-- Ongoing -->
-                              <div class="v-step">
-                                 <div class="v-dot"></div>
-                                 <div class="flex flex-col">
-                                    <span class="font-medium">Ongoing</span>
-                                    <span class="text-xs text-gray-400">You are currently using the borrowed item.</span>
-                                 </div>
-                              </div>
-                              <div class="v-line"></div>
-                              <!-- Completed -->
-                              <div class="v-step">
-                                 <div class="v-dot"></div>
-                                 <div class="flex flex-col">
-                                    <span class="font-medium">Completed</span>
-                                    <span class="text-xs text-gray-400">Item has been returned. The process is complete.</span>
-                                 </div>
-                              </div>
-                              <div class="v-line"></div>
-                              <!-- Payment Pending -->
-                              <div class="v-step">
-                                 <div class="v-dot"></div>
-                                 <div class="flex flex-col">
-                                    <span class="font-medium">Payment Pending</span>
-                                    <span class="text-xs text-gray-400">Please settle your payment to finish the transaction.</span>
-                                 </div>
-                              </div>
-                              <div class="v-line"></div>
-                              <!-- Paid -->
-                              <div class="v-step">
-                                 <div class="v-dot"></div>
-                                 <div class="flex flex-col">
-                                    <span class="font-medium">Paid</span>
-                                    <span class="text-xs text-gray-400">Payment received. Thank you!</span>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">Request Activity</h2>
+                        <div class="vertical-progress">
+    <div th:each="step, iterStat : ${steps}">
+        <div class="v-step" th:classappend="${iterStat.index} <= ${currentStepIndex} ? ' active'">
+            <div class="v-dot"></div>
+            <div class="flex flex-col">
+                <span class="font-medium" th:text="${step}"></span>
+                <span class="text-xs text-gray-400" th:switch="${step}">
+                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PENDING}">Your request has been submitted and is waiting for review.</span>
+                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).APPROVED}">The lender has reviewed your request and responded.</span>
+                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).REJECTED}">Your request has been rejected.</span>
+                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PICK_UP_READY}">Your item is now ready to be picked up.</span>
+                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).ITEM_RECEIVED}">You have received the item from the lender.</span>
+                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).ON_GOING}">You are currently using the borrowed item.</span>
+                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).COMPLETED}">Item has been returned. The process is complete.</span>
+                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PAYMENT_PENDING}">Please settle your payment to finish the transaction.</span>
+                    <span th:case="${T(project.borrowhen.common.constant.CommonConstant).PAID}">Payment received. Thank you!</span>
+                </span>
+            </div>
+        </div>
+        <div class="v-line" th:if="${!iterStat.last}"></div>
+    </div>
+</div>
+</div>
+
                      </div>
                   </div>
                </div>
@@ -416,6 +451,9 @@
             </div>
          </div>
       </div>
+      <script th:inline="javascript">
+         console.log(/*[[${borrowRequestDto}]]*/'');
+      </script>
       <script th:src="@{/script/modal.js}"></script>
       <script th:src="@{/script/loading.js}"></script>
    </body>
