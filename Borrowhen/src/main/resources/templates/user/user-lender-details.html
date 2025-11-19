@@ -79,11 +79,11 @@
                      </div>
                   </div>
                   <a th:href="@{/admin/lenders}"
-					   class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-500 hover:bg-indigo-700 
-					          border border-white rounded-md text-sm text-white transition">
-					   <i class="fa-solid fa-arrow-left text-white text-sm"></i>
-					   Back
-					</a>
+                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-500 hover:bg-indigo-700 
+                     border border-white rounded-md text-sm text-white transition">
+                  <i class="fa-solid fa-arrow-left text-white text-sm"></i>
+                  Back
+                  </a>
                </div>
                <div class="bg-white rounded-xl">
                   <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
@@ -96,10 +96,10 @@
                               <span class="text-sm text-gray-500" th:text="*{user.emailAddress}"></span>
                               <div class="flex items-center gap-2 mt-1 whitespace-nowrap">
                                  <div id="star-container" class="flex text-yellow-400 shrink-0"></div>
-								  <span id="rating-text" class="text-gray-500 text-sm whitespace-nowrap"
-								        th:text="*{user.rating + ' out of 5'}">
-								    0 out of 5
-								  </span>
+                                 <span id="rating-text" class="text-gray-500 text-sm whitespace-nowrap"
+                                    th:text="*{user.rating + ' out of 5'}">
+                                 0 out of 5
+                                 </span>
                               </div>
                            </div>
                         </div>
@@ -128,9 +128,9 @@
                            <div class="border border-gray-300 rounded-md shadow-sm p-5 bg-white">
                               <h3 class="text-base font-semibold text-gray-800 mb-2">About</h3>
                               <p class="text-gray-600 text-sm leading-relaxed"
-								   th:text="*{user.about}"
-								   style="white-space: pre-wrap !important; white-space: -moz-pre-wrap !important; word-break: break-word !important; display:block !important;">
-								</p>
+                                 th:text="*{user.about}"
+                                 style="white-space: pre-wrap !important; white-space: -moz-pre-wrap !important; word-break: break-word !important; display:block !important;">
+                              </p>
                               </p>
                            </div>
                            <div class="border border-gray-300 rounded-md shadow-sm p-5 bg-white w-full">
@@ -211,32 +211,31 @@
          <script th:inline="javascript">
             console.log(/*[[${userDto}]]*/'')
          </script>
-         <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const rating = /*[[${userDto.user.rating}]]*/ 0; // Thymeleaf injects rating
-    const starContainer = document.getElementById("star-container");
-
-    const fullStars = Math.floor(rating);
-    const hasHalf = rating % 1 >= 0.5;
-
-    // 🟡 Full stars
-    for (let i = 0; i < fullStars; i++) {
-      starContainer.innerHTML += '<i class="fa-solid fa-star"></i>';
-    }
-
-    // 🌓 Half star
-    if (hasHalf) {
-      starContainer.innerHTML += '<i class="fa-solid fa-star-half-stroke"></i>';
-    }
-
-    // ⚪ Empty stars
-    const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
-    for (let i = 0; i < emptyStars; i++) {
-      starContainer.innerHTML += '<i class="fa-regular fa-star"></i>';
-    }
-  });
-</script>
-
+         <script th:inline="javascript">
+            document.addEventListener("DOMContentLoaded", () => {
+              const rating = /*[[${userDto.user.rating}]]*/ 0; // Thymeleaf injects rating
+              const starContainer = document.getElementById("star-container");
+            
+              const fullStars = Math.floor(rating);
+              const hasHalf = rating % 1 >= 0.5;
+            
+              // 🟡 Full stars
+              for (let i = 0; i < fullStars; i++) {
+                starContainer.innerHTML += '<i class="fa-solid fa-star"></i>';
+              }
+            
+              // 🌓 Half star
+              if (hasHalf) {
+                starContainer.innerHTML += '<i class="fa-solid fa-star-half-stroke"></i>';
+              }
+            
+              // ⚪ Empty stars
+              const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
+              for (let i = 0; i < emptyStars; i++) {
+                starContainer.innerHTML += '<i class="fa-regular fa-star"></i>';
+              }
+            });
+         </script>
       </div>
    </body>
 </html>
