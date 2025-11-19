@@ -145,46 +145,58 @@ async function loadNotifications(page = 0, startDate = "", endDate = "", status 
             data.notifications.forEach(notification => {
                 const tr = document.createElement("tr");
 
-                // Unread notifications get light blue, all have hover pointer + gray effect
-                tr.className = `
-                    border-b border-gray-100
-                    ${!notification.isRead ? "bg-blue-50" : ""}
-                    hover:bg-gray-100 cursor-pointer
-                `;
+                // Base classes for hover + pointer
+                tr.className = `border-b border-gray-100 cursor-pointer`;
+
+                // Create <a> element wrapping the content
+                const a = document.createElement("a");
+                a.href = notification.link;
+                a.className = "flex items-start gap-3 w-full h-full px-4 py-2";
+
+                // Highlight unread notifications
+                if (!notification.isRead) {
+                    tr.classList.add("bg-blue-50");
+                } else {
+                    a.classList.add("hover:bg-gray-100");
+                }
 
                 // Determine icon based on notification type
                 let iconClass = "fa-info-circle";
                 let colorClass = "text-gray-500";
 
                 switch (notification.type) {
-                    case "REQUEST_PENDING":
-                        iconClass = "fa-hourglass-half"; colorClass = "text-yellow-500"; break;
-                    case "REQUEST_APPROVED":
-                        iconClass = "fa-check-circle"; colorClass = "text-green-500"; break;
-                    case "REQUEST_REJECTED":
-                        iconClass = "fa-times-circle"; colorClass = "text-red-500"; break;
-                    case "NEW_ITEM":
-                        iconClass = "fa-box"; colorClass = "text-blue-500"; break;
-                    case "ITEM_RECEIVED":
-                        iconClass = "fa-box-open"; colorClass = "text-indigo-500"; break;
-                    case "REQUEST_PICKUP_READY":
-                        iconClass = "fa-location-dot"; colorClass = "text-purple-500"; break;
-                    case "REQUEST_PAYMENT_PENDING":
-                        iconClass = "fa-credit-card"; colorClass = "text-pink-500"; break;
-                    case "OVERDUE":
-                        iconClass = "fa-exclamation-triangle"; colorClass = "text-orange-500"; break;
+                    case "REQUEST_PENDING": iconClass = "fa-hourglass-half"; colorClass = "text-yellow-500"; break;
+                    case "REQUEST_APPROVED": iconClass = "fa-check-circle"; colorClass = "text-green-500"; break;
+                    case "REQUEST_REJECTED": iconClass = "fa-times-circle"; colorClass = "text-red-500"; break;
+                    case "NEW_ITEM": iconClass = "fa-box"; colorClass = "text-blue-500"; break;
+                    case "ITEM_RECEIVED": iconClass = "fa-box-open"; colorClass = "text-indigo-500"; break;
+                    case "REQUEST_PICKUP_READY": iconClass = "fa-location-dot"; colorClass = "text-purple-500"; break;
+                    case "REQUEST_PAYMENT_PENDING": iconClass = "fa-credit-card"; colorClass = "text-pink-500"; break;
+                    case "OVERDUE": iconClass = "fa-exclamation-triangle"; colorClass = "text-orange-500"; break;
                 }
 
-                tr.innerHTML = `
-                    <td class="px-4 py-2 flex items-start gap-3">
-                        <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
-                        <div class="flex flex-col text-sm text-gray-700 leading-tight">
-                            <span>${notification.message}</span>
-                            <span class="text-[11px] text-gray-400 mt-0.5">${notification.dateAndTime}</span>
-                        </div>
-                    </td>
+                a.innerHTML = `
+                    <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
+                    <div class="flex flex-col text-sm text-gray-700 leading-tight">
+                        <span>${notification.message}</span>
+                        <span class="text-[11px] text-gray-400 mt-0.5">${notification.dateAndTime}</span>
+                    </div>
                 `;
 
+                // Intercept click to mark as read first
+                a.addEventListener("click", async (e) => {
+                    e.preventDefault(); // prevent immediate navigation
+                    try {
+                        await fetch(`/api/notifications/read?encryptedId=${notification.encryptedId}`, { method: "GET" });
+                        tr.classList.remove("bg-blue-50"); // remove highlight
+                        a.classList.add("hover:bg-gray-100");
+                    } catch (err) {
+                        console.error("Failed to mark notification as read:", err);
+                    }
+                    window.location.href = notification.link; // navigate after marking as read
+                });
+
+                tr.appendChild(a);
                 tableBody.appendChild(tr);
             });
         } else {
@@ -201,6 +213,7 @@ async function loadNotifications(page = 0, startDate = "", endDate = "", status 
         removeLoadingScreenBody();
     }
 }
+
 
 
 

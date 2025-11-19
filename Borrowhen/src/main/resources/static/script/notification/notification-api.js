@@ -60,7 +60,16 @@ async function updateNotificationModal(triggerElement, forceRefresh = false) {
 
 	data.notifications.forEach((notification) => {
 	  const li = document.createElement("li");
-	  li.className = "cursor-pointer px-4 py-2 hover:bg-gray-100 flex items-start gap-3 border-b border-gray-100";
+
+	  // Base classes
+	  li.className = "cursor-pointer px-4 py-2 flex items-start gap-3 border-b border-gray-100";
+
+	  // Highlight unread notifications
+	  if (!notification.isRead) {
+	    li.classList.add("bg-blue-50"); // light blue background for unread
+	  } else {
+	    li.classList.add("hover:bg-gray-100"); // normal hover for read notifications
+	  }
 
 	  let iconClass = "fa-info-circle";
 	  let colorClass = "text-gray-500";
@@ -101,10 +110,12 @@ async function updateNotificationModal(triggerElement, forceRefresh = false) {
 	    e.preventDefault(); // prevent immediate navigation
 	    try {
 	      await fetch(`/api/notifications/read?encryptedId=${notification.encryptedId}`, { method: "GET" });
+	      li.classList.remove("bg-blue-50");   // Remove highlight after read
+	      li.classList.add("hover:bg-gray-100");
 	    } catch (err) {
 	      console.error("Failed to mark notification as read:", err);
 	    }
-	    // After marking as read, navigate to the link
+	    // Navigate after marking as read
 	    window.location.href = notification.link;
 	  });
 

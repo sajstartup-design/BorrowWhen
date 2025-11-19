@@ -69,7 +69,8 @@ public interface NotificationDao extends JpaRepository<NotificationEntity, Integ
 		        n.target_role,
 		        n.type,
 		        n.updated_date,
-		        n.user_id
+		        n.user_id,
+		        n.borrow_request_id
 		    FROM notifications n
 		    INNER JOIN users u ON u.id = :userId
 		    WHERE n.is_deleted = false
