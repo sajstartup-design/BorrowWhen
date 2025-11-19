@@ -71,7 +71,7 @@
                   </div>
                </div>
                <!-- ---------- FORM ---------- -->
-               <div class="bg-white rounded-md ">
+               <div class="bg-white rounded-xl ">
                   <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
                      <form th:action="@{/lender/inventory/edit}" method="POST" th:object="${inventoryDto}">
                         <input type="hidden" name="encryptedId" th:value="*{encryptedId}" />

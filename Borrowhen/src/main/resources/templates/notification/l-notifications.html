@@ -28,12 +28,25 @@
          <main class="flex-1 relative">
             <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0"></div>
             <div class="relative z-10 px-6 max-w-[1280px] mx-auto w-full gap-y-3">
-               <!-- Breadcrumb -->
-               <ul class="py-3 flex items-center text-white text-xs">
-                  <li><a th:href="@{/lender/dashboard}" class="px-2"><i class="fa-solid fa-house"></i></a></li>
-                  <li><i class="fa-solid fa-chevron-right px-1 fa-2xs"></i></li>
-                  <li><a href="#" class="px-2 font-bold">Notifications</a></li>
-               </ul>
+               <div class="flex flex-wrap items-center justify-between">
+                  <div class="max-w-auto overflow-x-auto">
+                     <ul class="py-3 flex items-center text-white">
+                        <li>
+                           <a th:href="@{/lender/dashboard}" class="px-2 text-xs flex items-center gap-2">
+                           <i class="fa-solid fa-house inline-flex items-center"></i>
+                           </a>
+                        </li>
+                        <li>
+                           <i class="fa-solid fa-chevron-right fa-2xs inline-flex items-center px-1"></i>
+                        </li>
+                        <li>
+                           <a href="#" class="px-2 text-xs flex items-center gap-2 font-bold">
+                           <span>Notifications</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
                <hr class="border-t border-white opacity-80" />
                <!-- Title -->
                <div class="flex items-center py-4 gap-3">
@@ -45,7 +58,7 @@
                   </div>
                </div>
                <!-- Main Content -->
-               <div class="bg-white rounded-2xl shadow-md p-6 flex gap-6">
+               <div class="bg-white rounded-xl shadow-md p-6 flex gap-6">
                   <!-- Sidebar -->
                   <aside class="w-64 border-r border-gray-200 pr-6">
                      <ul class="space-y-2">
