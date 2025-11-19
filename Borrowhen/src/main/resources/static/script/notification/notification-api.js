@@ -95,14 +95,21 @@ async function updateNotificationModal(triggerElement, forceRefresh = false) {
 
 	  // Create <a> element
 	  const a = document.createElement("a");
-	  a.href = notification.link;
+
+	  // Override link for NEW_ITEM notifications
+	  if (notification.type === "NEW_ITEM") {
+	      a.href = "/inventory";
+	  } else {
+	      a.href = notification.link;
+	  }
+
 	  a.className = "flex flex-row items-start gap-2 w-full h-full";
 	  a.innerHTML = `
-	    <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
-	    <div class="flex flex-col text-sm text-gray-700 leading-tight">
-	      <span>${notification.message}</span>
-	      <span class="text-[11px] text-gray-400 mt-0.5">${notification.dateAndTime}</span>
-	    </div>
+	      <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
+	      <div class="flex flex-col text-sm text-gray-700 leading-tight">
+	        <span>${notification.message}</span>
+	        <span class="text-[11px] text-gray-400 mt-0.5">${notification.dateAndTime}</span>
+	      </div>
 	  `;
 
 	  // Intercept click to mark as read first
@@ -116,7 +123,7 @@ async function updateNotificationModal(triggerElement, forceRefresh = false) {
 	      console.error("Failed to mark notification as read:", err);
 	    }
 	    // Navigate after marking as read
-	    window.location.href = notification.link;
+	    window.location.href = a.href;
 	  });
 
 	  li.appendChild(a);

@@ -22,8 +22,8 @@ nav i:hover{
 	background-color: #eef2ff;
 }
 
-.dropdown-wrapper.active a,
-.dropdown-wrapper.active button{
+.header-tab.active a,
+.header-tab.active button{
   background-color: #bfdbfe;
   color: #6366f1 !important;
 }

@@ -141,65 +141,96 @@ async function loadNotifications(page = 0, startDate = "", endDate = "", status 
         const tableBody = document.getElementById("table-body");
         tableBody.innerHTML = ""; // clear previous rows
 
-        if (data.notifications && data.notifications.length) {
-            data.notifications.forEach(notification => {
-                const tr = document.createElement("tr");
+		if (data.notifications && data.notifications.length) {
+		    data.notifications.forEach(notification => {
+		        const tr = document.createElement("tr");
 
-                // Base classes for hover + pointer
-                tr.className = `border-b border-gray-100 cursor-pointer`;
+		        // Base classes for hover + pointer
+		        tr.className = `border-b border-gray-100 cursor-pointer`;
 
-                // Create <a> element wrapping the content
-                const a = document.createElement("a");
-                a.href = notification.link;
-                a.className = "flex items-start gap-3 w-full h-full px-4 py-2";
+		        // Determine icon based on notification type
+		        let iconClass = "fa-info-circle";
+		        let colorClass = "text-gray-500";
 
-                // Highlight unread notifications
-                if (!notification.isRead) {
-                    tr.classList.add("bg-blue-50");
-                } else {
-                    a.classList.add("hover:bg-gray-100");
-                }
+		        switch (notification.type) {
+		            case "REQUEST_PENDING": iconClass = "fa-hourglass-half"; colorClass = "text-yellow-500"; break;
+		            case "REQUEST_APPROVED": iconClass = "fa-check-circle"; colorClass = "text-green-500"; break;
+		            case "REQUEST_REJECTED": iconClass = "fa-times-circle"; colorClass = "text-red-500"; break;
+		            case "NEW_ITEM": iconClass = "fa-box"; colorClass = "text-blue-500"; break;
+		            case "ITEM_RECEIVED": iconClass = "fa-box-open"; colorClass = "text-indigo-500"; break;
+		            case "REQUEST_PICKUP_READY": iconClass = "fa-location-dot"; colorClass = "text-purple-500"; break;
+		            case "REQUEST_PAYMENT_PENDING": iconClass = "fa-credit-card"; colorClass = "text-pink-500"; break;
+		            case "OVERDUE": iconClass = "fa-exclamation-triangle"; colorClass = "text-orange-500"; break;
+		        }
 
-                // Determine icon based on notification type
-                let iconClass = "fa-info-circle";
-                let colorClass = "text-gray-500";
+		        // Check if the notification should be clickable
+		        if (notification.type !== "REQUEST_PAYMENT_PENDING") {
+		            const a = document.createElement("a");
 
-                switch (notification.type) {
-                    case "REQUEST_PENDING": iconClass = "fa-hourglass-half"; colorClass = "text-yellow-500"; break;
-                    case "REQUEST_APPROVED": iconClass = "fa-check-circle"; colorClass = "text-green-500"; break;
-                    case "REQUEST_REJECTED": iconClass = "fa-times-circle"; colorClass = "text-red-500"; break;
-                    case "NEW_ITEM": iconClass = "fa-box"; colorClass = "text-blue-500"; break;
-                    case "ITEM_RECEIVED": iconClass = "fa-box-open"; colorClass = "text-indigo-500"; break;
-                    case "REQUEST_PICKUP_READY": iconClass = "fa-location-dot"; colorClass = "text-purple-500"; break;
-                    case "REQUEST_PAYMENT_PENDING": iconClass = "fa-credit-card"; colorClass = "text-pink-500"; break;
-                    case "OVERDUE": iconClass = "fa-exclamation-triangle"; colorClass = "text-orange-500"; break;
-                }
+		            // Override link for NEW_ITEM notifications
+		            if (notification.type === "NEW_ITEM") {
+		                a.href = "/inventory";
+		            } else {
+		                a.href = notification.link;
+		            }
 
-                a.innerHTML = `
-                    <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
-                    <div class="flex flex-col text-sm text-gray-700 leading-tight">
-                        <span>${notification.message}</span>
-                        <span class="text-[11px] text-gray-400 mt-0.5">${notification.dateAndTime}</span>
-                    </div>
-                `;
+		            a.className = "flex items-start gap-3 w-full h-full px-4 py-2";
 
-                // Intercept click to mark as read first
-                a.addEventListener("click", async (e) => {
-                    e.preventDefault(); // prevent immediate navigation
-                    try {
-                        await fetch(`/api/notifications/read?encryptedId=${notification.encryptedId}`, { method: "GET" });
-                        tr.classList.remove("bg-blue-50"); // remove highlight
-                        a.classList.add("hover:bg-gray-100");
-                    } catch (err) {
-                        console.error("Failed to mark notification as read:", err);
-                    }
-                    window.location.href = notification.link; // navigate after marking as read
-                });
+		            // Highlight unread notifications
+		            if (!notification.isRead) {
+		                tr.classList.add("bg-blue-50");
+		            } else {
+		                a.classList.add("hover:bg-gray-100");
+		            }
 
-                tr.appendChild(a);
-                tableBody.appendChild(tr);
-            });
-        } else {
+		            a.innerHTML = `
+		                <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
+		                <div class="flex flex-col text-sm text-gray-700 leading-tight">
+		                    <span>${notification.message}</span>
+		                    <span class="text-[11px] text-gray-400 mt-0.5">${notification.dateAndTime}</span>
+		                </div>
+		            `;
+
+		            // Intercept click to mark as read first
+		            a.addEventListener("click", async (e) => {
+		                e.preventDefault(); // prevent immediate navigation
+		                try {
+		                    await fetch(`/api/notifications/read?encryptedId=${notification.encryptedId}`, { method: "GET" });
+		                    tr.classList.remove("bg-blue-50"); // remove highlight
+		                    a.classList.add("hover:bg-gray-100");
+		                } catch (err) {
+		                    console.error("Failed to mark notification as read:", err);
+		                }
+		                // Navigate using the a.href so it respects NEW_ITEM override
+		                window.location.href = a.href;
+		            });
+
+		            tr.appendChild(a);
+		        } else {
+		            // For REQUEST_PAYMENT_PENDING, just display the content without <a>
+		            tr.classList.remove("cursor-pointer"); // remove pointer effect if needed
+		            tr.innerHTML = `
+		                <td class="px-4 py-2 flex items-start gap-3">
+		                    <i class="fa-solid ${iconClass} ${colorClass} mt-1"></i>
+		                    <div class="flex flex-col text-sm text-gray-700 leading-tight">
+		                        <span>${notification.message}</span>
+		                        <span class="text-[11px] text-gray-400 mt-0.5">${notification.dateAndTime}</span>
+		                    </div>
+		                </td>
+		            `;
+
+		            // Highlight unread notifications
+		            if (!notification.isRead) {
+		                tr.classList.add("bg-blue-50");
+		            }
+		        }
+
+		        tableBody.appendChild(tr);
+		    });
+		}
+
+		
+		else {
             const tr = document.createElement("tr");
             tr.innerHTML = `
                 <td class="text-gray-400 text-sm py-2 px-3" colspan="2">No notifications found.</td>

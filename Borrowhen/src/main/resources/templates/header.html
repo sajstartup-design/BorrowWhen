@@ -26,14 +26,14 @@
          <div class="hidden md:flex md:items-center md:gap-6">
             <ul class="flex items-center gap-1.5 text-xs">
                <!-- Dashboard -->
-               <li class="rounded-lg">
+               <li class="header-tab rounded-lg">
                   <a th:href="@{/admin/dashboard}" class="rounded-sm px-2 py-1.5 flex items-center gap-2 text-gray-500">
                   <i class="fa-solid fa-chart-line inline-flex items-center text-base"></i>
                   <span>Dashboard</span>
                   </a>
                </li>
                <!-- Inventory -->
-               <li class="dropdown-wrapper relative rounded-sm">
+               <li class="header-tab dropdown-wrapper relative rounded-sm">
                   <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                   <i class="fa-solid fa-box text-base"></i>
                   <span>Inventory</span>
@@ -45,7 +45,7 @@
                   </ul>
                </li>
                <!-- Request -->
-               <li class="dropdown-wrapper relative rounded-sm">
+               <li class="header-tab dropdown-wrapper relative rounded-sm">
                   <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                   <i class="fa-solid fa-inbox text-base"></i>
                   <span>Request</span>
@@ -56,7 +56,7 @@
                   </ul>
                </li>
                <!-- Borrower -->
-               <li class="dropdown-wrapper relative rounded-sm">
+               <li class="header-tab dropdown-wrapper relative rounded-sm">
                   <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                   <i class="fa-solid fa-users text-base"></i>
                   <span>Borrower</span>
@@ -67,7 +67,7 @@
                   </ul>
                </li>
                <!-- Lender -->
-               <li class="dropdown-wrapper relative rounded-sm">
+               <li class="header-tab dropdown-wrapper relative rounded-sm">
                   <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                   <i class="fa-solid fa-hand-holding-dollar text-base"></i>
                   <span>Lender</span>
@@ -79,7 +79,7 @@
                   </ul>
                </li>
                <!-- Settings -->
-               <li class="dropdown-wrapper relative rounded-sm">
+               <li class="header-tab dropdown-wrapper relative rounded-sm">
                   <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                   <i class="fa-solid fa-gear text-base"></i>
                   <span>Settings</span>
@@ -221,19 +221,19 @@
             <!-- Center Menu -->
             <div class="hidden md:flex md:items-center md:gap-6">
                <ul class="flex items-center gap-1.5 text-xs">
-                  <li class="rounded-lg active">
+                  <li class="header-tab rounded-lg active">
                      <a th:href="@{/lender/dashboard}" class="rounded-sm px-2 py-1.5 flex items-center gap-2 text-gray-500">
                      <i class="fa-solid fa-chart-line text-base"></i>
                      <span>Dashboard</span>
                      </a>
                   </li>
-                  <li class="rounded-lg">
+                  <li class="header-tab rounded-lg">
                      <a th:href="@{/lender/chat}" class="rounded-sm px-2 py-1.5 flex items-center gap-2 text-gray-500">
                      <i class="fa-solid fa-comments text-base"></i>
                      <span>Chat</span>
                      </a>
                   </li>
-                  <li class="dropdown-wrapper relative rounded-sm">
+                  <li class="header-tab dropdown-wrapper relative rounded-sm">
                      <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                      <i class="fa-solid fa-box text-base"></i>
                      <span>Inventory</span>
@@ -243,7 +243,7 @@
                         <li><a th:href="@{/lender/inventory}" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Inventory List</a></li>
                      </ul>
                   </li>
-                  <li class="dropdown-wrapper relative rounded-sm">
+                  <li class="header-tab dropdown-wrapper relative rounded-sm">
                      <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                      <i class="fa-solid fa-inbox text-base"></i>
                      <span>Request</span>
@@ -253,7 +253,7 @@
                         <li><a th:href="@{/lender/request}" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Request List</a></li>
                      </ul>
                   </li>
-                  <li class="dropdown-wrapper relative rounded-sm">
+                  <li class="header-tab dropdown-wrapper relative rounded-sm">
                      <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                      <i class="fa-solid fa-credit-card text-base"></i>
                      <span>Payment</span>
@@ -263,7 +263,7 @@
                         <li><a th:href="@{/lender/payment}" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Payment List</a></li>
                      </ul>
                   </li>
-                  <li class="dropdown-wrapper relative rounded-sm">
+                  <li class="header-tab dropdown-wrapper relative rounded-sm">
                      <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                      <i class="fa-regular fa-star w-5"></i>
                      <span>Review</span>
@@ -403,19 +403,19 @@
             <!-- Center Menu -->
             <div class="hidden md:flex md:items-center md:gap-6">
                <ul class="flex items-center gap-1.5 text-xs">
-                  <li class="rounded-lg active">
+                  <li class="header-tab rounded-lg active">
                      <a th:href="@{/dashboard}" class="rounded-sm px-2 py-1.5 flex items-center gap-2 text-gray-500">
                      <i class="fa-solid fa-chart-line text-base"></i>
                      <span>Dashboard</span>
                      </a>
                   </li>
-                  <li class="rounded-lg">
+                  <li class="header-tab rounded-lg">
                      <a th:href="@{/chat}" class="rounded-sm px-2 py-1.5 flex items-center gap-2 text-gray-500">
                      <i class="fa-solid fa-comments text-base"></i>
                      <span>Chat</span>
                      </a>
                   </li>
-                  <li class="dropdown-wrapper relative rounded-sm">
+                  <li class="header-tab dropdown-wrapper relative rounded-sm">
                      <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                      <i class="fa-solid fa-box text-base"></i>
                      <span>Inventory</span>
@@ -425,7 +425,7 @@
                         <li><a th:href="@{/inventory}" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Inventory List</a></li>
                      </ul>
                   </li>
-                  <li class="dropdown-wrapper relative rounded-sm">
+                  <li class="header-tab dropdown-wrapper relative rounded-sm">
                      <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                      <i class="fa-solid fa-inbox text-base"></i>
                      <span>Request</span>
@@ -435,7 +435,7 @@
                         <li><a th:href="@{/request}" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Request List</a></li>
                      </ul>
                   </li>
-                  <li class="dropdown-wrapper relative rounded-sm">
+                  <li class="header-tab dropdown-wrapper relative rounded-sm">
                      <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                      <i class="fa-solid fa-credit-card text-base"></i>
                      <span>Payment</span>
@@ -445,7 +445,7 @@
                         <li><a th:href="@{/payment/view}" class="block px-3 py-2 rounded-lg hover:bg-gray-100">Payment List</a></li>
                      </ul>
                   </li>
-                  <li class="dropdown-wrapper relative rounded-sm">
+                  <li class="header-tab dropdown-wrapper relative rounded-sm">
                      <button type="button" class="dropdown-btn px-2 py-1.5 rounded-sm flex items-center gap-2 text-gray-500 hover:text-gray-700 transition">
                      <i class="fa-solid fa-clock-rotate-left text-base"></i>
                      <span>History</span>
