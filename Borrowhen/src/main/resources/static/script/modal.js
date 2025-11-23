@@ -43,6 +43,17 @@ function updateBtnsModal() {
 			console.log(modal.id);
 
 			if (modal) {
+				
+				const form = modal.querySelector("form");
+			    const submitBtn = modal.querySelector("button[type='submit']");
+			
+			    if (form && submitBtn) {
+			        form.addEventListener("submit", () => {
+			            submitBtn.disabled = true;
+			            submitBtn.textContent = "PROCESSING...";
+			        });
+			    }
+				
 				const modalBackground = document.createElement("div");
 				
 				document.body.appendChild(modalBackground);
