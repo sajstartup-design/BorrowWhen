@@ -184,7 +184,7 @@
                                  <!-- Mark as Received button: only for PICK-UP READY -->
                                  <button th:if="*{request.status == 'PICK-UP READY'}"
                                     data-toggle="modal"
-                                    data-target="#markReceivedModal"
+                                    data-target="#confirmModal"
                                     th:data-id="*{request.encryptedId}"
                                     th:data-item-name="*{request.itemName}"
                                     th:data-price="*{request.price}"
