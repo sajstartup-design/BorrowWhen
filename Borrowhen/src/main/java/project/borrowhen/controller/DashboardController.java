@@ -41,6 +41,16 @@ public class DashboardController {
 	@GetMapping("/admin/dashboard")
 	public String showAdminDashboard(Model model) {
 		
+		try {
+			DashboardDto outDto = dashboardService.getAdminDashboardDetails();
+			
+			model.addAttribute("dashboardDto", outDto);
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			
+		}
+		
 		return "dashboard/admin-dashboard";
 	}
 	

@@ -6,6 +6,8 @@ import project.borrowhen.dto.DashboardDto;
 
 @Service
 public interface DashboardService {
+	
+	public DashboardDto getAdminDashboardDetails() throws Exception;
 
 	public DashboardDto getBorrowerDashboardDetails();
 	

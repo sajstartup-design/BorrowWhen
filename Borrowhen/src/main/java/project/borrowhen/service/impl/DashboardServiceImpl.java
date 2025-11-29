@@ -5,14 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import project.borrowhen.common.constant.CommonConstant;
+import project.borrowhen.common.util.CipherUtil;
+import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.common.util.TimeAgoUtil;
 import project.borrowhen.dao.BorrowRequestDao;
 import project.borrowhen.dao.InventoryDao;
 import project.borrowhen.dao.NotificationDao;
+import project.borrowhen.dao.UserDao;
+import project.borrowhen.dao.entity.AdminDashboardOverview;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
@@ -22,6 +28,7 @@ import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.DashboardDto;
 import project.borrowhen.object.BorrowRequestObj;
+import project.borrowhen.object.FilterAndSearchObj;
 import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.NotificationObj;
 import project.borrowhen.object.OverdueBorrowRequestObj;
@@ -42,6 +49,12 @@ public class DashboardServiceImpl implements DashboardService{
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private CipherUtil cipherUtil;
 
 	@Override
 	public DashboardDto getBorrowerDashboardDetails() {
@@ -203,6 +216,75 @@ public class DashboardServiceImpl implements DashboardService{
 		}
 		
 		outDto.setOngoingRequests(ongoingRequests);	
+		
+		return outDto;
+	}
+
+	@Override
+	public DashboardDto getAdminDashboardDetails() throws Exception {
+		
+		DashboardDto outDto = new DashboardDto();
+		
+		AdminDashboardOverview overview = userDao.getAdminOverview();
+		
+		outDto.setAdminDashboardOverview(overview);
+		
+		Pageable pageable = PageRequest.of(0,8);
+	     
+	    Page<BorrowRequestData> allRequests = borrowRequestDao.getAllBorrowRequests(pageable, CommonConstant.BLANK, "ALL");
+	    
+	    List<BorrowRequestObj> requests = new ArrayList<>();
+	    
+	    for (BorrowRequestData request : allRequests) {
+	        BorrowRequestObj obj = new BorrowRequestObj();
+	        
+	        obj.setEncryptedId(cipherUtil.encrypt(String.valueOf(request.getBorrowRequestId())));
+	        
+	        String borrowerFullName = request.getBorrowerFullName();
+	        obj.setBorrower(borrowerFullName.trim());
+	        obj.setBorrowerUserId(request.getBorrowerUserId());
+	        
+	        String lenderFullName = request.getLenderFullName();
+	        obj.setLender(lenderFullName.trim());
+	        obj.setLenderUserId(request.getLenderUserId());
+	        
+	        obj.setItemName(request.getItemName());
+	        obj.setPrice(request.getPrice());
+	        obj.setQty(request.getQty());
+	        obj.setDateToBorrow(request.getDateToBorrow());
+	        obj.setDateToReturn(request.getDateToReturn());
+	        obj.setStatus(request.getStatus());
+			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(request.getCreatedDate()));
+			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(request.getUpdatedDate()));		
+	        
+	        requests.add(obj);
+	    }
+	    
+	    outDto.setRequests(requests);
+	    
+	    List<InventoryEntity> allInventories = inventoryDao.getAdminPopularItems();
+		
+		List<InventoryObj> inventories = new ArrayList<>();
+		
+		for(InventoryEntity inventory : allInventories) {
+			
+			InventoryObj obj = new InventoryObj();
+			
+			obj.setItemName(inventory.getItemName());
+			obj.setTotalLent(inventory.getTotalLent());
+		
+			inventories.add(obj);
+		}
+		
+		outDto.setPopularItems(inventories);
+		
+		List<Double> revenues = borrowRequestDao.getTotalRevenueEachMonth();
+		
+		outDto.setRevenues(revenues);
+		
+		List<Integer> borrows = borrowRequestDao.getTotalBorrowEachMonth();
+		
+		outDto.setBorrows(borrows);
 		
 		return outDto;
 	}

@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import jakarta.transaction.Transactional;
+import project.borrowhen.dao.entity.AdminDashboardOverview;
 import project.borrowhen.dao.entity.UserData;
 import project.borrowhen.dao.entity.UserDetailsData;
 import project.borrowhen.dao.entity.UserEntity;
@@ -275,5 +276,53 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 	    @Param("updatedDate") Date updatedDate
 	) throws DataAccessException;
 	
+	public final String GET_ADMIN_OVERVIEW = """
+		    WITH total_borrowers AS (
+		        SELECT CAST(COALESCE(COUNT(*), 0) AS INT) AS value
+		        FROM users
+		        WHERE role = 'BORROWER' AND is_deleted = false
+		    ),
+		    total_lenders AS (
+		        SELECT CAST(COALESCE(COUNT(*), 0) AS INT) AS value
+		        FROM users
+		        WHERE role = 'LENDER' AND is_deleted = false
+		    ),
+		    total_items AS (
+		        SELECT CAST(COALESCE(COUNT(*), 0) AS INT) AS value
+		        FROM inventory
+		        WHERE is_deleted = false
+		    ),
+		    total_qty AS (
+		        SELECT CAST(COALESCE(SUM(total_qty), 0) AS INT) AS value
+		        FROM inventory
+		        WHERE is_deleted = false
+		    ),
+		    total_available_qty AS (
+		        SELECT CAST(COALESCE(SUM(available_qty), 0) AS INT) AS value
+		        FROM inventory
+		        WHERE is_deleted = false
+		    ),
+		    total_requests AS (
+		        SELECT CAST(COALESCE(COUNT(*), 0) AS INT) AS value
+		        FROM borrow_request
+		        WHERE is_deleted = false
+		    ),
+		    total_revenues AS (
+		        SELECT CAST(COALESCE(SUM(price * qty), 0) AS DOUBLE PRECISION) AS value
+		        FROM borrow_request
+		        WHERE is_deleted = false AND status = 'PAID'
+		    )
+		    SELECT 
+		        (SELECT value FROM total_borrowers) AS total_borrowers,
+		        (SELECT value FROM total_lenders) AS total_lenders,
+		        (SELECT value FROM total_items) AS total_items,
+		        (SELECT value FROM total_qty) AS total_qty,
+		        (SELECT value FROM total_available_qty) AS total_available_qty,
+		        (SELECT value FROM total_requests) AS total_requests,
+		        (SELECT value FROM total_revenues) AS total_revenues
+		""";
 
+	
+	@Query(value=GET_ADMIN_OVERVIEW, nativeQuery=true)
+	public AdminDashboardOverview getAdminOverview() throws DataAccessException;
 }

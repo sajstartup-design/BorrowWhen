@@ -503,4 +503,43 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	public Page<BorrowRequestData> getAllPaidBorrowRequestForBorrower(Pageable pageable,
 			@Param("userId") int userId,
 			@Param("search") String search) throws DataAccessException; 
+	
+	
+	public final String GET_TOTAL_REVENUE_EACH_MONTH = """
+				WITH months AS (
+				    SELECT generate_series(1,12) AS month
+				)
+				SELECT
+				    COALESCE(SUM(b.qty * b.price), 0) AS revenue
+				FROM months m
+				LEFT JOIN borrow_request b
+				    ON EXTRACT(MONTH FROM b.created_date) = m.month
+				    AND b.status = 'PAID'
+				    AND b.is_deleted = false
+				GROUP BY m.month
+				ORDER BY m.month;
+
+			
+			""";
+	
+	@Query(value=GET_TOTAL_REVENUE_EACH_MONTH, nativeQuery=true)
+	public List<Double> getTotalRevenueEachMonth() throws DataAccessException; 
+	
+	public final String GET_TOTAL_BORROW_EACH_MONTH = """
+			WITH months AS (
+			    SELECT generate_series(1,12) AS month
+			)
+			SELECT
+			    COALESCE(COUNT(b.id), 0) AS request_count
+			FROM months m
+			LEFT JOIN borrow_request b
+			    ON EXTRACT(MONTH FROM b.created_date) = m.month
+			    AND b.is_deleted = false
+			GROUP BY m.month
+			ORDER BY m.month;
+
+		""";
+
+	@Query(value=GET_TOTAL_BORROW_EACH_MONTH, nativeQuery=true)
+	public List<Integer> getTotalBorrowEachMonth() throws DataAccessException; 
 }

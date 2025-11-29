@@ -227,6 +227,16 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	@Query(value=GET_LENDER_POPULAR_ITEMS, nativeQuery=true)
 	public List<InventoryEntity> getLenderPopularItems(@Param("userId") int userId) throws DataAccessException;
 	
+	public static final String GET_ADMIN_POPULAR_ITEMS = """
+			SELECT e.*
+			FROM inventory e
+			ORDER BY e.total_lent DESC
+			LIMIT 5
+		""";
+
+@Query(value=GET_ADMIN_POPULAR_ITEMS, nativeQuery=true)
+public List<InventoryEntity> getAdminPopularItems() throws DataAccessException;
+	
     public final String DELETE_INVENTORY = 
     	    """
     			UPDATE inventory

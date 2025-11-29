@@ -26,7 +26,7 @@
       <div class="bg-base-200 flex min-h-screen flex-col">
          <!-- ---------- HEADER ---------- -->
          <div th:replace="~{header :: admin-header}"></div>
-         <main class="flex-1 relative">
+         <main class="flex-1 relative" th:object="${dashboardDto}">
             <!-- Blue background section (stays fixed within main) -->
             <div class="absolute top-0 left-0 w-full h-105 bg-blue-500 z-0">			 
             </div>
@@ -73,7 +73,7 @@
                               <i class="fa-solid fa-users text-blue-500 text-xl"></i>
                               <span class="text-gray-500 text-xs font-medium">Total Borrowers</span>
                            </div>
-                           <span class="text-2xl font-bold text-gray-800 mt-2">120</span>
+                           <span class="text-2xl font-bold text-gray-800 mt-2" th:text="*{adminDashboardOverview.totalBorrowers}">0</span>
                         </div>
                         <!-- Total Lenders -->
                         <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white flex flex-col justify-between">
@@ -81,7 +81,7 @@
                               <i class="fa-solid fa-hand-holding-dollar text-green-500 text-xl"></i>
                               <span class="text-gray-500 text-xs font-medium">Total Lenders</span>
                            </div>
-                           <span class="text-2xl font-bold text-gray-800 mt-2">45</span>
+                           <span class="text-2xl font-bold text-gray-800 mt-2" th:text="*{adminDashboardOverview.totalLenders}">0</span>
                         </div>
                         <!-- Total Items -->
                         <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white flex flex-col justify-between">
@@ -89,7 +89,7 @@
                               <i class="fa-solid fa-box text-indigo-500 text-xl"></i>
                               <span class="text-gray-500 text-xs font-medium">Total Items</span>
                            </div>
-                           <span class="text-2xl font-bold text-gray-800 mt-2">380</span>
+                           <span class="text-2xl font-bold text-gray-800 mt-2" th:text="*{adminDashboardOverview.totalItems}">0</span>
                         </div>
                         <!-- Total Qty -->
                         <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white flex flex-col justify-between">
@@ -97,7 +97,7 @@
                               <i class="fa-solid fa-layer-group text-purple-500 text-xl"></i>
                               <span class="text-gray-500 text-xs font-medium">Total Qty</span>
                            </div>
-                           <span class="text-2xl font-bold text-gray-800 mt-2">1,240</span>
+                           <span class="text-2xl font-bold text-gray-800 mt-2" th:text="*{adminDashboardOverview.totalQty}">0</span>
                         </div>
                         <!-- Total Available Qty -->
                         <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white flex flex-col justify-between">
@@ -105,7 +105,7 @@
                               <i class="fa-solid fa-check-circle text-green-500 text-xl"></i>
                               <span class="text-gray-500 text-xs font-medium">Total Available Qty</span>
                            </div>
-                           <span class="text-2xl font-bold text-gray-800 mt-2">1,050</span>
+                           <span class="text-2xl font-bold text-gray-800 mt-2" th:text="*{adminDashboardOverview.totalAvailableQty}">0</span>
                         </div>
                         <!-- Total Requests -->
                         <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white flex flex-col justify-between">
@@ -113,7 +113,7 @@
                               <i class="fa-solid fa-file-invoice text-yellow-500 text-xl"></i>
                               <span class="text-gray-500 text-xs font-medium">Total Requests</span>
                            </div>
-                           <span class="text-2xl font-bold text-gray-800 mt-2">320</span>
+                           <span class="text-2xl font-bold text-gray-800 mt-2" th:text="*{adminDashboardOverview.totalRequests}">0</span>
                         </div>
                         <!-- Total Revenue -->
                         <div class="rounded-lg border border-gray-300 shadow-md p-4 bg-white flex flex-col justify-between">
@@ -121,14 +121,14 @@
                               <i class="fa-solid fa-dollar-sign text-pink-500 text-xl"></i>
                               <span class="text-gray-500 text-xs font-medium">Total Revenue</span>
                            </div>
-                           <span class="text-2xl font-bold text-gray-800 mt-2">$12,400</span>
+                           <span class="text-2xl font-bold text-gray-800 mt-2" th:text="|₱*{adminDashboardOverview.totalRevenues}|"></span>
                         </div>
                         <div class="rounded-lg p-1 flex flex-wrap gap-2 justify-center items-center">
-                           <button class="bg-blue-500 text-white px-3 py-1 rounded shadow hover:bg-blue-600 transition">Inventory</button>
-                           <button class="bg-green-500 text-white px-3 py-1 rounded shadow hover:bg-green-600 transition">Request</button>
-                           <button class="bg-pink-500 text-white px-3 py-1 rounded shadow hover:bg-pink-600 transition">Borrower</button>
-                           <button class="bg-yellow-500 text-white px-3 py-1 rounded shadow hover:bg-yellow-600 transition">Lender</button>
-                           <button class="bg-purple-500 text-white px-3 py-1 rounded shadow hover:bg-purple-600 transition">Payment</button>
+                           <a th:href="@{/admin/inventory}" class="bg-blue-500 text-white px-3 py-1 rounded shadow hover:bg-blue-600 transition">Inventory</a>
+                           <a th:href="@{/admin/request}" class="bg-green-500 text-white px-3 py-1 rounded shadow hover:bg-green-600 transition">Request</a>
+                           <a th:href="@{/admin/borrowers}" class="bg-pink-500 text-white px-3 py-1 rounded shadow hover:bg-pink-600 transition">Borrower</a>
+                           <a th:href="@{/admin/lenders}" class="bg-yellow-500 text-white px-3 py-1 rounded shadow hover:bg-yellow-600 transition">Lender</a>
+                           <a th:href="@{/admin/inventory}" class="bg-purple-500 text-white px-3 py-1 rounded shadow hover:bg-purple-600 transition">Payment</a>
                         </div>
                      </div>
                      <!-- Analytics / Charts Section -->
@@ -167,30 +167,15 @@
                               <i class="fa-solid fa-list text-yellow-500"></i>
                            </div>
                            <ul class="overflow-y-auto max-h-80 divide-y divide-gray-200 text-gray-700 text-sm">
-                              <li class="py-2">
-                                 <span class="font-medium">Tan Zullene</span> requested to borrow
-                                 <span class="font-semibold">21,312</span> from
-                                 <span class="text-gray-400">2024-201</span> to
-                                 <span class="text-gray-400">23423</span>
-                              </li>
-                              <li class="py-2">
-                                 <span class="font-medium">Joshua Damole</span> requested to borrow
-                                 <span class="font-semibold">5,000</span> from
-                                 <span class="text-gray-400">2024-210</span> to
-                                 <span class="text-gray-400">22000</span>
-                              </li>
-                              <li class="py-2">
-                                 <span class="font-medium">Joshua Rojo</span> requested to borrow
-                                 <span class="font-semibold">12,000</span> from
-                                 <span class="text-gray-400">2024-215</span> to
-                                 <span class="text-gray-400">23000</span>
-                              </li>
-                              <li class="py-2">
-                                 <span class="font-medium">Sia Clarence</span> requested to borrow
-                                 <span class="font-semibold">8,500</span> from
-                                 <span class="text-gray-400">2024-220</span> to
-                                 <span class="text-gray-400">24000</span>
-                              </li>
+                              <li class="py-2" th:each="request : *{requests}">
+							   <span class="font-medium" th:text="${request.borrower}">-</span>
+							   wants to borrow <span th:text="${request.itemName}">-</span> from
+							   <span class="font-medium" th:text="${request.lender}">-</span>,
+							   from 
+							   <span class="text-gray-400" th:text="${request.dateToBorrow}">-</span>
+							   to 
+							   <span class="text-gray-400" th:text="${request.dateToReturn}">-</span>.
+							</li>              
                            </ul>
                         </div>
                      </div>
@@ -217,15 +202,21 @@
          </main>
       </div>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script>
+      <script th:inline="javascript">
+		  
+		 const webDto = /*[[${dashboardDto}]]*/'';
+		 console.log(webDto);
+		 const popularItems = webDto.popularItems;
+		 const revenues = webDto.revenues;
+		 const borrows = webDto.borrows;
          const borrowersCtx = document.getElementById('borrowersChart').getContext('2d');
          const borrowersChart = new Chart(borrowersCtx, {
              type: 'line',
              data: {
-                 labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+                 labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
                  datasets: [{
                      label: 'Borrowers',
-                     data: [12, 19, 3, 17, 28, 24],
+                     data: borrows,
                      borderColor: 'rgba(59, 130, 246, 1)',
                      backgroundColor: 'rgba(59, 130, 246, 0.2)',
                      tension: 0.3,
@@ -237,38 +228,58 @@
          });
          
          const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-         const revenueChart = new Chart(revenueCtx, {
-             type: 'bar',
-             data: {
-                 labels: ['Jan','Feb','Mar','Apr','May','Jun'],
-                 datasets: [{
-                     label: 'Revenue',
-                     data: [1200, 1900, 800, 1700, 2800, 2400],
-                     backgroundColor: 'rgba(236, 72, 153, 0.7)'
-                 }]
-             },
-             options: { responsive: true, plugins: { legend: { display: false } } }
-         });
+		const revenueChart = new Chart(revenueCtx, {
+		    type: 'bar',
+		    data: {
+		        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+		        datasets: [{
+		            label: 'Revenue',
+		            data: revenues,
+		            backgroundColor: 'rgba(236, 72, 153, 0.7)'
+		        }]
+		    },
+		    options: { responsive: true, plugins: { legend: { display: false } } }
+		});
          
          const topItemsCtx = document.getElementById('topItemsChart').getContext('2d');
-         const topItemsChart = new Chart(topItemsCtx, {
-             type: 'doughnut',
-             data: {
-                 labels: ['Laptop', 'Chair', 'Projector', 'Desk', 'Camera'],
-                 datasets: [{
-                     label: 'Top Items',
-                     data: [12, 19, 3, 5, 7],
-                     backgroundColor: [
-                         'rgba(79, 70, 229, 0.7)',
-                         'rgba(34, 197, 94, 0.7)',
-                         'rgba(245, 158, 11, 0.7)',
-                         'rgba(219, 39, 119, 0.7)',
-                         'rgba(14, 165, 233, 0.7)'
-                     ]
-                 }]
-             },
-             options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
-         });
+
+		// Check if popularItems exists and has at least 1 item
+		if (!popularItems || popularItems.length === 0) {
+		    console.log("No popular items to display.");
+		} else {
+		    // Generate labels and data dynamically
+		    const labels = popularItems.map(item => item.itemName);
+		    const data = popularItems.map(item => item.totalLent || 0); // or your value
+		
+		    // Predefined colors; repeat if more items than colors
+		    const backgroundColorsBase = [
+		        'rgba(79, 70, 229, 0.7)',
+		        'rgba(34, 197, 94, 0.7)',
+		        'rgba(245, 158, 11, 0.7)',
+		        'rgba(219, 39, 119, 0.7)',
+		        'rgba(14, 165, 233, 0.7)'
+		    ];
+		    const backgroundColors = popularItems.map((_, i) => backgroundColorsBase[i % backgroundColorsBase.length]);
+		
+		    const topItemsChart = new Chart(topItemsCtx, {
+		        type: 'doughnut',
+		        data: {
+		            labels: labels,
+		            datasets: [{
+		                label: 'Total Borrows',
+		                data: data,
+		                backgroundColor: backgroundColors
+		            }]
+		        },
+		        options: {
+		            responsive: true,
+		            plugins: {
+		                legend: { position: 'bottom' }
+		            }
+		        }
+		    });
+		}
+
       </script>
    </body>
 </html>
