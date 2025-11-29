@@ -40,4 +40,6 @@ public class BorrowRequestObj {
 	private String feedback;
 	
 	private double rating;
+	
+	private String paymentEncryptedId;
 }

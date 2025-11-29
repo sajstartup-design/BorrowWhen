@@ -78,7 +78,7 @@ public class SecurityConfig {
 
 						
 						 
-						.requestMatchers("/payment/receipt").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER)
+						.requestMatchers("/payment/receipt").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER, CommonConstant.ROLE_ADMIN)
 						
 						.requestMatchers("/admin/dashboard/**").hasAuthority(CommonConstant.ROLE_ADMIN)
 						.requestMatchers("/admin/lenders/**").hasAuthority(CommonConstant.ROLE_ADMIN)

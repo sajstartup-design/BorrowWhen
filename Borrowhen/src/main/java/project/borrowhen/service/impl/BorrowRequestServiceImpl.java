@@ -17,11 +17,13 @@ import project.borrowhen.common.util.CalculationUtil;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.BorrowRequestDao;
+import project.borrowhen.dao.PaymentDao;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
 import project.borrowhen.dao.entity.InventoryEntity;
 import project.borrowhen.dao.entity.NotificationEntity;
+import project.borrowhen.dao.entity.PaymentEntity;
 import project.borrowhen.dao.entity.ReviewOverviewData;
 import project.borrowhen.dao.entity.UserEntity;
 import project.borrowhen.dto.BorrowRequestDto;
@@ -63,6 +65,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	
 	@Autowired
 	private AdminSettingsService adminSettingsService;
+	
+	@Autowired
+	private PaymentDao paymentDao;
     
     private int getMaxRequestDisplay() {
         return adminSettingsService.getSettings().getRequestPerPage();
@@ -490,6 +495,13 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
         lender.setPhoneNumber(lender.getPhoneNumber());
         lender.setGender(lender.getGender());
         
+	    if(CommonConstant.PAID.equals(request.getStatus())) {
+	    	
+	    	PaymentEntity payment = paymentDao.getPaymentByBorrowRequestId(id);
+	    	
+	    	obj.setPaymentEncryptedId(cipherUtil.encrypt(String.valueOf(payment.getId())));
+	    }
+        
         outDto.setRequest(obj);
         outDto.setBorrower(borrowerObj);   
         outDto.setLender(lenderObj);
@@ -517,6 +529,13 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
         obj.setDateToBorrow(request.getDateToBorrow());
         obj.setDateToReturn(request.getDateToReturn());
         obj.setStatus(request.getStatus());	     
+        
+        if(CommonConstant.PAID.equals(request.getStatus())) {
+	    	
+	    	PaymentEntity payment = paymentDao.getPaymentByBorrowRequestId(id);
+	    	
+	    	obj.setPaymentEncryptedId(cipherUtil.encrypt(String.valueOf(payment.getId())));
+	    }
                    
         outDto.setRequest(obj);    
 	
