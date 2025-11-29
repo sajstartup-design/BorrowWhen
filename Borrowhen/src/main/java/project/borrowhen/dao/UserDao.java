@@ -83,8 +83,7 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 	
 	public final String GET_USER_BY_ID = "SELECT e "
 			+ "FROM UserEntity e "
-			+ "WHERE e.id = :id "
-			+ "AND e.isDeleted = false ";
+			+ "WHERE e.id = :id ";
 	
 	@Query(value=GET_USER_BY_ID)
 	public UserEntity getUser(@Param("id") int id)  throws DataAccessException;
