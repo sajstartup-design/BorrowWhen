@@ -56,4 +56,12 @@ public class UserObj {
 	private int rating;
 	
 	private int page;
+	
+	private int totalBorrowers;
+	
+	private int totalLenders;
+	
+	private int totalActiveBorrowers;
+	
+	private int totalActiveLenders;
 }

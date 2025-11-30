@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +62,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private InventoryDao inventoryDao;
+	
+	@Autowired
+	private SessionRegistry sessionRegistry;
     
     private int getMaxUserDisplay() {
         return adminSettingsService.getSettings().getUserPerPage();
@@ -483,6 +488,56 @@ public class UserServiceImpl implements UserService {
 		int id = Integer.parseInt(cipherUtil.decrypt(inDto.getEncryptedId()));
 		
 		userDao.deleteUser(id, dateNow);
+	}
+
+	@Override
+	public UserDto getBorrowersOverview() throws Exception {
+		
+		UserDto outDto = new UserDto();
+		
+		int totalBorrowers = userDao.getTotalCountByRole(CommonConstant.ROLE_BORROWER);
+		
+		UserObj obj = new UserObj();
+		
+		obj.setTotalBorrowers(totalBorrowers);
+		 
+		List<Object> principals = sessionRegistry.getAllPrincipals();
+	    long activeBorrowers = principals.stream()
+	            .filter(p -> p instanceof UserDetails)
+	            .map(p -> (UserDetails) p)
+	            .filter(u -> u.getAuthorities().stream()
+	                    .anyMatch(a -> a.getAuthority().equals(CommonConstant.ROLE_BORROWER)))
+	            .count();
+	    obj.setTotalActiveBorrowers((int) activeBorrowers);
+	    
+	    outDto.setUser(obj);
+		
+		return outDto;
+	}
+
+	@Override
+	public UserDto getLendersOverview() throws Exception {
+		
+		UserDto outDto = new UserDto();
+		
+		int totalLenders = userDao.getTotalCountByRole(CommonConstant.ROLE_LENDER);
+		
+		UserObj obj = new UserObj();
+		
+		obj.setTotalLenders(totalLenders);
+		 
+		List<Object> principals = sessionRegistry.getAllPrincipals();
+	    long activeLenders = principals.stream()
+	            .filter(p -> p instanceof UserDetails)
+	            .map(p -> (UserDetails) p)
+	            .filter(u -> u.getAuthorities().stream()
+	                    .anyMatch(a -> a.getAuthority().equals(CommonConstant.ROLE_LENDER)))
+	            .count();
+	    obj.setTotalActiveLenders((int) activeLenders);
+	    
+	    outDto.setUser(obj);
+		
+		return outDto;
 	}
 
 

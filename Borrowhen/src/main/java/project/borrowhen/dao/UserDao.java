@@ -324,4 +324,9 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 	
 	@Query(value=GET_ADMIN_OVERVIEW, nativeQuery=true)
 	public AdminDashboardOverview getAdminOverview() throws DataAccessException;
+	
+	public final String GET_TOTAL_COUNT_BY_ROLE = "SELECT CAST(COUNT(e) AS INTEGER) FROM UserEntity e WHERE e.isDeleted = false AND e.role = :role ";
+	
+	@Query(GET_TOTAL_COUNT_BY_ROLE)
+	public int getTotalCountByRole(@Param("role") String role) throws DataAccessException;
 }

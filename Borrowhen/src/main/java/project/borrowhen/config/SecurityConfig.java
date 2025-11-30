@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -23,6 +25,11 @@ public class SecurityConfig {
 
 	@Autowired
 	private DataSource dataSource;
+	
+	@Bean
+	protected SessionRegistry sessionRegistry() {
+	    return new SessionRegistryImpl();
+	}
 
 	@Bean
 	protected PasswordEncoder passwordEncoder() {
@@ -56,7 +63,7 @@ public class SecurityConfig {
 
 	
 	@Bean
-	protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	protected SecurityFilterChain securityFilterChain(HttpSecurity http, SessionRegistry sessionRegistry) throws Exception {
 		
         AccessDeniedHandlerImpl accessDeniedHandler = new AccessDeniedHandlerImpl();
         accessDeniedHandler.setErrorPage("/error/401");
@@ -143,7 +150,11 @@ public class SecurityConfig {
 				.logout((logout) -> logout
 						.logoutSuccessUrl("/login")
 						.invalidateHttpSession(true)
-						.permitAll());
+						.permitAll())
+				.sessionManagement(session -> session
+			            .maximumSessions(-1) // unlimited concurrent sessions
+			            .sessionRegistry(sessionRegistry)
+			        );
 
 		return http.build();
 	}

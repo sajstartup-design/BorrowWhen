@@ -28,7 +28,9 @@ public interface UserService {
 	
 	public void deleteUser(UserDto inDto) throws Exception;
 	
+	public UserDto getBorrowersOverview() throws Exception;
 	
+	public UserDto getLendersOverview() throws Exception;
 	
 	/*
 	 * Authentication Part

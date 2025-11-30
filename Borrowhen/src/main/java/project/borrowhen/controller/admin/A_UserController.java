@@ -29,7 +29,16 @@ public class A_UserController {
 	private UserService userService;
 
 	@GetMapping("/admin/borrowers")
-	public String showBorrowerScreen() {
+	public String showBorrowerScreen(Model model ) {
+		
+		try {
+			UserDto outDto = userService.getBorrowersOverview();
+			
+			model.addAttribute("userDto", outDto);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 
 		return "user/user-borrower-view";
 	}
@@ -137,7 +146,16 @@ public class A_UserController {
 	}
 	
 	@GetMapping("/admin/lenders")
-	public String showLenderScreen() {
+	public String showLenderScreen(Model model) {
+		
+		try {
+			UserDto outDto = userService.getLendersOverview();
+			
+			model.addAttribute("userDto", outDto);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 
 		return "user/user-lender-view";
 	}
