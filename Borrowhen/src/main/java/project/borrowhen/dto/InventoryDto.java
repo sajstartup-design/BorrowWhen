@@ -40,6 +40,8 @@ public class InventoryDto {
 	
 	private MultipartFile image;
 	
+	private String imageName;
+	
 	private int availableQty;
 	
 	private String createdDate;

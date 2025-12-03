@@ -240,7 +240,10 @@ public class InventoryServiceImpl implements InventoryService{
 		outDto.setCreatedDate(DateFormatUtil.formatTimestampToString(inventory.getCreatedDate()));
 		outDto.setUpdatedDate(DateFormatUtil.formatTimestampToString(inventory.getUpdatedDate()));
 		outDto.setTotalBorrows(totalBorrows);
-		outDto.setTotalRevenue(totalRevenue);		
+		outDto.setTotalRevenue(totalRevenue);
+		outDto.setImageName(inventory.getImageName());
+		outDto.setCategory(inventory.getCategory());
+		
 		return outDto;
 	}
 
@@ -248,8 +251,6 @@ public class InventoryServiceImpl implements InventoryService{
 	public void editInventory(InventoryDto inDto) throws Exception {
 
 	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
-	    
-	    System.out.println(inDto.getUserId());
 	    
 	    Date dateNow = Date.valueOf(LocalDate.now());
 
@@ -262,17 +263,41 @@ public class InventoryServiceImpl implements InventoryService{
 
 	    int oldTotal = inv.getTotalQty();
 	    int oldAvailable = inv.getAvailableQty();
-	    int borrowed = oldTotal - oldAvailable;          // borrowed items
+	    int borrowed = oldTotal - oldAvailable;          
 
 	    int newTotal = inDto.getTotalQty();
-	    int newAvailable = newTotal - borrowed;          // recalc available
+	    int newAvailable = newTotal - borrowed;          
 
 	    // Validation: total cannot be smaller than borrowed items
 	    if (newTotal < borrowed) {
 	        throw new RuntimeException("Total Quantity cannot be smaller than borrowed quantity (" + borrowed + ").");
 	    }
 
-	    if (newAvailable < 0) newAvailable = 0;         // safety
+	    if (newAvailable < 0) newAvailable = 0;    
+	    
+	    String imageName = inv.getImageName(); // keep current image by default
+	    
+	    if (inDto.getImage() != null && !inDto.getImage().isEmpty()) {
+	        // Delete old image if it exists
+	        if (imageName != null && !imageName.isBlank()) {
+	            File oldFile = new File(imagesPath + imageName);
+	            if (oldFile.exists()) {
+	                oldFile.delete();
+	            }
+	        }
+
+	        // Save new image
+	        String fileExtension = inDto.getImage().getOriginalFilename()
+	                            .substring(inDto.getImage().getOriginalFilename().lastIndexOf("."));
+
+	        String newFilename = id + fileExtension; // using inventory id as filename
+	        File newFile = new File(imagesPath + newFilename);
+	        newFile.getParentFile().mkdirs();
+
+	        inDto.getImage().transferTo(newFile);
+
+	        imageName = newFilename; // update to new image
+	    }
 
 	    inventoryDao.updateInventory(
 	            id,
@@ -280,10 +305,13 @@ public class InventoryServiceImpl implements InventoryService{
 	            inDto.getItemName(),
 	            inDto.getPrice().doubleValue(),
 	            newTotal,
-	            newAvailable,       // update availableQty
-	            dateNow
+	            newAvailable,      
+	            dateNow,
+	            inDto.getCategory(),
+	            imageName
 	    );
 	}
+
 
 	
 	@Override

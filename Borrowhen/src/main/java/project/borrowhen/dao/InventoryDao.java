@@ -127,7 +127,9 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 				price = :price,
 				total_qty = :totalQty,
 				available_qty = :availableQty,
-				updated_date = :updatedDate
+				updated_date = :updatedDate,
+				category = :category,
+				image_name = :imageName
 				WHERE id = :id
 			""";
 	
@@ -140,7 +142,9 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 			@Param("price") double price, 
 			@Param("totalQty") int totalQty, 
 			@Param("availableQty") int availableQty,
-			@Param("updatedDate") Date updatedDate) throws DataAccessException;
+			@Param("updatedDate") Date updatedDate,
+			@Param("category") String category,
+			@Param("imageName") String imageName) throws DataAccessException;
     
 	public final String UPDATE_INVENTORY_LENT_TIMES = "UPDATE inventory "
 			+ "SET total_lent = total_lent + :qty, "
