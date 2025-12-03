@@ -171,59 +171,72 @@
                   <input type="hidden" name="encryptedId" id="encryptedId" />
                   <!-- Two-column grid -->
                   <div class="grid grid-cols-2 gap-x-6 gap-y-4">
-                     <!-- Item Name -->
-                     <div class="flex justify-between items-center">
-                        <label class="text-gray-700 text-sm font-medium">Item Name</label>
-                        <span class="item-name text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
-                        Hammer
-                        </span>
-                     </div>
-                     <!-- Price -->
-                     <div class="flex justify-between items-center">
-                        <label class="text-gray-700 text-sm font-medium">Price</label>
-                        <span class="item-price text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
-                        ₱100
-                        </span>
-                     </div>
-                     <!-- Available Qty -->
-                     <div class="flex justify-between items-center">
-                        <label class="text-gray-700 text-sm font-medium">Available Qty</label>
-                        <span class="item-qty text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
-                        100
-                        </span>
-                     </div>
-                     <!-- Date to Borrow -->
-                     <div class="flex justify-between items-center">
-                        <label class="text-gray-700 text-sm font-medium">Date to Borrow</label>
-                        <input
-                           type="date"
-                           name="dateToBorrow"
-                           required
-                           class="text-sm text-gray-700 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 focus:ring-2 focus:ring-blue-400 focus:outline-none text-center"
-                           />
-                     </div>
-                     <!-- Date to Return -->
-                     <div class="flex justify-between items-center">
-                        <label class="text-gray-700 text-sm font-medium">Date to Return</label>
-                        <input
-                           type="date"
-                           name="dateToReturn"
-                           required
-                           class="text-sm text-gray-700 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 focus:ring-2 focus:ring-blue-400 focus:outline-none text-center"
-                           />
-                     </div>
-                     <!-- Quantity -->
-                     <div class="flex justify-between items-center">
-                        <label class="text-gray-700 text-sm font-medium">Number to Borrow</label>
-                        <input
-                           type="number"
-                           name="qty"
-                           required
-                           min="1"
-                           class="text-sm text-gray-700 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 focus:ring-2 focus:ring-blue-400 focus:outline-none text-center"
-                           />
-                     </div>
-                  </div>
+    <!-- Item Name -->
+    <div class="flex justify-between items-center">
+        <label class="text-gray-700 text-sm font-medium">Item Name</label>
+        <span class="item-name text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+            Hammer
+        </span>
+    </div>
+
+    <!-- Price -->
+    <div class="flex justify-between items-center">
+        <label class="text-gray-700 text-sm font-medium">Price</label>
+        <span class="item-price text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+            ₱100
+        </span>
+    </div>
+
+    <!-- Available Qty -->
+    <div class="flex justify-between items-center">
+        <label class="text-gray-700 text-sm font-medium">Available Qty</label>
+        <span class="item-qty text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+            100
+        </span>
+    </div>
+
+    <!-- Date to Borrow -->
+    <div class="flex justify-between items-center">
+        <label class="text-gray-700 text-sm font-medium">Date to Borrow</label>
+        <input
+            type="date"
+            name="dateToBorrow"
+            required
+            class="text-sm text-gray-700 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 focus:ring-2 focus:ring-blue-400 focus:outline-none text-center"
+        />
+    </div>
+
+    <!-- Date to Return -->
+    <div class="flex justify-between items-center">
+        <label class="text-gray-700 text-sm font-medium">Date to Return</label>
+        <input
+            type="date"
+            name="dateToReturn"
+            required
+            class="text-sm text-gray-700 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 focus:ring-2 focus:ring-blue-400 focus:outline-none text-center"
+        />
+    </div>
+
+    <!-- Number to Borrow -->
+    <div class="flex justify-between items-center">
+        <label class="text-gray-700 text-sm font-medium">Number to Borrow</label>
+        <input
+            type="number"
+            name="qty"
+            required
+            min="1"
+            class="text-sm text-gray-700 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 focus:ring-2 focus:ring-blue-400 focus:outline-none text-center"
+        />
+    </div>
+
+    <!-- Purpose — spans 2 columns -->
+    <div class="col-span-2 flex justify-between items-start gap-3">
+        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+        <textarea name="purpose" required rows="3"
+            class="text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></textarea>
+    </div>
+</div>
+
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
                   Once confirmed, your request will be submitted for approval.

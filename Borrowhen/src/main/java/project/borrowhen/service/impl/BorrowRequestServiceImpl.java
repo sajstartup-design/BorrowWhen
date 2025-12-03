@@ -99,7 +99,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		request.setCreatedDate(dateNow);
 		request.setUpdatedDate(dateNow);
 		request.setIsDeleted(false);
-	
+		request.setPurpose(inDto.getPurpose());
+		
 		borrowRequestDao.save(request);
 
 		inventoryService.updateInventoryAvailableQty(id, inDto.getQty(), CommonConstant.DECREASE);

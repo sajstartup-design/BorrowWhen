@@ -44,4 +44,6 @@ public class BorrowRequestEntity {
 	private Double rating;
 	
 	private String feedback;
+	
+	private String purpose;
 }

@@ -21,6 +21,8 @@ public class BorrowRequestDto {
 
 	private String dateToReturn;
 	
+	private String purpose;
+	
 	private BorrowRequestObj request;
 	
 	private UserObj borrower;
