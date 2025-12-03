@@ -91,6 +91,15 @@
 		  <artifactId>stripe-java</artifactId>
 		  <version>25.7.0</version> <!-- use latest -->
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.11.0</version> <!-- Use the latest version available -->
+		</dependency>
 
 
 	</dependencies>

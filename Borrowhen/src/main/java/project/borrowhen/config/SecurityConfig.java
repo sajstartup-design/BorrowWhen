@@ -82,7 +82,8 @@ public class SecurityConfig {
 						.requestMatchers("/register/**").permitAll()
 						.requestMatchers("/login").permitAll()
 						.requestMatchers("/error/**").permitAll()
-
+						.requestMatchers("/view/**").permitAll()
+						
 						
 						 
 						.requestMatchers("/payment/receipt").hasAnyAuthority(CommonConstant.ROLE_BORROWER, CommonConstant.ROLE_LENDER, CommonConstant.ROLE_ADMIN)

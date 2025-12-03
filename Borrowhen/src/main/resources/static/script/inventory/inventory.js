@@ -91,7 +91,9 @@ async function loadInventories(page = 0, search = "") {
               data-id="${inventory.encryptedId}"
               data-name="${inventory.itemName}"
               data-price="${inventory.price}"
-              data-qty="${inventory.availableQty}">
+              data-qty="${inventory.availableQty}"
+              data-image="${inventory.imageName}"
+              >
               Borrow
             </button>`
           : `

@@ -64,6 +64,7 @@ function updateBtnsModal() {
 						modal.querySelector(".item-name").textContent = btn.dataset.name;
 						modal.querySelector(".item-price").textContent = `₱${btn.dataset.price}`;
 						modal.querySelector(".item-qty").textContent = btn.dataset.qty;
+						modal.querySelector(".image").src = `/view/image/${btn.dataset.image}`;
 					}
 
 					if (

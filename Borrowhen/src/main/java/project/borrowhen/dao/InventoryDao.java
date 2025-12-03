@@ -40,7 +40,8 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 				   )) THEN false ELSE true END,
 				   u.barangay,
 				   0,
-				   0.0
+				   0.0,
+				   e.imageName
 				)
 				FROM InventoryEntity e
 				LEFT JOIN UserEntity u ON u.id = e.userId

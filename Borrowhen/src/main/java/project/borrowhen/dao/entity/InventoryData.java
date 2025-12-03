@@ -59,4 +59,6 @@ public class InventoryData {
 	private int totalBorrows;
 	
 	private Double totalRevenue;
+	
+	private String imageName;
 }

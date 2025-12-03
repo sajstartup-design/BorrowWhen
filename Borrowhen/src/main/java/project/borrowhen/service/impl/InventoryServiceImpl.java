@@ -1,5 +1,6 @@
 package project.borrowhen.service.impl;
 
+import java.io.File;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +49,9 @@ public class InventoryServiceImpl implements InventoryService{
 
 	@Autowired
 	private AdminSettingsService adminSettingsService;
+	
+	@Value("${inventory.images.path}")
+    private String imagesPath;
     
     private int getMaxInventoryDisplay() {
         return adminSettingsService.getSettings().getInventoryPerPage();
@@ -74,8 +79,25 @@ public class InventoryServiceImpl implements InventoryService{
 		inventory.setCreatedDate(dateNow);
 		inventory.setUpdatedDate(dateNow);
 		inventory.setIsDeleted(false);
+		inventory.setCategory(inDto.getCategory());
 		
 		inventoryDao.save(inventory);
+		
+		if (inDto.getImage() != null && !inDto.getImage().isEmpty()) {
+            String fileExtension = inDto.getImage().getOriginalFilename()
+                                .substring(inDto.getImage().getOriginalFilename().lastIndexOf("."));
+
+            String newFilename = inventory.getId() + fileExtension;
+
+            File file = new File(imagesPath + newFilename);
+            file.getParentFile().mkdirs();
+
+            inDto.getImage().transferTo(file);
+
+            inventory.setImageName(newFilename);
+            inventoryDao.save(inventory); // save again
+        }
+
 		
 		NotificationEntity notification = new NotificationEntity();
 		notification.setUserId(-1);
@@ -129,6 +151,7 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setIsEditable(inventory.getIsEditable());
 			obj.setIsDeletable(inventory.getIsDeletable());
 			obj.setBarangay(inventory.getBarangay());	
+			obj.setImageName(inventory.getImageName());
 
 			inventories.add(obj);
 			

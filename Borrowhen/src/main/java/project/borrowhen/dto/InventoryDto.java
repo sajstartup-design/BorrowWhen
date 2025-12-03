@@ -4,6 +4,8 @@ package project.borrowhen.dto;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +27,9 @@ public class InventoryDto {
 	@NotBlank(message = MessageConstant.NOT_BLANK)
 	private String itemName;
 	
+	@NotBlank(message = MessageConstant.NOT_BLANK)
+	private String category;
+	
 	@Positive(message = MessageConstant.NOT_BLANK)
 	@NotNull(message = MessageConstant.NOT_BLANK)
 	private Double price;
@@ -32,6 +37,8 @@ public class InventoryDto {
 	@Min(value = 1, message = MessageConstant.QUANTITY_NOT_BLANK)
 	@NotNull(message = MessageConstant.QUANTITY_NOT_BLANK)
 	private Integer totalQty;
+	
+	private MultipartFile image;
 	
 	private int availableQty;
 	

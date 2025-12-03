@@ -31,4 +31,6 @@ public class InventoryObj {
 	private String barangay;
 	
 	private int totalLent;
+	
+	private String imageName;
 }

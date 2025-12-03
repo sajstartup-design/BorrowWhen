@@ -37,4 +37,8 @@ public class InventoryEntity {
 	private Boolean isDeleted;
 	
 	private int totalLent = 0;
+	
+	private String category;
+	
+	private String imageName;
 }
