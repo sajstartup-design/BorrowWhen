@@ -485,6 +485,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
         obj.setStatus(request.getStatus());	     
         obj.setFeedback(request.getFeedback());
         obj.setRating(request.getRating() == null ? '0' : request.getRating());
+        obj.setPurpose(request.getPurpose());
+        obj.setImageName(inventory.getImageName());
         
         UserObj borrowerObj = new UserObj();
         

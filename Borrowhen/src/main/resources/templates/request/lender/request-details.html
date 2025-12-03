@@ -255,6 +255,9 @@
                            </div>
                            <!-- Details Card -->
                            <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100 flex flex-col gap-3">
+							    <div class="flex flex-col items-center">
+									<img th:src="@{/view/image/{imageName}(imageName=*{request.imageName})}" class="object-contain rounded-md border bg-gray-50" />
+						        </div>
                               <!-- Borrower Name -->
                               <div class="flex justify-between items-center pb-2">
                                  <span class="text-gray-600 text-sm font-medium">Borrower's Name</span>
@@ -332,6 +335,14 @@
                                  <span class="text-gray-600 text-sm font-medium">Total Amount</span>
                                  <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-64 text-center"
                                     th:text="|₱*{request.qty * request.price}|">
+                                 -
+                                 </span>
+                              </div>
+                              <hr class="border-gray-100" />
+                              <div class="flex justify-between items-center pb-2">
+                                 <span class="text-gray-600 text-sm font-medium">Purpose</span>
+                                 <span class="text-gray-800 text-sm font-medium px-3 py-1 bg-gray-50 border border-gray-200 rounded-md w-80 text-center"
+                                    th:text="|*{request.purpose}|">
                                  -
                                  </span>
                               </div>

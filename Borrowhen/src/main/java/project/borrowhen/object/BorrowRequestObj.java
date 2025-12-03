@@ -42,4 +42,8 @@ public class BorrowRequestObj {
 	private double rating;
 	
 	private String paymentEncryptedId;
+	
+	private String imageName;
+	
+	private String purpose;
 }
