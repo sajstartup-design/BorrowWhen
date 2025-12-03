@@ -120,6 +120,7 @@ async function loadInventories(page = 0, search = "") {
               <h2 class="text-gray-800 text-base font-semibold mb-1 flex items-center justify-between">
                 ${inventory.itemName}
               </h2>
+              <span class="text-xs text-gray-400 font-medium">${inventory.category || 'Other'}</span>
               ${newBadge}
 			  
 			  <div class="flex items-center gap-1 mb-2">
