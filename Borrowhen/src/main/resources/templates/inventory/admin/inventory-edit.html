@@ -73,7 +73,7 @@
                <!-- ---------- FORM ---------- -->
                <div class="bg-white rounded-md ">
                   <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
-                     <form th:action="@{/admin/inventory/edit}" method="POST" th:object="${inventoryDto}">
+                     <form th:action="@{/admin/inventory/edit}" method="POST" th:object="${inventoryDto}" enctype="multipart/form-data">
                      	<input type="hidden" name="encryptedId" th:value="*{encryptedId}" />
                         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                            <!-- LEFT SIDE — BASIC INFORMATION -->
@@ -85,6 +85,26 @@
                                        <label class="block text-sm font-medium text-gray-600 mb-1" for="itemName">Item Name</label>
                                        <input id="itemName" type="text" name="itemName" placeholder="Enter item name" required th:value="*{itemName}"
                                           class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                                    </div>
+                                    <div class="input-wrapper mb-3">
+                                       <label class="block text-sm font-medium text-gray-600 mb-1" for="category">Category</label>
+                                       <select class="dropdown w-full border border-gray-300 rounded-md h-8 text-sm" name="category" required>
+										    <option value="">Select Category</option>
+										    <option value="Electronics" th:selected="*{category} == 'Electronics'">Electronics</option>
+										    <option value="Tools & Equipment" th:selected="*{category} == 'Tools & Equipment'">Tools & Equipment</option>
+										    <option value="Sports & Outdoor" th:selected="*{category} == 'Sports & Outdoor'">Sports & Outdoor</option>
+										    <option value="Appliances" th:selected="*{category} == 'Appliances'">Appliances</option>
+										    <option value="Furniture" th:selected="*{category} == 'Furniture'">Furniture</option>
+										    <option value="Books & Learning Materials" th:selected="*{category} == 'Books & Learning Materials'">Books & Learning Materials</option>
+										    <option value="Office Supplies" th:selected="*{category} == 'Office Supplies'">Office Supplies</option>
+										    <option value="Musical Instruments" th:selected="*{category} == 'Musical Instruments'">Musical Instruments</option>
+										    <option value="Clothing & Costumes" th:selected="*{category} == 'Clothing & Costumes'">Clothing & Costumes</option>
+										    <option value="Emergency Equipment" th:selected="*{category} == 'Emergency Equipment'">Emergency Equipment</option>
+										    <option value="School Materials" th:selected="*{category} == 'School Materials'">School Materials</option>
+										    <option value="Cleaning Equipment" th:selected="*{category} == 'Cleaning Equipment'">Cleaning Equipment</option>
+										    <option value="Others" th:selected="*{category} == 'Others'">Others</option>
+										</select>
+
                                     </div>
                                     <div class="input-wrapper mb-3">
                                        <label class="block text-sm font-medium text-gray-600 mb-1" for="itemPrice">Lender</label>
@@ -107,6 +127,16 @@
                                        <input id="itemQty" type="text" name="totalQty" placeholder="10" required th:value="*{totalQty}"
                                           class="w-full border border-gray-300 rounded-md h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
                                     </div>
+                                    <div class="input-wrapper ">
+								        <label class="block text-sm font-medium text-gray-600 mb-1">Item Image</label>
+								        <input 
+								            type="file" 
+								            accept="image/*" 
+								            onchange="previewImage(event)" 
+								            name="image"
+								            class="border border-gray-300 rounded-md p-1 w-full text-sm"
+								        >
+								    </div>
                                  </div>
                               </div>
                            </div>
@@ -116,10 +146,15 @@
                                  <h2 class="text-lg font-semibold text-gray-800 mb-4">Item Information Preview</h2>
                                  <div class="space-y-3 text-sm text-gray-600">
                                     <p><span class="font-medium">Item:</span> <span id="previewName">—</span></p>
+                                    <p><span class="font-medium">Category:</span> <span id="previewCategory">—</span></p>
                                     <p><span class="font-medium">Lender:</span> <span id="previewLender">—</span></p>
                                     <p><span class="font-medium">Price:</span> <span id="previewGender">—</span></p>
                                     <p><span class="font-medium">Total Qty:</span> <span id="previewBirthDate">—</span></p>
                                     <p><span class="font-medium">Available Qty:</span> <span id="previewAvailableQty" th:text="|*{availableQty} pcs|">—</span></p>
+                                    <div>
+							            <span class="font-medium text-gray-700 block mb-1">Image:</span>
+										<img id="previewImageBox" th:src="@{/view/image/{imageName}(imageName=*{imageName})}" class="object-contain rounded-md border bg-gray-50" />
+							        </div>	
                                  </div>
                               </div>
                               <!-- Buttons -->
@@ -142,6 +177,7 @@
             </div>
          </main>
       </div>
+      <script th:src="@{/script/loading.js}"></script>
       <script th:src="@{/script/dropdown.js}"></script>
 <script th:inline="javascript">
 /*<![CDATA[*/
@@ -155,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Preview fields
     const previewName = document.getElementById("previewName");
+    const previewCategory = document.getElementById("previewCategory");
     const previewLender = document.getElementById("previewLender");
     const previewPrice = document.getElementById("previewGender");
     const previewTotal = document.getElementById("previewBirthDate");
@@ -198,12 +235,16 @@ document.addEventListener("DOMContentLoaded", () => {
         return true;
     }
 
+	const categorySelect = document.querySelector("select[name='category']");
 
     // MAIN PREVIEW UPDATE
     function updatePreview() {
 
         // Name
         previewName.textContent = nameInput.value.trim() || "—";
+        
+        previewCategory.textContent =
+            		categorySelect.value !== "" ? categorySelect.value : "—";
 
         // Lender
         const selectedOption = lenderSelect.options[lenderSelect.selectedIndex];
@@ -231,12 +272,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
         validateQty();
     }
+    
+    window.previewImage = function(event) {
+	    const file = event.target.files[0];
+	    const previewBox = document.getElementById("previewImageBox");
+	
+	    if (file) {
+	        const imageURL = URL.createObjectURL(file);
+	
+	        previewBox.src = imageURL;
+	        previewBox.classList.remove("hidden");
+	
+	    } else {
+	        previewBox.src = "";
+	        previewBox.classList.add("hidden");
+	    }
+	};
 
     // Bind listeners
     nameInput.addEventListener("input", updatePreview);
     priceInput.addEventListener("input", updatePreview);
     qtyInput.addEventListener("input", updatePreview);
     lenderSelect.addEventListener("change", updatePreview);
+    categorySelect.addEventListener("change", updatePreview);
 
     // Ensure on-load preview
     updatePreview();
