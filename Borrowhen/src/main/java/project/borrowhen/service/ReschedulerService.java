@@ -8,4 +8,6 @@ public interface ReschedulerService {
 	public void checkOverdueRequests();
 	
 	public void voidUnpickedRequests();
+	
+	public void notifyRequestsDueIn2Days();
 }

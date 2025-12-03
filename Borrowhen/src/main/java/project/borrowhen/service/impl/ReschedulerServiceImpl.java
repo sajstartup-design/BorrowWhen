@@ -121,5 +121,54 @@ public class ReschedulerServiceImpl implements ReschedulerService{
 	        });
 	    }
 
+	    @Override
+	    public void notifyRequestsDueIn2Days() {
+	        // Calculate the target date (2 days from today)
+	        Date targetDate = Date.valueOf(LocalDate.now().plusDays(2));
+
+	        // Fetch all borrow requests whose dateToReturn is exactly 2 days from now
+	        List<BorrowRequestEntity> requests = borrowRequestDao.getBorrowRequestDueIn2Days(targetDate);
+
+	        // Current timestamp
+	        Timestamp now = DateFormatUtil.getCurrentTimestamp();
+
+	        // Loop through each request and send notifications
+	        requests.forEach(request -> {
+	            System.out.println("⏰ Reminder: Request ID " + request.getId() +
+	                    " | Item: " + request.getItemName() +
+	                    " | Due on: " + request.getDateToReturn());
+
+	            UserEntity borrower = userService.getUser(request.getUserId());
+
+	            // Build notification message
+	            String message = String.format(
+	                    "Reminder: Your borrowed item '%s' is due on %s. Please return it on time.",
+	                    request.getItemName(),
+	                    request.getDateToReturn()
+	            );
+
+	            // Create notification entity
+	            NotificationEntity notification = new NotificationEntity();
+	            notification.setUserId(request.getUserId());
+	            notification.setMessage(message);
+	            notification.setType(CommonConstant.REQUEST_DUE_SOON);
+	            notification.setIsRead(false);
+	            notification.setIsDeleted(false);
+	            notification.setCreatedDate(now);
+	            notification.setUpdatedDate(now);
+
+	            // Save to database
+	            notificationService.saveNotification(notification);
+
+	            // Send via WebSocket
+	            messagingTemplate.convertAndSendToUser(
+	                    borrower.getUserId().toString(),
+	                    "/queue/borrower/notifications",
+	                    message
+	            );
+	        });
+	    }
+
+
 
 }

@@ -542,4 +542,11 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 
 	@Query(value=GET_TOTAL_BORROW_EACH_MONTH, nativeQuery=true)
 	public List<Integer> getTotalBorrowEachMonth() throws DataAccessException; 
+	
+	public final String GET_BORROW_REQUESTS_DUE_IN_2_DAYS = """
+				SELECT b FROM BorrowRequestEntity b WHERE b.dateToReturn = :targetDate AND b.isDeleted = false
+			""";
+	
+	@Query(GET_BORROW_REQUESTS_DUE_IN_2_DAYS)
+	public List<BorrowRequestEntity> getBorrowRequestDueIn2Days(@Param("targetDate") Date targetDate);
 }

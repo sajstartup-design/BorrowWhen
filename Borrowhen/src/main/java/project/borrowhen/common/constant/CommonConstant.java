@@ -66,6 +66,8 @@ public class CommonConstant {
     
     public static final String REQUEST_COMPLETED = "REQUEST_COMPLETED";
     
+    public static final String REQUEST_DUE_SOON = "REQUEST_DUE_SOON";
+    
     public static final String NEW_ITEM = "NEW_ITEM";
     
     public static final String GENERAL = "GENERAL";
