@@ -134,6 +134,10 @@
                                  <p><span class="font-medium">Available Qty:</span> <span id="previewAvailable" th:text="*{availableQty}">—</span></p>
                                  <p><span class="font-medium">Total Borrows:</span> <span id="previewAvailable" th:text="*{totalBorrows}">—</span></p>
 								 <p><span class="font-medium">Total Revenue:</span> <span id="previewRevenue" th:text="|₱*{totalRevenue}|">₱ —</span></p>
+								 <div>
+						            <span class="font-medium text-gray-700 block mb-1">Image:</span>
+									<img id="previewImageBox" th:src="@{/view/image/8.jpeg}" class="object-contain rounded-md border bg-gray-50" />
+						         </div>
                               </div>
                            </div>                    
                         </div>
