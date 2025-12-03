@@ -80,5 +80,11 @@ public class CommonConstant {
     public static final String DECREASE = "DECREASE";
     
     public static final String INCREASE = "INCREASE";
+    
+    /*
+     * PRICE
+     */
+    public static final int LATE_RETURNED_FEES = 50;
+    public static final int DAMAGED_ITEM_FEES = 100;
 
 }

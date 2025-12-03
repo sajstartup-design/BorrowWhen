@@ -34,7 +34,7 @@
                         <i class="fa-solid fa-receipt text-blue-200"></i> Payment Summary
                      </h2>
                      <span class="text-xs bg-blue-500/60 px-3 py-1 rounded-full text-white font-medium tracking-wide">
-                     #Order-{{orderId}}
+                     #Order
                      </span>
                   </div>
                   <p class="text-blue-100 mb-6 text-sm leading-relaxed">
@@ -58,15 +58,39 @@
                         <span class="text-blue-100">Date to Return</span>
                         <span class="font-semibold text-white" th:text="*{request.dateToReturn}">2025-10-15</span>
                      </div>
+                  
                      <div class="flex justify-between items-center border-t border-blue-400/30 pt-3 mt-2">
                         <span class="text-blue-100">Price</span>
                         <span class="font-semibold text-white" th:text="*{request.price}">₱500</span>
                      </div>
-                     <div class="flex justify-between items-center border-t border-blue-300/40 pt-4 mt-3">
-                        <span class="font-semibold text-white text-lg">Total</span>
-                        <span class="font-bold text-white text-lg" th:text="*{@calculationUtil.getTotalPrice(request.qty, request.price)}">₱500</span>
+                     <div class="flex justify-between items-center border-t border-blue-400/30 pt-3 mt-2" th:if="*{request.isReturnedLate}">
+                        <span class="text-blue-100">Returned Late Fees</span>
+                        <span class="font-semibold text-white">₱50</span>
                      </div>
+                     <div class="flex justify-between items-center border-t border-blue-400/30 pt-3 mt-2" th:if="*{request.isDamaged}">
+                        <span class="text-blue-100">Damaged Item Fees</span>
+                        <span class="font-semibold text-white">₱100</span>
+                     </div>
+                     <div class="flex justify-between items-center border-t border-blue-300/40 pt-4 mt-3">
+    <span class="font-semibold text-white text-lg">Total</span>
+    <span class="font-bold text-white text-lg"
+      th:text="${@calculationUtil.getTotalPriceWithFees(
+                  borrowRequestDto.request.qty, 
+                  borrowRequestDto.request.price, 
+                  borrowRequestDto.request.isReturnedLate ? 50 : 0, 
+                  borrowRequestDto.request.isDamaged ? 100 : 0)}">
+    ₱500
+</span>
+</div>
                   </div>
+                  
+                  <div class="flex flex-col gap-1 mt-3">
+					  <span class="text-sm">Damage Notes</span>
+	                  <div class="bg-blue-800/40 rounded-xl border border-blue-400/20 p-4 shadow-inner space-y-3 text-sm" th:text="*{request.damageNotes}">
+						  wqeqw
+					  </div>
+					  
+				  </div>
                   <!-- Footer Note -->
                   <div class="mt-6 flex items-center gap-2 text-xs text-blue-200/90">
                      <i class="fa-solid fa-info-circle"></i>

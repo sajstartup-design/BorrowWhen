@@ -32,4 +32,12 @@ public class PaymentObj {
 	private String stripePaymentId;
 	
 	private String encryptedBorrowRequestId;
+	
+	private Boolean isReturnedLate;
+	
+	private Boolean isReturned;
+	
+	private Boolean isDamaged;
+	
+	private String damageNotes;
 }

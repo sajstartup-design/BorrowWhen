@@ -537,6 +537,10 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
         obj.setDateToBorrow(request.getDateToBorrow());
         obj.setDateToReturn(request.getDateToReturn());
         obj.setStatus(request.getStatus());	     
+        obj.setIsReturnedLate(request.getIsReturnedLate());
+        obj.setIsReturned(request.getIsReturned());
+        obj.setIsDamaged(request.getIsDamaged());
+        obj.setDamageNotes(request.getDamageNotes());
         
         if(CommonConstant.PAID.equals(request.getStatus())) {
 	    	
@@ -562,6 +566,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    UserEntity borrower = userService.getUser(request.getUserId()); 
 
 	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.COMPLETED);
+	    borrowRequestDao.updateBorrowRequestDamaged(id, inDto.getDamageNotes());
 	    
 	    NotificationEntity notification = new NotificationEntity();
 	    notification.setUserId(borrower.getId());
@@ -572,6 +577,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
     	);
 	    
 	    inventoryService.updateInventoryAvailableQty(request.getInventoryId(), request.getQty(), CommonConstant.INCREASE);
+	    
 	    
 	    notification.setMessage(message);
 	    notification.setIsRead(false);
@@ -660,7 +666,17 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    PaymentDto paymentDto = new PaymentDto();
 	    
-	    paymentDto.setAmount(CalculationUtil.getTotalPrice(request.getQty(), request.getPrice()));
+	    int additionalAmount = 0;
+	    
+	    if(request.getIsReturnedLate()) {
+	    	additionalAmount += CommonConstant.LATE_RETURNED_FEES;
+	    }
+	    
+	    if(request.getIsDamaged()) {
+	    	additionalAmount += CommonConstant.DAMAGED_ITEM_FEES;
+	    }
+	    
+	    paymentDto.setAmount(CalculationUtil.getTotalPrice(request.getQty(), request.getPrice()) + additionalAmount);
 	    paymentDto.setEmailAddress(borrower.getEmailAddress());
 	    paymentDto.setBorrowRequestId(id);
 	    

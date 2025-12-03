@@ -182,13 +182,13 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
     
     public final String UPDATE_BORROW_REQUEST_DAMANGED =
             "UPDATE BorrowRequestEntity br " +
-            "SET br.isDamaged = true, br.updatedDate = CURRENT_TIMESTAMP " +
+            "SET br.isDamaged = true, br.damageNotes =:damageNotes, br.updatedDate = CURRENT_TIMESTAMP " +
             "WHERE br.id = :id";
  
     @Transactional
     @Modifying
     @Query(UPDATE_BORROW_REQUEST_DAMANGED)
-    public int updateBorrowRequestDamaged(@Param("id") int id) throws DataAccessException; 
+    public int updateBorrowRequestDamaged(@Param("id") int id, @Param("damageNotes") String damageNotes) throws DataAccessException; 
     
     public final String GET_BORROW_REQUEST = "SELECT e "
     		+ "FROM BorrowRequestEntity e "

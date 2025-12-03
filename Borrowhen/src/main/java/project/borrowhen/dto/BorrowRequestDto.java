@@ -42,6 +42,10 @@ public class BorrowRequestDto {
 	private String feedback;
 	
 	private ReviewOverviewData reviewOverview;
+	
+	private Boolean isDamaged;
+	
+	private String damageNotes;
 
 	
 }

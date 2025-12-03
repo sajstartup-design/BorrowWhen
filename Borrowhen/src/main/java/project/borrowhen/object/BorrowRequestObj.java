@@ -46,4 +46,12 @@ public class BorrowRequestObj {
 	private String imageName;
 	
 	private String purpose;
+	
+	private Boolean isReturnedLate;
+	
+	private Boolean isReturned;
+	
+	private Boolean isDamaged;
+	
+	private String damageNotes;
 }

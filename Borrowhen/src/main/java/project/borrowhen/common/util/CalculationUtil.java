@@ -15,4 +15,8 @@ public class CalculationUtil {
     public static double getTotalPrice(int qty, double price) {
         return qty * price;
     }
+    
+    public static double getTotalPriceWithFees(int qty, double price, double lateFee, double damageFee) {
+        return qty * price + lateFee + damageFee;
+    }
 }
