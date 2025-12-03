@@ -32,5 +32,7 @@ public class InventoryObj {
 	
 	private int totalLent;
 	
+	private String category;
+	
 	private String imageName;
 }

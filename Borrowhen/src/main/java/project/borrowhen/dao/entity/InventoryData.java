@@ -22,7 +22,7 @@ public class InventoryData {
 		this.availableQty = availableQty;
 	}
 	
-	public InventoryData(Integer inventoryId, String itemName, Double price, Integer totalQty, Integer availableQty, Integer totalBorrows, Double totalRevenue) {
+	public InventoryData(Integer inventoryId, String itemName, Double price, Integer totalQty, Integer availableQty, Integer totalBorrows, Double totalRevenue, String category) {
 		this.inventoryId = inventoryId;
 		this.itemName = itemName;
 		this.price = price;
@@ -30,6 +30,7 @@ public class InventoryData {
 		this.availableQty = availableQty;
 		this.totalBorrows = totalBorrows;
 		this.totalRevenue = totalRevenue;
+		this.category = category;
 	}
 
 	private Integer inventoryId;
@@ -61,4 +62,6 @@ public class InventoryData {
 	private Double totalRevenue;
 	
 	private String imageName;
+	
+	private String category;
 }

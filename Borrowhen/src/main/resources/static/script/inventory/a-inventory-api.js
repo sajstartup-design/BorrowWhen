@@ -121,6 +121,7 @@ async function loadInventories(page = 0, search = "") {
 					  			  </div>
 					  			</td>
 			          <td class="px-2">${inventory.itemName}</td>
+			          <td class="px-2">${inventory.category || '-'}</td>
 			          <td class="px-2 font-semibold text-blue-600">₱${inventory.price}</td>
 			          <td class="px-2">${inventory.totalQty} pcs</td>
 			          <td class="px-2">${inventory.availableQty} pcs</td>

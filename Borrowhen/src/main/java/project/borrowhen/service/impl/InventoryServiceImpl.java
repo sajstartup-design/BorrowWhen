@@ -150,7 +150,8 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setAvailableQty(inventory.getAvailableQty());
 			obj.setIsEditable(inventory.getIsEditable());
 			obj.setIsDeletable(inventory.getIsDeletable());
-			obj.setBarangay(inventory.getBarangay());	
+			obj.setBarangay(inventory.getBarangay());
+			obj.setCategory(inventory.getCategory());
 			obj.setImageName(inventory.getImageName());
 
 			inventories.add(obj);
@@ -196,6 +197,7 @@ public class InventoryServiceImpl implements InventoryService{
 			obj.setPrice(inventory.getPrice());
 			obj.setTotalQty(inventory.getTotalQty());
 			obj.setAvailableQty(inventory.getAvailableQty());
+			obj.setCategory(inventory.getCategory());
 			obj.setIsEditable(inventory.getIsEditable());
 			obj.setIsDeletable(inventory.getIsDeletable());
 	

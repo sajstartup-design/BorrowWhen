@@ -41,7 +41,8 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 				   u.barangay,
 				   0,
 				   0.0,
-				   e.imageName
+				   e.imageName,
+				   e.category
 				)
 				FROM InventoryEntity e
 				LEFT JOIN UserEntity u ON u.id = e.userId
@@ -51,6 +52,7 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 				   (:search IS NOT NULL AND :search <> '' AND (
 				       LOWER(e.itemName) LIKE LOWER(CONCAT('%', :search, '%')) OR
 				       LOWER(u.fullName) LIKE LOWER(CONCAT('%', :search, '%')) OR
+				       LOWER(e.category) LIKE LOWER(CONCAT('%', :search, '%')) OR
 				       CAST(e.price AS string) LIKE CONCAT('%', :search, '%') OR
 				       CAST(e.totalQty AS string) LIKE CONCAT('%', :search, '%')
 				   ))
@@ -87,7 +89,8 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 			    FROM BorrowRequestEntity br
 	            WHERE br.inventoryId = e.id
 	            AND br.status IN ('COMPLETED', 'PAYMENT PENDING', 'PAID')
-              ) AS DOUBLE) AS total_revenue
+              ) AS DOUBLE) AS total_revenue,
+              e.category
 		   )
 		   FROM InventoryEntity e
 		   WHERE e.userId = :userId
@@ -99,6 +102,7 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 		             AND (
 		                 LOWER(e.itemName) LIKE LOWER(CONCAT('%', :search, '%'))
 		                 OR CAST(e.price AS string) LIKE LOWER(CONCAT('%', :search, '%'))
+		                 OR LOWER(e.category) LIKE LOWER(CONCAT('%', :search, '%'))
 		                 OR CAST(e.totalQty AS string) LIKE CONCAT('%', :search, '%')
 		                 OR CAST(e.availableQty AS string) LIKE CONCAT('%', :search, '%')
 		             )
