@@ -76,6 +76,19 @@ function updateBtnsModal() {
 						modal.querySelector(".date-to-borrow").textContent = btn.dataset.dateToBorrow;
 						modal.querySelector(".date-to-return").textContent = btn.dataset.dateToReturn;
 						modal.querySelector(".number-to-borrow").textContent = btn.dataset.numberToBorrow;
+						modal.querySelector(".purpose").textContent = btn.dataset.purpose;
+						
+						const imgEl = modal.querySelector(".image");
+					    const imgPath = `/view/image/${btn.dataset.image}`;
+					    
+					    const tempImg = new Image();
+					    tempImg.onload = function() {
+					        imgEl.src = imgPath; // Image exists, set the src
+					    };
+					    tempImg.onerror = function() {
+					        imgEl.src = `/view/image/no_image.jpg`; // Image doesn't exist, set fallback
+					    };
+					    tempImg.src = imgPath;
 					}
 					
 					if(

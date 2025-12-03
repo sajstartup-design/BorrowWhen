@@ -52,4 +52,6 @@ public class BorrowRequestEntity {
 	private Boolean isReturned;
 	
 	private Boolean isDamaged;
+	
+	private String damageNotes;
 }

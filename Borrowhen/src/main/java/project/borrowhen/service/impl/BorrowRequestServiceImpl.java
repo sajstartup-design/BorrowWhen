@@ -172,6 +172,7 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        obj.setDateToBorrow(request.getDateToBorrow());
 	        obj.setDateToReturn(request.getDateToReturn());
 	        obj.setStatus(request.getStatus());
+	        obj.setPurpose(request.getPurpose());
 			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(request.getCreatedDate()));
 			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(request.getUpdatedDate()));		
 	        
@@ -326,7 +327,8 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	        obj.setDateToBorrow(request.getDateToBorrow());
 	        obj.setDateToReturn(request.getDateToReturn());
 	        obj.setStatus(request.getStatus());	
-	        
+	        obj.setPurpose(request.getPurpose());
+        
 	        requests.add(obj);
 	    }
 	    

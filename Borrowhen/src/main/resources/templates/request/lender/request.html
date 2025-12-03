@@ -79,7 +79,7 @@
                   <div class="bg-base-100 rounded-xl p-6 shadow-md flex flex-col gap-6">
                      <div class="flex flex-wrap xl:flex-nowrap gap-4">
                         <!-- 🕓 Pending -->
-                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
+                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[160px] shadow-md">
                            <div class="space-y-1">
                               <p class="text-gray-500 text-sm">Pending</p>
                               <div class="text-gray-800 text-lg font-semibold" th:text="*{overview.totalPending}">0</div>
@@ -92,7 +92,7 @@
                            </div>
                         </div>
                         <!-- ✅ Approved -->
-                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
+                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[160px] shadow-md">
                            <div class="space-y-1">
                               <p class="text-gray-500 text-sm">Approved</p>
                               <div class="text-gray-800 text-lg font-semibold" th:text="*{overview.totalApproved}">0</div>
@@ -105,7 +105,7 @@
                            </div>
                         </div>
                         <!-- 📦 Ongoing -->
-                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
+                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[160px] shadow-md">
                            <div class="space-y-1">
                               <p class="text-gray-500 text-sm">Ongoing</p>
                               <div class="text-gray-800 text-lg font-semibold" th:text="*{overview.totalOngoing}">0</div>
@@ -116,7 +116,7 @@
                            </div>
                         </div>
                         <!-- 💸 Pending Payment -->
-                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
+                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[160px] shadow-md">
                            <div class="space-y-1">
                               <p class="text-gray-500 text-sm">Pending Payment</p>
                               <div class="text-gray-800 text-lg font-semibold" th:text="*{overview.totalPendingPayment}">0</div>
@@ -129,7 +129,7 @@
                            </div>
                         </div>
                         <!-- 💰 Paid -->
-                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
+                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[160px] shadow-md">
                            <div class="space-y-1">
                               <p class="text-gray-500 text-sm">Paid</p>
                               <div class="text-gray-800 text-lg font-semibold" th:text="*{overview.totalPaid}">0</div>
@@ -142,7 +142,7 @@
                            </div>
                         </div>
                         <!-- ⚠️ Overdue -->
-                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[240px] shadow-md">
+                        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 flex-1 min-w-[160px] shadow-md">
                            <div class="space-y-1">
                               <p class="text-gray-500 text-sm">Overdue</p>
                               <div class="text-gray-800 text-lg font-semibold" th:text="*{overview.totalOverdue}">0</div>
@@ -311,6 +311,11 @@
                         2
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
@@ -393,6 +398,11 @@
                         2
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
@@ -478,6 +488,11 @@
                         2
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
@@ -510,7 +525,7 @@
             <div class="px-8 py-6">
                <!-- Preview Image -->
                <div class="flex justify-center mb-6">
-                  <div class="w-32 h-32 bg-white border border-blue-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
+                  <div class="image bg-white border border-blue-200 rounded-xl shadow-md flex items-center justify-center overflow-hidden">
                      <img
                         th:src="@{/images/logo.png}"
                         alt="Item Preview"
@@ -561,6 +576,32 @@
                         2
                         </span>
                      </div>
+                     
+                     
+                     <div class="flex justify-between items-center">
+                        
+                     </div>
+                     
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
+				     
+                     <div class="flex justify-between items-center">
+					    <label class="text-gray-700 text-sm font-medium">Is Damaged?</label>
+					    <select name="isDamaged" class="text-sm text-gray-800 bg-white border border-blue-200 rounded-md px-3 py-1 w-40 text-center">
+					        <option value="false" selected>No</option>
+					        <option value="true">Yes</option>
+					    </select>
+					</div>
+
+
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Damage Notes (Optional)</label>
+				        <textarea name="purpose" required rows="3"
+				            class="text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></textarea>
+				    </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
@@ -644,6 +685,11 @@
                         1
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">

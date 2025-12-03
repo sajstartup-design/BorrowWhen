@@ -1879,8 +1879,14 @@
   .accent-blue-600 {
     accent-color: var(--color-blue-600);
   }
+  .accent-green-500 {
+    accent-color: var(--color-green-500);
+  }
   .accent-indigo-500 {
     accent-color: var(--color-indigo-500);
+  }
+  .accent-red-500 {
+    accent-color: var(--color-red-500);
   }
   .opacity-0 {
     opacity: 0%;

@@ -177,6 +177,8 @@
                                     th:data-date-to-borrow="*{request.dateToBorrow}"
                                     th:data-date-to-return="*{request.dateToReturn}"
                                     th:data-number-to-borrow="*{request.qty}"
+                                    th:data-purpose="*{request.purpose}"
+                                    th:data-image="*{request.imageName}"
                                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
                                  <img th:src="@{/images/cancelled.png}" class="w-4 h-4"/>
                                  Cancel Request
@@ -191,6 +193,8 @@
                                     th:data-date-to-borrow="*{request.dateToBorrow}"
                                     th:data-date-to-return="*{request.dateToReturn}"
                                     th:data-number-to-borrow="*{request.qty}"
+                                    th:data-purpose="*{request.purpose}"
+                                    th:data-image="*{request.imageName}"
                                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
                                  <img th:src="@{/images/received.png}" class="w-4 h-4"/>
                                  Mark as Received

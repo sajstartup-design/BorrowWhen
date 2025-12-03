@@ -21,7 +21,8 @@ public class BorrowRequestData {
     public BorrowRequestData(int borrowRequestId, String borrowerFullName, String borrowerUserId,
                              String lenderFullName, String lenderUserId, String itemName,
                              double price, int qty, Date dateToBorrow, Date dateToReturn,
-                             String status, Timestamp createdDate, Timestamp updatedDate) {
+                             String status, Timestamp createdDate, Timestamp updatedDate,
+                             String purpose) {
         this.borrowRequestId = borrowRequestId;
         this.borrowerFullName = borrowerFullName;
         this.borrowerUserId = borrowerUserId;
@@ -35,6 +36,7 @@ public class BorrowRequestData {
         this.status = status;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
+        this.purpose = purpose;
     }
 
     // Constructor for feedback & rating only
@@ -77,4 +79,6 @@ public class BorrowRequestData {
 	private String feedback;
 	
 	private double rating;
+	
+	private String purpose;
 }

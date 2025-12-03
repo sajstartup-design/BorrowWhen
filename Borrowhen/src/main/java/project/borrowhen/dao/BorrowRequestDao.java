@@ -35,7 +35,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 				    br.dateToReturn,
 				    br.status,
 				    br.createdDate,
-				    br.updatedDate
+				    br.updatedDate,
+				    br.purpose
 				)
 				FROM BorrowRequestEntity br
 				LEFT JOIN InventoryEntity i ON i.id = br.inventoryId
@@ -80,7 +81,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    " br.dateToReturn, " +                
 		    " br.status, " +                    
 		    " br.createdDate, " +                 
-		    " br.updatedDate) " +              
+		    " br.updatedDate, " +
+		    " br.purpose) " +              
 		    "FROM BorrowRequestEntity br " +     
 		    "INNER JOIN InventoryEntity i ON i.id = br.inventoryId " +     
 		    "LEFT JOIN UserEntity borrower ON borrower.id = br.userId " + 
@@ -124,7 +126,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 			    br.createdDate,
 			    br.updatedDate,
 			    COALESCE(br.feedback, ''),
-			    COALESCE(br.rating, 0)
+			    COALESCE(br.rating, 0),
+			    br.purpose
 			)
 			FROM BorrowRequestEntity br
 			INNER JOIN InventoryEntity i ON i.id = br.inventoryId
@@ -181,7 +184,7 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
             "UPDATE BorrowRequestEntity br " +
             "SET br.isDamaged = true, br.updatedDate = CURRENT_TIMESTAMP " +
             "WHERE br.id = :id";
-
+ 
     @Transactional
     @Modifying
     @Query(UPDATE_BORROW_REQUEST_DAMANGED)
@@ -208,7 +211,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    " br.dateToReturn, " +                
 		    " br.status, " +                    
 		    " br.createdDate, " +                 
-		    " br.updatedDate) " +              
+		    " br.updatedDate,  " +
+		    " br.purpose ) " +              
 		    "FROM BorrowRequestEntity br " +     
 		    "INNER JOIN InventoryEntity i ON i.id = br.inventoryId " +     
 		    "LEFT JOIN UserEntity borrower ON borrower.id = br.userId " + 
@@ -368,7 +372,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 		    " br.dateToReturn, " +                
 		    " br.status, " +                    
 		    " br.createdDate, " +                 
-		    " br.updatedDate) " +              
+		    " br.updatedDate, " + 
+		    "br.purpose) " +              
 		    "FROM BorrowRequestEntity br " +     
 		    "INNER JOIN InventoryEntity i ON i.id = br.inventoryId " +     
 		    "LEFT JOIN UserEntity borrower ON borrower.id = br.userId " + 
@@ -396,7 +401,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 			    br.dateToReturn,
 			    br.status,
 			    br.createdDate,
-			    br.updatedDate
+			    br.updatedDate,
+			    br.purpose
 			)
 			FROM BorrowRequestEntity br
 			INNER JOIN InventoryEntity i ON i.id = br.inventoryId
@@ -497,7 +503,8 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 			    br.createdDate,
 			    br.updatedDate,
 			    br.feedback,
-			    br.rating
+			    br.rating,
+			    br.purpose
 			)
 			FROM BorrowRequestEntity br
 			INNER JOIN InventoryEntity i ON i.id = br.inventoryId

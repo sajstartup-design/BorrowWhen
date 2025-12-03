@@ -108,7 +108,10 @@ const buttons = {
         data-price="${request.price}"
         data-date-to-borrow="${request.dateToBorrow}"
         data-date-to-return="${request.dateToReturn}"
-        data-number-to-borrow="${request.qty}">
+        data-number-to-borrow="${request.qty}"
+        data-purpose="${request.purpose}"
+    	data-image="${request.imageName}"
+        >
         <img src="/images/cancelled.png" alt="Cancel" class="h-4 w-4" />
       </a>
       <span class="tooltip-text">Cancel Request</span>
@@ -127,7 +130,10 @@ const buttons = {
         data-price="${request.price}"
         data-date-to-borrow="${request.dateToBorrow}"
         data-date-to-return="${request.dateToReturn}"
-        data-number-to-borrow="${request.qty}">
+        data-number-to-borrow="${request.qty}"
+        data-purpose="${request.purpose}"
+    	data-image="${request.imageName}"
+        >
         <img src="/images/received-icon.png" alt="Received" class="h-4 w-4" />
       </a>
       <span class="tooltip-text">Mark as Received</span>
@@ -142,7 +148,10 @@ const buttons = {
       data-toggle="modal"
       data-target="#rateModal"
       data-id="${request.encryptedId}"
-      data-item-name="${request.itemName}">
+      data-item-name="${request.itemName}"
+      data-purpose="${request.purpose}"
+      data-image="${request.imageName}"
+      >
       <img src="/images/star.png" alt="Rate" class="h-4 w-4" />
     </a>
     <span class="tooltip-text">Rate Item</span>

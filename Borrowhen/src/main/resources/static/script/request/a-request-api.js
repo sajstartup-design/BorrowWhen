@@ -1,4 +1,4 @@
-createLoadingScreenBody();
+ createLoadingScreenBody();
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -107,7 +107,10 @@ const buttons = {
 	        data-price="${request.price}"
 	        data-date-to-borrow="${request.dateToBorrow}"
 	        data-date-to-return="${request.dateToReturn}"
-	        data-number-to-borrow="${request.qty}">
+	        data-number-to-borrow="${request.qty}"
+            data-purpose="${request.purpose}"
+        	data-image="${request.imageName}"
+	        >
 	        <img src="/images/approved.png" alt="Approve" class="h-4 w-4" />
 	      </button>
 	      <span class="tooltip-text">Approve Request</span>
@@ -125,7 +128,10 @@ const buttons = {
 	        data-price="${request.price}"
 	        data-date-to-borrow="${request.dateToBorrow}"
 	        data-date-to-return="${request.dateToReturn}"
-	        data-number-to-borrow="${request.qty}">
+	        data-number-to-borrow="${request.qty}"
+            data-purpose="${request.purpose}"
+        	data-image="${request.imageName}"
+	        >
 	        <img src="/images/rejected.png" alt="Reject" class="h-4 w-4" />
 	      </button>
 	      <span class="tooltip-text">Reject Request</span>
@@ -143,7 +149,10 @@ const buttons = {
 	        data-price="${request.price}"
 	        data-date-to-borrow="${request.dateToBorrow}"
 	        data-date-to-return="${request.dateToReturn}"
-	        data-number-to-borrow="${request.qty}">
+	        data-number-to-borrow="${request.qty}"
+            data-purpose="${request.purpose}"
+        	data-image="${request.imageName}"
+	        >
 	        <img src="/images/return-box.png" alt="Return" class="h-4 w-4" />
 	      </button>
 	      <span class="tooltip-text">Confirm Return</span>
@@ -161,7 +170,10 @@ const buttons = {
 	        data-price="${request.price}"
 	        data-date-to-borrow="${request.dateToBorrow}"
 	        data-date-to-return="${request.dateToReturn}"
-	        data-number-to-borrow="${request.qty}">
+	        data-number-to-borrow="${request.qty}"
+            data-purpose="${request.purpose}"
+        	data-image="${request.imageName}"
+	        >
 	        <img src="/images/credit-cards.png" alt="Payment" class="h-4 w-4" />
 	      </button>
 	      <span class="tooltip-text">Issue Payment</span>
@@ -179,7 +191,10 @@ const buttons = {
 	        data-price="${request.price}"
 	        data-date-to-borrow="${request.dateToBorrow}"
 	        data-date-to-return="${request.dateToReturn}"
-	        data-number-to-borrow="${request.qty}">
+	        data-number-to-borrow="${request.qty}"
+            data-purpose="${request.purpose}"
+        	data-image="${request.imageName}"
+	        >
 	        <img src="/images/location.png" alt="Pick Up" class="h-4 w-4" />
 	      </button>
 	      <span class="tooltip-text">Mark as Ready for Pick-Up</span>
@@ -197,7 +212,10 @@ const buttons = {
 	          data-price="${request.price}"
 	          data-date-to-borrow="${request.dateToBorrow}"
 	          data-date-to-return="${request.dateToReturn}"
-	          data-number-to-borrow="${request.qty}">
+	          data-number-to-borrow="${request.qty}"
+              data-purpose="${request.purpose}"
+        	  data-image="${request.imageName}"
+	          >
 	          <img src="/images/cancelled.png" alt="Cancel" class="h-4 w-4" />
 	        </a>
 	        <span class="tooltip-text">Cancel Request</span>
@@ -216,7 +234,10 @@ const buttons = {
 	          data-price="${request.price}"
 	          data-date-to-borrow="${request.dateToBorrow}"
 	          data-date-to-return="${request.dateToReturn}"
-	          data-number-to-borrow="${request.qty}">
+	          data-number-to-borrow="${request.qty}"
+              data-purpose="${request.purpose}"
+        	  data-image="${request.imageName}"
+	          >
 	          <img src="/images/received-icon.png" alt="Received" class="h-4 w-4" />
 	        </a>
 	        <span class="tooltip-text">Mark as Received</span>

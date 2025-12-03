@@ -176,6 +176,8 @@
 							            th:data-date-to-borrow="*{request.dateToBorrow}"
 							            th:data-date-to-return="*{request.dateToReturn}"
 							            th:data-number-to-borrow="*{request.qty}"
+							            th:data-purpose="*{request.purpose}"
+                                    	th:data-image="*{request.imageName}"
 							            class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
 							        <img th:src="@{/images/cancelled.png}" class="w-4 h-4"/>
 							        Cancel Request
@@ -191,6 +193,8 @@
 							            th:data-date-to-borrow="*{request.dateToBorrow}"
 							            th:data-date-to-return="*{request.dateToReturn}"
 							            th:data-number-to-borrow="*{request.qty}"
+							            th:data-purpose="*{request.purpose}"
+                                    	th:data-image="*{request.imageName}"
 							            class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
 							        <img th:src="@{/images/received.png}" class="w-4 h-4"/>
 							        Mark as Received
@@ -205,6 +209,8 @@
                                     th:data-date-to-borrow="*{request.dateToBorrow}"
                                     th:data-date-to-return="*{request.dateToReturn}"
                                     th:data-number-to-borrow="*{request.qty}"
+                                    th:data-purpose="*{request.purpose}"
+                                    th:data-image="*{request.imageName}"
                                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
                                  <img th:src="@{/images/approved.png}" class="w-4 h-4"/>
                                  APPROVE
@@ -219,6 +225,8 @@
                                     th:data-date-to-borrow="*{request.dateToBorrow}"
                                     th:data-date-to-return="*{request.dateToReturn}"
                                     th:data-number-to-borrow="*{request.qty}"
+                                    th:data-purpose="*{request.purpose}"
+                                    th:data-image="*{request.imageName}"
                                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
                                  <img th:src="@{/images/rejected.png}" class="w-4 h-4"/>
                                  REJECT
@@ -233,6 +241,8 @@
                                     th:data-date-to-borrow="*{request.dateToBorrow}"
                                     th:data-date-to-return="*{request.dateToReturn}"
                                     th:data-number-to-borrow="*{request.qty}"
+                                    th:data-purpose="*{request.purpose}"
+                                    th:data-image="*{request.imageName}"
                                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
                                  <img th:src="@{/images/location.png}" class="w-4 h-4"/>
                                  READY FOR PICKUP
@@ -247,6 +257,8 @@
                                     th:data-date-to-borrow="*{request.dateToBorrow}"
                                     th:data-date-to-return="*{request.dateToReturn}"
                                     th:data-number-to-borrow="*{request.qty}"
+                                    th:data-purpose="*{request.purpose}"
+                                    th:data-image="*{request.imageName}"
                                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
                                  <img th:src="@{/images/return-box.png}" class="w-4 h-4"/>
                                  ITEM RETURNED
@@ -261,6 +273,8 @@
                                     th:data-date-to-borrow="*{request.dateToBorrow}"
                                     th:data-date-to-return="*{request.dateToReturn}"
                                     th:data-number-to-borrow="*{request.qty}"
+                                    th:data-purpose="*{request.purpose}"
+                                    th:data-image="*{request.imageName}"
                                     class="h-8 px-2 py-1 flex items-center gap-2 bg-blue-200 rounded-md text-sm text-gray-700 hover:bg-blue-300 transition">
                                  <img th:src="@{/images/pending-payment.png}" class="w-4 h-4"/>
                                  ISSUE PAYMENT
@@ -502,6 +516,11 @@
                         2
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
@@ -584,6 +603,11 @@
                         2
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
@@ -669,6 +693,11 @@
                         2
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
@@ -752,6 +781,11 @@
                         2
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
@@ -835,6 +869,11 @@
                         1
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
@@ -914,6 +953,11 @@
                         2
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
@@ -1000,6 +1044,11 @@
                         1
                         </span>
                      </div>
+                     <div class="col-span-2 flex justify-between items-start gap-3">
+				        <label class="text-gray-700 text-sm font-medium mt-1">Purpose</label>
+				        <span name="purpose" required rows="3"
+				            class="purpose text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></span>
+				     </div>
                   </div>
                </form>
                <p class="text-gray-500 text-xs text-center mt-6">
