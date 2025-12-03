@@ -100,6 +100,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 		request.setUpdatedDate(dateNow);
 		request.setIsDeleted(false);
 		request.setPurpose(inDto.getPurpose());
+		request.setIsReturnedLate(false);
+		request.setIsReturned(false);
+		request.setIsDamaged(false);
 		
 		borrowRequestDao.save(request);
 

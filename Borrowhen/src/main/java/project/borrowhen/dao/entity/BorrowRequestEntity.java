@@ -46,4 +46,10 @@ public class BorrowRequestEntity {
 	private String feedback;
 	
 	private String purpose;
+	
+	private Boolean isReturnedLate;
+	
+	private Boolean isReturned;
+	
+	private Boolean isDamaged;
 }

@@ -49,6 +49,7 @@ public class ReschedulerServiceImpl implements ReschedulerService{
 	            Timestamp dateNow = DateFormatUtil.getCurrentTimestamp(); 
 	            
 	    	    borrowRequestDao.updateBorrowRequestStatusById(request.getId(), CommonConstant.REQUEST_OVERDUE);
+	    	    borrowRequestDao.updateBorrowRequestReturnedLate(request.getId());
 
 	            // Build notification
 	            NotificationEntity notification = new NotificationEntity();
