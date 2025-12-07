@@ -38,6 +38,7 @@ import project.borrowhen.object.InventoryObj;
 import project.borrowhen.object.PaginationObj;
 import project.borrowhen.object.UserObj;
 import project.borrowhen.service.AdminSettingsService;
+import project.borrowhen.service.EmailService;
 import project.borrowhen.service.InventoryService;
 import project.borrowhen.service.UserService;
 
@@ -67,6 +68,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private SessionRegistry sessionRegistry;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@Value("${user.images.path}")
     private String imagesPath;
@@ -377,11 +381,23 @@ public class UserServiceImpl implements UserService {
 		int id = 0;
 		boolean isActivated = inDto.getIsActivated() == null ? false : inDto.getIsActivated();
 		
-		if(CommonConstant.ROLE_BORROWER.equals(inDto.getRole())) {
+		/**
+		 * If lender or borrower update their profile
+		 */
+		if(CommonConstant.ROLE_BORROWER.equals(inDto.getEncryptedId())) {
 			id = getLoggedInUser().getId();
 		}else {
 			id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
 		}
+		
+		if(CommonConstant.ROLE_BORROWER.equals(inDto.getRole())){
+			if (isActivated) {
+			    emailService.sendActivationEmail(inDto.getEmailAddress(), inDto.getFullName());
+			}else {
+				emailService.sendDeactivationEmail(inDto.getEmailAddress(), inDto.getFullName());
+			}
+		}
+
 		
 		
 		//Check if the password has been changed
