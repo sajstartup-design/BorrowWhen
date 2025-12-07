@@ -43,5 +43,25 @@ public class FileController {
 	    }
 	}
 
+	@GetMapping(value = "/view/user/image/{imageName}")
+	public @ResponseBody ResponseEntity<byte[]> responseImages(@PathVariable String imageName) {
+	    String fileDirectory = env.getProperty("user.images.path");
+	    Path filePath = Paths.get(fileDirectory + imageName);
 
+	    try {
+	        if (!Files.exists(filePath)) {
+	            filePath = Paths.get(fileDirectory + "no_image.jpg");
+	        }
+
+	        String contentType = Files.probeContentType(filePath);
+	        byte[] bytes = Files.readAllBytes(filePath);
+
+	        return ResponseEntity.ok()
+	                .contentType(MediaType.parseMediaType(contentType))
+	                .body(bytes);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new byte[0]);
+	    }
+	}
 }

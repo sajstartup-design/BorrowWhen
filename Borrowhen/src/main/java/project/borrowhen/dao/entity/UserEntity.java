@@ -53,4 +53,8 @@ public class UserEntity {
 	
 	private Boolean isDeleted;
 	
+	private Boolean isActivated;
+	
+	private String imageName;
+	
 }

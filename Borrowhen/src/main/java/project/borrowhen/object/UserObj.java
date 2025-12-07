@@ -39,6 +39,8 @@ public class UserObj {
 	
 	private Boolean isDeletable;
 	
+	private Boolean isActivated;
+	
     private int borrowedItems;
     
     private int pendingRequests;

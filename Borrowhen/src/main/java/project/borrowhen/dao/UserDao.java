@@ -29,7 +29,7 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 		    "       FROM BorrowRequestEntity br " +
 		    "       WHERE br.userId = u.id " +
 		    "       AND br.status IN ('PENDING', 'APPROVED', 'PICK-UP READY', 'ON GOING', 'PAYMENT PENDING', 'OVERDUE')" +
-		    "   ) > 0 THEN false ELSE true END AS isDeletable " +
+		    "   ) > 0 THEN false ELSE true END AS isDeletable, u.isActivated " +
 		    ") " +
 		    "FROM UserEntity u " +
 		    "WHERE u.isDeleted = false " +
@@ -60,7 +60,7 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 		    "       JOIN InventoryEntity ii ON ii.id = br2.inventoryId " +
 		    "       WHERE ii.isDeleted = false AND ii.userId = u.id " +
 		    "       AND br2.status NOT IN ('PAID', 'CANCELLED', 'REJECTED', 'VOID')" +
-		    "   ) > 0 THEN false ELSE true END AS isDeletable " +
+		    "   ) > 0 THEN false ELSE true END AS isDeletable, u.isActivated " +
 		    ") " +
 		    "FROM UserEntity u " +
 		    "WHERE u.isDeleted = false " +
@@ -111,7 +111,8 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 		    "about = :about, " +
 		    "user_id = :userId, " +
 		    "password = CASE WHEN :hasChanged = true THEN :password ELSE password END, " +
-		    "updated_date = :updatedDate " +
+		    "updated_date = :updatedDate, " +
+		    "is_activated = :isActivated " +
 		    "WHERE id = :id";
 
     @Modifying
@@ -133,7 +134,8 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
             @Param("userId") String userId,
             @Param("password") String password,
             @Param("hasChanged") boolean hasChanged,
-            @Param("updatedDate") Date updatedDate
+            @Param("updatedDate") Date updatedDate,
+            @Param("isActivated") boolean isActivated
     )  throws DataAccessException;
     
     public final String GET_ALL_USER_ID = "SELECT e.userId "

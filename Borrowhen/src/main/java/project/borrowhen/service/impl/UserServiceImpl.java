@@ -1,5 +1,6 @@
 package project.borrowhen.service.impl;
 
+import java.io.File;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -65,6 +67,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private SessionRegistry sessionRegistry;
+	
+	@Value("${user.images.path}")
+    private String imagesPath;
     
     private int getMaxUserDisplay() {
         return adminSettingsService.getSettings().getUserPerPage();
@@ -123,8 +128,27 @@ public class UserServiceImpl implements UserService {
 		user.setCreatedDate(dateNow);
 		user.setUpdatedDate(dateNow);
 		user.setIsDeleted(false);
+		user.setIsActivated(false);
 		
 		userDao.save(user);
+		
+		if (inDto.getValidId() != null && !inDto.getValidId().isEmpty()) {
+            String fileExtension = inDto.getValidId().getOriginalFilename()
+                                .substring(inDto.getValidId().getOriginalFilename().lastIndexOf("."));
+
+            String newFilename = user.getId() + fileExtension;
+
+            File file = new File(imagesPath + newFilename);
+            file.getParentFile().mkdirs();
+
+            inDto.getValidId().transferTo(file);
+
+            user.setImageName(newFilename);
+            
+            userDao.save(user);
+        }
+		
+		
 		
 	}
 
@@ -165,6 +189,7 @@ public class UserServiceImpl implements UserService {
 			obj.setCreatedDate(DateFormatUtil.formatTimestampToString(user.getCreatedDate()));
 			obj.setUpdatedDate(DateFormatUtil.formatTimestampToString(user.getUpdatedDate()));	
 			obj.setIsDeletable(user.getIsDeletable());
+			obj.setIsActivated(user.getIsActivated());
 			
 		    users.add(obj);
 		}
@@ -276,6 +301,8 @@ public class UserServiceImpl implements UserService {
 	    outDto.setRole(user.getRole());
 	    outDto.setCreatedDate(DateFormatUtil.formatTimestampToString(user.getCreatedDate()));
 	    outDto.setUpdatedDate(DateFormatUtil.formatTimestampToString(user.getUpdatedDate()));
+	    outDto.setIsActivated(user.getIsActivated());
+	    outDto.setImageName(user.getImageName());
 	    
 	    return outDto;
 	}
@@ -343,11 +370,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void editUser(UserDto inDto) throws Exception {
 		
+		System.out.println("IS ACTIVATED : " + inDto.getIsActivated());
+		
 		Date dateNow = Date.valueOf(LocalDate.now());
 		
 		int id = 0;
+		boolean isActivated = inDto.getIsActivated() == null ? false : inDto.getIsActivated();
 		
-		if(CommonConstant.ROLE_BORROWER.equals(inDto.getEncryptedId())) {
+		if(CommonConstant.ROLE_BORROWER.equals(inDto.getRole())) {
 			id = getLoggedInUser().getId();
 		}else {
 			id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
@@ -380,7 +410,8 @@ public class UserServiceImpl implements UserService {
 				inDto.getUserId(),
 				encoder.encode(inDto.getPassword()),
 				hasChanged,
-				dateNow);
+				dateNow,
+				isActivated);
 		
 		UserEntity loggedInUser = getLoggedInUser();
 		

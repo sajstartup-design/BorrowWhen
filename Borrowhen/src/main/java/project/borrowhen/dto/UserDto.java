@@ -2,6 +2,8 @@ package project.borrowhen.dto;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import project.borrowhen.common.constant.MessageConstant;
@@ -53,6 +55,12 @@ public class UserDto {
 	
 	@NotBlank(message = MessageConstant.NOT_BLANK, groups = {ValidationGroup.Create.class})
 	private String password;
+	
+	private MultipartFile validId;
+	
+	private String imageName;
+	
+	private Boolean isActivated;
 	
 	private String role;
 	

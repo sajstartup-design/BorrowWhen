@@ -94,7 +94,7 @@
           </div>
 
           <!-- ===== Sign Up Form ===== -->
-          <form class="sb mt-6" th:action="@{/register}" method="POST">
+          <form class="sb mt-6" th:action="@{/register}" method="POST" enctype="multipart/form-data">
             <div class="wb">
               <label class="rc kk wm vb" for="userid">User ID</label>
               <input type="text" name="userId" id="userid" placeholder="devidwonder"
@@ -111,6 +111,12 @@
               <label class="rc kk wm vb" for="email">Email Address</label>
               <input type="email" name="emailAddress" id="email" placeholder="example@gmail.com"
                 class="vd hh rg zk _g ch hm dm fm pl/50 xi mi sm xm pm dn/40" required />
+            </div>
+            
+            <div class="wb">
+              <label class="rc kk wm vb" for="validId">Valid ID</label>
+              <input type="file" name="validId"
+                class="vd hh rg zk _g ch hm dm fm pl/50 xi mi sm xm pm dn/40 transition-all duration-200" required />
             </div>
 
             <div class="wb">

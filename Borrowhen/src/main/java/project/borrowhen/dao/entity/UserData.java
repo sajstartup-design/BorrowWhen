@@ -48,4 +48,6 @@ public class UserData {
 	private Timestamp updatedDate;
 	
 	private Boolean isDeletable;
+	
+	private Boolean isActivated;
 }

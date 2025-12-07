@@ -122,6 +122,7 @@ async function loadUsers(page = 0,
 			  <td class="px-2 text-xs align-middle">${user.emailAddress}</td>
 			  <td class="px-2 text-xs align-middle">${user.phoneNumber && user.phoneNumber.trim() !== '' ? user.phoneNumber : '-'}</td>
 			  <td class="px-2 text-xs align-middle">${user.birthDate && user.birthDate.trim() !== '' ? user.birthDate : '-'}</td>
+			  <td class="px-2 text-xs align-middle">${user.isActivated ? 'ACTIVATED' : 'NOT ACTIVATED'}</td>
 			  <td class="px-2 text-xs align-middle">${user.createdDate}</td>
 			  <td class="px-2 text-xs align-middle">${user.updatedDate}</td>
 			  <td class="px-2 text-sm align-middle">

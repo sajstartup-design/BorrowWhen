@@ -39,7 +39,8 @@ public class SecurityConfig {
 	private static final String USER_ACCOUNT_SQL = "SELECT USER_ID,PASSWORD,TRUE"
 			+ " FROM USERS "
 			+ " WHERE USER_ID = ?"
-			+ " AND USERS.IS_DELETED = FALSE ";
+			+ " AND USERS.IS_DELETED = FALSE "
+			+ " AND USERS.IS_ACTIVATED = TRUE ";
 
 	private static final String USER_ROLE_SQL = "SELECT USER_ID, ROLE FROM USERS WHERE USER_ID = ?";
 	
