@@ -1,10 +1,13 @@
 createLoadingScreenBody();
 
+const BLANK = ""
+
 document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.querySelector(".prev-btn");
   const nextBtn = document.querySelector(".next-btn");
   const inputPage = document.querySelector(".input-page");
   const search = document.querySelector(".search");
+  const categoryFilter = document.querySelector('#categoryFilter');
 
   // Load first page
   loadInventories(0);
@@ -13,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nextBtn.addEventListener("click", () => {
       createLoadingScreenBody();
       let currentPage = Number(inputPage.value);
-      loadInventories(currentPage);
+      loadInventories(currentPage, BLANK, categoryFilter.value);
     });
   }
 
@@ -21,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prevBtn.addEventListener("click", () => {
       createLoadingScreenBody();
       let currentPage = Number(inputPage.value);
-      loadInventories(currentPage - 2);
+      loadInventories(currentPage - 2, BLANK, categoryFilter.value);
     });
   }
 
@@ -31,7 +34,18 @@ document.addEventListener("DOMContentLoaded", () => {
       let newPage = Number(inputPage.value);
       if (newPage < 1) newPage = 1;
       inputPage.value = newPage;
-      loadInventories(newPage - 1);
+      loadInventories(newPage - 1, BLANK, categoryFilter.value);
+    });
+  }
+  
+    if (categoryFilter) {
+    categoryFilter.addEventListener("change", () => {
+		console.log("YAWA");
+      createLoadingScreenBody();
+      let newPage = Number(inputPage.value);
+      if (newPage < 1) newPage = 1;
+      inputPage.value = newPage;
+      loadInventories(newPage - 1, BLANK, categoryFilter.value);
     });
   }
 
@@ -53,9 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-async function loadInventories(page = 0, search = "") {
+async function loadInventories(page = 0, search = "", category = "") {
   try {
-    const params = new URLSearchParams({ page, search });
+    const params = new URLSearchParams({ page, search, category });
     const url = `/api/inventory?${params.toString()}`;
     const response = await fetch(url);
     const data = await response.json();

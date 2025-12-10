@@ -131,7 +131,9 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		FilterAndSearchObj filter = inDto.getFilter();
 		
-		Page<InventoryData> allInventories = inventoryDao.getAllInventory(pageable, filter.getSearch()); 
+		System.out.println(filter.getCategory());
+		
+		Page<InventoryData> allInventories = inventoryDao.getAllInventory(pageable, filter.getSearch(), filter.getCategory()); 
 		
 		List<InventoryObj> inventories = new ArrayList<>();
 		

@@ -16,4 +16,6 @@ public class FilterAndSearchObj {
 	private String endDate;
 
 	private String status;
+	
+	private String category;
 }

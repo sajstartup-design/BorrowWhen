@@ -20,7 +20,8 @@ public class InventoryRestController {
 
     @GetMapping("inventory")
     public InventoryDto getUsers(@RequestParam(defaultValue = "0") int page,
-    		@RequestParam(required = false) String search) {
+    		@RequestParam(required = false) String search,
+    		@RequestParam(required = false) String category) {
     	
         try {																					
             InventoryDto inDto = new InventoryDto();
@@ -30,7 +31,8 @@ public class InventoryRestController {
             
             FilterAndSearchObj filter = new FilterAndSearchObj();
             filter.setSearch(search);
-
+            filter.setCategory(category);
+            
             inDto.setPagination(pagination);
             inDto.setFilter(filter);
 

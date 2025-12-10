@@ -94,20 +94,29 @@
                            class="border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
                            >
                            <option value="">All Categories</option>
-                           <option>Books</option>
-                           <option>Tools</option>
-                           <option>Equipment</option>
-                           <option>Gadgets</option>
+							<option value="Electronics">Electronics</option>
+							<option value="Tools & Equipment">Tools & Equipment</option>
+							<option value="Sports & Outdoor">Sports & Outdoor</option>
+							<option value="Appliances">Appliances</option>
+							<option value="Furniture">Furniture</option>
+							<option value="Books & Learning Materials">Books & Learning Materials</option>
+							<option value="Office Supplies">Office Supplies</option>
+							<option value="Musical Instruments">Musical Instruments</option>
+							<option value="Clothing & Costumes">Clothing & Costumes</option>
+							<option value="Emergency Equipment">Emergency Equipment</option>
+							<option value="School Materials">School Materials</option>
+							<option value="Cleaning Equipment">Cleaning Equipment</option>
+							<option value="Others">Others</option>
                         </select>
                         <!-- Availability Filter -->
-                        <select
+                        <!--<select
                            id="availabilityFilter"
                            class="border border-gray-300 rounded-lg h-8 px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none w-40"
                            >
                            <option value="">All Status</option>
                            <option value="available">Available</option>
                            <option value="borrowed">Borrowed</option>
-                        </select>
+                        </select>-->
                         <!-- ✅ Pagination Controls -->
                         <div class="flex items-center gap-2 ml-auto">
                            <button
@@ -119,6 +128,7 @@
                            </button>
                            <div class="flex items-center gap-1">
                               <input
+                              	disabled
                                  type="number"
                                  class="input-page w-16 h-8 px-2 py-1 text-sm border border-gray-300 rounded-md text-center focus:ring-2 focus:ring-blue-400 focus:outline-none"
                                  value="1"
@@ -127,6 +137,7 @@
                            </div>
                            <button
                               class="next-btn flex items-center gap-2 h-8 px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 transition disabled:opacity-50"
+                              disabled
                               >
                            <span>Next</span>
                            <i class="fa-solid fa-angle-right"></i>

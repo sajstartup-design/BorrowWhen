@@ -58,6 +58,10 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 				   ))
 				   OR (:search IS NULL OR :search = '')
 				)
+				AND (
+				   :category IS NULL OR :category = '' OR LOWER(e.category) = LOWER(:category)
+				)
+
 
 			""";
 
@@ -65,7 +69,8 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 
 	@Query(value=GET_ALL_INVENTORY)
 	public Page<InventoryData> getAllInventory(Pageable pageable, 
-			@Param("search") String search) throws DataAccessException;
+			@Param("search") String search,
+			@Param("category") String category) throws DataAccessException;
 	
 	
 	
