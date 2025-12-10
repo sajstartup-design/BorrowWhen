@@ -128,6 +128,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 		
 		const totalAvailableItemsQtyId = document.getElementById('totalAvailableItemsQty');
 		totalAvailableItemsQtyId.innerHTML = lenderDashboardOverview.totalAvailableItemsQty;
+		
+		const totalLostItemsQtyId = document.getElementById('totalLostItemsQty');
+		totalLostItemsQtyId.innerHTML = lenderDashboardOverview.totalLost;
+		
+		const totalDamagedItemsQtyId = document.getElementById('totalDamagedItemsQty');
+		totalDamagedItemsQtyId.innerHTML = lenderDashboardOverview.totalDamaged;
 	}
 	
 	if (popularItems && popularItems.length > 0) {

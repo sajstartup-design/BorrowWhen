@@ -25,5 +25,9 @@ public class AdminDashboardOverview {
 	private int totalRequests;
 	
 	private double totalRevenues;
+	
+	private int totalLost;
+	
+	private int totalDamaged;
 
 }

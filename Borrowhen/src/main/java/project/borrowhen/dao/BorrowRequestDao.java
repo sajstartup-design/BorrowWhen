@@ -340,21 +340,41 @@ public interface BorrowRequestDao extends JpaRepository<BorrowRequestEntity, Int
 	@Query(value = GET_BORROW_REQUEST_OVERVIEW_FOR_BORROWER)
 	public BorrowRequestOverview getBorrowRequestOverviewForBorrower(@Param("userId") int userId) throws DataAccessException;
 	
-	public final String GET_LENDER_DASHBOARD_OVERVIEW = """
-		    SELECT 
-		        COALESCE(CAST(COUNT(DISTINCT i.id) AS integer), 0) AS totalItem,
-		        COALESCE(CAST(SUM(i.totalQty) AS integer), 0) AS totalQty,
-		        COALESCE(CAST(SUM(CASE WHEN br.status NOT IN ('COMPLETE', 'CANCELLED', 'PAYMENT PENDING', 'PAID') THEN br.qty ELSE 0 END) AS integer), 0) AS totalOngoingQty,
-		        COALESCE(CAST(SUM(CASE WHEN br.status IN ('PENDING', 'APPROVED', 'PICK-UP READY', 'ON GOING', 'COMPLETE') THEN 1 ELSE 0 END) AS integer), 0) AS totalOngoing,
-		        COALESCE(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END), 0) AS totalRevenue,
-		        COALESCE(CAST(SUM(i.availableQty) AS integer), 0) AS totalItemsAvailableQty
-		    FROM InventoryEntity i
-		    LEFT JOIN BorrowRequestEntity br ON br.inventoryId = i.id
-		    WHERE i.userId = :userId
+	public static final String GET_LENDER_DASHBOARD_OVERVIEW_NATIVE = """
+		    WITH inventory_totals AS (
+		        SELECT
+		            i.id AS inventory_id,
+		            i.total_qty,
+		            i.available_qty,
+		            COALESCE(SUM(CASE WHEN br.status NOT IN ('COMPLETE', 'CANCELLED', 'PAYMENT PENDING', 'PAID') THEN CAST(br.qty AS integer) ELSE 0 END), 0) AS total_ongoing_qty,
+		            COALESCE(SUM(CASE WHEN br.status IN ('PENDING', 'APPROVED', 'PICK-UP READY', 'ON GOING', 'COMPLETE') THEN 1 ELSE 0 END), 0) AS total_ongoing,
+		            COALESCE(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END), 0) AS total_revenue,
+		            (SELECT COALESCE(SUM(CAST(ic.qty AS integer)), 0)
+		             FROM inventory_item_condition ic
+		             WHERE ic.inventory_id = i.id AND ic.condition = 'LOST' AND ic.is_deleted = FALSE) AS total_lost,
+		            (SELECT COALESCE(SUM(CAST(ic.qty AS integer)), 0)
+		             FROM inventory_item_condition ic
+		             WHERE ic.inventory_id = i.id AND ic.condition = 'DAMAGED' AND ic.is_deleted = FALSE) AS total_damaged
+		        FROM inventory i
+		        LEFT JOIN borrow_request br ON br.inventory_id = i.id
+		        WHERE i.user_id = :userId AND i.is_deleted = FALSE
+		        GROUP BY i.id, i.total_qty, i.available_qty
+		    )
+		    SELECT
+		        CAST(COALESCE(COUNT(*), 0) AS integer) AS totalItem,
+		        CAST(COALESCE(SUM(total_qty), 0) AS integer) AS totalItemsQty,
+		        CAST(COALESCE(SUM(total_ongoing_qty), 0) AS integer) AS totalItemsBorrowedQty,
+		        CAST(COALESCE(SUM(total_ongoing), 0) AS integer) AS totalOngoingBorrowRequest,
+		        CAST(COALESCE(SUM(total_revenue), 0) AS double precision) AS totalRevenue,
+		        CAST(COALESCE(SUM(available_qty), 0) AS integer) AS totalAvailableItemsQty,
+		        CAST(COALESCE(SUM(total_lost), 0) AS integer) AS totalLost,
+		        CAST(COALESCE(SUM(total_damaged), 0) AS integer) AS totalDamaged
+		    FROM inventory_totals
 		""";
 
+
 	
-	@Query(GET_LENDER_DASHBOARD_OVERVIEW)
+	@Query(value=GET_LENDER_DASHBOARD_OVERVIEW_NATIVE, nativeQuery=true)
 	public LenderDashboardOverview getLenderDashboardOverview(@Param("userId") int userId) throws DataAccessException;
 
 	

@@ -303,6 +303,16 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 		        FROM inventory
 		        WHERE is_deleted = false
 		    ),
+		    total_lost AS (
+		        SELECT CAST(COALESCE(SUM(qty), 0) AS INT) AS value
+		        FROM inventory_item_condition
+		        WHERE condition = 'LOST' AND is_deleted = false
+		    ),
+		    total_damaged AS (
+		        SELECT CAST(COALESCE(SUM(qty), 0) AS INT) AS value
+		        FROM inventory_item_condition
+		        WHERE condition = 'DAMAGED' AND is_deleted = false
+		    ),
 		    total_requests AS (
 		        SELECT CAST(COALESCE(COUNT(*), 0) AS INT) AS value
 		        FROM borrow_request
@@ -314,14 +324,18 @@ public interface UserDao extends JpaRepository<UserEntity, Integer> {
 		        WHERE is_deleted = false AND status = 'PAID'
 		    )
 		    SELECT 
-		        (SELECT value FROM total_borrowers) AS total_borrowers,
-		        (SELECT value FROM total_lenders) AS total_lenders,
-		        (SELECT value FROM total_items) AS total_items,
-		        (SELECT value FROM total_qty) AS total_qty,
-		        (SELECT value FROM total_available_qty) AS total_available_qty,
-		        (SELECT value FROM total_requests) AS total_requests,
-		        (SELECT value FROM total_revenues) AS total_revenues
+		        (SELECT value FROM total_borrowers) AS totalBorrowers,
+		        (SELECT value FROM total_lenders) AS totalLenders,
+		        (SELECT value FROM total_items) AS totalItems,
+		        (SELECT value FROM total_qty) AS totalQty,
+		        (SELECT value FROM total_available_qty) AS totalAvailableQty,
+		        (SELECT value FROM total_requests) AS totalRequests,
+		        (SELECT value FROM total_revenues) AS totalRevenues,
+		        (SELECT value FROM total_lost) AS totalLost,
+		        (SELECT value FROM total_damaged) AS totalDamaged
 		""";
+
+
 
 	
 	@Query(value=GET_ADMIN_OVERVIEW, nativeQuery=true)

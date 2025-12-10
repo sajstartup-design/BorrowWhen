@@ -23,4 +23,8 @@ public class LenderDashboardOverview {
 	private double totalRevenue;
 	
 	private int totalAvailableItemsQty;
+	
+	private int totalLost;
+	
+	private int totalDamaged;
 }
