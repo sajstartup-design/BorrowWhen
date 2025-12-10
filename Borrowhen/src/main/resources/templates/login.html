@@ -7,12 +7,21 @@
       <title>Sign In | Base - Tailwind CSS Startup Template</title>
       <link rel="icon" href="favicon.ico">
       <link th:href="@{/css/style-2.css}" rel="stylesheet">
+      <link th:href="@{/css/output.css}" rel="stylesheet">
+      <link th:href="@{/css/input.css}" rel="stylesheet">
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
    </head>
    <body x-data="{ page: 'signin', 'darkMode': true, 'stickyMenu': false, 'navigationOpen': false, 'scrollTop': false }"
       x-init="
       darkMode = JSON.parse(localStorage.getItem('darkMode'));
       $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
       :class="{'b eh': darkMode === true}">
+        <th:block th:if="${isSuccess}">
+         <div th:replace="~{alert :: success}"></div>
+      </th:block>
+      <th:block th:if="${isError}">
+         <div th:replace="~{alert :: error}"></div>
+      </th:block>
       <!-- ===== Header Start ===== -->
       <header class="g s r vd ya cj" :class="{ 'hh sm _k dj bl ll' : stickyMenu }"
          @scroll.window="stickyMenu = (window.pageYOffset > 20) ? true : false">
