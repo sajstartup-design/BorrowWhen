@@ -235,6 +235,26 @@
 				        <textarea name="purpose" required rows="3"
 				            class="text-sm bg-white border border-blue-200 rounded-md px-3 py-2 w-[70%] focus:ring-2 focus:ring-blue-400 flex-1"></textarea>
 				    </div>
+				<div class="col-span-2 flex flex-col gap-2">
+    <label class="text-gray-700 text-sm font-medium">Terms and Conditions</label>
+
+    <!-- Terms Box -->
+    <div class="border border-blue-200 rounded-md p-3 h-32 overflow-y-auto bg-white text-sm text-gray-700">
+        <p>
+            By submitting this request, you agree to borrow the item responsibly and return it in the same condition.
+You acknowledge that you may be held accountable for any loss, damage, or misuse of the item while it is in your possession.
+You also understand that approval of this request is subject to the policies of the organization and the discretion of authorized personnel.
+        </p>
+    </div>
+
+    <!-- Checkbox -->
+    <label class="flex items-center gap-2 mt-1 cursor-pointer">
+        <input type="checkbox" name="agreeTerms" required
+               class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+        <span class="text-sm text-gray-700">I agree to the terms and conditions</span>
+    </label>
+</div>
+
 				</div>
 
                </form>
