@@ -35,6 +35,8 @@ public interface InventoryService {
 	
 	public void updateInventoryAvailableQty(int id, int qty, String status);
 	
+	public void updateInventoryTotalAndAvailableQty(int id, int qty, String status);
+	
 	public void updateInventoryLentTimes(int id, int qty);
 	
 	public List<InventoryData> getRecentInventory(int userId);

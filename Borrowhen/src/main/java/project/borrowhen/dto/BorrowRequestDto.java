@@ -45,7 +45,13 @@ public class BorrowRequestDto {
 	
 	private Boolean isDamaged;
 	
+	private int damagedQty;
+	
 	private String damageNotes;
+	
+	private Boolean isLost;
+	
+	private int lostQty;
 
 	
 }

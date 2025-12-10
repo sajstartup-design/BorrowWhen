@@ -35,4 +35,10 @@ public class PaymentDto {
 	
 	private PaymentOverview overview;
 	
+	private double itemAmount;
+	
+	private double damagedAmount;
+	
+	private double lostAmount;
+	
 }

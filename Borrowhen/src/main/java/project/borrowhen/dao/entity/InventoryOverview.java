@@ -17,4 +17,8 @@ public class InventoryOverview {
 	private int totalAvailableQty;
 	
 	private double totalRevenue;
+	
+	private int totalLost;
+	
+	private int totalDamaged;
 }

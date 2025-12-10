@@ -394,5 +394,19 @@ public class InventoryServiceImpl implements InventoryService{
 		inventoryDao.deleteInventory(id, dateNow);
 	}
 
+	@Override
+	public void updateInventoryTotalAndAvailableQty(int id, int qty, String status) {
+
+		Date dateNow = Date.valueOf(LocalDate.now());
+		
+		if(CommonConstant.DECREASE.equals(status)) {
+			inventoryDao.updateInventoryTotalAndAvailableQty(id, -qty, dateNow);
+		}else if(CommonConstant.INCREASE.equals(status)){
+			inventoryDao.updateInventoryTotalAndAvailableQty(id, +qty, dateNow);
+		}else {
+			inventoryDao.updateInventoryTotalAndAvailableQty(id, 0, dateNow);
+		}
+	}
+
 
 }

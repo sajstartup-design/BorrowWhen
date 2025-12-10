@@ -181,6 +181,22 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 	    @Param("deltaQty") int deltaQty,
 	    @Param("updatedDate") Date updatedDate
 	) throws DataAccessException;
+	
+    public final String UPDATE_INVENTORY_TOTAL_AVAILABLE_QTY = 
+    	    "UPDATE inventory " +
+    	    "SET total_qty = total_qty + :deltaQty, " +
+    	    "available_qty = available_qty + :deltaQty, " +
+    	    "updated_date = :updatedDate " +
+    	    "WHERE id = :id";
+
+	@Modifying
+	@Transactional
+	@Query(value=UPDATE_INVENTORY_TOTAL_AVAILABLE_QTY, nativeQuery=true)
+	void updateInventoryTotalAndAvailableQty(
+	    @Param("id") int inventoryId,
+	    @Param("deltaQty") int deltaQty,
+	    @Param("updatedDate") Date updatedDate
+	) throws DataAccessException;
 
 	public String GET_RECENT_INVENTORY_BY_USER_ID = """
 				SELECT new project.borrowhen.dao.entity.InventoryData(
@@ -200,33 +216,72 @@ public interface InventoryDao extends JpaRepository<InventoryEntity, Integer>{
 			Pageable pageable) throws DataAccessException;
 	
 	public static final String GET_LENDER_INVENTORY_OVERVIEW = """
-		    SELECT 
-		        COALESCE(CAST(COUNT(DISTINCT e.id) AS integer), 0) AS totalItem,
-		        COALESCE(CAST(SUM(e.totalQty) AS integer), 0) AS totalQty,
-		        COALESCE(CAST(SUM(e.availableQty) AS integer), 0) AS totalAvailableQty,
-		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END) AS double), 0) AS totalRevenue
-		    FROM InventoryEntity e
-		    LEFT JOIN BorrowRequestEntity br 
-		        ON br.inventoryId = e.id AND br.status = 'PAID'
-		    WHERE e.userId = :userId
+		    WITH inventory_totals AS (
+		        SELECT
+		            e.id AS inventory_id,
+		            e.total_qty,
+		            e.available_qty,
+		            (SELECT COALESCE(SUM(br.price * br.qty), 0)
+		             FROM borrow_request br
+		             WHERE br.inventory_id = e.id AND br.status = 'PAID') AS total_revenue,
+		            (SELECT COALESCE(SUM(ic.qty), 0)
+		             FROM inventory_item_condition ic
+		             WHERE ic.inventory_id = e.id AND ic.condition = 'LOST' AND ic.is_deleted = FALSE) AS total_lost,
+		            (SELECT COALESCE(SUM(ic.qty), 0)
+		             FROM inventory_item_condition ic
+		             WHERE ic.inventory_id = e.id AND ic.condition = 'DAMAGED' AND ic.is_deleted = FALSE) AS total_damaged
+		        FROM inventory e
+		        WHERE e.user_id = :userId AND e.is_deleted = FALSE
+		    )
+		    SELECT
+		        COALESCE(CAST(COUNT(*) AS integer), 0) AS totalItem,
+		        COALESCE(CAST(SUM(total_qty) AS integer), 0) AS totalQty,
+		        COALESCE(CAST(SUM(available_qty) AS integer), 0) AS totalAvailableQty,
+		        COALESCE(CAST(SUM(total_revenue) AS double precision), 0) AS totalRevenue,
+		        COALESCE(CAST(SUM(total_lost) AS integer), 0) AS totalLostItems,
+		        COALESCE(CAST(SUM(total_damaged) AS integer), 0) AS totalDamagedItems
+		    FROM inventory_totals;
 		""";
 
-	@Query(GET_LENDER_INVENTORY_OVERVIEW)
+
+
+	@Query(value=GET_LENDER_INVENTORY_OVERVIEW, nativeQuery=true)
 	public InventoryOverview getLenderInventoryOverview(@Param("userId") int userId) throws DataAccessException;
 	
 	public static final String GET_ADMIN_INVENTORY_OVERVIEW = """
-		    SELECT 
-		        COALESCE(CAST(COUNT(DISTINCT e.id) AS integer), 0) AS totalItem,
-		        COALESCE(CAST(SUM(e.totalQty) AS integer), 0) AS totalQty,
-		        COALESCE(CAST(SUM(e.availableQty) AS integer), 0) AS totalAvailableQty,
-		        COALESCE(CAST(SUM(CASE WHEN br.status = 'PAID' THEN (br.price * br.qty) ELSE 0 END) AS double), 0) AS totalRevenue
-		    FROM InventoryEntity e
-		    LEFT JOIN BorrowRequestEntity br 
-		        ON br.inventoryId = e.id AND br.status = 'PAID'
-		    WHERE e.isDeleted = false
+		    WITH inventory_totals AS (
+			    SELECT
+			        e.id AS inventory_id,
+			        e.total_qty,
+			        e.available_qty,
+			        (SELECT COALESCE(SUM(br.price * br.qty), 0)
+			         FROM borrow_request br
+			         WHERE br.inventory_id = e.id AND br.status = 'PAID') AS total_revenue,
+			        (SELECT COALESCE(SUM(ic.qty), 0)
+			         FROM inventory_item_condition ic
+			         WHERE ic.inventory_id = e.id AND ic.condition = 'LOST' AND ic.is_deleted = FALSE) AS total_lost,
+			        (SELECT COALESCE(SUM(ic.qty), 0)
+			         FROM inventory_item_condition ic
+			         WHERE ic.inventory_id = e.id AND ic.condition = 'DAMAGED' AND ic.is_deleted = FALSE) AS total_damaged
+			    FROM inventory e
+			    WHERE e.is_deleted = FALSE
+			)
+			SELECT
+			    COALESCE(CAST(COUNT(*) AS integer), 0) AS totalItem,
+			    COALESCE(CAST(SUM(total_qty) AS integer), 0) AS totalQty,
+			    COALESCE(CAST(SUM(available_qty) AS integer), 0) AS totalAvailableQty,
+			    COALESCE(CAST(SUM(total_revenue) AS double precision), 0) AS totalRevenue,
+			    COALESCE(CAST(SUM(total_lost) AS integer), 0) AS totalLostItems,
+			    COALESCE(CAST(SUM(total_damaged) AS integer), 0) AS totalDamagedItems
+			FROM inventory_totals;
+
 		""";
 
-	@Query(GET_ADMIN_INVENTORY_OVERVIEW)
+
+
+
+
+	@Query(value=GET_ADMIN_INVENTORY_OVERVIEW, nativeQuery=true)
 	public InventoryOverview getAdminInventoryOverview() throws DataAccessException;
 	
 	

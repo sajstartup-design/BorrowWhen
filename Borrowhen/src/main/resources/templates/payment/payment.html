@@ -44,45 +44,49 @@
                   <div class="bg-blue-800/40 rounded-xl border border-blue-400/20 p-4 shadow-inner space-y-3 text-sm">
                      <div class="flex justify-between items-center">
                         <span class="text-blue-100">Item Name</span>
-                        <span class="font-semibold text-white" th:text="*{request.itemName}">Laptop</span>
+                        <span class="font-semibold text-white" th:text="*{request.itemName}">-</span>
                      </div>
                      <div class="flex justify-between items-center">
                         <span class="text-blue-100">Quantity</span>
-                        <span class="font-semibold text-white" th:text="*{request.qty}">1</span>
+                        <span class="font-semibold text-white" th:text="*{request.qty}">0</span>
+                     </div>
+                     <div class="flex justify-between items-center">
+                        <span class="text-blue-100">Price</span>
+                        <span class="font-semibold text-white" th:text="|₱*{request.price}|">₱0</span>
                      </div>
                      <div class="flex justify-between items-center">
                         <span class="text-blue-100">Date to Borrow</span>
-                        <span class="font-semibold text-white" th:text="*{request.dateToBorrow}">2025-10-12</span>
+                        <span class="font-semibold text-white" th:text="*{request.dateToBorrow}">0000-00-00</span>
                      </div>
                      <div class="flex justify-between items-center">
                         <span class="text-blue-100">Date to Return</span>
-                        <span class="font-semibold text-white" th:text="*{request.dateToReturn}">2025-10-15</span>
+                        <span class="font-semibold text-white" th:text="*{request.dateToReturn}">0000-00-00</span>
                      </div>
                   
-                     <div class="flex justify-between items-center border-t border-blue-400/30 pt-3 mt-2">
-                        <span class="text-blue-100">Price</span>
-                        <span class="font-semibold text-white" th:text="*{request.price}">₱500</span>
+                     <div class="flex justify-between items-center border-t border-blue-400/30 pt-3 mt-2" th:if="${paymentDto.itemAmount != 0}">
+                        <span class="text-blue-100">Total Item Amount</span>
+                        <span class="font-semibold text-white" th:text="|₱${paymentDto.itemAmount}|">₱0</span>
+                     </div>
+                     <div class="flex justify-between items-center border-t border-blue-400/30 pt-3 mt-2" th:if="${paymentDto.lostAmount != 0}">
+                        <span class="text-blue-100">Lost Items</span>
+                        <span class="font-semibold text-white" th:text="|₱${paymentDto.lostAmount}|">₱0</span>
                      </div>
                      <div class="flex justify-between items-center border-t border-blue-400/30 pt-3 mt-2" th:if="*{request.isReturnedLate}">
                         <span class="text-blue-100">Returned Late Fees</span>
-                        <span class="font-semibold text-white">₱50</span>
+                        <span class="font-semibold text-white">₱100</span>
                      </div>
                      <div class="flex justify-between items-center border-t border-blue-400/30 pt-3 mt-2" th:if="*{request.isDamaged}">
                         <span class="text-blue-100">Damaged Item Fees</span>
-                        <span class="font-semibold text-white">₱100</span>
+                        <span class="font-semibold text-white" th:text="|₱${paymentDto.damagedAmount}|"></span>
                      </div>
                      <div class="flex justify-between items-center border-t border-blue-300/40 pt-4 mt-3">
-    <span class="font-semibold text-white text-lg">Total</span>
-    <span class="font-bold text-white text-lg"
-      th:text="${@calculationUtil.getTotalPriceWithFees(
-                  borrowRequestDto.request.qty, 
-                  borrowRequestDto.request.price, 
-                  borrowRequestDto.request.isReturnedLate ? 50 : 0, 
-                  borrowRequestDto.request.isDamaged ? 100 : 0)}">
-    ₱500
-</span>
-</div>
-                  </div>
+						    <span class="font-semibold text-white text-lg">Total</span>
+						<span class="font-bold text-white text-lg"
+						      th:text="|₱${paymentDto.amount}|">
+						    ₱500
+						</span>
+						</div>
+	                  </div>
                   
                   <div class="flex flex-col gap-1 mt-3">
 					  <span class="text-sm">Damage Notes</span>

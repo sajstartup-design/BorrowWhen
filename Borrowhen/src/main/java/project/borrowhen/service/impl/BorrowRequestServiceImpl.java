@@ -17,11 +17,13 @@ import project.borrowhen.common.util.CalculationUtil;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.dao.BorrowRequestDao;
+import project.borrowhen.dao.InventoryItemConditionDao;
 import project.borrowhen.dao.PaymentDao;
 import project.borrowhen.dao.entity.BorrowRequestData;
 import project.borrowhen.dao.entity.BorrowRequestEntity;
 import project.borrowhen.dao.entity.BorrowRequestOverview;
 import project.borrowhen.dao.entity.InventoryEntity;
+import project.borrowhen.dao.entity.InventoryItemConditionEntity;
 import project.borrowhen.dao.entity.NotificationEntity;
 import project.borrowhen.dao.entity.PaymentEntity;
 import project.borrowhen.dao.entity.ReviewOverviewData;
@@ -44,6 +46,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	
 	@Autowired
 	private BorrowRequestDao borrowRequestDao;
+	
+	@Autowired
+	private InventoryItemConditionDao inventoryItemConditionDao;
 	
 	@Autowired
 	private UserService userService;
@@ -578,6 +583,39 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    
 	    inventoryService.updateInventoryAvailableQty(request.getInventoryId(), request.getQty(), CommonConstant.INCREASE);
 	    
+	    if(inDto.getIsDamaged()) {
+	    	InventoryItemConditionEntity itemDamaged = new InventoryItemConditionEntity();
+	    	
+	    	itemDamaged.setInventoryId(request.getInventoryId());
+	    	itemDamaged.setBorrowRequestId(id);
+	    	itemDamaged.setCondition(CommonConstant.CONDITION_DAMAGED);
+	    	itemDamaged.setQty(inDto.getDamagedQty());
+	    	itemDamaged.setRemarks(inDto.getDamageNotes());
+	    	itemDamaged.setCreatedDate(dateNow);
+	    	itemDamaged.setUpdatedDate(dateNow);
+	    	itemDamaged.setIsDeleted(false);
+	    	
+	    	inventoryItemConditionDao.save(itemDamaged);
+	    }
+	    
+	    if(inDto.getIsLost()) {
+	    	InventoryItemConditionEntity itemLost = new InventoryItemConditionEntity();
+	    	
+	    	itemLost.setInventoryId(request.getInventoryId());
+	    	itemLost.setBorrowRequestId(id);
+	    	itemLost.setCondition(CommonConstant.CONDITION_LOST);
+	    	itemLost.setQty(inDto.getDamagedQty());
+	    	itemLost.setRemarks("LOST BY BORROWER");
+	    	itemLost.setCreatedDate(dateNow);
+	    	itemLost.setUpdatedDate(dateNow);
+	    	itemLost.setIsDeleted(false);
+	    	
+	    	inventoryItemConditionDao.save(itemLost);
+	    }
+	    
+	    if(inDto.getIsLost() || inDto.getIsDamaged()) {
+	    	inventoryService.updateInventoryTotalAndAvailableQty(request.getInventoryId(), inDto.getDamagedQty() + inDto.getLostQty(), CommonConstant.DECREASE);
+	    }
 	    
 	    notification.setMessage(message);
 	    notification.setIsRead(false);
@@ -664,6 +702,9 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 
 	    borrowRequestDao.updateBorrowRequestStatusById(id, CommonConstant.PENDING_PAYMENT);
 	    
+	    InventoryItemConditionEntity itemDamaged = inventoryItemConditionDao.getInventoryItemConditionByBorrowId(id, CommonConstant.CONDITION_DAMAGED);
+	    InventoryItemConditionEntity itemLost = inventoryItemConditionDao.getInventoryItemConditionByBorrowId(id, CommonConstant.CONDITION_LOST);
+	    
 	    PaymentDto paymentDto = new PaymentDto();
 	    
 	    int additionalAmount = 0;
@@ -672,8 +713,13 @@ public class BorrowRequestServiceImpl implements BorrowRequestService{
 	    	additionalAmount += CommonConstant.LATE_RETURNED_FEES;
 	    }
 	    
-	    if(request.getIsDamaged()) {
-	    	additionalAmount += CommonConstant.DAMAGED_ITEM_FEES;
+	    if (itemDamaged != null && itemDamaged.getQty() > 0) {
+	        additionalAmount += (itemDamaged.getQty() * (request.getPrice() / 2));
+	    }
+
+	    // Lost rule: lostQty * price
+	    if (itemLost != null && itemLost.getQty() > 0) {
+	        additionalAmount += (itemLost.getQty() * request.getPrice());
 	    }
 	    
 	    paymentDto.setAmount(CalculationUtil.getTotalPrice(request.getQty(), request.getPrice()) + additionalAmount);

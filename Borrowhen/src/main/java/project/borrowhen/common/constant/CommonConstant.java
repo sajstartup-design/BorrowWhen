@@ -86,5 +86,8 @@ public class CommonConstant {
      */
     public static final int LATE_RETURNED_FEES = 50;
     public static final int DAMAGED_ITEM_FEES = 100;
+    
+    public static final String CONDITION_LOST = "LOST";
+    public static final String CONDITION_DAMAGED = "DAMAGED";
 
 }

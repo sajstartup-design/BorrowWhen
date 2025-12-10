@@ -22,7 +22,11 @@ import project.borrowhen.common.constant.CommonConstant;
 import project.borrowhen.common.util.CipherUtil;
 import project.borrowhen.common.util.DateFormatUtil;
 import project.borrowhen.common.util.StripeUtil;
+import project.borrowhen.dao.BorrowRequestDao;
+import project.borrowhen.dao.InventoryItemConditionDao;
 import project.borrowhen.dao.PaymentDao;
+import project.borrowhen.dao.entity.BorrowRequestEntity;
+import project.borrowhen.dao.entity.InventoryItemConditionEntity;
 import project.borrowhen.dao.entity.PaymentData;
 import project.borrowhen.dao.entity.PaymentEntity;
 import project.borrowhen.dao.entity.PaymentOverview;
@@ -49,6 +53,12 @@ public class PaymentServiceImpl implements PaymentService{
 	
 	@Autowired
 	private AdminSettingsService adminSettingsService;
+	
+	@Autowired
+	private InventoryItemConditionDao inventoryItemConditionDao;
+	
+	@Autowired
+	private BorrowRequestDao borrowRequestDao;
     
     private int getMaxPaymentDisplay() {
         return adminSettingsService.getSettings().getPaymentPerPage();
@@ -87,38 +97,65 @@ public class PaymentServiceImpl implements PaymentService{
 
 	@Override
 	public PaymentDto getPaymentIntent(PaymentDto inDto) throws Exception {
-		
-		int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
 
+	    int id = Integer.valueOf(cipherUtil.decrypt(inDto.getEncryptedId()));
+
+	    // 1. Fetch payment
 	    PaymentEntity payment = paymentDao.getPaymentByBorrowRequestId(id);
 	    if (payment == null) {
 	        throw new RuntimeException("No payment found for borrowRequestId: " + inDto.getBorrowRequestId());
 	    }
-	    
+
+	    // 2. Stripe
 	    Stripe.apiKey = StripeUtil.STRIPE_API_SECRET_KEY;
 
-	    String stripePaymentId = payment.getStripePaymentId(); 
+	    String stripePaymentId = payment.getStripePaymentId();
 	    PaymentIntent intent = PaymentIntent.retrieve(stripePaymentId);
 
-	    // 3. Populate DTO
+	    // 3. Fetch item conditions
+	    InventoryItemConditionEntity itemDamaged =
+	            inventoryItemConditionDao.getInventoryItemConditionByBorrowId(id, CommonConstant.CONDITION_DAMAGED);
+
+	    InventoryItemConditionEntity itemLost =
+	            inventoryItemConditionDao.getInventoryItemConditionByBorrowId(id, CommonConstant.CONDITION_LOST);
+
+	    // 4. Borrow Request
+	    BorrowRequestEntity borrowRequest = borrowRequestDao.getBorrowRequest(payment.getBorrowRequestId());
+
+	    int qtyBorrowed = borrowRequest.getQty();
+	    double price = borrowRequest.getPrice();
+
+	    int damagedQty = (itemDamaged != null) ? itemDamaged.getQty() : 0;
+	    int lostQty = (itemLost != null) ? itemLost.getQty() : 0;
+
+	    // 5. Calculations
+	    double itemAmount = qtyBorrowed * price;
+	    double damagedAmount = damagedQty * (price / 2);
+	    double lostAmount = lostQty * price;
+
+	    // 6. Build DTO
 	    PaymentDto dto = new PaymentDto();
 	    dto.setBorrowRequestId(inDto.getBorrowRequestId());
 	    dto.setEncryptedId(inDto.getEncryptedId());
 	    dto.setStripePaymentId(intent.getId());
 	    dto.setClientSecret(intent.getClientSecret());
-	    dto.setAmount(intent.getAmount() / 100.0);
+	    dto.setAmount(intent.getAmount() / 100.0); // Stripe cents → PHP
 	    dto.setEmailAddress(intent.getReceiptEmail());
 	    dto.setStatus(intent.getStatus());
 
+	    dto.setItemAmount(itemAmount);
+	    dto.setDamagedAmount(damagedAmount);
+	    dto.setLostAmount(lostAmount);
+
+	    // 7. Receipt URL
 	    Charge latestCharge = intent.getLatestChargeObject();
 	    if (latestCharge != null) {
 	        dto.setReceiptUrl(latestCharge.getReceiptUrl());
 	    }
 
 	    return dto;
-		
-		
 	}
+
 
 	@Override
 	public void updatePaymentStatus(PaymentDto inDto) throws Exception {
